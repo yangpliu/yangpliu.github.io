@@ -1,1 +1,1 @@
-Sitemap: http://yangliu.github.io/sitemap.xml
+Sitemap: https://yangliu.github.io/sitemap.xml
