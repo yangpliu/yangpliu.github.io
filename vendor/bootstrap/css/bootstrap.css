@@ -52,6 +52,14 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+hr {
+border: none;
+height: 1px;
+/* Set the hr color */
+color: #333; /* old IE */
+background-color: #333; /* Modern Browsers */
+}
+
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }

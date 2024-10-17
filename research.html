@@ -12,7 +12,20 @@
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+  <style>
+    hr {
+          border: none; /* Remove the default border */
+          height: 1.2px; /* Set the thickness of the line */
+          background-color: #000; /* Set the color of the line */
+          margin: 2px 0; /* Adjust the space above and below the line */
+      }
+      .scaled-text {
+            display: inline-block; /* Necessary for scaling to work correctly */
+            transform: scale(1.2); /* Scale text by 10% */
+            transform-origin: top; /* Adjusts the origin of the scaling */
+      }
+    </style>
+    </style>
 </head>
 
 <body>
@@ -44,193 +57,239 @@
     <div class="row">
         <div class="col-md-9 col-sm-9 col-xs-9 offset-md-1 offset-sm-1 offset-xs-1">
         <br style="line-height:2">
-        <h3>Computer Science Research</h3>
-        <font size="3.5">
-        <p>
-        <b>On Approximate Fully-Dynamic Matching and Online Matrix-Vector Multiplication</b>, FOCS 2024 <br/>
-        <i> Yang P. Liu </i> <br/>
-        <a href="https://arxiv.org/pdf/2403.02582">arXiv</a>
-        </p>
-        <p>
-        <b>Almost-Linear Time Algorithms for Decremental Graphs: Min-Cost Flow and More via Duality</b>, FOCS 2024 <br/>
+        <h3 style="margin-left:-22px">Publications</h3>
+        <font size="2px">
+        <ol class="scaled-text">
+        <hr> <b> 2024 </b> <hr>
+        <li>
+        <b>On Approximate Fully-Dynamic Matching and Online Matrix-Vector Multiplication</b> <br/>
+        <i> Yang P. Liu</i> <br/>
+        FOCS 2024 <br/>
+        <a href="https://arxiv.org/pdf/2403.02582">arXiv</a> <br/>
+        </li>
+        <li>
+        <b>Almost-Linear Time Algorithms for Decremental Graphs: Min-Cost Flow and More via Duality</b> <br/>
         Jan van den Brand, Li Chen, Rasmus Kyng, <i>Yang P. Liu</i>, Simon Meierhans, Maximilian Probst Gutenberg, Sushant Sachdeva <br/>
-        <a href="https://arxiv.org/pdf/2407.10830">arXiv</a>
-        </p>
-        <p>
-        <b>Sparsifying generalized linear models</b>, STOC 2024 <br/>
+        FOCS 2024 <br/>
+        <a href="https://arxiv.org/pdf/2407.10830">arXiv</a> <br/>
+        </li>
+        <li>
+        <b>Parallel Repetition for 3-Player XOR Games</b> <br/>
+        Amey Bhangale, Mark Braverman, Subhash Khot, <i> Yang P. Liu</i>, Dor Minzer<br/>
+        Manuscript <br/>
+        <a href="https://arxiv.org/pdf/2408.09352">arXiv</a>
+        </li>
+        <li>
+        <b>Parallel Repetition for <i>k</i>-Player Projection Games</b> <br/>
+        Amey Bhangale, Mark Braverman, Subhash Khot, <i> Yang P. Liu</i>, Dor Minzer<br/>
+        RANDOM 2024 <br/>
+        <a href="https://arxiv.org/pdf/2312.04783">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.APPROX/RANDOM.2024.54">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/kPlayer.pdf">Slides</a>
+        </li>
+        <li>
+        <b>On Further Questions Regarding Unit Fractions</b> <br/>
+        <i> Yang P. Liu</i>, Mehtaab Sawhney<br/>
+        In submission <br/>
+        <a href="https://arxiv.org/pdf/2404.07113">arXiv</a>
+        </li>
+        <li>
+        <b>Sparsifying generalized linear models</b> <br/>
         Arun Jambulapati, James R. Lee, <i> Yang P. Liu</i>, Aaron Sidford <br/>
-        <a href="https://arxiv.org/abs/2311.18145">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://dl.acm.org/doi/pdf/10.1145/3618260.3649684">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/glm.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=ii6TMtotLSA">Video</a>
-        </p>
-        <p>
-        <b>Almost-Linear Time Algorithms for Incremental Graphs: Cycle Detection, SCCs, <i>s-t</i> Shortest Path, and Minimum-Cost Flow</b>, STOC 2024 <br/>
-        Li Chen, Rasmus Kyng, <i> Yang P. Liu </i>, Simon Meierhans, Maximilian Probst Gutenberg <br/>
-        <a href="https://arxiv.org/abs/2311.18295">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://dl.acm.org/doi/pdf/10.1145/3618260.3649745">Proceedings</a>
-        </p>
-        <p>
-        <b>Incremental Approximate Maximum Flow on Undirected Graphs in Subpolynomial Update Time</b>, SODA 2024 <br/>
+        STOC 2024 <br/>
+        <a href="https://arxiv.org/abs/2311.18145">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://dl.acm.org/doi/pdf/10.1145/3618260.3649684">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/glm.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=ii6TMtotLSA">Video</a> <br/>
+        </li>
+        <li>
+        <b>Almost-Linear Time Algorithms for Incremental Graphs: Cycle Detection, SCCs, <i>s-t</i> Shortest Path, and Minimum-Cost Flow</b> <br/>
+        Li Chen, Rasmus Kyng, <i> Yang P. Liu </i>, Simon Meierhans, Maximilian Probst Gutenberg. <br/>
+        STOC 2024 <br/>
+        <a href="https://arxiv.org/abs/2311.18295">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://dl.acm.org/doi/pdf/10.1145/3618260.3649745">Proceedings</a> <br/>
+        </li>
+        <li>
+        <b>Incremental Approximate Maximum Flow on Undirected Graphs in Subpolynomial Update Time</b> <br/>
+        Jan van den Brand, Li Chen, Rasmus Kyng, <i> Yang P. Liu</i>, Richard Peng, Maximilian Probst Gutenberg, Sushant Sachdeva, Aaron Sidford. <br/>
+        <a href="https://arxiv.org/pdf/2311.03174.pdf">arXiv</a> <br/>
+        SODA 2024
+        </li>
+        <hr> <b> 2023 </b> <hr>
+        <li>
+        <b>A Deterministic Almost-Linear Time Algorithm for Minimum-Cost Flow</b> <br/>
         Jan van den Brand, Li Chen, Rasmus Kyng, <i> Yang P. Liu</i>, Richard Peng, Maximilian Probst Gutenberg, Sushant Sachdeva, Aaron Sidford <br/>
-        <a href="https://arxiv.org/pdf/2311.03174.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>A Deterministic Almost-Linear Time Algorithm for Minimum-Cost Flow</b>, FOCS 2023 <br/>
-        Jan van den Brand, Li Chen, Rasmus Kyng, <i> Yang P. Liu</i>, Richard Peng, Maximilian Probst Gutenberg, Sushant Sachdeva, Aaron Sidford <br/>
+        FOCS 2023 <br/>
         <a href="https://arxiv.org/abs/2309.16629">arXiv</a>
-        </p>
-        <p>
-        <b>Sparsifying Sums of Norms</b>, FOCS 2023, Invited to SICOMP Special Issue <br/>
+        </li>
+        <li>
+        <b>Sparsifying Sums of Norms</b> <br/>
         Arun Jambulapati, James R. Lee, <i> Yang P. Liu</i>, Aaron Sidford<br/>
+        FOCS 2023, Invited to SICOMP Special Issue <br/>
         <a href="https://arxiv.org/abs/2305.09049">arXiv</a>
-        </p>
-        <p>
-        <b>Chaining, Group Leverage Score Overestimates, and Fast Spectral Hypergraph Sparsification</b>, STOC 2023 <br/>
+        </li>
+        <li>
+        <b>Chaining, Group Leverage Score Overestimates, and Fast Spectral Hypergraph Sparsification</b> <br/>
         Arun Jambulapati, <i> Yang P. Liu</i>, Aaron Sidford <br/>
+        STOC 2023 <br/>
         <a href="https://dl.acm.org/doi/abs/10.1145/3564246.3585136">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2209.10539.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Dynamic Maxflow via Dynamic Interior Point Methods</b>, STOC 2023 <br/>
+        </li>
+        <li>
+        <b>Dynamic Maxflow via Dynamic Interior Point Methods</b> <br/>
         Jan van den Brand, <i> Yang P. Liu</i>, Aaron Sidford <br/>
+        STOC 2023 <br/>
         <a href="https://dl.acm.org/doi/10.1145/3564246.3585135">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2212.06315.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Vertex Sparsification for Edge Connectivity in Polynomial Time</b>, ITCS 2023<br/>
+        </li>
+        <li>
+        <b>Vertex Sparsification for Edge Connectivity in Polynomial Time</b> <br/>
         <i>Yang P. Liu</i><br />
+        ITCS 2023 <br/>
         <a href="https://drops.dagstuhl.de/opus/volltexte/2023/17586/pdf/LIPIcs-ITCS-2023-83.pdf">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2011.15101.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Optimal Sublinear Sampling of Spanning Trees and Determinantal Point Processes via Average-Case Entropic Independence</b>, FOCS 2022, Invited to SICOMP Special Issue<br/>
-        Nima Anari, <i>Yang P. Liu</i>, Thuy-Duong Vuong <br />
+        </li>
+        <li>
+        <b>Exponential Convergence of Sinkhorn Under Regularization Scheduling</b> <br/>
+        Jingbang Chen, <i> Yang P. Liu</i>, Richard Peng, Arvind Ramaswami <br/>
+        ACDA 2023 <br/>
+        <a href="https://arxiv.org/pdf/2207.00736.pdf">arXiv</a>  &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://epubs.siam.org/doi/epdf/10.1137/1.9781611977714.16">Proceedings</a>
+        </li>
+        <hr> <b> 2022 </b> <hr>
+        <li>
+        <b>Optimal Sublinear Sampling of Spanning Trees and Determinantal Point Processes via Average-Case Entropic Independence</b> <br/>
+        Nima Anari, <i>Yang P. Liu</i>, Thuy-Duong Vuong <br/>
+        FOCS 2022, Invited to SICOMP Special Issue <br/>
         <a href="https://ieeexplore.ieee.org/document/9996694/">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2204.02570.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Maximum Flow and Minimum-Cost Flow in Almost Linear Time</b>, FOCS 2022, <b style="color:red">Best Paper</b> <br/>
+        </li>
+        <li>
+        <b>Maximum Flow and Minimum-Cost Flow in Almost Linear Time</b> <br/>
         Li Chen, Rasmus Kyng, <i>Yang P. Liu</i>, Richard Peng, Maximilian Probst Gutenberg, Sushant Sachdeva <br />
+         FOCS 2022, <b style="color:red">Best Paper</b> <br/>
         <a href="https://arxiv.org/pdf/2203.00671.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/Flows_Stanford.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=KsMtVthpkzI">Video</a>
-        </p>
-        <p>
-        <b>Online Edge Coloring via Tree Recurrences and Correlation Decay</b>, STOC 2022, Invited to SICOMP Special Issue <br/>
+        </li>
+        <li>
+        <b>Online Edge Coloring via Tree Recurrences and Correlation Decay</b> <br/>
         Janardhan Kulkarni, <i>Yang P. Liu</i>, Ashwin Sah, Mehtaab Sawhney, Jakub Tarnawski <br />
+        STOC 2022, Invited to SICOMP Special Issue <br/>
         <a href="https://dl.acm.org/doi/10.1145/3519935.3519986">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2111.00721.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Improved Iteration Complexities for Overconstrained <i>p</i>-Norm Regression</b>, STOC 2022<br/>
+        </li>
+        <li>
+        <b>Improved Iteration Complexities for Overconstrained <i>p</i>-Norm Regression</b> <br/>
         Arun Jambulapati, <i>Yang P. Liu</i>, Aaron Sidford <br />
+        STOC 2022 <br/>
         <a href="https://dl.acm.org/doi/10.1145/3519935.3519971">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2111.01848.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Faster Maxflow via Improved Dynamic Spectral Vertex Sparsifiers</b>, STOC 2022<br/>
+        </li>
+        <li>
+        <b>Faster Maxflow via Improved Dynamic Spectral Vertex Sparsifiers</b> <br/>
         Jan van den Brand, Yu Gao, Arun Jambulapati, Yin Tat Lee, <i>Yang P. Liu</i>, Richard Peng, Aaron Sidford <br />
+        STOC 2022 <br/>
         <a href="https://dl.acm.org/doi/10.1145/3519935.3520068">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2112.00722.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>A Gaussian Fixed Point Walk</b>, ITCS 2022, <b style="color:red">Best Student Paper</b><br/>
+        </li>
+        <li>
+        <b>A Gaussian Fixed Point Walk</b> <br/>
         <i>Yang P. Liu</i>, Ashwin Sah, Mehtaab Sawhney <br />
+        ITCS 2022, <b style="color:red">Best Student Paper</b> <br/>
         <a href="https://drops.dagstuhl.de/opus/volltexte/2022/15697/pdf/LIPIcs-ITCS-2022-101.pdf">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2104.07009.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/gaussianslides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=rK53DhTdbmM">Video</a>
-        </p>
-        <p>
-        <b>Fully Dynamic Electrical Flows: Sparse Maxflow Faster Than Goldberg-Rao</b>, FOCS 2021, SIAM Journal of Computing Special Issue<br/>
-        Yu Gao, <i>Yang P. Liu</i>, Richard Peng <br />
-        <a href="https://epubs.siam.org/doi/abs/10.1137/22M1476666">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://ieeexplore.ieee.org/document/9719861/">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2101.07233.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/m1497slides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=4Tc-pv9UIl8">Video</a>
-        </p> 
-        <p>
-        <b>Minor Sparsifiers and the Distributed Laplacian Paradigm</b>, FOCS 2021<br/>
-        Sebastian Forster, Gramoz Goranci, <i>Yang P. Liu</i>, Richard Peng, Xiaorui Sun, Mingquan Ye <br />
-        <a href="https://ieeexplore.ieee.org/document/9719829/">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2012.15675.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Minimum Cost Flows, MDPs, and ℓ<sub>1</sub>-Regression in Nearly Linear Time for Dense Instances</b>, STOC 2021<br/>
-        Jan van den Brand, Yin Tat Lee, <i>Yang P. Liu</i>, Thatchaphol Saranurak, Aaron Sidford, Zhao Song, Di Wang <br />
-        <a href="https://dl.acm.org/doi/10.1145/3406325.3451108">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2101.05719.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="img/stoc2021-video-paper396.mp4">Video</a>
-        </p>
-        <p>
-        <b>Discrepancy Minimization via a Self-Balancing Walk</b>, STOC 2021, <b style="color:red">Best Student Paper</b>, SIAM Journal of Computing Special Issue<br/>
-        Ryan Alweiss, <i>Yang P. Liu</i>, Mehtaab Sawhney <br />
-        <a href="https://dl.acm.org/doi/10.1145/3406325.3450994">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2006.14009.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/discrepancyslides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=eI8eMRpzFw0">Video</a>
-        </p>
-        <p>
-        <b>Vertex Sparsification for Edge Connectivity</b>, SODA 2021<br/>
-        Parinya Chalermsook, Syamantak Das, Yunbum Kook, Bundit Laekhanukit, <br /> <i> Yang P. Liu</i>, Richard Peng, Mark Sellke, Daniel Vaz <br />
-        <a href="https://epubs.siam.org/doi/abs/10.1137/1.9781611976465.74?mobileUi=0">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/2007.07862">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=gLo7uZocI9o">Video</a>
-        </p>
-        <p>
-        <b>Faster Divergence Maximization for Faster Maximum Flow</b>, FOCS 2020, SIAM Journal of Computing Special Issue<br/>
-        <i>Yang P. Liu</i>, Aaron Sidford <br />
-        <a href="https://epubs.siam.org/doi/abs/10.1137/20M1383525">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.computer.org/csdl/proceedings-article/focs/2020/962100a119/1qyxz8pQqPe">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2003.08929.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/tcsplus.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=NgjRPjQYo34">Video</a>
-        </p>
-        <p>
-        <b>Faster Energy Maximization for Faster Maximum Flow</b>, STOC 2020<br/>
-        <i>Yang P. Liu</i>, Aaron Sidford <br />
-        <a href="https://dl.acm.org/doi/abs/10.1145/3357713.3384247">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/1910.14276.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/maxflow1375slides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=9CT7PeJAimU&list=PLn0nrSd4xjjadfcMd5xvmJ_GNSLDi1ATn&index=53&t=1s">Video</a>
-        </p>
-        <p>
-        <b>Constant Girth Approximation for Directed Graphs in Subquadratic Time</b>, STOC 2020<br/>
-        Shiri Chechik, <i>Yang P. Liu</i>, Omer Rotem, Aaron Sidford <br />
-        <a href="https://dl.acm.org/doi/abs/10.1145/3357713.3384247">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/1907.10779.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/girthslides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=P_7p-I5QzB8&list=PLn0nrSd4xjjadfcMd5xvmJ_GNSLDi1ATn&index=91">Video</a>
-        </p>
-        <p>
-        <b>Near-optimal Approximate Discrete and Continuous Submodular Function Minimization</b>, SODA 2020<br/>
-        Brian Axelrod, <i>Yang P. Liu</i>, Aaron Sidford <br />
-        <a href="https://epubs.siam.org/doi/pdf/10.1137/1.9781611975994.51">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/1909.00171.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Parallel Reachability in Almost Linear Work and Square Root Depth</b>, FOCS 2019<br/>
-        Arun Jambulapati, <i>Yang P. Liu</i>, Aaron Sidford <br />
-        <a href="https://conferences.computer.org/focs/2019/pdfs/FOCS2019-7pBwCpNH4Mz2L4MJWVl6Xp/1C0JL2Vt2lJsBpym9DCtSB/7gmIK4wOVQ4QyanZcozuEp.pdf">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/1905.08841">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/digraphslides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=FXsogo42yiU&list=PL3DbynX8gwfLXOsziSLaVmiLKKjedlvks&index=46&t=">Video</a>
-        </p>
-        <p>
-        <b>Short Cycles via Low-Diameter Decompositions</b>, SODA 2019<br/>
-        <i>Yang P. Liu</i>, Sushant Sachdeva, Zejun Yu <br/>
-        <a href="https://epubs.siam.org/doi/pdf/10.1137/1.9781611975482.161">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/1810.05143">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/ShortCycleSlides.pdf">Slides</a>
-        </p>
-        <p>
-        <b>Reproducibility and Pseudo-Determinism in Log-Space</b>, SODA 2019 <br/>
-        Ofer Grossman, <i>Yang P. Liu</i><br/>
-        <a href="https://epubs.siam.org/doi/pdf/10.1137/1.9781611975482.38">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/1803.04025">arXiv</a>
-        </p>
-        <p>
-        <b>An Exponential Separation Between MA and AM Proofs of Proximity</b>, ICALP 2018 <br/>
-        Tom Gur, <i>Yang P. Liu</i>, Ron D. Rothblum <br/>
-        <a href="http://drops.dagstuhl.de/opus/volltexte/2018/9077/pdf/LIPIcs-ICALP-2018-73.pdf">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://eccc.weizmann.ac.il/report/2018/083/">ECCC</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/MAPSlides.pdf">Slides</a>
-        </p>
-      </div>
-    </div>
-      <div class="row">
-        <div class="col-md-9 col-sm-9 col-xs-9 offset-md-1 offset-sm-1 offset-xs-1">
-        <br style="line-height:2">
-        <h3>Mathematics Research</h3>
-        <font size="3.5">
-        <p>
-        <b>On the upper tail problem for random hypergraphs</b>, <i> Random Structures & Algorithms</i> <br />
-        <i>Yang P. Liu</i>, Yufei Zhao <br/>
-        <a href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/rsa.20975">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/1910.02916.pdf">arXiv</a>
-        </p>
-        <p>
-        <b>Arithmetic progressions in sumsets of sparse sets</b>, <i> Integers</i> <br />
+        </li>
+        <li>
+        <b>Arithmetic progressions in sumsets of sparse sets</b> <br />
         Noga Alon, Ryan Alweiss, <i> Yang P. Liu</i>, Anders Martinsson, Shyam Narayanan <br/>
+        <i> Integers</i> <br/>
         <a href="https://www.degruyter.com/document/doi/10.1515/9783110754216-003/html?lang=en">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2104.01564.pdf">arXiv</a>
-        </p>
-        <b>The "Riemann Hypothesis" is True for Period Polynomials of Almost All Newforms</b>, <br /> Res Math Sci (2016) 3: 31. <br/>
+        </li>
+        <hr> <b> 2021 </b> <hr>
+        <li>
+        <b>Fully Dynamic Electrical Flows: Sparse Maxflow Faster Than Goldberg-Rao</b> <br/>
+        Yu Gao, <i>Yang P. Liu</i>, Richard Peng <br />
+        FOCS 2021, SIAM Journal of Computing Special Issue <br/>
+        <a href="https://epubs.siam.org/doi/abs/10.1137/22M1476666">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://ieeexplore.ieee.org/document/9719861/">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2101.07233.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/m1497slides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=4Tc-pv9UIl8">Video</a>
+        </li> 
+        <li>
+        <b>Minor Sparsifiers and the Distributed Laplacian Paradigm</b> <br/>
+        Sebastian Forster, Gramoz Goranci, <i>Yang P. Liu</i>, Richard Peng, Xiaorui Sun, Mingquan Ye <br />
+        FOCS 2021 <br/>
+        <a href="https://ieeexplore.ieee.org/document/9719829/">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2012.15675.pdf">arXiv</a>
+        </li>
+        <li>
+        <b>Minimum Cost Flows, MDPs, and ℓ<sub>1</sub>-Regression in Nearly Linear Time for Dense Instances</b> <br/>
+        Jan van den Brand, Yin Tat Lee, <i>Yang P. Liu</i>, Thatchaphol Saranurak, Aaron Sidford, Zhao Song, Di Wang <br />
+        STOC 2023 <br/>
+        <a href="https://dl.acm.org/doi/10.1145/3406325.3451108">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2101.05719.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="img/stoc2021-video-paper396.mp4">Video</a>
+        </li>
+        <li>
+        <b>Discrepancy Minimization via a Self-Balancing Walk</b> <br/>
+        Ryan Alweiss, <i>Yang P. Liu</i>, Mehtaab Sawhney <br />
+        STOC 2021, <b style="color:red">Best Student Paper</b>, SIAM Journal of Computing Special Issue <br/>
+        <a href="https://dl.acm.org/doi/10.1145/3406325.3450994">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2006.14009.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/discrepancyslides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=eI8eMRpzFw0">Video</a>
+        </li>
+        <li>
+        <b>Vertex Sparsification for Edge Connectivity</b> <br/>
+        Parinya Chalermsook, Syamantak Das, Yunbum Kook, Bundit Laekhanukit, <br /> <i> Yang P. Liu</i>, Richard Peng, Mark Sellke, Daniel Vaz <br />
+        SODA 2021 <br/>
+        <a href="https://epubs.siam.org/doi/abs/10.1137/1.9781611976465.74?mobileUi=0">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/2007.07862">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=gLo7uZocI9o">Video</a>
+        </li>
+        <hr> <b> 2020 </b> <hr>
+        <li>
+        <b>Faster Divergence Maximization for Faster Maximum Flow</b> <br/>
+        <i>Yang P. Liu</i>, Aaron Sidford <br />
+        FOCS 2020, SIAM Journal of Computing Special Issue <br/>
+        <a href="https://epubs.siam.org/doi/abs/10.1137/20M1383525">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.computer.org/csdl/proceedings-article/focs/2020/962100a119/1qyxz8pQqPe">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/2003.08929.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/tcsplus.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=NgjRPjQYo34">Video</a>
+        </li>
+        <li>
+        <b>Faster Energy Maximization for Faster Maximum Flow</b> <br/>
+        <i>Yang P. Liu</i>, Aaron Sidford <br />
+        STOC 2020 <br/>
+        <a href="https://dl.acm.org/doi/abs/10.1145/3357713.3384247">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/1910.14276.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/maxflow1375slides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=9CT7PeJAimU&list=PLn0nrSd4xjjadfcMd5xvmJ_GNSLDi1ATn&index=53&t=1s">Video</a>
+        </li>
+        <li>
+        <b>Constant Girth Approximation for Directed Graphs in Subquadratic Time</b> <br/>
+        Shiri Chechik, <i>Yang P. Liu</i>, Omer Rotem, Aaron Sidford <br />
+        STOC 2020 <br/>
+        <a href="https://dl.acm.org/doi/abs/10.1145/3357713.3384247">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/1907.10779.pdf">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/girthslides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=P_7p-I5QzB8&list=PLn0nrSd4xjjadfcMd5xvmJ_GNSLDi1ATn&index=91">Video</a>
+        </li>
+        <li>
+        <b>Near-optimal Approximate Discrete and Continuous Submodular Function Minimization</b> <br/>
+        Brian Axelrod, <i>Yang P. Liu</i>, Aaron Sidford <br />
+        SODA 2020 <br/>
+        <a href="https://epubs.siam.org/doi/pdf/10.1137/1.9781611975994.51">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/1909.00171.pdf">arXiv</a>
+        </li>
+        <li>
+        <b>On the upper tail problem for random hypergraphs</b> <br />
+        <i>Yang P. Liu</i>, Yufei Zhao <br/>
+        <i> Random Structures & Algorithms</i> <br/>
+        <a href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/rsa.20975">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/pdf/1910.02916.pdf">arXiv</a>
+        </li>
+        <hr> <b> 2019 </b> <hr>
+        <li>
+        <b>Parallel Reachability in Almost Linear Work and Square Root Depth</b> <br/>
+        Arun Jambulapati, <i>Yang P. Liu</i>, Aaron Sidford <br />
+        FOCS 2019 <br/>
+        <a href="https://conferences.computer.org/focs/2019/pdfs/FOCS2019-7pBwCpNH4Mz2L4MJWVl6Xp/1C0JL2Vt2lJsBpym9DCtSB/7gmIK4wOVQ4QyanZcozuEp.pdf">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/1905.08841">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/digraphslides.pdf">Slides</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.youtube.com/watch?v=FXsogo42yiU&list=PL3DbynX8gwfLXOsziSLaVmiLKKjedlvks&index=46&t=">Video</a>
+        </li>
+        <li>
+        <b>Short Cycles via Low-Diameter Decompositions</b> <br/>
+        <i>Yang P. Liu</i>, Sushant Sachdeva, Zejun Yu <br/>
+        SODA 2019 <br/>
+        <a href="https://epubs.siam.org/doi/pdf/10.1137/1.9781611975482.161">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/1810.05143">arXiv</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/ShortCycleSlides.pdf">Slides</a>
+        </li>
+        <li>
+        <b>Reproducibility and Pseudo-Determinism in Log-Space</b> <br/>
+        Ofer Grossman, <i>Yang P. Liu</i><br/>
+        SODA 2019 <br/>
+        <a href="https://epubs.siam.org/doi/pdf/10.1137/1.9781611975482.38">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/1803.04025">arXiv</a>
+        </li>
+        <hr> <b> Before 2019 </b> <hr>
+        <li>
+        <b>An Exponential Separation Between MA and AM Proofs of Proximity</b> <br/>
+        Tom Gur, <i>Yang P. Liu</i>, Ron D. Rothblum <br/>
+        ICALP 2018, Computational Complexity <br/>
+        <a href="http://drops.dagstuhl.de/opus/volltexte/2018/9077/pdf/LIPIcs-ICALP-2018-73.pdf">Proceedings</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://eccc.weizmann.ac.il/report/2018/083/">ECCC</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://link.springer.com/content/pdf/10.1007/s00037-021-00212-3.pdf">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="pdf/MAPSlides.pdf">Slides</a>
+        <li>
+        <b>The "Riemann Hypothesis" is True for Period Polynomials of Almost All Newforms</b> <br />
         <i>Yang P. Liu</i>, Peter S. Park, Zhuo Qun Song <br/>
+        Res Math Sci (2016) 3: 31. <br/>
         <a href="https://link.springer.com/article/10.1186/s40687-016-0081-x">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/1607.04699">arXiv</a>
-        </p>
-        <p>
-        <b>Bounded Gaps Between Products of Distinct Primes</b>, Res. number theory (2017) 3: 26. <br/>
+        </li>
+        <li>
+        <b>Bounded Gaps Between Products of Distinct Primes</b> <br/>
         <i>Yang P. Liu</i>, Peter S. Park, Zhuo Qun Song <br/>
+        Res. number theory (2017) 3: 26. <br/>
         <a href="https://link.springer.com/article/10.1007/s40993-017-0089-3">Journal</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="https://arxiv.org/abs/1607.03887">arXiv</a>
-        </p>
+        </li>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-9 col-sm-9 col-xs-9 offset-md-1 offset-sm-1 offset-xs-1">
-      <br style="line-height:2">
-      <h3>Manuscripts</h3>
-      <font size="3.5">
-      <p>
-      <b>Exponential Convergence of Sinkhorn Under Regularization Scheduling</b>, ACDA 2024 <br/>
-      Jingbang Chen, <i> Yang P. Liu</i>, Richard Peng, Arvind Ramaswami <br/>
-      <a href="https://arxiv.org/pdf/2207.00736.pdf">arXiv</a>
-      </p>
-      </div>
-    </div> 
   </div>
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.slim.min.js"></script>
