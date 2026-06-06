@@ -1,6 +1,4 @@
 (function () {
-  var ENDING_TOKENS = { ".": true, "?": true, "!": true };
-
   var state = {
     room: null,
     roomCode: "",
@@ -489,10 +487,10 @@
   }
 
   function nextActionText(room) {
-    if (!room.reveal || !ENDING_TOKENS[room.reveal.actual]) {
+    if (!room.reveal || !room.reveal.endsSentence) {
       return "Add Losses and Continue";
     }
-    return room.sentenceNumber >= room.sentenceCount ? "Add Losses and Show Final Scores" : "Add Losses and Next Sentence";
+    return room.reveal.endsGame ? "Add Losses and Show Final Scores" : "Add Losses and Next Sentence";
   }
 
   function defaultRows() {

@@ -447,6 +447,8 @@ function publicState(room, viewerId) {
     reveal: room.phase === "revealing" && room.lastResult ? {
       actual: room.lastResult.actual,
       reason: room.lastResult.reason,
+      endsSentence: revealEndsSentence(room),
+      endsGame: revealEndsSentence(room) && room.sentenceIndex + 1 >= room.deck.length,
       results: room.lastResult.results.slice().sort(function (a, b) {
         return a.loss - b.loss || a.playerName.localeCompare(b.playerName);
       })
@@ -562,6 +564,11 @@ function buildDeck(count) {
 function shouldEndSentence(room) {
   const previousToken = room.currentTokens[room.currentTokenIndex - 1];
   return ENDING_TOKENS[previousToken] || room.currentTokenIndex >= room.currentTokens.length;
+}
+
+function revealEndsSentence(room) {
+  const actual = room.lastResult ? room.lastResult.actual : "";
+  return ENDING_TOKENS[actual] || room.currentTokenIndex + 1 >= room.currentTokens.length;
 }
 
 function rankedPlayers(room) {
