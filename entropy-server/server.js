@@ -5,6 +5,7 @@ const vm = require("vm");
 
 const ROOT = path.resolve(__dirname, "..");
 const PORT = Number(process.env.PORT) || 8787;
+const ALLOWED_ORIGINS = parseAllowedOrigins(process.env.ALLOWED_ORIGINS || "https://yangpliu.github.io,http://localhost:8787,http://127.0.0.1:8787");
 const PENALTY = 4;
 const LOG_BASE = 2;
 const MAX_PLAYERS = 12;
@@ -24,6 +25,13 @@ const sentenceBank = loadSentences();
 setInterval(cleanupRooms, CLEANUP_INTERVAL_MS).unref();
 
 const server = http.createServer(function (request, response) {
+  applyCorsHeaders(request, response);
+  if (request.method === "OPTIONS") {
+    response.writeHead(204);
+    response.end();
+    return;
+  }
+
   route(request, response).catch(function (error) {
     console.error(error);
     respondJson(response, 500, { error: "Server error." });
@@ -812,4 +820,20 @@ function contentType(filePath) {
 function isPathInside(parent, child) {
   const relative = path.relative(parent, child);
   return Boolean(relative) && !relative.startsWith("..") && !path.isAbsolute(relative);
+}
+
+function parseAllowedOrigins(rawOrigins) {
+  return String(rawOrigins || "").split(",").map(function (origin) {
+    return origin.trim();
+  }).filter(Boolean);
+}
+
+function applyCorsHeaders(request, response) {
+  const origin = request.headers.origin;
+  if (origin && (ALLOWED_ORIGINS.includes("*") || ALLOWED_ORIGINS.includes(origin))) {
+    response.setHeader("Access-Control-Allow-Origin", origin);
+    response.setHeader("Vary", "Origin");
+  }
+  response.setHeader("Access-Control-Allow-Methods", "GET,POST,HEAD,OPTIONS");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 }

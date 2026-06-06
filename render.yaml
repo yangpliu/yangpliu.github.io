@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: entropy-online-server
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run entropy-online
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: https://yangpliu.github.io

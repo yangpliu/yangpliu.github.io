@@ -11,6 +11,7 @@
   };
 
   var elements = {};
+  var API_BASE = normalizeApiBase(window.ENTROPY_ONLINE_API_BASE || "");
 
   document.addEventListener("DOMContentLoaded", function () {
     cacheElements();
@@ -148,7 +149,7 @@
   function createRoom() {
     setSetupStatus("Creating room...", false);
     setSetupBusy(true);
-    fetchJson("/api/online/rooms", {
+    fetchJson(apiUrl("/api/online/rooms"), {
       name: playerName(),
       settings: readSetupSettings()
     }).then(function (data) {
@@ -170,7 +171,7 @@
 
     setSetupStatus("Joining room...", false);
     setSetupBusy(true);
-    fetchJson("/api/online/rooms/" + encodeURIComponent(code) + "/join", {
+    fetchJson(apiUrl("/api/online/rooms/" + encodeURIComponent(code) + "/join"), {
       name: playerName()
     }).then(function (data) {
       enterRoom(data);
@@ -197,7 +198,7 @@
       state.source.close();
     }
 
-    state.source = new EventSource("/api/online/rooms/" + encodeURIComponent(state.roomCode) + "/events?playerId=" + encodeURIComponent(state.playerId));
+    state.source = new EventSource(apiUrl("/api/online/rooms/" + encodeURIComponent(state.roomCode) + "/events?playerId=" + encodeURIComponent(state.playerId)));
     state.source.addEventListener("state", function (event) {
       var nextRoom = JSON.parse(event.data);
       state.room = nextRoom;
@@ -222,7 +223,7 @@
     }
 
     setLobbyStatus("Starting game...", false);
-    fetchJson("/api/online/rooms/" + encodeURIComponent(state.roomCode) + "/start", {
+    fetchJson(apiUrl("/api/online/rooms/" + encodeURIComponent(state.roomCode) + "/start"), {
       playerId: state.playerId,
       settings: readLobbySettings()
     }).then(function (data) {
@@ -247,7 +248,7 @@
     }
 
     setPredictionBusy(true);
-    fetchJson("/api/online/rooms/" + encodeURIComponent(state.roomCode) + "/submit", {
+    fetchJson(apiUrl("/api/online/rooms/" + encodeURIComponent(state.roomCode) + "/submit"), {
       playerId: state.playerId,
       distribution: result.distribution
     }).then(function (data) {
@@ -272,7 +273,7 @@
     }
 
     elements.onlineNextTurnButton.disabled = true;
-    fetchJson("/api/online/rooms/" + encodeURIComponent(state.roomCode) + "/advance", {
+    fetchJson(apiUrl("/api/online/rooms/" + encodeURIComponent(state.roomCode) + "/advance"), {
       playerId: state.playerId
     }).then(function (data) {
       state.room = data.state;
@@ -802,6 +803,14 @@
         return data;
       });
     });
+  }
+
+  function apiUrl(path) {
+    return API_BASE + path;
+  }
+
+  function normalizeApiBase(value) {
+    return String(value || "").replace(/\/+$/, "");
   }
 
   function updateUrlRoom(roomCode) {
