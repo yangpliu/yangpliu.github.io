@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Cross entropy loss game">
+  <meta name="author" content="">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <meta http-equiv="pragma" content="no-cache">
+  <title>Cross Entropy Loss Game</title>
+
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="entropy-game/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Yang P. Liu</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="research.html">Research</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="teaching.html">Teaching</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="entropy-app">
+    <section id="setupPanel" class="setup-grid" aria-label="Game setup">
+      <div class="tool-panel">
+        <div class="section-heading">
+          <p class="eyebrow">Game Setup</p>
+          <h1>Entropy Oracle</h1>
+        </div>
+
+        <div class="settings-grid">
+          <label>
+            Sentence rounds
+            <input id="sentenceCount" type="number" min="1" max="12" value="5">
+          </label>
+          <label>
+            Seconds per reveal
+            <input id="turnSeconds" type="number" min="5" max="180" value="30">
+          </label>
+          <label class="range-label">
+            Prefix exposed
+            <input id="prefixShare" type="range" min="35" max="75" step="5" value="55">
+            <span id="prefixShareValue">55%</span>
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button id="startGameButton" class="primary-button" type="button">Start Game</button>
+          <button id="resetSetupButton" class="quiet-button" type="button">Reset</button>
+        </div>
+      </div>
+
+      <div class="tool-panel">
+        <div class="section-heading compact">
+          <p class="eyebrow">Players</p>
+          <h2>Roster</h2>
+        </div>
+
+        <form id="addPlayerForm" class="add-player-form">
+          <input id="playerNameInput" type="text" maxlength="24" placeholder="Player name" autocomplete="off">
+          <button type="submit" class="secondary-button">Add</button>
+        </form>
+
+        <ol id="setupPlayerList" class="player-list"></ol>
+      </div>
+    </section>
+
+    <section id="gamePanel" class="game-layout is-hidden" aria-label="Game board">
+      <div class="game-main">
+        <div class="round-bar">
+          <div>
+            <p id="roundKicker" class="eyebrow">Sentence 1</p>
+            <h1 id="roundTitle">Assign probability to the next string</h1>
+          </div>
+          <div class="timer-box" aria-live="polite">
+            <span id="timerValue">30.0</span>
+            <span>seconds</span>
+          </div>
+        </div>
+
+        <div class="prompt-band">
+          <div class="prompt-label">Prefix</div>
+          <div id="promptText" class="prompt-text"></div>
+        </div>
+
+        <div id="predictPanel" class="tool-panel prediction-panel">
+          <div class="prediction-toolbar">
+            <label>
+              Player
+              <select id="playerSelect"></select>
+            </label>
+            <div id="submissionStatus" class="submission-status"></div>
+          </div>
+
+          <div class="entry-header">
+            <span>String</span>
+            <span>Probability</span>
+            <span></span>
+          </div>
+          <div id="entryRows" class="entry-rows"></div>
+
+          <div class="prediction-actions">
+            <button id="addRowButton" type="button" class="quiet-button">Add Row</button>
+            <button id="normalizeButton" type="button" class="secondary-button">Normalize</button>
+            <button id="submitPredictionButton" type="button" class="primary-button">Submit</button>
+          </div>
+
+          <div class="validation-strip">
+            <span>Total: <strong id="probabilityTotal">0</strong></span>
+            <span id="validationMessage"></span>
+          </div>
+        </div>
+
+        <div id="revealPanel" class="tool-panel reveal-panel is-hidden" aria-live="polite">
+          <div>
+            <p class="eyebrow">Actual string</p>
+            <div id="actualToken" class="actual-token"></div>
+          </div>
+          <div id="turnResultTable" class="result-table"></div>
+          <div class="button-row">
+            <button id="nextTurnButton" type="button" class="primary-button">Next String</button>
+          </div>
+        </div>
+
+        <div id="finishedPanel" class="tool-panel finished-panel is-hidden">
+          <p class="eyebrow">Final</p>
+          <h2>Leaderboard</h2>
+          <div id="winnerBanner" class="winner-banner"></div>
+          <div id="finalTable" class="result-table"></div>
+          <div class="button-row">
+            <button id="playAgainButton" type="button" class="primary-button">Play Again</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="scoreboard-panel">
+        <div class="section-heading compact">
+          <p class="eyebrow">Scoreboard</p>
+          <h2>Cumulative Loss</h2>
+        </div>
+        <ol id="scoreboardList" class="scoreboard-list"></ol>
+      </aside>
+    </section>
+  </main>
+
+  <script src="vendor/jquery/jquery.slim.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="entropy-game/sentences.js"></script>
+  <script src="entropy-game/app.js"></script>
+</body>
+
+</html>

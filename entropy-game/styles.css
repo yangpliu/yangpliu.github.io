@@ -1,0 +1,510 @@
+:root {
+  --ink: #141414;
+  --muted: #62666a;
+  --line: #d8d8d8;
+  --panel: #fbfbfb;
+  --paper: #f2f2f2;
+  --near-black: #181818;
+  --button-gray: #e7e7e7;
+  --button-gray-hover: #dcdcdc;
+  --accent-blue: #8cc7ee;
+  --accent-blue-dark: #356f93;
+  --accent-green: #2f7d4f;
+  --accent-red: #b0473a;
+}
+
+* {
+  box-sizing: border-box;
+  border-radius: 0 !important;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  min-height: 38px;
+  padding: 0.55rem 0.85rem;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+input,
+select {
+  border: 1px solid var(--line);
+  min-height: 38px;
+  padding: 0.45rem 0.6rem;
+  width: 100%;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  box-shadow: 0 0 0 3px rgba(140, 199, 238, 0.45);
+  outline: none;
+}
+
+.entropy-app {
+  margin: 0 auto;
+  max-width: 1220px;
+  padding: 24px;
+}
+
+.setup-grid,
+.game-layout {
+  display: grid;
+  gap: 16px;
+}
+
+.setup-grid {
+  align-items: start;
+  grid-template-columns: minmax(360px, 1fr) minmax(260px, 340px);
+  margin: 0 auto;
+  max-width: 920px;
+  padding-top: 20px;
+}
+
+.setup-grid .tool-panel:first-child {
+  padding: 24px;
+}
+
+.game-layout {
+  align-items: start;
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+
+.game-main {
+  display: grid;
+  gap: 16px;
+}
+
+.tool-panel,
+.scoreboard-panel,
+.prompt-band,
+.round-bar {
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.tool-panel,
+.scoreboard-panel {
+  padding: 18px;
+}
+
+.round-bar {
+  align-items: center;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  padding: 18px;
+}
+
+.section-heading h1,
+.section-heading h2,
+.round-bar h1 {
+  letter-spacing: 0;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.section-heading h1 {
+  font-size: clamp(1.75rem, 3.6vw, 2.65rem);
+}
+
+.section-heading h2,
+.round-bar h1,
+.finished-panel h2 {
+  font-size: 1.35rem;
+}
+
+.section-heading.compact {
+  margin-bottom: 14px;
+}
+
+.eyebrow {
+  color: var(--accent-blue-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+}
+
+.settings-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 22px;
+}
+
+.settings-grid label,
+.prediction-toolbar label {
+  color: var(--muted);
+  display: grid;
+  font-size: 0.9rem;
+  gap: 6px;
+}
+
+.range-label {
+  grid-column: 1 / -1;
+}
+
+.range-label input {
+  accent-color: var(--accent-blue);
+  padding: 0;
+}
+
+.button-row,
+.prediction-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primary-button {
+  background: var(--near-black);
+  color: #fff;
+  font-weight: 700;
+}
+
+.primary-button:hover {
+  background: #000;
+}
+
+.secondary-button {
+  background: #e6f4fb;
+  color: var(--accent-blue-dark);
+  font-weight: 700;
+}
+
+.quiet-button {
+  background: var(--button-gray);
+  color: var(--ink);
+}
+
+.quiet-button:hover,
+.secondary-button:hover {
+  background: var(--button-gray-hover);
+}
+
+.danger-button {
+  background: #f2e1df;
+  color: var(--accent-red);
+}
+
+.add-player-form {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.player-list,
+.scoreboard-list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.player-list li,
+.scoreboard-list li {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 10px 0;
+}
+
+.player-name,
+.score-name {
+  color: var(--accent-blue-dark);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.score-value {
+  color: var(--accent-red);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.timer-box {
+  align-items: baseline;
+  background: var(--near-black);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-width: 118px;
+  padding: 12px 14px;
+  text-align: right;
+}
+
+.timer-box span:first-child {
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.timer-box span:last-child {
+  color: #cfcfcf;
+  font-size: 0.8rem;
+}
+
+.prompt-band {
+  border-left: 6px solid var(--accent-blue);
+  padding: 20px;
+}
+
+.prompt-label {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.prompt-text {
+  font-size: clamp(1.45rem, 3vw, 2.45rem);
+  line-height: 1.25;
+}
+
+.prediction-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.prediction-toolbar {
+  align-items: end;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+}
+
+.submission-status {
+  color: var(--muted);
+  text-align: right;
+}
+
+.entry-header,
+.entry-row {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: minmax(78px, 1fr) 72px 30px;
+}
+
+.entry-header {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  max-width: 300px;
+  text-transform: uppercase;
+}
+
+.entry-rows {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: minmax(190px, 300px);
+}
+
+.remove-row-button {
+  background: #f2e1df;
+  color: var(--accent-red);
+  min-height: 38px;
+  padding: 0;
+}
+
+.validation-strip {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding-top: 12px;
+}
+
+.validation-strip strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.validation-strip .is-error {
+  color: var(--accent-red);
+}
+
+.validation-strip .is-ok {
+  color: var(--accent-green);
+}
+
+.actual-token {
+  background: var(--near-black);
+  color: #fff;
+  display: inline-block;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 14px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  padding: 14px 18px;
+}
+
+.result-table {
+  display: grid;
+  gap: 0;
+}
+
+.result-row {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) 90px 90px 110px;
+  padding: 10px 0;
+}
+
+.result-row.header {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.result-row span {
+  overflow-wrap: anywhere;
+}
+
+.winner-banner {
+  align-items: center;
+  background: #f7f7f7;
+  border: 1px solid var(--near-black);
+  border-left: 6px solid var(--accent-blue);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 46px minmax(0, 1fr);
+  margin: 14px 0 16px;
+  padding: 14px;
+}
+
+.winner-crown {
+  align-items: end;
+  display: grid;
+  gap: 3px;
+  grid-template-columns: repeat(3, 10px);
+  height: 28px;
+  justify-content: center;
+}
+
+.winner-crown span {
+  background: var(--accent-blue);
+  border: 1px solid var(--near-black);
+  display: block;
+  width: 10px;
+}
+
+.winner-crown span:nth-child(1),
+.winner-crown span:nth-child(3) {
+  height: 18px;
+}
+
+.winner-crown span:nth-child(2) {
+  height: 28px;
+}
+
+.winner-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.winner-name {
+  color: var(--ink);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.winner-score {
+  color: var(--accent-red);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.round-loss,
+.new-total-score {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.round-loss.is-zero {
+  color: var(--accent-green);
+}
+
+.round-loss.is-positive,
+.new-total-score {
+  color: var(--accent-red);
+}
+
+.scoreboard-panel {
+  position: sticky;
+  top: 18px;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+@media (max-width: 980px) {
+  .setup-grid,
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .scoreboard-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 620px) {
+  .entropy-app {
+    padding: 14px;
+  }
+
+  .settings-grid,
+  .prediction-toolbar,
+  .entry-header,
+  .result-row {
+    grid-template-columns: 1fr;
+  }
+
+  .entry-header {
+    display: none;
+  }
+
+  .round-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .timer-box {
+    text-align: left;
+  }
+}
