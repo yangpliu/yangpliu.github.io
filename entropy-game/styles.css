@@ -36,6 +36,19 @@ button {
   padding: 0.55rem 0.85rem;
 }
 
+a.link-button {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0.55rem 0.85rem;
+  text-decoration: none;
+}
+
+a.link-button:hover {
+  text-decoration: none;
+}
+
 button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
@@ -76,6 +89,12 @@ button:focus {
   padding-top: 20px;
 }
 
+.online-setup-grid {
+  grid-template-columns: minmax(0, 680px);
+  justify-content: center;
+  max-width: 720px;
+}
+
 .setup-grid .tool-panel:first-child {
   padding: 24px;
 }
@@ -111,6 +130,25 @@ button:focus {
   padding: 18px;
 }
 
+.mode-heading {
+  align-items: flex-start;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.mode-heading .section-heading {
+  min-width: 0;
+}
+
+.mode-link {
+  flex: 0 0 auto;
+  font-size: 0.86rem;
+  font-weight: 700;
+  min-height: 34px;
+  padding: 0.45rem 0.7rem;
+}
+
 .section-heading h1,
 .section-heading h2,
 .round-bar h1 {
@@ -127,6 +165,19 @@ button:focus {
 .round-bar h1,
 .finished-panel h2 {
   font-size: 1.35rem;
+}
+
+.prediction-toolbar h2 {
+  font-size: 1.15rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.room-code {
+  color: var(--near-black);
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(2.2rem, 7vw, 4rem) !important;
+  letter-spacing: 0;
 }
 
 .section-heading.compact {
@@ -184,14 +235,29 @@ button:focus {
   background: #000;
 }
 
+a.primary-button.link-button,
+a.primary-button.link-button:hover {
+  color: #fff;
+}
+
 .secondary-button {
   background: #e6f4fb;
   color: var(--accent-blue-dark);
   font-weight: 700;
 }
 
+a.secondary-button.link-button,
+a.secondary-button.link-button:hover {
+  color: var(--accent-blue-dark);
+}
+
 .quiet-button {
   background: var(--button-gray);
+  color: var(--ink);
+}
+
+a.quiet-button.link-button,
+a.quiet-button.link-button:hover {
   color: var(--ink);
 }
 
@@ -233,6 +299,17 @@ button:focus {
   color: var(--accent-blue-dark);
   font-weight: 700;
   overflow-wrap: anywhere;
+}
+
+.connection-status {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.connection-status.is-online {
+  color: var(--accent-green);
 }
 
 .score-value {
@@ -348,6 +425,42 @@ button:focus {
 
 .validation-strip .is-ok {
   color: var(--accent-green);
+}
+
+.status-line {
+  color: var(--muted);
+  font-size: 0.9rem;
+  min-height: 1.4rem;
+  padding-top: 10px;
+}
+
+.status-line.is-error {
+  color: var(--accent-red);
+}
+
+.fact-list {
+  display: grid;
+  gap: 0;
+}
+
+.fact-list div {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 10px 0;
+}
+
+.fact-list span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.fact-list strong {
+  color: var(--ink);
 }
 
 .actual-token {
