@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="A personal repository of AI-generated papers.">
+  <meta name="author" content="Yang P. Liu">
+
+  <title>Repository | Yang P. Liu</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .repository-intro {
+      max-width: 690px;
+      margin-bottom: 1.75rem;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .paper-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: papers;
+      border-bottom: 1px solid #bdbdbd;
+    }
+
+    .paper-list > li {
+      position: relative;
+      padding: 1.15rem 0 1.1rem 2.15rem;
+      counter-increment: papers;
+      border-top: 1px solid #bdbdbd;
+    }
+
+    .paper-list > li::before {
+      content: counter(papers) ".";
+      position: absolute;
+      top: 1.17rem;
+      left: 0;
+      color: #333;
+      font-size: 1rem;
+    }
+
+    .paper-entry summary {
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto 0.75rem;
+      align-items: baseline;
+      gap: 0.35rem 0.8rem;
+      list-style: none;
+    }
+
+    .paper-entry summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .paper-entry summary::after {
+      content: "\25BE";
+      color: #555;
+      font-size: 0.85rem;
+      text-align: right;
+    }
+
+    .paper-entry[open] summary::after {
+      content: "\25B4";
+    }
+
+    .paper-title {
+      font-size: 1rem;
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    .paper-pdf {
+      white-space: nowrap;
+      font-size: 0.86rem;
+    }
+
+    .paper-pdf.unavailable {
+      color: #777;
+    }
+
+    .paper-details {
+      max-width: 700px;
+      padding: 1.15rem 2rem 0.1rem 0;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .paper-details p {
+      margin-bottom: 1rem;
+    }
+
+    .paper-details b {
+      font-weight: bold;
+    }
+
+    .paper-details p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 575.98px) {
+      .paper-entry summary {
+        grid-template-columns: minmax(0, 1fr) 0.75rem;
+        align-items: flex-start;
+      }
+
+      .paper-pdf {
+        grid-row: 2;
+        grid-column: 1;
+      }
+
+      .paper-entry summary::after {
+        grid-row: 1;
+        grid-column: 2;
+      }
+
+      .paper-details {
+        padding-right: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Yang P. Liu</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="research.html">Research</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="repository.html">Repository
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="teaching.html">Teaching</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-sm-9 col-xs-9 offset-md-1 offset-sm-1 offset-xs-1">
+        <br style="line-height:2">
+        <h3 style="margin-left:-22px">Repository</h3>
+        <p class="repository-intro">
+          This page collects papers generated with AI that I do not plan to submit for publication.
+          Each entry includes an abstract and an informal account of the result and proof.
+        </p>
+
+        <!--
+          Dummy entries: replace these with real papers.
+          Store PDFs under repo/, optionally in per-paper subdirectories, and link them with:
+          <a class="paper-pdf" href="repo/paper-title/paper.pdf">PDF</a>
+        -->
+        <ol class="paper-list">
+          <li>
+            <details class="paper-entry">
+              <summary>
+                <span class="paper-title">A Sample Result in Discrete Optimization</span>
+                <span class="paper-pdf unavailable">PDF coming soon</span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> This dummy abstract illustrates where a concise technical summary of the paper will appear. It can state the problem, the main theorem, and the setting in which the result holds.</p>
+                <p><b>Informal description.</b> The paper proves a hypothetical approximation guarantee by reducing the original optimization problem to a simpler geometric one. The proof then combines a potential-function argument with iterative rounding. This text is intentionally informal and can explain both what is proved and the main idea behind the proof.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details class="paper-entry">
+              <summary>
+                <span class="paper-title">A Sample Note on Random Graphs</span>
+                <span class="paper-pdf unavailable">PDF coming soon</span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> This second dummy entry shows how multiple papers will be displayed. The abstract area is designed for a short, self-contained statement of the question and result.</p>
+                <p><b>Informal description.</b> The hypothetical result bounds the probability of a rare graph event. At a high level, the argument reveals the random choices in stages, controls the change at each stage, and applies a concentration inequality after separating typical and exceptional cases.</p>
+              </div>
+            </details>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.slim.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
