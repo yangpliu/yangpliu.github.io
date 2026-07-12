@@ -79,10 +79,6 @@
       font-size: 0.86rem;
     }
 
-    .paper-pdf.unavailable {
-      color: #777;
-    }
-
     .paper-details {
       max-width: 700px;
       padding: 1.15rem 2rem 0.1rem 0;
@@ -162,37 +158,24 @@
         <br style="line-height:2">
         <h3 style="margin-left:-22px">Repository</h3>
         <p class="repository-intro">
-          This page collects papers generated with AI that I do not plan to submit for publication.
-          Each entry includes an abstract and an informal account of the result and proof.
+          This page collects papers generated with AI (not all prompted by the owner of this page)
+          that are not planned for submission for publication.
+          As such, the content here is less verified and polished than of a published paper,
+          though the author is fairly confident about the correctness of each document.
+          Each entry includes an abstract describing the main results, applications,
+          and a very high-level sketch of the proof.
         </p>
 
-        <!--
-          Dummy entries: replace these with real papers.
-          Store PDFs under repo/, optionally in per-paper subdirectories, and link them with:
-          <a class="paper-pdf" href="repo/paper-title/paper.pdf">PDF</a>
-        -->
+        <!-- Store PDFs under repo/, optionally in per-paper subdirectories. -->
         <ol class="paper-list">
           <li>
             <details class="paper-entry">
               <summary>
-                <span class="paper-title">A Sample Result in Discrete Optimization</span>
-                <span class="paper-pdf unavailable">PDF coming soon</span>
+                <span class="paper-title">Linear-size sparsifiers for sums of seminorms</span>
+                <a class="paper-pdf" href="repo/sparsifying-sums-seminorms/paper.pdf">PDF</a>
               </summary>
               <div class="paper-details">
-                <p><b>Abstract.</b> This dummy abstract illustrates where a concise technical summary of the paper will appear. It can state the problem, the main theorem, and the setting in which the result holds.</p>
-                <p><b>Informal description.</b> The paper proves a hypothetical approximation guarantee by reducing the original optimization problem to a simpler geometric one. The proof then combines a potential-function argument with iterative rounding. This text is intentionally informal and can explain both what is proved and the main idea behind the proof.</p>
-              </div>
-            </details>
-          </li>
-          <li>
-            <details class="paper-entry">
-              <summary>
-                <span class="paper-title">A Sample Note on Random Graphs</span>
-                <span class="paper-pdf unavailable">PDF coming soon</span>
-              </summary>
-              <div class="paper-details">
-                <p><b>Abstract.</b> This second dummy entry shows how multiple papers will be displayed. The abstract area is designed for a short, self-contained statement of the question and result.</p>
-                <p><b>Informal description.</b> The hypothetical result bounds the probability of a rare graph event. At a high level, the argument reveals the random choices in stages, controls the change at each stage, and applies a concentration inequality after separating typical and exceptional cases.</p>
+                <p><b>Abstract.</b> For seminorms <i>N</i><sub>1</sub>,...,<i>N</i><sub>m</sub> on R<sup>n</sup>, this paper proves that their sum has a uniform (1 &plusmn; &epsilon;)-sparsifier supported on O(<i>d</i>&epsilon;<sup>&minus;2</sup> log(1/&epsilon;)) reweighted summands, where <i>d</i> is the dimension after quotienting by the common kernel. Consequently, sums of normalized symmetric submodular functions admit sparsifiers with the same effective-dimension bound, and every weighted hypergraph on <i>n</i> vertices has a cut sparsifier with O((<i>n</i> &minus; &kappa;)&epsilon;<sup>&minus;2</sup> log(1/&epsilon;)) hyperedges, where &kappa; is the number of connected components of its positive-weight 2-section. At a high level, the proof represents seminorms by compact centrally symmetric convex support sets, extends the Reis&ndash;Rothvoss coefficient-space argument from sums of segments to arbitrary Minkowski sums using convexity of volume under Minkowski erosion, and applies partial coloring to eliminate a constant fraction of the summands at each step.</p>
               </div>
             </details>
           </li>

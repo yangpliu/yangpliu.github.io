@@ -1,0 +1,53 @@
+\begin{thebibliography}{AKW14}
+
+\bibitem[AKW14]{AKW14}
+Alexandr Andoni, Robert Krauthgamer, and David~P. Woodruff.
+\newblock The sketching complexity of graph cuts.
+\newblock {\em CoRR}, abs/1403.7058, 2014.
+
+\bibitem[CKN20]{CKN20}
+Yu~Chen, Sanjeev Khanna, and Ansh Nagda.
+\newblock Near-linear size hypergraph cut sparsifiers.
+\newblock In {\em 61st IEEE Annual Symposium on Foundations of Computer
+  Science}, pages 61--72. IEEE, 2020.
+
+\bibitem[JLLS23]{JLLS23}
+Arun Jambulapati, James~R. Lee, Yang~P. Liu, and Aaron Sidford.
+\newblock Sparsifying sums of norms.
+\newblock In {\em 64th IEEE Annual Symposium on Foundations of Computer
+  Science}, pages 1953--1962. IEEE, 2023.
+
+\bibitem[Lov83]{Lovasz83}
+L{\'a}szl{\'o} Lov{\'a}sz.
+\newblock Submodular functions and convexity.
+\newblock In {\em Mathematical Programming: The State of the Art}, pages
+  235--257. Springer, 1983.
+
+\bibitem[RR23]{RR23}
+Victor Reis and Thomas Rothvoss.
+\newblock Vector balancing in {Lebesgue} spaces.
+\newblock {\em Random Structures \& Algorithms}, 62(3):667--688, 2023.
+
+\bibitem[RR26]{RR26}
+Victor Reis and Thomas Rothvoss.
+\newblock Linear-size $\ell_1$ sparsifiers, 2026.
+
+\bibitem[RSG22]{RS22}
+Christian Richter and Eugenia Saor{\'\i}n~G{\'o}mez.
+\newblock On the monotonicity of the isoperimetric quotient for parallel
+  bodies.
+\newblock {\em Journal of Geometric Analysis}, 32(1):15, 2022.
+
+\bibitem[Sch14]{Schneider14}
+Rolf Schneider.
+\newblock {\em Convex Bodies: The {Brunn--Minkowski} Theory}, volume 151 of
+  {\em Encyclopedia of Mathematics and its Applications}.
+\newblock Cambridge University Press, 2 edition, 2014.
+
+\bibitem[Tal90]{Talagrand90}
+Michel Talagrand.
+\newblock Embedding subspaces of $l_1$ into $\ell_1^n$.
+\newblock {\em Proceedings of the American Mathematical Society},
+  108(2):363--369, 1990.
+
+\end{thebibliography}
