@@ -87,6 +87,18 @@ Repository page.
   teaching.html; use the existing Bootstrap font and navigation conventions.
 - List papers as numbered entries with a title, working PDF link, and the
   existing native expansion arrow.
+- Treat the original-addition provenance link as the paper's timestamp. Put it
+  beside the PDF link in the collapsed entry header, label it
+  `Added Month Day, Year`, and keep the expanded content abstract-only.
+- Point the timestamp to the canonical GitHub pull request that first added the
+  paper to repository.html. If the paper was added by a direct commit, use an
+  immutable full-SHA commit URL instead. Derive the displayed date from the PR
+  merge date or direct commit date, respectively. Never replace this link or
+  date when the paper is revised; later version history may be recorded
+  separately if requested.
+- For repo/sparsifying-sums-seminorms/, preserve the timestamp
+  `Added July 12, 2026` and link it to commit
+  `8efe41f9e87f41d17bef7a43204d8f4a8d6da7c2` in this repository.
 - The expanded content contains only an abstract. Base it closely on the actual
   paper abstract and ensure it states results, applications, and a very
   high-level proof sketch.

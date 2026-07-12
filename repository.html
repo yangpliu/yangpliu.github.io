@@ -74,9 +74,20 @@
       line-height: 1.4;
     }
 
-    .paper-pdf {
+    .paper-links {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.8rem;
       white-space: nowrap;
       font-size: 0.86rem;
+    }
+
+    .paper-history {
+      color: #666;
+    }
+
+    .paper-history:hover {
+      color: #333;
     }
 
     .paper-details {
@@ -104,9 +115,10 @@
         align-items: flex-start;
       }
 
-      .paper-pdf {
+      .paper-links {
         grid-row: 2;
         grid-column: 1;
+        flex-wrap: wrap;
       }
 
       .paper-entry summary::after {
@@ -172,7 +184,10 @@
             <details class="paper-entry">
               <summary>
                 <span class="paper-title">Linear-size sparsifiers for sums of seminorms</span>
-                <a class="paper-pdf" href="repo/sparsifying-sums-seminorms/paper.pdf">PDF</a>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/sparsifying-sums-seminorms/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/8efe41f9e87f41d17bef7a43204d8f4a8d6da7c2" title="View the commit that added this paper">Added July 12, 2026</a>
+                </span>
               </summary>
               <div class="paper-details">
                 <p><b>Abstract.</b> For seminorms <i>N</i><sub>1</sub>,...,<i>N</i><sub>m</sub> on R<sup>n</sup>, this paper proves that their sum has a uniform (1 &plusmn; &epsilon;)-sparsifier supported on O(<i>d</i>&epsilon;<sup>&minus;2</sup> log(1/&epsilon;)) reweighted summands, where <i>d</i> is the dimension after quotienting by the common kernel. Consequently, sums of normalized symmetric submodular functions admit sparsifiers with the same effective-dimension bound, and every weighted hypergraph on <i>n</i> vertices has a cut sparsifier with O((<i>n</i> &minus; &kappa;)&epsilon;<sup>&minus;2</sup> log(1/&epsilon;)) hyperedges, where &kappa; is the number of connected components of its positive-weight 2-section. At a high level, the proof represents seminorms by compact centrally symmetric convex support sets, extends the Reis&ndash;Rothvoss coefficient-space argument from sums of segments to arbitrary Minkowski sums using convexity of volume under Minkowski erosion, and applies partial coloring to eliminate a constant fraction of the summands at each step.</p>
