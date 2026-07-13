@@ -1,0 +1,49 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{BCWdW01}
+
+\bibitem[BCWdW01]{BuhrmanEtAl01}
+Harry Buhrman, Richard Cleve, John Watrous, and Ronald de~Wolf.
+\newblock Quantum fingerprinting.
+\newblock {\em Physical Review Letters}, 87(16):167902, 2001.
+
+\bibitem[BKLM24]{BKLM24}
+Amey Bhangale, Subhash Khot, Yang~P. Liu, and Dor Minzer.
+\newblock On approximability of satisfiable $k$-{CSP}s: {VI}, 2024.
+
+\bibitem[HM13]{HarrowMontanaro13}
+Aram~W. Harrow and Ashley Montanaro.
+\newblock Testing product states, quantum {Merlin--Arthur} games and tensor
+  optimization.
+\newblock {\em Journal of the ACM}, 60(1):1--43, 2013.
+
+\bibitem[LL26]{LovitzLowe26}
+Benjamin Lovitz and Angus Lowe.
+\newblock Nearly tight bounds for testing tree tensor network states.
+\newblock {\em IEEE Transactions on Information Theory}, 72(5):3074--3097, May
+  2026.
+
+\bibitem[MKB05]{MintertKusBuchleitner05}
+Florian Mintert, Marek Ku{\'s}, and Andreas Buchleitner.
+\newblock Concurrence of mixed multipartite quantum states.
+\newblock {\em Physical Review Letters}, 95(26):260502, 2005.
+
+\bibitem[SW22]{SoleimanifarWright22}
+Mehdi Soleimanifar and John Wright.
+\newblock Testing matrix product states.
+\newblock In {\em Proceedings of the 2022 Annual ACM-SIAM Symposium on Discrete
+  Algorithms}, pages 1679--1701. Society for Industrial and Applied
+  Mathematics, 2022.
+
+\bibitem[WG03]{WeiGoldbart03}
+Tzu-Chieh Wei and Paul~M. Goldbart.
+\newblock Geometric measure of entanglement and applications to bipartite and
+  multipartite quantum states.
+\newblock {\em Physical Review A}, 68(4):042307, 2003.
+
+\bibitem[WRG{\etalchar{+}}26]{WeinbrennerEtAl26}
+Lisa~T. Weinbrenner, Albert Rico, Kenneth Goodenough, Xiao-Dong Yu, and Otfried
+  G{\"u}hne.
+\newblock Complete hierarchies for the geometric measure of entanglement, 2026.
+\newblock arXiv:2601.23243v2.
+
+\end{thebibliography}
