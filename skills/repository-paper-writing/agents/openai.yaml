@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repository Paper Writing"
+  short_description: "Rigorous AI-generated math manuscript workflow"
+  default_prompt: "Use $repository-paper-writing to draft and audit an arXiv-style repository paper with verified prior work."

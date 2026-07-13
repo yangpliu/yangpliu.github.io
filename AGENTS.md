@@ -35,12 +35,28 @@ Repository page.
 
 ## Writing and paper format
 
+- For every repository paper, read and follow
+  `skills/repository-paper-writing/SKILL.md` before researching, drafting,
+  revising, compiling, or listing the manuscript.
+
 - Match the restrained, math-first style of the papers listed on
   research.html. For this topic, use "Sparsifying sums of norms" as the closest
   organization and prose reference.
 - State the mathematical setup and main guarantee immediately. Use direct prose,
   precise theorem statements, punctuated displays, and a substantive proof
   overview.
+- Give the introduction a substantive, source-verified discussion of prior
+  work. For established problems, cover the classical exact algorithms,
+  relevant hardness or conditional barriers, approximation baselines, the
+  strongest previous result for the precise input regime, adjacent results that
+  differ in assumptions or output strength, and the specific results imported
+  by the proof. State runtimes, approximation conventions, input restrictions,
+  randomization, and explicit-witness guarantees whenever they matter.
+- Prefer primary sources and tie every citation to a concrete claim. Verify
+  bibliographic metadata and version-dependent theorem numbering. Do not use a
+  citation dump, vague priority language, or an unverified state-of-the-art or
+  novelty claim. A mature topic should normally have a correspondingly
+  substantial bibliography, not only citations to the lemmas directly reused.
 - Each abstract must include:
   1. the main result and its assumptions,
   2. the principal applications, and
@@ -90,12 +106,21 @@ Repository page.
 - Treat the original-addition provenance link as the paper's timestamp. Put it
   beside the PDF link in the collapsed entry header, label it
   `Added Month Day, Year`, and keep the expanded content abstract-only.
-- Point the timestamp to the canonical GitHub pull request that first added the
-  paper to repository.html. If the paper was added by a direct commit, use an
-  immutable full-SHA commit URL instead. Derive the displayed date from the PR
-  merge date or direct commit date, respectively. Never replace this link or
-  date when the paper is revised; later version history may be recorded
-  separately if requested.
+- Point the timestamp to the canonical GitHub pull request that added the paper,
+  or, for a direct-push workflow, to the first immutable full-SHA commit that
+  added the final paper files under `repo/<paper-slug>/`. Derive the displayed
+  date from the PR merge date or that first content commit date, respectively.
+  Never replace this link or date when the paper is revised; later version
+  history may be recorded separately if requested.
+- For a direct-push addition, use two commits and two pushes so the HTML can
+  contain a truthful immutable link without self-reference:
+  1. commit and push the final paper source, PDF, bibliography, and build files
+     without the new `repository.html` entry;
+  2. record the first commit's full SHA and commit date, add the
+     `repository.html` entry whose `Added Month Day, Year` link targets that
+     commit, then commit and push the page integration separately.
+  Do not amend, squash, or replace the first content commit after publishing
+  its link.
 - For repo/sparsifying-sums-seminorms/, preserve the timestamp
   `Added July 12, 2026` and link it to commit
   `8efe41f9e87f41d17bef7a43204d8f4a8d6da7c2` in this repository.

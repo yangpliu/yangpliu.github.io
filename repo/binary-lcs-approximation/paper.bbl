@@ -1,0 +1,120 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{CDG{\etalchar{+}}20}
+
+\bibitem[ABW15]{AbboudBackursWilliams}
+Amir Abboud, Arturs Backurs, and Virginia~Vassilevska Williams.
+\newblock Tight hardness results for {LCS} and other sequence similarity
+  measures.
+\newblock In {\em 2015 IEEE 56th Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 59--78. IEEE, 2015.
+
+\bibitem[AKO10]{AndoniKrauthgamerOnak}
+Alexandr Andoni, Robert Krauthgamer, and Krzysztof Onak.
+\newblock Polylogarithmic approximation for edit distance and the asymmetric
+  query complexity.
+\newblock In {\em 2010 IEEE 51st Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 377--386. IEEE, 2010.
+
+\bibitem[AN20]{AndoniNosatzki}
+Alexandr Andoni and Negev~Shekel Nosatzki.
+\newblock Edit distance in near-linear time: It's a constant factor.
+\newblock In {\em 2020 IEEE 61st Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 990--1001. IEEE, 2020.
+
+\bibitem[AO12]{AndoniOnak}
+Alexandr Andoni and Krzysztof Onak.
+\newblock Approximating edit distance in near-linear time.
+\newblock {\em SIAM Journal on Computing}, 41(6):1635--1648, 2012.
+
+\bibitem[AW21]{AkmalVW}
+Shyan Akmal and Virginia~Vassilevska Williams.
+\newblock Improved approximation for longest common subsequence over small
+  alphabets.
+\newblock In {\em 48th International Colloquium on Automata, Languages, and
+  Programming (ICALP 2021)}, volume 198 of {\em Leibniz International
+  Proceedings in Informatics}, pages 13:1--13:18. Schloss
+  Dagstuhl--Leibniz-Zentrum f{\"u}r Informatik, 2021.
+
+\bibitem[BCAD23]{BringmannCohenAddadDas}
+Karl Bringmann, Vincent Cohen-Addad, and Debarati Das.
+\newblock A linear-time $n^{0.4}$-approximation for longest common subsequence.
+\newblock {\em ACM Transactions on Algorithms}, 19(1):9:1--9:24, 2023.
+
+\bibitem[BGK25]{BonehGolanKraus}
+Itai Boneh, Shay Golan, and Matan Kraus.
+\newblock Deterministic longest common subsequence approximation in near-linear
+  time, 2025.
+\newblock arXiv:2507.22486.
+
+\bibitem[BK15]{BringmannKunnemann}
+Karl Bringmann and Marvin K{\"u}nnemann.
+\newblock Quadratic conditional lower bounds for string problems and dynamic
+  time warping.
+\newblock In {\em 2015 IEEE 56th Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 79--97. IEEE, 2015.
+
+\bibitem[CDG{\etalchar{+}}20]{CDGKS}
+Diptarka Chakraborty, Debarati Das, Elazar Goldenberg, Michal Kouck{\'y}, and
+  Michael~E. Saks.
+\newblock Approximating edit distance within constant factor in truly
+  sub-quadratic time.
+\newblock {\em Journal of the ACM}, 67(6):36:1--36:22, 2020.
+
+\bibitem[GHL22]{GHL}
+Venkatesan Guruswami, Xiaoyu He, and Ray Li.
+\newblock The zero-rate threshold for adversarial bit-deletions is less than
+  1/2.
+\newblock In {\em 2021 IEEE 62nd Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 727--738. IEEE, 2022.
+\newblock Expanded version, arXiv:2106.05250v2.
+
+\bibitem[Gra16]{Grabowski}
+Szymon Grabowski.
+\newblock New tabulation and sparse dynamic programming based techniques for
+  sequence similarity problems.
+\newblock {\em Discrete Applied Mathematics}, 212:96--103, 2016.
+
+\bibitem[HL23]{HeLi}
+Xiaoyu He and Ray Li.
+\newblock Approximating binary longest common subsequence in almost-linear
+  time.
+\newblock In {\em Proceedings of the 55th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 1145--1158. ACM, 2023.
+\newblock Expanded version, arXiv:2211.16660v2.
+
+\bibitem[HSSS19]{HSSS}
+MohammadTaghi Hajiaghayi, Masoud Seddighin, Saeed Seddighin, and Xiaorui Sun.
+\newblock Approximating {LCS} in linear time: Beating the $\sqrt{n}$ barrier.
+\newblock In {\em Proceedings of the Thirtieth Annual ACM-SIAM Symposium on
+  Discrete Algorithms (SODA)}, pages 1181--1200. SIAM, 2019.
+
+\bibitem[MP80]{MasekPaterson}
+William~J. Masek and Michael~S. Paterson.
+\newblock A faster algorithm computing string edit distances.
+\newblock {\em Journal of Computer and System Sciences}, 20(1):18--31, 1980.
+
+\bibitem[MR26]{MaoRubinstein}
+Xiao Mao and Aviad Rubinstein.
+\newblock Approximation schemes for edit distance and {LCS} in quasi-strongly
+  subquadratic time, 2026.
+\newblock arXiv:2603.29702.
+
+\bibitem[Nos21]{NosatzkiLCS}
+Negev~Shekel Nosatzki.
+\newblock Approximating the longest common subsequence problem within a
+  sub-polynomial factor in linear time, 2021.
+\newblock arXiv:2112.08454.
+
+\bibitem[RS20]{RubinsteinSong}
+Aviad Rubinstein and Zhao Song.
+\newblock Reducing approximate longest common subsequence to approximate edit
+  distance.
+\newblock In {\em Proceedings of the 2020 ACM-SIAM Symposium on Discrete
+  Algorithms (SODA)}, pages 1591--1600. SIAM, 2020.
+
+\bibitem[SS71]{SchonhageStrassen}
+Arnold Sch{\"o}nhage and Volker Strassen.
+\newblock Schnelle multiplikation gro{\ss}er zahlen.
+\newblock {\em Computing}, 7:281--292, 1971.
+
+\end{thebibliography}
