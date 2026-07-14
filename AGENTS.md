@@ -57,10 +57,21 @@ Repository page.
   citation dump, vague priority language, or an unverified state-of-the-art or
   novelty claim. A mature topic should normally have a correspondingly
   substantial bibliography, not only citations to the lemmas directly reused.
-- Each abstract must include:
-  1. the main result and its assumptions,
-  2. the principal applications, and
-  3. only a very high-level sketch of the proof.
+- Each abstract should normally include, in whatever order and emphasis best
+  suit the paper:
+  1. the main result and its assumptions;
+  2. when applicable, concise, source-verified context explaining what prior
+     guarantee the result improves, which documented question or conjecture it
+     answers or resolves, or in what precise sense its bound is optimal;
+  3. the principal applications; and
+  4. only a very high-level sketch of the proof.
+  This is a content guide, not a fixed template. Do not force a comparison or
+  significance claim when the literature does not support one.
+- Verify claims such as "improves," "best," "first," "optimal," "answers,"
+  and "resolves" against primary sources and make their scope precise.
+  Substantiate them in the introduction, and do not inflate an advance beyond
+  the input regime, output guarantee, runtime model, or parameter range
+  actually proved.
 - Do not add a separate "Informal description" field to repository.html.
 - Repository papers have no named author unless the user explicitly requests
   one. A date is allowed and must use Month Day, Year.
@@ -125,8 +136,10 @@ Repository page.
   `Added July 12, 2026` and link it to commit
   `8efe41f9e87f41d17bef7a43204d8f4a8d6da7c2` in this repository.
 - The expanded content contains only an abstract. Base it closely on the actual
-  paper abstract and ensure it states results, applications, and a very
-  high-level proof sketch.
+  paper abstract, retaining its main result, verified significance relative to
+  prior work or a documented question when applicable, principal applications,
+  and a very high-level proof sketch. The order and emphasis may vary with the
+  paper.
 - Store PDF links under repo/...; verify every relative target exists.
 - Remove dummy entries once a real paper is available.
 - Preserve user-written Repository introductory text unless explicitly asked to

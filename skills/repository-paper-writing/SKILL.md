@@ -79,8 +79,17 @@ clearer variant:
 ## Manuscript and release requirements
 
 - Put the setup and main guarantee in the abstract and introduction.
+- Normally give the abstract one concise, source-verified explanation of why
+  the result matters: identify the precise prior guarantee it improves, a
+  documented question or conjecture it answers, or the exact sense in which
+  its bound is optimal, when one of these descriptions genuinely applies.
+  State the relevant regime and qualifiers, distinguish "answers" from the
+  stronger "resolves," and support the context with primary-source discussion
+  in the introduction.
 - Include principal applications and only a high-level proof sketch in the
-  abstract.
+  abstract. Treat these as flexible ingredients rather than a fixed sentence
+  order, and never manufacture a comparison, open question, priority claim, or
+  optimality claim merely to strengthen the abstract.
 - Use no named author unless requested. Use a Month Day, Year date.
 - Put an accurate bold `Note.` disclosure immediately below the abstract,
   naming every model/harness materially responsible for the manuscript.

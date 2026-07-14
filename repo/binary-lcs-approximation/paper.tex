@@ -51,12 +51,18 @@ via string regularity}
 
 \begin{abstract}
 We give absolute constants $\delta,c>0$ and a deterministic algorithm
-which, on arbitrary binary strings $s,t$, runs in
-$(|s|+|t|)\polylog(|s|+|t|)$ time and outputs an explicit common
+which, on arbitrary binary strings $s,t$ of total length
+$n=|s|+|t|$, runs in $n\polylog n$ time and outputs an explicit common
 subsequence of length at least
 $(1/2+\delta)\LCS(s,t)$.  Equivalently, the algorithm is a
 $(2-c)$-approximation, with no assumption that the input lengths or symbol
-counts agree.  Combined with the reduction of Akmal and Vassilevska Williams,
+counts agree.  He and Li previously showed that, for every fixed
+$\varepsilon>0$, some gain $\delta_\varepsilon>0$ over $1/2$ is attainable
+in deterministic $n^{1+\varepsilon}$ time for the same regime.  Thus the
+present result achieves a single absolute gain, independent of the exponent
+slack $\varepsilon$, in $n\polylog n$ time while retaining explicit-subsequence
+output.  Combined with the reduction of Akmal and
+Vassilevska Williams,
 the result also gives, for every fixed $q\ge2$, a deterministic near-linear
 $(1/q+\delta_q)$-approximation with an explicit witness for arbitrary-length
 $q$-ary LCS.
@@ -158,7 +164,8 @@ equal-length $(1/q+\delta_q)$-approximation.  They also showed that any
 arbitrary-length binary improvement transfers to arbitrary-length $q$-ary
 LCS~\cite{AkmalVW}.  He and Li then handled unequal-length binary
 strings: for every fixed $\varepsilon>0$, they gave a deterministic
-$n^{1+\varepsilon}$-time $(1/2+\delta)$-approximation~\cite{HeLi}.  More
+$n^{1+\varepsilon}$-time $(1/2+\delta_\varepsilon)$-approximation for some
+$\delta_\varepsilon>0$~\cite{HeLi}.  More
 quantitatively, their black-box reduction turns an equal-length gain $\delta$
 and running time $T(n)$ into an arbitrary-length gain $\delta^A$ and running
 time $O((n+T(n))\log^A n)$ for an absolute $A$; it also preserves an explicit
@@ -175,9 +182,10 @@ near-linear time and seeks only an absolute improvement over the unary $1/2$
 baseline.
 
 \paragraph{Present contribution.}
-The result below replaces the $n^{1+\varepsilon}$ running time in the
-arbitrary-length binary setting by $n\polylog n$ while preserving explicit
-subsequence output.  Its new ingredient is the following balanced promise theorem.
+The result below strengthens this runtime--accuracy tradeoff: it obtains a
+single absolute gain over $1/2$ in $n\polylog n$ time for arbitrary-length
+binary strings, while preserving explicit-subsequence output.  Its new
+ingredient is the following balanced promise theorem.
 The structural source is the three-type string-regularity theorem of
 Guruswami, He, and Li, originally developed to prove limitations for binary
 deletion codes~\cite{GHL}.  Here it is applied to a hidden near-perfect common
