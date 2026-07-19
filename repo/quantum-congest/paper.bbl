@@ -1,0 +1,75 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{ACHD{\etalchar{+}}21}
+
+\bibitem[ACHD{\etalchar{+}}21]{AnconaEtAl2021}
+Bertie Ancona, Keren Censor-Hillel, Mina Dalirrooyfard, Yuval Efron, and
+  Virginia~Vassilevska Williams.
+\newblock Distributed distance approximation.
+\newblock In {\em 24th International Conference on Principles of Distributed
+  Systems ({OPODIS} 2020)}, volume 184 of {\em Leibniz International
+  Proceedings in Informatics ({LIPIcs})}, pages 30:1--30:17. Schloss
+  Dagstuhl--Leibniz-Zentrum f{\"u}r Informatik, 2021.
+
+\bibitem[ACHK16]{AbboudCensorHillelKhoury2016}
+Amir Abboud, Keren Censor-Hillel, and Seri Khoury.
+\newblock Near-linear lower bounds for distributed distance computations, even
+  in sparse networks.
+\newblock In {\em Distributed Computing---30th International Symposium ({DISC}
+  2016)}, volume 9888 of {\em Lecture Notes in Computer Science}, pages 29--42.
+  Springer, 2016.
+
+\bibitem[BN19]{BernsteinNanongkai2019}
+Aaron Bernstein and Danupon Nanongkai.
+\newblock Distributed exact weighted all-pairs shortest paths in near-linear
+  time.
+\newblock In {\em Proceedings of the 51st Annual {ACM} {SIGACT} Symposium on
+  Theory of Computing ({STOC} 2019)}, pages 334--342. ACM, 2019.
+
+\bibitem[CM20]{ChechikMukhtar2020}
+Shiri Chechik and Doron Mukhtar.
+\newblock Single-source shortest paths in the {CONGEST} model with improved
+  bound.
+\newblock In {\em {PODC} '20: Proceedings of the 39th Symposium on Principles
+  of Distributed Computing}, pages 464--473. ACM, 2020.
+
+\bibitem[EKNP14]{ElkinEtAl2014}
+Michael Elkin, Hartmut Klauck, Danupon Nanongkai, and Gopal Pandurangan.
+\newblock Can quantum communication speed up distributed computation?
+\newblock In {\em Proceedings of the 2014 {ACM} Symposium on Principles of
+  Distributed Computing ({PODC} 2014)}, pages 166--175. ACM, 2014.
+
+\bibitem[GM18]{LeGallMagniez2018}
+Fran\c{c}ois~Le Gall and Fr\'{e}d\'{e}ric Magniez.
+\newblock Sublinear-time quantum computation of the diameter in {CONGEST}
+  networks.
+\newblock In {\em Proceedings of the 2018 {ACM} Symposium on Principles of
+  Distributed Computing ({PODC} 2018)}, pages 337--346. ACM, 2018.
+
+\bibitem[Nan14]{Nanongkai2014}
+Danupon Nanongkai.
+\newblock Distributed approximation algorithms for weighted shortest paths.
+\newblock In {\em Proceedings of the 46th Annual {ACM} Symposium on Theory of
+  Computing ({STOC} 2014)}, pages 565--573. ACM, 2014.
+\newblock Full version: \url{https://arxiv.org/abs/1403.5171v2}.
+
+\bibitem[vAdV22]{vanApeldoornDeVos2022}
+Joran van Apeldoorn and Tijn de~Vos.
+\newblock A framework for distributed quantum queries in the {CONGEST} model.
+\newblock In {\em {PODC} '22: {ACM} Symposium on Principles of Distributed
+  Computing}, pages 109--119. ACM, 2022.
+
+\bibitem[WWY21]{WangWuYao2021}
+Changsheng Wang, Xudong Wu, and Penghui Yao.
+\newblock Complexity of eccentricities and all-pairs shortest paths in the
+  quantum {CONGEST} model.
+\newblock {\em SPIN}, 11(3):2140007, 2021.
+
+\bibitem[WY22]{WuYao2022}
+Xudong Wu and Penghui Yao.
+\newblock Quantum complexity of weighted diameter and radius in {CONGEST}
+  networks.
+\newblock In {\em {PODC} '22: {ACM} Symposium on Principles of Distributed
+  Computing}, pages 120--130. ACM, 2022.
+\newblock Full version: \url{https://arxiv.org/abs/2206.02767v2}.
+
+\end{thebibliography}
