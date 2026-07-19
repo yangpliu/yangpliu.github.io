@@ -18,6 +18,7 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{observation}[theorem]{Observation}
 \newtheorem{definition}[theorem]{Definition}
 \theoremstyle{remark}
@@ -28,7 +29,8 @@
 \newcommand{\nnz}{\operatorname{nnz}}
 \newcommand{\OPT}{\operatorname{OPT}}
 
-\title{An exact sparse reduction from boxed linear feasibility to a packing threshold}
+\title{From rational linear programming to positive linear programming:\\
+an exact sparse reduction for threshold decisions}
 \author{}
 \date{July 19, 2026}
 
@@ -37,30 +39,39 @@
 \maketitle
 
 \begin{abstract}
-Let $A\in\R^{m\times n}$, $b\in\R^m$, and $U>0$.  We give a
-deterministic sparse reduction from deciding whether
+We give a deterministic polynomial-time reduction from the
+threshold-decision problem for binary-encoded rational linear programs
+to an exact positive packing-LP threshold problem.  Given
+$A\in\mathbb{Q}^{m\times n}$, $b\in\mathbb{Q}^m$,
+$c\in\mathbb{Q}^n$, and $\tau\in\mathbb{Q}$, the source question is
+whether there is an $x\in\R^n$ such that
 \[
-  Ax\leq b,\qquad x\in[-U,U]^n,
+  Ax\leq b,
+  \qquad
+  c^\top x\geq\tau.
 \]
-is feasible to testing whether the optimum of a packing linear program
-with entrywise nonnegative data reaches a specified threshold.  The
-output has at most $2n$ variables, its constraint matrix $P$ satisfies
-$\nnz(P)\leq\nnz(A)+2n$, and it is constructed in
-$O(\nnz(A)+m+n)$ exact sparse-arithmetic operations and output writes.
-An explicit packing point at the threshold decodes to a boxed feasible
-point in linear time.
+The reduction maps this question to whether the optimum of a positive
+packing linear program reaches a specified threshold.  It first
+computes a box of polynomial encoding length that contains a feasible
+point whenever one exists.  The output has at most $2n$ variables and
+at most $m+n+1$ constraints, and its constraint matrix $P$ satisfies
+$\nnz(P)\leq\nnz(A)+\nnz(c)+2n$.  Every output coefficient has
+polynomial encoding length.  Once the rational rows have been
+normalized and the box computed, the sparse core uses
+$O(\nnz(A)+\nnz(c)+m+n)$ exact arithmetic operations and output writes.
+An explicit packing point at the threshold decodes to a source feasible
+point in $O(n)$ time.
 
-The prompting motivation was the quantitative reduction of Kyng,
-Wang, and Zhang from accurate packing-LP solving to linear-system
-solving.  Their source problem, hypotheses, and approximate guarantee
-are different; the theorem here is neither a specialization nor a
-strengthening of theirs.  The constructions share only broad algebraic
-motifs: split signed variables, nonnegative shifts, and an objective
-that forces bounding inequalities to be tight.  Our exact construction
-creates no uniform objective gap: infeasible boxed systems can map to
-packing optima arbitrarily close to the threshold.  Thus it does not by
-itself transfer running times for multiplicative packing-LP
-approximation.
+The reduction writes the objective threshold as one additional linear
+inequality, splits signed variables into nonnegative pairs, shifts each
+signed row using the computed box bound, and uses the positive objective
+to force the bounding inequalities to be tight.
+One motivation is the quantitative reduction of Kyng, Wang, and Zhang
+linking accurate packing-LP solving to linear-system solving.  The
+present construction is deliberately exact rather than approximation-preserving:
+infeasible source instances can map to packing optima arbitrarily close
+to the threshold.  It therefore does not by itself transfer running
+times for multiplicative positive-LP approximation.
 \end{abstract}
 
 \begin{quote}
@@ -73,22 +84,46 @@ audited and revised by GPT-5 in the Codex harness.
 \section{Introduction}
 \label{sec:introduction}
 
-For $A\in\R^{m\times n}$, $b\in\R^m$, and $U>0$, consider the boxed
-linear-feasibility problem
+General linear programs may have signed variables and signed constraint,
+objective, and right-hand-side data.  Positive linear programming
+conventionally refers to the packing/covering pair with nonnegative data
+\cite{LubyNisan1993PositiveLinearProgramming}.  We use the packing form,
+which maximizes a nonnegative objective subject to nonnegative
+upper-bound constraints, and give an exact sparse conversion from a
+general LP threshold decision to a positive packing threshold.
+
+Let $A\in\mathbb{Q}^{m\times n}$, $b\in\mathbb{Q}^m$,
+$c\in\mathbb{Q}^n$, and $\tau\in\mathbb{Q}$.  The source question is
+\begin{equation}
+  \label{eq:lp-threshold}
+  \exists x\in\R^n
+  \quad
+  Ax\leq b,
+  \qquad
+  c^\top x\geq\tau.
+\end{equation}
+Appending the inequality $-c^\top x\leq-\tau$ turns this question into
+rational linear feasibility.  A polynomial-bit box containing a
+feasible point can be computed directly from the rational input.  The
+algebraic core of the reduction therefore considers arbitrary real
+$A\in\R^{m\times n}$ and $b\in\R^m$ together with $U>0$, and handles
 \begin{equation}
   \label{eq:boxed-system-intro}
   Ax\leq b,\qquad -U\one\leq x\leq U\one.
 \end{equation}
-The entries of $A$ may have either sign.  The target of this paper is a
-packing linear program
+The entries of $A$ and $b$ may have either sign.  The target is a
+positive packing linear program
 \begin{equation}
   \label{eq:packing-form-intro}
   \max\{e^\top z:z\geq0,\ Pz\leq d\},
 \end{equation}
 in which $P$, $d$, and $e$ are entrywise nonnegative.  Our goal is not
-to solve either program, but to convert \eqref{eq:boxed-system-intro}
-to an exact objective-threshold question for
-\eqref{eq:packing-form-intro} while preserving sparsity.
+to solve either program, but to convert
+\eqref{eq:boxed-system-intro} to an exact objective-threshold question
+for \eqref{eq:packing-form-intro} while preserving sparsity.  Combining
+this core with the one-row objective reduction and the polynomial-bit
+box gives the claimed reduction for the general rational question
+\eqref{eq:lp-threshold}.
 
 For rational input, general linear programming is polynomial-time
 solvable by the ellipsoid and interior-point frameworks
@@ -108,11 +143,11 @@ width-independent parallel approximation for positive linear programs
 \cite{LubyNisan1993PositiveLinearProgramming}; Plotkin, Shmoys, and
 Tardos developed the Lagrangian-relaxation framework for fractional
 packing and covering \cite{PlotkinShmoysTardos1995FractionalPackingCovering}.
-For an explicit constraint matrix with $N$ nonzeros, $r$ rows, and $c$
+For an explicit constraint matrix with $N$ nonzeros, $r$ rows, and $s$
 columns, Koufogiannakis and Young gave, with high probability, feasible
 primal and dual solutions within a factor $1+\varepsilon$ of optimum in
 \[
-  O\!\left(N+\frac{(r+c)\log N}{\varepsilon^2}\right)
+  O\!\left(N+\frac{(r+s)\log N}{\varepsilon^2}\right)
 \]
 time \cite{KoufogiannakisYoung2014ExplicitFractionalPackingCovering}.
 Allen-Zhu and Orecchia subsequently obtained
@@ -120,32 +155,37 @@ $\widetilde O(N/\varepsilon)$ time for packing and
 $\widetilde O(N/\varepsilon^{3/2})$ time for covering
 \cite{AllenZhuOrecchia2019NearlyLinearPackingCovering}.
 
-The prompt that led to this note referred to the work of Kyng, Wang,
-and Zhang on the accuracy dependence of packing-LP solvers
-\cite{KyngWangZhang2020PackingLPsHard}.  They reduce conditioned
-least-squares problems to packing programs and show that sufficiently
-fast, sufficiently accurate packing solvers would improve algorithms
-for linear systems.  Their dense and sparsity-preserving theorems
-assume full column rank and a known upper bound on the spectral
-condition number.  That bound supplies a solution scale; a
-condition-dependent choice of packing accuracy then permits residual
-decoding and iterative refinement.
+The direct motivation for asking about this conversion comes from
+Kyng, Wang, and Zhang
+\cite{KyngWangZhang2020PackingLPsHard}.  They give quantitative
+reductions from conditioned least-squares problems to packing programs,
+showing that sufficiently fast and accurate packing solvers would yield
+faster algorithms for linear systems.  More precisely, for a
+full-column-rank matrix $A\in\R^{m\times n}$ and a known bound
+$K_A\geq\kappa(A)$, their sparse reduction turns a
+$\widetilde O(N/\varepsilon^\alpha)$-time packing solver into a
+constant-relative-residual least-squares solver running in
+$\widetilde O(\nnz(A)(m^{3/2}K_A^3)^\alpha)$ time.  The condition-number
+bound determines the solution scale and packing accuracy used for
+residual decoding and iterative refinement.
 
-The result below addresses a different, elementary question.  Its
-input is an arbitrary signed inequality system together with an
-explicit coordinate bound $U$, and its target is an exact packing
-threshold.  It is not extracted as a special case of the reduction of
-Kyng, Wang, and Zhang, nor does either theorem imply the other.  The
-limited connection is that both constructions use split variables,
-bounding constraints, and objective tightness to remove signs.  We
-make no novelty claim for those general devices.  The contribution
-here is a self-contained exact formulation, sharp sparse accounting,
-and an explicit statement of what near-threshold points do and do not
-imply.
+At the center of our reduction is a simpler exact conversion from a
+signed system inside a known box to positive linear programming.  For
+rational input, a determinant bound supplies a suitable box of
+polynomial encoding length, so no boundedness promise is imposed on the
+source feasibility problem.  At a structural level, our construction
+and that of Kyng, Wang, and Zhang both split signed variables and use an
+objective to force bounding constraints to be tight.  The guarantee
+here is otherwise different: it does not provide the quantitative
+approximation-to-residual implication needed for the linear-system
+application.  We make no novelty claim for the shared algebraic devices.
+The purpose of this note is to give a self-contained exact formulation,
+exact sparse accounting, and an explicit statement of what
+near-threshold points do and do not imply.
 
-Our main result is the following.
+We first state the boxed-feasibility primitive.
 
-\begin{theorem}[Exact sparse boxed-feasibility reduction]
+\begin{theorem}[Boxed linear feasibility to positive linear programming]
 \label{thm:main}
 Let $m,n$ be positive integers, let $A\in\R^{m\times n}$ be given in
 sparse row form, let $b\in\R^m$, and let $U>0$.  In the exact sparse
@@ -174,8 +214,125 @@ explicit feasible packing point of value at least $\theta$ decodes to
 a boxed feasible point in $O(n)$ operations.
 \end{theorem}
 
+\begin{lemma}[A polynomial-bit box for rational feasibility]
+\label{lem:rational-box}
+Let $p,n$ be positive integers, let $B\in\mathbb{Q}^{p\times n}$, and
+let $d\in\mathbb{Q}^p$.  Write the entries in lowest terms with positive
+denominators.  For each row $i$, let $q_i$ be the product of the
+denominators appearing in that row, including the denominator of $d_i$,
+and multiply the row by $q_i$.  This gives an equivalent integral system
+$\overline Bx\leq\overline d$.  Define
+\[
+  M=\max\bigl(\{1\}\cup
+  \{|\overline B_{ij}|:i\in[p],j\in[n]\}\cup
+  \{|\overline d_i|:i\in[p]\}\bigr),
+  \qquad
+  r=\min\{p,n\},
+\]
+and $U=(rM)^r$.  Then
+\[
+  \{x\in\R^n:Bx\leq d\}\neq\varnothing
+  \quad\Longleftrightarrow\quad
+  \{x\in[-U,U]^n:Bx\leq d\}\neq\varnothing.
+\]
+Moreover,
+\[
+  \log_2 U\leq r(\log_2 r+\log_2 M),
+\]
+so $U$ has polynomial encoding length in the binary encoding of
+$(B,d)$.
+\end{lemma}
+
+\begin{proof}
+Only the forward implication requires proof.  Write
+$x=x^+-x^-$ and introduce slacks:
+\[
+  \overline Bx^+-\overline Bx^-+s=\overline d,
+  \qquad x^+,x^-,s\geq0.
+\]
+If this standard-form system is feasible, it has a basic feasible
+solution.  One way to see this is to minimize the sum of all variables:
+the sublevel set below the value of any fixed feasible point is compact,
+so an optimum exists, and an extreme optimum is basic.
+
+Let $C$ be the integral basis matrix of such a solution, and suppose
+that $k$ of its columns come from
+$(\overline B,-\overline B)$ rather than from the slack identity
+matrix.  A nonsingular basis cannot contain both
+$\overline B_{*,j}$ and $-\overline B_{*,j}$, so
+$k\leq\min\{p,n\}=r$.  Expanding along the $p-k$ slack columns reduces
+$\det C$ to a $k\times k$ integral determinant.  Hence
+$|\det C|\geq1$.  For any basic coordinate belonging to $x^+$ or
+$x^-$, Cramer's rule and the same expansion bound the numerator by
+\[
+  k!M^k\leq(rM)^r=U.
+\]
+At most one of $x_j^+$ and $x_j^-$ is basic; every nonbasic variable is
+zero.  Therefore $|x_j|\leq U$ for every $j$.  The binary length of
+$q_i$ is at most the sum of the binary lengths of the denominators in
+row $i$.  Hence the normalized integer data, $M$, and $U$ all have
+encoding length polynomial in that of $(B,d)$.
+\end{proof}
+
+\begin{corollary}[Rational LP threshold decision to a positive packing threshold]
+\label{cor:general-lp}
+Let $A\in\mathbb{Q}^{m\times n}$, $b\in\mathbb{Q}^m$,
+$c\in\mathbb{Q}^n$, and $\tau\in\mathbb{Q}$ be binary encoded, with
+$m,n$ positive.  A deterministic polynomial-time algorithm constructs
+a positive packing linear program and a threshold $\theta>0$ such that
+\[
+  \exists x\in\R^n
+  \quad
+  Ax\leq b,
+  \qquad
+  c^\top x\geq\tau
+  \quad\Longleftrightarrow\quad
+  \OPT_{\mathrm{pack}}\geq\theta.
+\]
+The output has at most $2n$ variables and at most $m+n+1$
+constraints, its constraint matrix $P$ satisfies
+\[
+  \nnz(P)\leq\nnz(A)+\nnz(c)+2n,
+\]
+and every output coefficient has encoding length polynomial in the
+input encoding length.  An explicit packing point of value at least
+$\theta$ decodes to a source feasible point in $O(n)$ exact arithmetic
+operations.
+\end{corollary}
+
+\begin{proof}
+Append the objective row and write the resulting feasibility system as
+\[
+  Bx\leq d,
+  \qquad
+  B=
+  \begin{pmatrix}
+    A\\ -c^\top
+  \end{pmatrix},
+  \qquad
+  d=
+  \begin{pmatrix}
+    b\\ -\tau
+  \end{pmatrix}.
+\]
+Normalize each row using the denominator product specified in
+Lemma~\ref{lem:rational-box}, and compute $U$ from
+that lemma.  Applying \Cref{thm:main} to the normalized
+system inside $[-U,U]^n$ proves the equivalence and the dimension,
+sparsity, and witness claims.  Row normalization preserves the zero
+pattern.  Its coefficient lengths are polynomial in the input length,
+as is $\log U$; the shifted coefficients, shifted right-hand sides, box
+bounds, and threshold therefore also have polynomial encoding length.
+All normalization, integer arithmetic, and sparse-output construction
+can be performed in polynomial bit time.
+\end{proof}
+
 \paragraph{Proof idea.}
-Write $x_j=y_j-s_j$ with $y_j,s_j\geq0$ and intend to enforce
+For rational input, first write the objective threshold as one
+additional row, clear denominators, and use
+Lemma~\ref{lem:rational-box} to compute a polynomial-bit coordinate bound.
+For the sparse boxed-feasibility core, write $x_j=y_j-s_j$ with
+$y_j,s_j\geq0$ and intend to enforce
 $y_j+s_j=U$.  For row $i$, put
 \[
   R_i=\sum_j|A_{ij}|,
@@ -195,10 +352,15 @@ negative, the corresponding original row is infeasible throughout the
 box and the algorithm returns a fixed rejecting instance.
 
 \paragraph{Scope.}
-The result concerns construction cost in an exact unit-cost arithmetic
-model; it gives no bit-complexity or numerical-stability guarantee and
-does not include the cost of solving the output LP.  It is also an
-exact-threshold reduction, not a promise-gap reduction.  We prove in
+Removing the supplied box uses the finite binary encoding of rational
+data.  For arbitrary exact-real data, \Cref{thm:main} still requires
+$U$ as input.  The computed $U$ may have exponential magnitude; only
+its encoding length is polynomial.  Thus Corollary~\ref{cor:general-lp} is a
+polynomial bit-time reduction, not a strongly polynomial result.  The
+$O(\nnz(A)+m+n)$ bound in \Cref{thm:main} counts exact unit-cost
+arithmetic operations and output writes after $U$ is available, and it
+does not include the cost of solving the output LP.  The construction
+is an exact-threshold reduction, not a promise-gap reduction.  We prove in
 \Cref{sec:approximation-boundary} that near-threshold packing points
 decode to additively near-feasible boxed points, but also that
 infeasible instances can have packing optimum arbitrarily close to
@@ -208,8 +370,8 @@ boxed feasibility.
 
 The remainder of the paper is organized as follows.
 \Cref{sec:setup} records the algebraic identity behind the shift.
-\Cref{sec:reduction} gives the algorithm and proves
-\Cref{thm:main}.  \Cref{sec:approximation-boundary} gives the
+\Cref{sec:reduction} gives the algorithm and proves the feasibility
+primitive.  \Cref{sec:approximation-boundary} gives the
 approximate decoding bound and the no-gap example.
 
 \section{Setup}
@@ -219,9 +381,10 @@ All vector inequalities are coordinatewise.  For a positive integer
 $k$, write $[k]=\{1,\ldots,k\}$, and let $\one$ denote an all-ones
 vector of the dimension determined by context.  Empty sums are zero.
 
-\begin{definition}[Packing threshold instance]
+\begin{definition}[Positive packing threshold instance]
 \label{def:packing-threshold}
-A packing linear program has the form
+A packing linear program, the maximization form of a positive linear
+program, has the form
 \[
   \max\{e^\top z:z\in\R_{\geq0}^{q},\ Pz\leq d\},
 \]
@@ -286,7 +449,7 @@ is nonnegative, $y_j+s_j=U$, and $y_j-s_j=x_j$.
 Conversely, nonnegative $y_j,s_j$ with sum $U$ give
 $x_j=y_j-s_j\in[-U,U]$.
 
-\section{The reduction}
+\section{The reduction to positive linear programming}
 \label{sec:reduction}
 
 We first describe the algorithm.  Coefficients equal to zero are not
@@ -505,12 +668,10 @@ The first two bounds are simultaneously attainable and imply
 Letting $\delta$ tend to zero proves the claim.
 \end{proof}
 
-This example also marks the limit of the comparison with Kyng, Wang,
-and Zhang.  Their linear-system consequence uses additional
-condition-dependent scaling, residual analysis, and iterative
-refinement.  None of those quantitative ingredients follows from the
-exact equivalence here, and neither result should be read as a version
-of the other.
+Thus the exact threshold equivalence alone cannot support an
+approximation-preserving reduction.  Any such extension would need an
+additional promise or a different construction that creates and tracks
+a quantitative gap.
 
 \bibliographystyle{alpha}
 \bibliography{references}
