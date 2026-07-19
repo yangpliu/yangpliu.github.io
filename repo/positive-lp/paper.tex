@@ -1,0 +1,518 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1.25in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black
+]{hyperref}
+\usepackage[noabbrev,nameinlink]{cleveref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\one}{\bm{1}}
+\newcommand{\nnz}{\operatorname{nnz}}
+\newcommand{\OPT}{\operatorname{OPT}}
+
+\title{An exact sparse reduction from boxed linear feasibility to a packing threshold}
+\author{}
+\date{July 19, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Let $A\in\R^{m\times n}$, $b\in\R^m$, and $U>0$.  We give a
+deterministic sparse reduction from deciding whether
+\[
+  Ax\leq b,\qquad x\in[-U,U]^n,
+\]
+is feasible to testing whether the optimum of a packing linear program
+with entrywise nonnegative data reaches a specified threshold.  The
+output has at most $2n$ variables, its constraint matrix $P$ satisfies
+$\nnz(P)\leq\nnz(A)+2n$, and it is constructed in
+$O(\nnz(A)+m+n)$ exact sparse-arithmetic operations and output writes.
+An explicit packing point at the threshold decodes to a boxed feasible
+point in linear time.
+
+The prompting motivation was the quantitative reduction of Kyng,
+Wang, and Zhang from accurate packing-LP solving to linear-system
+solving.  Their source problem, hypotheses, and approximate guarantee
+are different; the theorem here is neither a specialization nor a
+strengthening of theirs.  The constructions share only broad algebraic
+motifs: split signed variables, nonnegative shifts, and an objective
+that forces bounding inequalities to be tight.  Our exact construction
+creates no uniform objective gap: infeasible boxed systems can map to
+packing optima arbitrarily close to the threshold.  Thus it does not by
+itself transfer running times for multiplicative packing-LP
+approximation.
+\end{abstract}
+
+\begin{quote}
+\small\noindent\textbf{Note.} This paper was fully AI generated with
+ChatGPT 5.5 Pro from prompts by Xinyuan Cao, Hanxi Lin, and Richard Peng.
+The present repository version, including this disclosure note, was
+audited and revised by GPT-5 in the Codex harness.
+\end{quote}
+
+\section{Introduction}
+\label{sec:introduction}
+
+For $A\in\R^{m\times n}$, $b\in\R^m$, and $U>0$, consider the boxed
+linear-feasibility problem
+\begin{equation}
+  \label{eq:boxed-system-intro}
+  Ax\leq b,\qquad -U\one\leq x\leq U\one.
+\end{equation}
+The entries of $A$ may have either sign.  The target of this paper is a
+packing linear program
+\begin{equation}
+  \label{eq:packing-form-intro}
+  \max\{e^\top z:z\geq0,\ Pz\leq d\},
+\end{equation}
+in which $P$, $d$, and $e$ are entrywise nonnegative.  Our goal is not
+to solve either program, but to convert \eqref{eq:boxed-system-intro}
+to an exact objective-threshold question for
+\eqref{eq:packing-form-intro} while preserving sparsity.
+
+For rational input, general linear programming is polynomial-time
+solvable by the ellipsoid and interior-point frameworks
+\cite{Khachiyan1979PolynomialLP,Karmarkar1984NewPolynomialTimeLP}.
+That bit-complexity statement is distinct from the unit-cost
+construction bound proved here.  Exact positive linear programming
+also has a parallel-complexity barrier: Trevisan and Xhafa proved that
+exact positive-LP solution is P-complete, so an NC algorithm would
+imply $\mathrm{P}=\mathrm{NC}$
+\cite{TrevisanXhafa1998ParallelComplexity}.
+
+Much of the algorithmic literature therefore concerns approximation.
+For a packing program with optimum $\OPT$, a
+$(1-\varepsilon)$-approximate solution is a feasible point of value at
+least $(1-\varepsilon)\OPT$.  Luby and Nisan initiated
+width-independent parallel approximation for positive linear programs
+\cite{LubyNisan1993PositiveLinearProgramming}; Plotkin, Shmoys, and
+Tardos developed the Lagrangian-relaxation framework for fractional
+packing and covering \cite{PlotkinShmoysTardos1995FractionalPackingCovering}.
+For an explicit constraint matrix with $N$ nonzeros, $r$ rows, and $c$
+columns, Koufogiannakis and Young gave, with high probability, feasible
+primal and dual solutions within a factor $1+\varepsilon$ of optimum in
+\[
+  O\!\left(N+\frac{(r+c)\log N}{\varepsilon^2}\right)
+\]
+time \cite{KoufogiannakisYoung2014ExplicitFractionalPackingCovering}.
+Allen-Zhu and Orecchia subsequently obtained
+$\widetilde O(N/\varepsilon)$ time for packing and
+$\widetilde O(N/\varepsilon^{3/2})$ time for covering
+\cite{AllenZhuOrecchia2019NearlyLinearPackingCovering}.
+
+The prompt that led to this note referred to the work of Kyng, Wang,
+and Zhang on the accuracy dependence of packing-LP solvers
+\cite{KyngWangZhang2020PackingLPsHard}.  They reduce conditioned
+least-squares problems to packing programs and show that sufficiently
+fast, sufficiently accurate packing solvers would improve algorithms
+for linear systems.  Their dense and sparsity-preserving theorems
+assume full column rank and a known upper bound on the spectral
+condition number.  That bound supplies a solution scale; a
+condition-dependent choice of packing accuracy then permits residual
+decoding and iterative refinement.
+
+The result below addresses a different, elementary question.  Its
+input is an arbitrary signed inequality system together with an
+explicit coordinate bound $U$, and its target is an exact packing
+threshold.  It is not extracted as a special case of the reduction of
+Kyng, Wang, and Zhang, nor does either theorem imply the other.  The
+limited connection is that both constructions use split variables,
+bounding constraints, and objective tightness to remove signs.  We
+make no novelty claim for those general devices.  The contribution
+here is a self-contained exact formulation, sharp sparse accounting,
+and an explicit statement of what near-threshold points do and do not
+imply.
+
+Our main result is the following.
+
+\begin{theorem}[Exact sparse boxed-feasibility reduction]
+\label{thm:main}
+Let $m,n$ be positive integers, let $A\in\R^{m\times n}$ be given in
+sparse row form, let $b\in\R^m$, and let $U>0$.  In the exact sparse
+arithmetic model, a deterministic algorithm constructs, using
+$O(\nnz(A)+m+n)$ arithmetic operations and output writes, a packing
+linear program
+\[
+  \max\{e^\top z:z\in\R_{\geq0}^{q},\ Pz\leq d\}
+\]
+and a threshold $\theta>0$ such that $P$, $d$, and $e$ are entrywise
+nonnegative,
+\[
+  q\leq2n,\qquad \nnz(P)\leq\nnz(A)+2n,
+\]
+and
+\[
+  \exists x\in[-U,U]^n\text{ with }Ax\leq b
+  \quad\Longleftrightarrow\quad
+  \max\{e^\top z:z\geq0,\ Pz\leq d\}\geq\theta.
+\]
+In the nontrivial branch the output has $q=2n$, exactly $m+n$
+constraints, $\theta=nU$, and
+$\nnz(P)=\nnz(A)+2n$.  A boxed feasible point can be encoded as a
+packing point of value $\theta$ in $O(n)$ operations; conversely, any
+explicit feasible packing point of value at least $\theta$ decodes to
+a boxed feasible point in $O(n)$ operations.
+\end{theorem}
+
+\paragraph{Proof idea.}
+Write $x_j=y_j-s_j$ with $y_j,s_j\geq0$ and intend to enforce
+$y_j+s_j=U$.  For row $i$, put
+\[
+  R_i=\sum_j|A_{ij}|,
+  \qquad p^+_{ij}=A_{ij}+|A_{ij}|,
+  \qquad p^-_{ij}=-A_{ij}+|A_{ij}|.
+\]
+The shifted row
+\[
+  \sum_jp^+_{ij}y_j+\sum_jp^-_{ij}s_j
+  \leq b_i+UR_i
+\]
+has nonnegative coefficients and, on the intended slice, is exactly
+$A_i x\leq b_i$.  The packing constraints $y_j+s_j\leq U$ and the
+objective $\sum_j(y_j+s_j)$ with threshold $nU$ force every one of
+these inequalities to be tight.  If some shifted right-hand side is
+negative, the corresponding original row is infeasible throughout the
+box and the algorithm returns a fixed rejecting instance.
+
+\paragraph{Scope.}
+The result concerns construction cost in an exact unit-cost arithmetic
+model; it gives no bit-complexity or numerical-stability guarantee and
+does not include the cost of solving the output LP.  It is also an
+exact-threshold reduction, not a promise-gap reduction.  We prove in
+\Cref{sec:approximation-boundary} that near-threshold packing points
+decode to additively near-feasible boxed points, but also that
+infeasible instances can have packing optimum arbitrarily close to
+$nU$.  Thus a value-only threshold oracle does not supply a witness,
+and a standard multiplicative approximation does not decide arbitrary
+boxed feasibility.
+
+The remainder of the paper is organized as follows.
+\Cref{sec:setup} records the algebraic identity behind the shift.
+\Cref{sec:reduction} gives the algorithm and proves
+\Cref{thm:main}.  \Cref{sec:approximation-boundary} gives the
+approximate decoding bound and the no-gap example.
+
+\section{Setup}
+\label{sec:setup}
+
+All vector inequalities are coordinatewise.  For a positive integer
+$k$, write $[k]=\{1,\ldots,k\}$, and let $\one$ denote an all-ones
+vector of the dimension determined by context.  Empty sums are zero.
+
+\begin{definition}[Packing threshold instance]
+\label{def:packing-threshold}
+A packing linear program has the form
+\[
+  \max\{e^\top z:z\in\R_{\geq0}^{q},\ Pz\leq d\},
+\]
+where $P$, $d$, and $e$ are entrywise nonnegative.  A packing
+threshold instance also specifies $\theta>0$ and accepts if the
+maximum is at least $\theta$.
+\end{definition}
+
+\paragraph{Sparse arithmetic model.}
+The input matrix is available in sparse row form.  Reading and writing
+a stored coefficient, adding or comparing real numbers, taking an
+absolute value, and multiplying by $U$ each cost one operation.  These
+are exact operations.  The cost of writing the sparse output and its
+dense right-hand side and objective vectors is included.
+
+For $i\in[m]$ and $j\in[n]$, define
+\begin{equation}
+  \label{eq:shift-data}
+  R_i=\sum_{j=1}^n|A_{ij}|,
+  \qquad
+  p^+_{ij}=A_{ij}+|A_{ij}|,
+  \qquad
+  p^-_{ij}=-A_{ij}+|A_{ij}|,
+  \qquad
+  c_i=b_i+UR_i.
+\end{equation}
+The quantities $R_i,p^+_{ij},p^-_{ij}$ are nonnegative.  The
+right-hand side $c_i$ need not be.
+
+\begin{observation}[Shift identity and tight slice]
+\label{obs:shift-tight}
+For all $y,s\in\R_{\geq0}^n$ and $i\in[m]$,
+\begin{equation}
+  \label{eq:shift-identity}
+  \sum_{j=1}^n p^+_{ij}y_j+
+  \sum_{j=1}^n p^-_{ij}s_j
+  =
+  \sum_{j=1}^n A_{ij}(y_j-s_j)+
+  \sum_{j=1}^n |A_{ij}|(y_j+s_j).
+\end{equation}
+If $y_j+s_j\leq U$ for every $j$ and
+$\sum_j(y_j+s_j)\geq nU$, then $y_j+s_j=U$ for every
+$j$.
+\end{observation}
+
+\begin{proof}
+Expanding the definitions of $p^+_{ij}$ and $p^-_{ij}$ gives
+\eqref{eq:shift-identity}.  For the second assertion, set
+$\delta_j=U-y_j-s_j\geq0$.  The objective inequality says
+$\sum_j\delta_j\leq0$, so every nonnegative $\delta_j$ is zero.
+\end{proof}
+
+The tight slice is in bijection with the box.  If $x\in[-U,U]^n$,
+then
+\begin{equation}
+  \label{eq:encode}
+  y_j=\frac{U+x_j}{2},
+  \qquad
+  s_j=\frac{U-x_j}{2}
+\end{equation}
+is nonnegative, $y_j+s_j=U$, and $y_j-s_j=x_j$.
+Conversely, nonnegative $y_j,s_j$ with sum $U$ give
+$x_j=y_j-s_j\in[-U,U]$.
+
+\section{The reduction}
+\label{sec:reduction}
+
+We first describe the algorithm.  Coefficients equal to zero are not
+stored.
+
+\paragraph{Algorithm \textsc{BoxToPacking}.}
+Given $A,b,U$, perform the following steps.
+\begin{enumerate}[label=\arabic*.,leftmargin=2em]
+  \item Compute $R_i$ and $c_i$ from \eqref{eq:shift-data} for every
+  $i\in[m]$.
+
+  \item If $c_i<0$ for some $i$, return the one-variable packing
+  program
+  \[
+    \max\{0\cdot z:z\geq0,\ z\leq0\}
+  \]
+  with threshold $\theta=1$.
+
+  \item Otherwise, use variables
+  \[
+    z=(y_1,\ldots,y_n,s_1,\ldots,s_n)\in\R_{\geq0}^{2n},
+  \]
+  set the objective vector to the all-ones vector, and set
+  $\theta=nU$.
+
+  \item For each $i\in[m]$, create the shifted row
+  \begin{equation}
+    \label{eq:shifted-row}
+    \sum_{j=1}^n p^+_{ij}y_j+
+    \sum_{j=1}^n p^-_{ij}s_j\leq c_i.
+  \end{equation}
+
+  \item For every $j\in[n]$, create the box row
+  \begin{equation}
+    \label{eq:box-row}
+    y_j+s_j\leq U.
+  \end{equation}
+  Return these $m+n$ constraints, the objective, and the threshold.
+\end{enumerate}
+
+The exceptional branch is justified by the following elementary
+certificate.
+
+\begin{lemma}[A negative shifted right-hand side certifies infeasibility]
+\label{lem:negative-shift}
+If $c_i<0$ for some $i\in[m]$, then the boxed system is infeasible.
+\end{lemma}
+
+\begin{proof}
+For every $x\in[-U,U]^n$,
+\[
+  (Ax)_i
+  \geq-\sum_{j=1}^n|A_{ij}|\,|x_j|
+  \geq-UR_i.
+\]
+The inequality $c_i=b_i+UR_i<0$ is equivalent to
+$b_i<-UR_i$.  Hence $(Ax)_i>b_i$ throughout the box.
+\end{proof}
+
+We next prove the exact equivalence in the main branch.
+
+\begin{lemma}[Threshold equivalence and witness conversion]
+\label{lem:threshold-equivalence}
+Assume $c_i\geq0$ for every $i\in[m]$.  The boxed system is feasible
+if and only if the packing program defined by
+\eqref{eq:shifted-row} and \eqref{eq:box-row} has optimum at least
+$nU$.  The maps $x\mapsto(y,s)$ from \eqref{eq:encode} and
+$(y,s)\mapsto y-s$ convert explicit witnesses in $O(n)$ operations.
+\end{lemma}
+
+\begin{proof}
+Suppose $x\in[-U,U]^n$ and $Ax\leq b$.  Define $y,s$ by
+\eqref{eq:encode}.  They satisfy every box row with equality.  By
+\eqref{eq:shift-identity}, for each $i\in[m]$,
+\[
+  \sum_jp^+_{ij}y_j+\sum_jp^-_{ij}s_j
+  =(Ax)_i+UR_i
+  \leq b_i+UR_i=c_i.
+\]
+Thus $(y,s)$ is packing-feasible and has objective $nU$.
+
+Conversely, the origin is packing-feasible because every $c_i$ is
+nonnegative.  The box rows make the feasible region compact, so the
+maximum is attained.  Let $(y,s)$ be feasible with objective at least
+$nU$.  The box rows also bound that objective by $nU$; hence
+Observation~\ref{obs:shift-tight} gives $y_j+s_j=U$ for every $j$.  Put
+$x=y-s$.  Then $x\in[-U,U]^n$, and
+\eqref{eq:shift-identity} gives
+\[
+  (Ax)_i+UR_i
+  =\sum_jp^+_{ij}y_j+\sum_jp^-_{ij}s_j
+  \leq c_i=b_i+UR_i.
+\]
+Therefore $Ax\leq b$.  Both conversions require constant work per
+coordinate.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:main}]
+Run \textsc{BoxToPacking}.  If the exceptional branch is taken, its
+packing optimum is $0<1=\theta$, while
+Lemma~\ref{lem:negative-shift} says that the boxed system is infeasible.
+The branch has one variable, one constraint, and one matrix nonzero;
+because $n\geq1$,
+\[
+  1\leq\nnz(A)+2n.
+\]
+
+In the main branch, every coefficient in
+\eqref{eq:shifted-row} is nonnegative, every $c_i$ is nonnegative, and
+the box rows, objective, and threshold are positive or nonnegative as
+required.  Thus the output is a packing threshold instance.
+Lemma~\ref{lem:threshold-equivalence} proves the exact equivalence and the
+witness statements.
+
+It remains to count the output and the construction work.  If
+$A_{ij}>0$, then $p^+_{ij}=2A_{ij}$ and $p^-_{ij}=0$; if
+$A_{ij}<0$, then $p^+_{ij}=0$ and $p^-_{ij}=-2A_{ij}$.  Consequently,
+each stored nonzero of $A$ produces exactly one nonzero in the shifted
+rows.  The $n$ box rows contribute two nonzeros each, so
+\[
+  \nnz(P)=\nnz(A)+2n
+\]
+in the main branch.  A constant number of sparse scans computes the
+row radii and writes the shifted coefficients.  Initializing the $m$
+right-hand sides, the $2n$ objective entries, and the $n$ box rows
+costs $O(m+n)$ more operations and writes.  This proves the claimed
+$O(\nnz(A)+m+n)$ bound.
+\end{proof}
+
+\section{The approximation boundary}
+\label{sec:approximation-boundary}
+
+Although the exact reduction has no promise gap, its feasible points
+have a simple quantitative interpretation below the threshold.
+
+\begin{proposition}[Decoding a near-threshold point]
+\label{prop:approximate-decoding}
+Consider a main-branch instance and any packing-feasible point
+$(y,s)$.  Define
+\[
+  x=y-s,
+  \qquad
+  \delta_j=U-y_j-s_j,
+  \qquad
+  \Delta=\sum_{j=1}^n\delta_j
+  =nU-\sum_{j=1}^n(y_j+s_j).
+\]
+Then $x\in[-U,U]^n$, and for every $i\in[m]$,
+\begin{equation}
+  \label{eq:approximate-row-bound}
+  (Ax)_i
+  \leq b_i+\sum_{j=1}^n|A_{ij}|\delta_j
+  \leq b_i+\lVert A_{i,*}\rVert_\infty\Delta.
+\end{equation}
+In particular, objective value at least $(1-\varepsilon)nU$ implies
+\[
+  (Ax)_i\leq b_i+
+  \varepsilon nU\lVert A_{i,*}\rVert_\infty
+  \qquad(i\in[m]).
+\]
+\end{proposition}
+
+\begin{proof}
+Nonnegativity and the box rows give
+$|x_j|=|y_j-s_j|\leq y_j+s_j\leq U$.  Rearranging the shifted-row
+inequality with \eqref{eq:shift-identity} yields
+\[
+  (Ax)_i
+  \leq b_i+UR_i-\sum_j|A_{ij}|(y_j+s_j)
+  =b_i+\sum_j|A_{ij}|\delta_j.
+\]
+The second inequality in \eqref{eq:approximate-row-bound} follows
+from $\delta_j\geq0$ and $\sum_j\delta_j=\Delta$.  The final statement
+uses $\Delta\leq\varepsilon nU$.
+\end{proof}
+
+The additive bound in Proposition~\ref{prop:approximate-decoding} does not yield
+an exact feasibility decision without a separate promise.  The next
+example shows that this is unavoidable for the present construction.
+
+\begin{proposition}[No uniform objective gap]
+\label{prop:no-gap}
+For every $\delta\in(0,1)$, there is an infeasible boxed instance with
+$m=2$, $n=1$, and $U=1$ whose output takes the main branch and has
+\[
+  \OPT=\theta-\frac{\delta}{2}.
+\]
+Consequently, the separation between infeasible and feasible outputs
+can be arbitrarily small, both additively and multiplicatively.
+\end{proposition}
+
+\begin{proof}
+Take
+\[
+  A=\begin{pmatrix}1\\-1\end{pmatrix},
+  \qquad
+  b=\begin{pmatrix}0\\-\delta\end{pmatrix},
+  \qquad U=1.
+\]
+The boxed system requires $x\leq0$ and $x\geq\delta$, so it is
+infeasible.  Both row radii are $1$, and the shifted right-hand sides
+are $1$ and $1-\delta$, so the main branch is taken.  Its variables
+are $y,s\geq0$, its threshold is $\theta=1$, and its constraints are
+\[
+  2y\leq1,
+  \qquad
+  2s\leq1-\delta,
+  \qquad
+  y+s\leq1.
+\]
+The first two bounds are simultaneously attainable and imply
+\[
+  \OPT=\frac12+\frac{1-\delta}{2}
+  =1-\frac{\delta}{2}.
+\]
+Letting $\delta$ tend to zero proves the claim.
+\end{proof}
+
+This example also marks the limit of the comparison with Kyng, Wang,
+and Zhang.  Their linear-system consequence uses additional
+condition-dependent scaling, residual analysis, and iterative
+refinement.  None of those quantitative ingredients follows from the
+exact equivalence here, and neither result should be read as a version
+of the other.
+
+\bibliographystyle{alpha}
+\bibliography{references}
+
+\end{document}

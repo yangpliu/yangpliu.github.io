@@ -1,0 +1,52 @@
+\begin{thebibliography}{KWZ20}
+
+\bibitem[AZO19]{AllenZhuOrecchia2019NearlyLinearPackingCovering}
+Zeyuan Allen-Zhu and Lorenzo Orecchia.
+\newblock Nearly linear-time packing and covering {LP} solvers.
+\newblock {\em Mathematical Programming}, 175(1--2):307--353, 2019.
+
+\bibitem[Kar84]{Karmarkar1984NewPolynomialTimeLP}
+Narendra Karmarkar.
+\newblock A new polynomial-time algorithm for linear programming.
+\newblock {\em Combinatorica}, 4(4):373--395, 1984.
+
+\bibitem[Kha79]{Khachiyan1979PolynomialLP}
+Leonid~G. Khachiyan.
+\newblock A polynomial algorithm in linear programming.
+\newblock {\em Doklady Akademii Nauk SSSR}, 244(5):1093--1096, 1979.
+\newblock English translation in Soviet Mathematics Doklady 20 (1979),
+  191--194.
+
+\bibitem[KWZ20]{KyngWangZhang2020PackingLPsHard}
+Rasmus Kyng, Di~Wang, and Peng Zhang.
+\newblock Packing {LPs} are hard to solve accurately, assuming linear equations
+  are hard.
+\newblock In {\em Proceedings of the 2020 ACM-SIAM Symposium on Discrete
+  Algorithms}, pages 279--296. Society for Industrial and Applied Mathematics,
+  2020.
+
+\bibitem[KY14]{KoufogiannakisYoung2014ExplicitFractionalPackingCovering}
+Christos Koufogiannakis and Neal~E. Young.
+\newblock A nearly linear-time {PTAS} for explicit fractional packing and
+  covering linear programs.
+\newblock {\em Algorithmica}, 70(4):648--674, 2014.
+
+\bibitem[LN93]{LubyNisan1993PositiveLinearProgramming}
+Michael Luby and Noam Nisan.
+\newblock A parallel approximation algorithm for positive linear programming.
+\newblock In {\em Proceedings of the Twenty-Fifth Annual ACM Symposium on
+  Theory of Computing}, pages 448--457. Association for Computing Machinery,
+  1993.
+
+\bibitem[PST95]{PlotkinShmoysTardos1995FractionalPackingCovering}
+Serge~A. Plotkin, David~B. Shmoys, and {\'E}va Tardos.
+\newblock Fast approximation algorithms for fractional packing and covering
+  problems.
+\newblock {\em Mathematics of Operations Research}, 20(2):257--301, 1995.
+
+\bibitem[TX98]{TrevisanXhafa1998ParallelComplexity}
+Luca Trevisan and Fatos Xhafa.
+\newblock The parallel complexity of positive linear programming.
+\newblock {\em Parallel Processing Letters}, 8(4):527--533, 1998.
+
+\end{thebibliography}
