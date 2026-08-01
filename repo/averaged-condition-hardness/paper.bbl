@@ -1,0 +1,156 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{ADW{\etalchar{+}}25}
+
+\bibitem[ABB{\etalchar{+}}26]{AmselEtAl2026SimonsLinearSystems}
+Noah Amsel, Yves Baumann, Paul Beckman, Peter B{\"u}rgisser, Chris Cama{\~n}o,
+  Tyler Chen, Edmond Chow, Anil Damle, Micha{\l} Derezi{\'n}ski, Mark Embree,
+  Ethan~N. Epperly, Robert Falgout, Mark Fornace, Anne Greenbaum, Chen Greif,
+  Diana Halikias, Zhen Huang, Elias Jarlebring, Yiannis Koutis, Daniel
+  Kressner, Rasmus Kyng, J{\"o}rg Liesen, Jackie Lok, Raphael~A. Meyer, Yuji
+  Nakatsukasa, Kate Pearce, Richard Peng, David Persson, Eliza Rebrova, Ryan
+  Schneider, Rikhav Shah, Edgar Solomonik, Nikhil Srivastava, Alex Townsend,
+  Robert~J. Webber, and Jess Williams.
+\newblock Linear systems and eigenvalue problems: Open questions from a simons
+  workshop, 2026.
+
+\bibitem[ADW{\etalchar{+}}25]{AlmanEtAl2025MoreAsymmetry}
+Josh Alman, Ran Duan, Virginia~Vassilevska Williams, Yinzhan Xu, Zixuan Xu, and
+  Renfei Zhou.
+\newblock More asymmetry yields faster matrix multiplication.
+\newblock In {\em Proceedings of the 2025 Annual ACM-SIAM Symposium on Discrete
+  Algorithms, SODA 2025}, pages 2005--2039. SIAM, 2025.
+
+\bibitem[AKK{\etalchar{+}}20]{AgarwalEtAl2020LeverageScoreSampling}
+Naman Agarwal, Sham Kakade, Rahul Kidambi, Yin-Tat Lee, Praneeth Netrapalli,
+  and Aaron Sidford.
+\newblock Leverage score sampling for faster accelerated regression and erm.
+\newblock In {\em Proceedings of the 31st International Conference on
+  Algorithmic Learning Theory}, volume 117 of {\em Proceedings of Machine
+  Learning Research}, pages 22--47. PMLR, 2020.
+
+\bibitem[BH74]{BunchHopcroft1974FastMatrixInversion}
+James~R. Bunch and John~E. Hopcroft.
+\newblock Triangular factorization and inversion by fast matrix multiplication.
+\newblock {\em Mathematics of Computation}, 28(125):231--236, 1974.
+
+\bibitem[CW17]{ClarksonWoodruff2017InputSparsity}
+Kenneth~L. Clarkson and David~P. Woodruff.
+\newblock Low-rank approximation and regression in input sparsity time.
+\newblock {\em Journal of the ACM}, 63(6):54:1--54:45, 2017.
+
+\bibitem[DLNR25]{DerezinskiLeJeuneNeedellRebrova2024FineGrained}
+Micha{\l} Derezi{\'n}ski, Daniel LeJeune, Deanna Needell, and Elizaveta
+  Rebrova.
+\newblock Fine-grained analysis and faster algorithms for iteratively solving
+  linear systems.
+\newblock {\em Journal of Machine Learning Research}, 26(144):1--49, 2025.
+
+\bibitem[DMY25]{DerezinskiMuscoYang2025MultiLevel}
+Micha{\l} Derezi{\'n}ski, Christopher Musco, and Jiaming Yang.
+\newblock Faster linear systems and matrix norm approximation via multi-level
+  sketched preconditioning.
+\newblock In {\em Proceedings of the 2025 Annual ACM-SIAM Symposium on Discrete
+  Algorithms, SODA 2025}, pages 1972--2004. SIAM, 2025.
+
+\bibitem[DNRY25]{DerezinskiNeedellRebrovaYang2025KaczmarzBeyondKrylov}
+Micha{\l} Derezi{\'n}ski, Deanna Needell, Elizaveta Rebrova, and Jiaming Yang.
+\newblock Randomized {Kaczmarz} methods with beyond-{Krylov} convergence, 2025.
+
+\bibitem[DS26]{DerezinskiSidford2026DenseLowRank}
+Micha{\l} Derezi{\'n}ski and Aaron Sidford.
+\newblock Approaching optimality for solving dense linear systems with low-rank
+  structure.
+\newblock In {\em Proceedings of the 2026 Annual ACM-SIAM Symposium on Discrete
+  Algorithms, SODA 2026}, pages 925--938. SIAM, 2026.
+
+\bibitem[DY24]{DerezinskiYang2024DensePreconditioning}
+Micha{\l} Derezi{\'n}ski and Jiaming Yang.
+\newblock Solving dense linear systems faster than via preconditioning.
+\newblock In {\em Proceedings of the 56th Annual ACM Symposium on Theory of
+  Computing, STOC 2024}, pages 1118--1129. ACM, 2024.
+
+\bibitem[GL13]{GolubVanLoan2013MatrixComputations}
+Gene~H. Golub and Charles F.~Van Loan.
+\newblock {\em Matrix Computations}.
+\newblock Johns Hopkins University Press, fourth edition, 2013.
+
+\bibitem[GR15]{GowerRichtarik2015RandomizedIterative}
+Robert~M. Gower and Peter Richt{\'a}rik.
+\newblock Randomized iterative methods for linear systems.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications},
+  36(4):1660--1690, 2015.
+
+\bibitem[HMT11]{HalkoMartinssonTropp2011FindingStructure}
+Nathan Halko, Per-Gunnar Martinsson, and Joel~A. Tropp.
+\newblock Finding structure with randomness: Probabilistic algorithms for
+  constructing approximate matrix decompositions.
+\newblock {\em SIAM Review}, 53(2):217--288, 2011.
+
+\bibitem[HS52]{HestenesStiefel1952ConjugateGradient}
+Magnus~R. Hestenes and Eduard Stiefel.
+\newblock Methods of conjugate gradients for solving linear systems.
+\newblock {\em Journal of Research of the National Bureau of Standards},
+  49(6):409--436, 1952.
+
+\bibitem[LL10]{LeventhalLewis2010RandomizedConstraints}
+Dennis Leventhal and Adrian~S. Lewis.
+\newblock Randomized methods for linear constraints: Convergence rates and
+  conditioning.
+\newblock {\em Mathematics of Operations Research}, 35(3), 2010.
+
+\bibitem[LS13a]{LeeSidford2013AcceleratedCoordinateDescent}
+Yin~Tat Lee and Aaron Sidford.
+\newblock Efficient accelerated coordinate descent methods and faster
+  algorithms for solving linear systems.
+\newblock In {\em 2013 IEEE 54th Annual Symposium on Foundations of Computer
+  Science, FOCS 2013}, pages 147--156. IEEE Computer Society, 2013.
+
+\bibitem[LS13b]{LiesenStrakos2013Krylov}
+J{\"o}rg Liesen and Zden{\v{e}}k Strako{\v{s}}.
+\newblock {\em Krylov Subspace Methods: Principles and Analysis}.
+\newblock Oxford University Press, 2013.
+
+\bibitem[MT20]{MartinssonTropp2020RandNLA}
+Per-Gunnar Martinsson and Joel~A. Tropp.
+\newblock Randomized numerical linear algebra: Foundations and algorithms.
+\newblock {\em Acta Numerica}, 29:403--572, 2020.
+
+\bibitem[PS82]{PaigeSaunders1982LSQR}
+Christopher~C. Paige and Michael~A. Saunders.
+\newblock {LSQR}: An algorithm for sparse linear equations and sparse least
+  squares.
+\newblock {\em ACM Transactions on Mathematical Software}, 8(1):43--71, 1982.
+
+\bibitem[RT08]{RokhlinTygert2008FastRandomizedLeastSquares}
+Vladimir Rokhlin and Mark Tygert.
+\newblock A fast randomized algorithm for overdetermined linear least-squares
+  regression.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  105(36):13212--13217, 2008.
+
+\bibitem[Sar06]{Sarlos2006RandomProjections}
+Tam{\'a}s Sarl{\'o}s.
+\newblock Improved approximation algorithms for large matrices via random
+  projections.
+\newblock In {\em 47th Annual IEEE Symposium on Foundations of Computer
+  Science, FOCS 2006}, pages 143--152. IEEE Computer Society, 2006.
+
+\bibitem[SS86]{SaadSchultz1986GMRES}
+Youcef Saad and Martin~H. Schultz.
+\newblock {GMRES}: A generalized minimal residual algorithm for solving
+  nonsymmetric linear systems.
+\newblock {\em SIAM Journal on Scientific and Statistical Computing},
+  7(3):856--869, 1986.
+
+\bibitem[Str69]{Strassen1969GaussianElimination}
+Volker Strassen.
+\newblock Gaussian elimination is not optimal.
+\newblock {\em Numerische Mathematik}, 13(4):354--356, 1969.
+
+\bibitem[SV09]{StrohmerVershynin2009RandomizedKaczmarz}
+Thomas Strohmer and Roman Vershynin.
+\newblock A randomized {Kaczmarz} algorithm with exponential convergence.
+\newblock {\em Journal of Fourier Analysis and Applications}, 15(2):262--278,
+  2009.
+
+\end{thebibliography}
