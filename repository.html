@@ -184,6 +184,20 @@
           <li>
             <details class="paper-entry">
               <summary>
+                <span class="paper-title">Conditional hardness for averaged-condition linear-system solvers</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/averaged-condition-hardness/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/bd83e0d31eb37e292d59f8b42cb218c65af4f00d" title="View the commit that added this paper">Added August 1, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> For a nonsingular <i>N</i>-by-<i>N</i> matrix <i>A</i>, let <i>&kappa;&#772;</i><sub><i>p</i></sub>(<i>A</i>) be its finite-<i>p</i> averaged condition number. Consider high-accuracy bit-complexity algorithms with running time, up to polylogarithmic factors, either nnz(<i>A</i>)<i>&kappa;&#772;</i><sub><i>p</i></sub>(<i>A</i>) or <i>N</i><sup>2</sup><i>&kappa;&#772;</i><sub><i>p</i></sub>(<i>A</i>). Assume that dense <i>n</i>-by-<i>n</i> systems of condition number <i>&kappa;</i> = <i>n</i><sup><i>&alpha;</i></sup> require &Omega;&#771;(min{<i>n</i><sup><i>&omega;</i></sup>, <i>n</i><sup>2+<i>&alpha;</i>/2</sup>}) bit operations on an infinite hard family, and write <i>&beta;</i>(<i>&alpha;</i>) = min{<i>&omega;</i>, 2 + <i>&alpha;</i>/2}. Under this hypothesis, no sparsity-sensitive solver of the first type exists for any fixed finite <i>p</i> &lt; max{(<i>&beta;</i>(<i>&alpha;</i>) &minus; 1)/<i>&alpha;</i>, 1/(2 + <i>&alpha;</i> &minus; <i>&beta;</i>(<i>&alpha;</i>))}, and no dense-access solver of the second type exists for any fixed <i>p</i> &lt; (<i>&beta;</i>(<i>&alpha;</i>) &minus; 2)/(2<i>&alpha;</i>). In the mildly conditioned regime 0 &lt; <i>&alpha;</i> &lt; 2<i>&omega;</i> &minus; 4, the dense threshold is <i>p</i> &lt; 1/4, while the sparse threshold includes <i>p</i> &lt; 2/<i>&alpha;</i> whenever <i>&alpha;</i> &lt; 2. If the dense lower-bound hypothesis holds for arbitrarily small positive <i>&alpha;</i>, the sparse result rules out every fixed finite <i>p</i>, and the dense result rules out every fixed <i>p</i> &lt; 1/4. The reduction appends decoupled identity coordinates, optimizes the amount of padding, and recovers the original high-accuracy solution by projection; the output guarantee is constant relative forward error.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details class="paper-entry">
+              <summary>
                 <span class="paper-title">Convergence of normalized residuals for restarted conjugate gradients of length two</span>
                 <span class="paper-links">
                   <a class="paper-pdf" href="repo/restarted-cg-two/paper.pdf">PDF</a>
