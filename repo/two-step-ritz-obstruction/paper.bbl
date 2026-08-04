@@ -1,0 +1,67 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{ABB{\etalchar{+}}26}
+
+\bibitem[ABB{\etalchar{+}}26]{AmselEtAl2026LinearSystems}
+Noah Amsel, Yves Baumann, Paul Beckman, Peter B{\"u}rgisser, Chris Cama{\~n}o,
+  Tyler Chen, Edmond Chow, Anil Damle, Michal Derezinski, Mark Embree, Ethan~N.
+  Epperly, Robert Falgout, Mark Fornace, Anne Greenbaum, Chen Greif, Diana
+  Halikias, Zhen Huang, Elias Jarlebring, Yiannis Koutis, Daniel Kressner,
+  Rasmus Kyng, J{\"o}rg Liesen, Jackie Lok, Raphael~A. Meyer, Yuji Nakatsukasa,
+  Kate Pearce, Richard Peng, David Persson, Eliza Rebrova, Ryan Schneider,
+  Rikhav Shah, Edgar Solomonik, Nikhil Srivastava, Alex Townsend, Robert~J.
+  Webber, and Jess Williams.
+\newblock Linear systems and eigenvalue problems: Open questions from a
+  {Simons} workshop, 2026.
+
+\bibitem[Arn51]{Arnoldi1951MinimizedIterations}
+Walter~Edwin Arnoldi.
+\newblock The principle of minimized iterations in the solution of the matrix
+  eigenvalue problem.
+\newblock {\em Quarterly of Applied Mathematics}, 9(1):17--29, 1951.
+
+\bibitem[BF60]{BauerFike1960NormsExclusion}
+F.~L. Bauer and C.~T. Fike.
+\newblock Norms and exclusion theorems.
+\newblock {\em Numerische Mathematik}, 2:137--141, 1960.
+
+\bibitem[CH13]{CardenHansen2013NormalRitz}
+Russell Carden and Derek~J. Hansen.
+\newblock {Ritz} values of normal matrices and {Ceva}'s theorem.
+\newblock {\em Linear Algebra and its Applications}, 438(11):4114--4129, 2013.
+
+\bibitem[DM12]{DuintjerTebbensMeurant2012AnyRitz}
+Jurjen {Duintjer Tebbens} and G{\'e}rard Meurant.
+\newblock Any {Ritz} value behavior is possible for {Arnoldi} and for {GMRES}.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications},
+  33(3):958--978, 2012.
+
+\bibitem[Gra93]{Gragg1993ArnoldiIsometric}
+William~B. Gragg.
+\newblock Positive definite {Toeplitz} matrices, the {Arnoldi} process for
+  isometric operators, and {Gaussian} quadrature on the unit circle.
+\newblock {\em Journal of Computational and Applied Mathematics},
+  46(1--2):183--198, 1993.
+
+\bibitem[KW92]{KuczynskiWozniakowski1992RandomStart}
+Jacek Kuczy{\'n}ski and Henryk Wo{\'z}niakowski.
+\newblock Estimating the largest eigenvalue by the power and {Lanczos}
+  algorithms with a random start.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications},
+  13(4):1094--1122, 1992.
+
+\bibitem[Saa80]{Saad1980VariationsArnoldi}
+Yousef Saad.
+\newblock Variations on {Arnoldi}'s method for computing eigenelements of large
+  unsymmetric matrices.
+\newblock {\em Linear Algebra and its Applications}, 34:269--295, 1980.
+
+\bibitem[Sha25]{Shah2025RandomCompressions}
+Rikhav Shah.
+\newblock The pseudospectrum of random compressions of matrices, 2025.
+
+\bibitem[Tre99]{Trefethen1999ComputationPseudospectra}
+Lloyd~N. Trefethen.
+\newblock Computation of pseudospectra.
+\newblock {\em Acta Numerica}, 8:247--295, 1999.
+
+\end{thebibliography}
