@@ -1,0 +1,167 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{BGVKS23}
+
+\bibitem[ABB{\etalchar{+}}26]{amselEtAl2026OpenQuestions}
+Noah Amsel, Yves Baumann, Paul Beckman, Peter B{\"u}rgisser, Chris Cama{\~n}o,
+  Tyler Chen, Edmond Chow, Anil Damle, Michal Derezinski, Mark Embree, Ethan~N.
+  Epperly, Robert Falgout, Mark Fornace, Anne Greenbaum, Chen Greif, Diana
+  Halikias, Zhen Huang, Elias Jarlebring, Yiannis Koutis, Daniel Kressner,
+  Rasmus Kyng, J{\"o}rg Liesen, Jackie Lok, Raphael~A. Meyer, Yuji Nakatsukasa,
+  Kate Pearce, Richard Peng, David Persson, Eliza Rebrova, Ryan Schneider,
+  Rikhav Shah, Edgar Solomonik, Nikhil Srivastava, Alex Townsend, Robert~J.
+  Webber, and Jess Williams.
+\newblock Linear systems and eigenvalue problems: Open questions from a
+  {Simons} workshop, 2026.
+\newblock arXiv:2602.05394.
+
+\bibitem[Arb92]{arbenz1992Bandsymmetric}
+Peter Arbenz.
+\newblock Divide and conquer algorithms for the bandsymmetric eigenvalue
+  problem.
+\newblock {\em Parallel Computing}, 18(10):1105--1128, 1992.
+
+\bibitem[BGVKS23]{banksEtAl2023PseudospectralShattering}
+Jess Banks, Jorge Garza-Vargas, Archit Kulkarni, and Nikhil Srivastava.
+\newblock Pseudospectral shattering, the sign function, and diagonalization in
+  nearly matrix multiplication time.
+\newblock {\em Foundations of Computational Mathematics}, 23:1959--2047, 2023.
+
+\bibitem[BHS07]{bellissardHislopStolz2007CorrelationEstimates}
+Jean~V. Bellissard, Peter~D. Hislop, and G{\"u}nter Stolz.
+\newblock Correlation estimates in the {Anderson} model.
+\newblock {\em Journal of Statistical Physics}, 129(4):649--662, 2007.
+
+\bibitem[BMW67]{barthMartinWilkinson1967Bisection}
+W.~Barth, R.~S. Martin, and J.~H. Wilkinson.
+\newblock Calculation of the eigenvalues of a symmetric tridiagonal matrix by
+  the method of bisection.
+\newblock {\em Numerische Mathematik}, 9:386--393, 1967.
+
+\bibitem[DMPV08]{demmelEtAl2008TridiagonalEigensolvers}
+James~W. Demmel, Osni~A. Marques, Beresford~N. Parlett, and Christof V{\"o}mel.
+\newblock Performance and accuracy of {LAPACK}'s symmetric tridiagonal
+  eigensolvers.
+\newblock {\em SIAM Journal on Scientific Computing}, 30(3):1508--1526, 2008.
+
+\bibitem[DP04]{dhillonParlett2004MultipleRepresentations}
+Inderjit~S. Dhillon and Beresford~N. Parlett.
+\newblock Multiple representations to compute orthogonal eigenvectors of
+  symmetric tridiagonal matrices.
+\newblock {\em Linear Algebra and its Applications}, 387:1--28, 2004.
+
+\bibitem[DPV05]{dhillonParlettVomel2005GluedMatrices}
+Inderjit~S. Dhillon, Beresford~N. Parlett, and Christof V{\"o}mel.
+\newblock Glued matrices and the {MRRR} algorithm.
+\newblock {\em SIAM Journal on Scientific Computing}, 27(2):496--510, 2005.
+
+\bibitem[DPV06]{dhillonParlettVomel2006DesignMRRR}
+Inderjit~S. Dhillon, Beresford~N. Parlett, and Christof V{\"o}mel.
+\newblock The design and implementation of the {MRRR} algorithm.
+\newblock {\em ACM Transactions on Mathematical Software}, 32(4):533--560,
+  2006.
+
+\bibitem[GSU01]{ganstererEtAl2001SymmetricBand}
+Wilfried Gansterer, Josef Schneid, and Christoph Ueberhuber.
+\newblock A low-complexity divide-and-conquer method for computing eigenvalues
+  and eigenvectors of symmetric band matrices.
+\newblock {\em BIT Numerical Mathematics}, 41(5):967--976, 2001.
+
+\bibitem[GWMG03]{ganstererEtAl2003BlockTridiagonal}
+Wilfried~N. Gansterer, Robert~C. Ward, Richard~P. Muller, and William~A.
+  Goddard, III.
+\newblock Computing approximate eigenpairs of symmetric block tridiagonal
+  matrices.
+\newblock {\em SIAM Journal on Scientific Computing}, 25(1):65--85, 2003.
+
+\bibitem[LXES19]{liEtAl2019EVSL}
+Ruipeng Li, Yuanzhe Xi, Lucas Erlandson, and Yousef Saad.
+\newblock The eigenvalues slicing library ({EVSL}): Algorithms, implementation,
+  and software.
+\newblock {\em SIAM Journal on Scientific Computing}, 41(4):C393--C415, 2019.
+
+\bibitem[LXV{\etalchar{+}}16]{liEtAl2016ThickRestartFiltering}
+Ruipeng Li, Yuanzhe Xi, Eugene Vecharynski, Chao Yang, and Yousef Saad.
+\newblock A thick-restart {Lanczos} algorithm with polynomial filtering for
+  {Hermitian} eigenvalue problems.
+\newblock {\em SIAM Journal on Scientific Computing}, 38(4):A2512--A2534, 2016.
+
+\bibitem[MDV20]{marquesDemmelVasconcelos2020BidiagonalSVD}
+Osni~A. Marques, James~W. Demmel, and Paulo~B. Vasconcelos.
+\newblock Bidiagonal {SVD} computation via an associated tridiagonal
+  eigenproblem.
+\newblock {\em ACM Transactions on Mathematical Software}, 46(2):14:1--14:25,
+  2020.
+
+\bibitem[MPV06]{marquesParlettVomel2006Subsets}
+Osni~A. Marques, Beresford~N. Parlett, and Christof V{\"o}mel.
+\newblock Computations of eigenpair subsets with the {MRRR} algorithm.
+\newblock {\em Numerical Linear Algebra with Applications}, 13(8):643--653,
+  2006.
+
+\bibitem[PD00]{parlettDhillon2000RelativelyRobust}
+Beresford~N. Parlett and Inderjit~S. Dhillon.
+\newblock Relatively robust representations of symmetric tridiagonals.
+\newblock {\em Linear Algebra and its Applications}, 309(1--3):121--151, 2000.
+
+\bibitem[Sha25]{shah2025HermitianDiagonalization}
+Rikhav Shah.
+\newblock Hermitian diagonalization in linear precision.
+\newblock In {\em Proceedings of the 2025 Annual ACM-SIAM Symposium on Discrete
+  Algorithms (SODA)}, pages 5599--5615. Society for Industrial and Applied
+  Mathematics, 2025.
+
+\bibitem[{\v{S}}K21]{susnjaraKressner2021Banded}
+Ana {\v{S}}u{\v{s}}njara and Daniel Kressner.
+\newblock A fast spectral divide-and-conquer method for banded matrices.
+\newblock {\em Numerical Linear Algebra with Applications}, 28(4):e2365, 2021.
+
+\bibitem[Sob25]{sobczyk2025HermitianEigenproblems}
+Aleksandros Sobczyk.
+\newblock Deterministic complexity analysis of hermitian eigenproblems.
+\newblock In {\em 52nd International Colloquium on Automata, Languages, and
+  Programming (ICALP 2025)}, volume 334 of {\em Leibniz International
+  Proceedings in Informatics (LIPIcs)}, pages 131:1--131:21. Schloss Dagstuhl
+  -- Leibniz-Zentrum f{\"u}r Informatik, 2025.
+
+\bibitem[TP14]{tangPolizzi2014FEAST}
+Ping Tak~Peter Tang and Eric Polizzi.
+\newblock {FEAST} as a subspace iteration eigensolver accelerated by
+  approximate spectral projection.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications},
+  35(2):354--390, 2014.
+
+\bibitem[VXCB16]{vogelEtAl2016StructuredEigenvalue}
+James Vogel, Jianlin Xia, Stephen Cauley, and Venkataramanan Balakrishnan.
+\newblock Superfast divide-and-conquer method and perturbation analysis for
+  structured eigenvalue solutions.
+\newblock {\em SIAM Journal on Scientific Computing}, 38(3):A1358--A1382, 2016.
+
+\bibitem[Wil62]{wilkinson1962InverseIteration}
+J.~H. Wilkinson.
+\newblock Calculation of the eigenvectors of a symmetric tridiagonal matrix by
+  inverse iteration.
+\newblock {\em Numerische Mathematik}, 4:368--376, 1962.
+
+\bibitem[WL12]{willemsLang2012MR3GK}
+Paul~R. Willems and Bruno Lang.
+\newblock The {MR}$^3$-{GK} algorithm for the bidiagonal {SVD}.
+\newblock {\em Electronic Transactions on Numerical Analysis}, 39:1--21, 2012.
+
+\bibitem[WL13]{willemsLang2013FrameworkMR3}
+Paul~R. Willems and Bruno Lang.
+\newblock A framework for the {MR}$^3$ algorithm: Theory and implementation.
+\newblock {\em SIAM Journal on Scientific Computing}, 35(2):A740--A766, 2013.
+
+\bibitem[WLV06]{willemsLangVomel2006BidiagonalSVD}
+Paul~R. Willems, Bruno Lang, and Christof V{\"o}mel.
+\newblock Computing the bidiagonal {SVD} using multiple relatively robust
+  representations.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications},
+  28(4):907--926, 2006.
+
+\bibitem[XS16]{xiSaad2016LeastSquaresRationalFilters}
+Yuanzhe Xi and Yousef Saad.
+\newblock Computing partial spectra with least-squares rational filters.
+\newblock {\em SIAM Journal on Scientific Computing}, 38(5):A3020--A3045, 2016.
+
+\end{thebibliography}
