@@ -184,6 +184,20 @@
           <li>
             <details class="paper-entry">
               <summary>
+                <span class="paper-title">Selected eigenpairs of fixed-bandwidth positive definite matrices in bit complexity</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/fixed-bandwidth-eigenpairs/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/69c6dddc234d3342474354bef752308a741220ff" title="View the commit that added this paper">Added August 4, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> Let <i>A</i> be an <i>n</i>&times;<i>n</i> real symmetric positive definite matrix of fixed half-bandwidth <i>w</i>, with nonzero integer entries of O(log <i>n</i>) bits and spectrum contained in [<i>n</i><sup>&minus;10</sup>, <i>n</i><sup>10</sup>]. Given 1 &le; <i>k</i> &le; <i>n</i> and dyadic 0 &lt; <i>&epsilon;</i>, <i>&delta;</i> &le; 1/4, we give a randomized finite-bit algorithm that terminates on every random branch and, with probability at least 1 &minus; 9<i>&delta;</i>/64 &gt; 1 &minus; <i>&delta;</i>, returns approximations to the leading <i>k</i> eigenpairs, equivalently the leading symmetric singular triples. Each returned unit vector <i>q</i><sub><i>i</i></sub> is represented by a nonzero finite dyadic vector <i>y</i><sub><i>i</i></sub>, interpreted as <i>y</i><sub><i>i</i></sub>/&radic;(<i>y</i><sub><i>i</i></sub><sup>T</sup><i>y</i><sub><i>i</i></sub>), and the nonnegative dyadic eigenvalue estimate <i>&sigma;&#770;</i><sub><i>i</i></sub> satisfies &#8214;<i>Aq</i><sub><i>i</i></sub> &minus; <i>&sigma;&#770;</i><sub><i>i</i></sub><i>q</i><sub><i>i</i></sub>&#8214;<sub>2</sub> &le; <i>C</i><sub><i>w</i></sub><i>&epsilon;</i>&#8214;<i>A</i>&#8214;<sub>2</sub>, |<i>q</i><sub><i>i</i></sub><sup>T</sup><i>q</i><sub><i>j</i></sub>| &le; <i>C</i><sub><i>w</i></sub><i>&epsilon;</i> for <i>i</i> &ne; <i>j</i>, and |<i>&sigma;&#770;</i><sub><i>i</i></sub> &minus; <i>&lambda;</i><sub><i>i</i></sub>(<i>A</i>)| &le; <i>C</i><sub><i>w</i></sub><i>&epsilon;</i>&#8214;<i>A</i>&#8214;<sub>2</sub>. For <i>Q</i> = [<i>q</i><sub>1</sub> &middot;&middot;&middot; <i>q</i><sub><i>k</i></sub>], the algorithm also guarantees &#8214;<i>Q</i><sup>T</sup><i>Q</i> &minus; <i>I</i>&#8214;<sub>2</sub> &le; <i>C</i><sub><i>w</i></sub><i>k&epsilon;</i>. If <i>L</i> = 1 + <i>b</i><sub><i>&epsilon;</i></sub> + <i>b</i><sub><i>&delta;</i></sub> + &lceil;log<sub>2</sub>(<i>n</i>/(<i>&epsilon;&delta;</i>))&rceil;, where <i>b</i><sub><i>&epsilon;</i></sub> and <i>b</i><sub><i>&delta;</i></sub> are the canonical binary encoding lengths, its worst-case cost is O<sub><i>w</i></sub>(<i>nkL</i><sup>3</sup>) bit operations, it uses O(<i>nL</i> + <i>kL</i><sup>2</sup>) random bits, and its output uses O(<i>nkL</i>) bits. The special case in which <i>&epsilon;</i><sup>&minus;1</sup> and <i>&delta;</i><sup>&minus;1</sup> are polynomial in <i>n</i> and their encodings have O(log <i>n</i>) bits therefore costs O<sub><i>w</i></sub>(<i>nk</i> log<sup>3</sup> <i>n</i>) bit operations. No input eigengap is assumed. The construction uses a finite-bit diagonal perturbation, guarded banded Sturm bisection, and a multishift bank of shifted-inverse polynomial filters.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details class="paper-entry">
+              <summary>
                 <span class="paper-title">A diagonalizable obstruction for random two-step Ritz compressions</span>
                 <span class="paper-links">
                   <a class="paper-pdf" href="repo/two-step-ritz-obstruction/paper.pdf">PDF</a>
