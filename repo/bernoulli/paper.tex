@@ -1,0 +1,522 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\definecolor{linkblue}{RGB}{35,72,139}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkblue,
+  citecolor=linkblue,
+  urlcolor=linkblue,
+  pdftitle={Short proof of the Bernoulli conjecture}
+}
+
+\AtBeginDocument{
+  \setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}
+  \setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}
+  \setlength{\abovedisplayshortskip}{4pt plus 2pt}
+  \setlength{\belowdisplayshortskip}{5pt plus 2pt minus 2pt}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}
+
+\newcommand{\E}{\mathbb E}
+\newcommand{\Pp}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\cx}{\preceq_{\mathrm{cx}}}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+
+\title[Short proof of the Bernoulli conjecture]
+{Short proof of the Bernoulli conjecture}
+\author{}
+\date{August 11, 2026}
+\subjclass[2020]{60G50, 60G15, 60E15, 46B09}
+\keywords{Bernoulli theorem, convex comparison, Gaussian processes,
+randomized rounding}
+
+\begin{document}
+
+\begin{abstract}
+We give a short proof of the Bernoulli conjecture. The proof was produced
+by an internal model at OpenAI.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Let $\varepsilon=(\varepsilon_i)_{i\in I}$ have independent uniform sign
+coordinates, and let $G=(g_i)_{i\in I}$ have independent standard Gaussian
+coordinates. For a nonempty $T\subset\ell^2(I)$, write
+\[
+ b(T)=\E\sup_{t\in T}\sum_{i\in I}t_i\varepsilon_i,
+ \qquad
+ g(T)=\E\sup_{t\in T}\sum_{i\in I}t_i g_i,
+\]
+with the usual finite-subset interpretation. Recall that $X\cx Y$ means
+$\E\Phi(X)\leq\E\Phi(Y)$ for every convex $\Phi$ for which the expectations
+are defined.
+
+\begin{theorem}[Bernoulli conjecture]\label{thm:bernoulli}
+There is a universal constant $C$ such that, whenever
+$\varnothing\ne T\subset\ell^2(I)$ and $b(T)<\infty$, there exist
+$U\subset\ell^1(I)$ and $V\subset\ell^2(I)$ such that
+\[
+ T\subset U+V,
+ \qquad
+ \sup_{u\in U}\|u\|_1\leq Cb(T),
+ \qquad
+ g(V)\leq Cb(T).
+\]
+\end{theorem}
+
+The conjecture was proposed by Talagrand~\cite{Talagrand} and first proved
+by Bednorz and Lata\l a~\cite{BednorzLatala}. Our proof does not invoke
+their theorem. Its main input is the subgaussian convex-comparison theorem
+of van Handel~\cite{vanHandel}. The key input for
+\cref{thm:bernoulli} is the following convex domination result.
+
+\begin{theorem}[Gaussian-to-Bernoulli comparison]\label{thm:comparison}
+There is a universal constant $C_0$ such that, for every
+$G\sim N(0,I_n)$ and every uniform
+$\varepsilon\in\{-1,1\}^n$,
+\[
+ X\cx G,\qquad \|X\|_\infty\leq1\quad\text{almost surely}
+ \quad\Longrightarrow\quad
+ X\cx C_0\varepsilon.
+\]
+\end{theorem}
+
+We use van Handel's Gaussian comparison in the following form: for a
+universal $C_G$, if $Y$ is centered and
+\begin{equation}\label{eq:subgaussian}
+ \log\E e^{\ip{a}{Y}}
+ \leq\frac{K^2}{2}\|a\|_2^2
+ \qquad(a\in\R^n),
+\end{equation}
+then $Y\cx C_GK G'$, where $G'\sim N(0,I_n)$
+\cite{vanHandel}. By Strassen's theorem~\cite{Strassen}, this is
+equivalent to the existence of a martingale coupling with
+\begin{equation}\label{eq:gaussian-martingale}
+ Y=C_GK\E[G'\mid Y].
+\end{equation}
+
+\smallskip
+\noindent\textbf{Acknowledgment.}
+We thank Ramon van Handel for various helpful comments.
+
+\smallskip
+\noindent\textbf{Note on concurrent work:}
+During the preparation of this manuscript, we learned of an independent
+alternate proof of the Bernoulli conjecture by Liu and
+Zadik~\cite{LiuZadik}.
+
+\section{Reduction to
+  \texorpdfstring{\cref{thm:comparison}}
+                 {Theorem \getrefnumber{thm:comparison}}}
+\label{sec:reduction}
+
+We first give the reduction from \cref{thm:bernoulli} to
+\cref{thm:comparison}.
+
+\begin{proof}
+By the standard finite-section and compactness reduction, it suffices to
+prove \cref{thm:bernoulli} for a finite
+$T\subset\R^n$. Set
+\begin{equation}\label{eq:D}
+ D(T)=\inf_{(v_t)_{t\in T}}
+ \left\{
+   \max_{t\in T}\|t-v_t\|_1
+   +\E\max_{t\in T}\ip{v_t}{G}
+ \right\}.
+\end{equation}
+For a measurable probability kernel $q=(q_t)_{t\in T}$, put
+\[
+ q_t\geq0,\qquad \sum_{t\in T}q_t=1,
+ \qquad
+ m_t=\E[Gq_t(G)].
+\]
+We claim that
+\begin{equation}\label{eq:minimax}
+ D(T)=
+ \sup_{q}
+ \left\{
+   \sum_{t\in T}\ip{t}{m_t}:
+   \sum_{t\in T}\|m_t\|_\infty\leq1
+ \right\}.
+\end{equation}
+Indeed,
+\begin{align*}
+ \max_t\|t-v_t\|_1
+  &=\sup_{\sum_t\|z_t\|_\infty\leq1}
+      \sum_t\ip{t-v_t}{z_t},\\
+ \E\max_t\ip{v_t}{G}
+  &=\sup_q\sum_t\ip{v_t}{m_t}.
+\end{align*}
+The kernels form a weakly compact convex subset of
+$L^2(\gamma_n)^{T}$, so one application of minimax gives
+\[
+ D(T)=
+ \sup_{\substack{\sum_t\|z_t\|_\infty\leq1\\q_t\geq0,\ \sum_tq_t=1}}
+ \inf_{(v_t)}
+ \left\{
+   \sum_t\ip{t}{z_t}
+   +\sum_t\ip{v_t}{m_t-z_t}
+ \right\}.
+\]
+The inner infimum is finite only when $z_t=m_t$ for every $t$:
+if $m_s\ne z_s$, take
+$v_s=-R(m_s-z_s)$ and $v_t=0$ for $t\ne s$ and let
+$R\to\infty$. In the remaining case the inner expression is
+$\sum_t\ip{t}{m_t}$. This proves~\eqref{eq:minimax} and, in
+particular, explains precisely why the dual variable is forced to equal
+the Gaussian barycenter.
+
+Fix an admissible kernel in~\eqref{eq:minimax}, and write
+$p_t=\E q_t(G)$ and $a_t=\|m_t\|_\infty$.
+Since $\sum_t(a_t-p_t)_+\leq\sum_ta_t\leq1$, choose a probability
+vector $r=(r_t)_{t\in T}$ such that
+$r_t\geq(a_t-p_t)_+$. Toss an independent fair coin. On heads,
+sample a label $J$ from $q(G)$; on tails, sample $J$ independently
+of $G$ with distribution $r$. Then
+\[
+ \Pp(J=t)=\frac{p_t+r_t}{2},
+ \qquad
+ \E\bigl[G\mathbf1_{\{J=t\}}\bigr]=\frac{m_t}{2}.
+\]
+Consequently $X=\E[G\mid J]$ satisfies $X\cx G$, and on every
+positive-probability event $\{J=t\}$,
+\[
+ X=\frac{m_t}{p_t+r_t},
+ \qquad
+ \|X\|_\infty=\frac{a_t}{p_t+r_t}\leq1.
+\]
+Apply \cref{thm:comparison} to the convex function
+$\Phi(x)=\max_{t\in T}\ip{t}{x}$. We obtain
+\[
+ \frac12\sum_{t\in T}\ip{t}{m_t}
+   =\E\ip{J}{X}
+   \leq\E\Phi(X)
+   \leq C_0b(T).
+\]
+Taking the supremum in~\eqref{eq:minimax} yields
+$D(T)\leq2C_0b(T)$. The infimum in~\eqref{eq:D} is attained by
+coercivity. For a minimizer $(v_t)$ set
+$U=\{t-v_t:t\in T\}$ and $V=\{v_t:t\in T\}$.
+Both terms in~\eqref{eq:D} are nonnegative. Hence
+\[
+ T\subset U+V,
+ \qquad
+ \sup_{u\in U}\|u\|_1\leq2C_0b(T),
+ \qquad
+ g(V)\leq2C_0b(T),
+\]
+as required.
+\end{proof}
+
+\section{Proof of
+  \texorpdfstring{\cref{thm:comparison}}
+                 {Theorem \getrefnumber{thm:comparison}}}
+\label{sec:lifting}
+
+The first lemma is the finite-support Gaussian case of a
+maximum-entropy martingale bridge. It is a special case of the
+construction of Hua, Song, and
+Tudose~\cite[Proposition~3.3 and Section~4.1]{HuaSongTudose}, applied
+to $X/2\cx G/2$. The general theory of martingale Schr\"odinger bridges
+is developed by Nutz and Wiesel~\cite{NutzWiesel} and by Backhoff,
+Beiglb\"ock, Bifronte, and Ley~\cite{BackhoffEtAl}. We include the
+short argument for completeness.
+
+\begin{lemma}\label{lem:lifting}
+Suppose $X$ has finite support and $X\cx G$. There exists a coupling
+of $X$ and $G\sim N(0,I_n)$ such that
+\begin{equation}\label{eq:half-lifting}
+ \E[G\mid X]=\tfrac12X,
+\end{equation}
+and each conditional distribution $G\mid\{X=x\}$ has an everywhere
+positive, $1$-strongly log-concave density. Among couplings satisfying
+\eqref{eq:half-lifting}, this coupling uniquely maximizes $H(X\mid G)$.
+\end{lemma}
+
+\begin{proof}
+Write $\Pp(X=x_j)=p_j>0$ for $1\leq j\leq m$.
+Convex comparison gives $\E X=0$. Set $a_m=0$, $b_m=0$, and
+$\ell_j(g)=a_j+\ip{b_j}{g}$. Consider
+\begin{equation}\label{eq:partition}
+ P(a,b)=
+ \E\log\sum_{j=1}^m e^{\ell_j(G)}
+ -\sum_{j=1}^mp_j
+    \left(a_j+\tfrac12\ip{b_j}{x_j}\right).
+\end{equation}
+Let $h=\E\max_j\ell_j(G)$. Since log-sum-exp dominates the maximum,
+\begin{equation}\label{eq:coercivity}
+ P(a,b)\geq
+ \tfrac12\left(h-\sum_jp_j\ell_j(x_j)\right)
+ +\tfrac12\E\left[
+     \max_j\ell_j(G)-\sum_jp_j\ell_j(G)
+   \right].
+\end{equation}
+The first term is nonnegative by $X\cx G$. The second is continuous,
+positively homogeneous, and strictly positive unless all $\ell_j$
+coincide, hence unless $(a,b)=0$. Compactness of the unit sphere now
+shows that $P$ is coercive, so it has a minimizer $(a^*,b^*)$.
+
+Define
+\begin{equation}\label{eq:gibbs}
+ q_j(g)=
+ \frac{e^{a_j^*+\ip{b_j^*}{g}}}
+      {\sum_{k=1}^me^{a_k^*+\ip{b_k^*}{g}}}.
+\end{equation}
+Differentiating~\eqref{eq:partition} gives
+\[
+ \E q_j(G)=p_j,
+ \qquad
+ \E[Gq_j(G)]=\tfrac12p_jx_j
+ \qquad(1\leq j<m).
+\]
+The identities for $j=m$ follow by summation from
+$\E G=\E X=0$. Conditional on $G=g$, assign $X=x_j$ with
+probability $q_j(g)$. This has the prescribed $X$ marginal and
+satisfies~\eqref{eq:half-lifting}.
+
+To see the maximum-entropy claim, let $\tilde q$ be any other kernel
+with the same marginal and barycenter constraints, and write
+$Z(g)=\sum_ke^{a_k^*+\ip{b_k^*}{g}}$ and
+$H(\tilde q)=-\E\sum_j\tilde q_j(G)\log\tilde q_j(G)$.
+Since $\log q_j(g)=a_j^*+\ip{b_j^*}{g}-\log Z(g)$, those
+constraints give
+\[
+ \E\sum_j\tilde q_j(G)\log q_j(G)
+ =\sum_jp_j\left(a_j^*+\tfrac12\ip{b_j^*}{x_j}\right)
+   -\E\log Z(G)
+ =\E\sum_jq_j(G)\log q_j(G).
+\]
+Thus the cross-entropy term is the same for every feasible kernel, and
+\[
+ H(q)-H(\tilde q)
+ =\E\sum_j\tilde q_j(G)
+       \log\frac{\tilde q_j(G)}{q_j(G)}\geq0.
+\]
+Equality holds only when $\tilde q=q$ almost surely. Finally,
+$\log q_j$ is concave because log-sum-exp is convex. Hence the
+conditional Gaussian density
+$g\mapsto[p_j(2\pi)^{n/2}]^{-1}q_j(g)e^{-\|g\|_2^2/2}$
+is everywhere positive and $1$-strongly log-concave.
+\end{proof}
+
+The following is an immediate consequence of the Brascamp--Lieb
+variance inequality~\cite[Theorem~4.1]{BrascampLieb}.
+
+\begin{lemma}\label{lem:variance}
+For the coupling in \cref{lem:lifting},
+\[
+ \operatorname{Var}(G_i\mid X)\leq1,
+ \qquad
+ \E[G_i^2\mid X]\leq1+\tfrac14X_i^2.
+\]
+\end{lemma}
+
+We next record a standard subgaussian estimate needed for
+\cref{lem:rounding}.
+
+\begin{lemma}\label{lem:bernstein}
+Let $V_1,\ldots,V_n$ be independent and centered, with
+$\E e^{|V_i|/\kappa}\leq2$, and let
+$Y_i=\E[V_i\mid\mathcal H]$ satisfy $|Y_i|\leq D$. Then
+\[
+ \log\E e^{\ip{a}{Y}}
+ \leq\max\{4\kappa^2,2\kappa D\}\|a\|_2^2
+ \qquad(a\in\R^n).
+\]
+\end{lemma}
+
+\begin{proof}
+The standard Bernstein moment estimate for a centered subexponential
+variable~\cite[proof of Proposition~2.8.1]{Vershynin} gives
+\[
+ \E e^{sV_i}\leq e^{4\kappa^2s^2}
+ \qquad\text{if }\kappa|s|\leq\tfrac12.
+\]
+Set $A=\{i:\kappa|a_i|>1/2\}$. For $i\in A$,
+$D|a_i|\leq2\kappa D a_i^2$. Thus conditional Jensen and independence
+give
+\[
+ \E e^{\ip{a}{Y}}
+ \leq
+ e^{2\kappa D\sum_{i\in A}a_i^2}
+ \prod_{i\notin A}\E e^{a_iV_i}
+ \leq
+ \exp\left(
+  2\kappa D\sum_{i\in A}a_i^2
+  +4\kappa^2\sum_{i\notin A}a_i^2
+ \right).
+\]
+The claimed bound follows.
+\end{proof}
+
+\begin{lemma}\label{lem:rounding}
+Suppose $\|X\|_\infty\leq1$, and use the coupling of
+\cref{lem:lifting}. For every $L>0$, there exist a uniform
+$\varepsilon\in\{-1,1\}^n$ and a centered $Y\in\R^n$ such that
+\begin{equation}\label{eq:rounding}
+ \tfrac12X=L\E[\varepsilon\mid X]+Y,
+ \qquad
+ \|Y\|_\infty\leq\frac1{2L},
+ \qquad
+ \log\E e^{\ip{a}{Y}}
+ \leq\frac4{L^2}\|a\|_2^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Independently of $(G,X)$, take independent
+$U_i\sim\operatorname{Unif}[-L,L]$ and set
+$\varepsilon_i=\operatorname{sgn}(G_i+U_i)$.
+The pairs $(G_i,U_i)$ are independent and symmetric. Therefore the
+$\varepsilon_i$ are genuinely independent uniform signs; no
+independence conditional on $X$ is asserted or needed. Moreover,
+\[
+ \E[\varepsilon_i\mid G,X]
+ =\operatorname{clip}(G_i/L,-1,1).
+\]
+Define $V_i=\operatorname{sgn}(G_i)(|G_i|-L)_+$ and
+$Y_i=\E[V_i\mid X]$.
+The $V_i$ are independent and centered, and
+$G_i=L\operatorname{clip}(G_i/L,-1,1)+V_i$.
+Taking conditional expectations and
+using~\eqref{eq:half-lifting} proves the first identity
+in~\eqref{eq:rounding}.
+
+The elementary inequality $(r-L)_+\leq r^2/(4L)$ gives
+\[
+ \E e^{L|V_i|}
+ \leq\E e^{G_i^2/4}=\sqrt2\leq2.
+\]
+\cref{lem:variance} and $|X_i|\leq1$ further give
+\[
+ |Y_i|
+ \leq\frac{\E[G_i^2\mid X]}{4L}
+ \leq\frac{1+X_i^2/4}{4L}
+ \leq\frac1{2L}.
+\]
+Apply \cref{lem:bernstein} with
+$\kappa=L^{-1}$ and $D=(2L)^{-1}$ to obtain the final
+bound in~\eqref{eq:rounding}.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:comparison}]
+For a convex $\phi:\R^n\to\R$, write
+\[
+ S_\phi=\sup\bigl\{\E\phi(X):X\cx G,\ \|X\|_\infty\leq1\bigr\}<\infty.
+\]
+It suffices to show that $S_\phi\leq\E\phi(C_0\varepsilon)$ for every
+convex $\phi$. Conditional expectation on increasingly fine finite
+partitions of the cube shows that the supremum defining $S_\phi$ may be
+taken over finite-valued $X$.
+
+Set $C_* =\max\{2\sqrt2C_G,1/2\}$, fix $L>2C_*$, and put
+$\lambda=C_*/L$ and $C_0=2L/(1-2\lambda)$. For each finite-valued
+admissible $X$, \cref{lem:rounding} and Gaussian
+comparison~\eqref{eq:gaussian-martingale} yield a uniform sign vector
+$\varepsilon$ and $G'\sim N(0,I_n)$ such that
+\[
+ \tfrac12X=L\E[\varepsilon\mid X]+\lambda Z,
+ \qquad Z=\E[G'\mid X].
+\]
+Jensen gives $Z\cx G$, and \cref{lem:rounding} gives
+\[
+ \|Z\|_\infty\leq\frac1{2L\lambda}
+ =\frac1{2C_*}\leq1,
+ \qquad
+ X=(1-2\lambda)\E[C_0\varepsilon\mid X]+2\lambda Z.
+\]
+Thus another application of Jensen gives
+\[
+ \E\phi(X)
+ \leq(1-2\lambda)\E\phi(C_0\varepsilon)
+      +2\lambda\E\phi(Z)
+ \leq(1-2\lambda)\E\phi(C_0\varepsilon)+2\lambda S_\phi.
+\]
+Taking the supremum over $X$ and using $2\lambda<1$ yields
+$S_\phi\leq\E\phi(C_0\varepsilon)$, as claimed.
+\end{proof}
+
+\begin{thebibliography}{99}
+
+\bibitem{BackhoffEtAl}
+J.~Backhoff, M.~Beiglb\"ock, G.~Bifronte, and A.~Ley,
+\emph{Bridging classical and martingale Schr\"odinger bridges},
+2026, \href{https://arxiv.org/abs/2604.01299}{arXiv:2604.01299}.
+
+\bibitem{BednorzLatala}
+W.~Bednorz and R.~Lata\l a,
+\emph{On the boundedness of Bernoulli processes},
+Ann. of Math. (2) \textbf{180} (2014), 1167--1203,
+\href{https://doi.org/10.4007/annals.2014.180.3.8}
+{doi:10.4007/annals.2014.180.3.8}.
+
+\bibitem{BrascampLieb}
+H.~J.~Brascamp and E.~H.~Lieb,
+\emph{On extensions of the Brunn--Minkowski and
+Pr\'ekopa--Leindler theorems, including inequalities for log concave
+functions, and with an application to the diffusion equation},
+J. Funct. Anal. \textbf{22} (1976), 366--389,
+\href{https://doi.org/10.1016/0022-1236(76)90004-5}
+{doi:10.1016/0022-1236(76)90004-5}.
+
+\bibitem{HuaSongTudose}
+D.~M.~Hua, A.~Song, and S.~Tudose,
+\emph{On Talagrand's Convexity Conjecture},
+2026, \href{https://arxiv.org/abs/2605.10908}{arXiv:2605.10908}.
+
+\bibitem{LiuZadik}
+J.~Liu and I.~Zadik,
+\emph{A Bayesian Proof of the Bernoulli Theorem},
+2026, \href{https://arxiv.org/abs/2608.11031}{arXiv:2608.11031}.
+
+\bibitem{NutzWiesel}
+M.~Nutz and J.~Wiesel,
+\emph{On the martingale Schr\"odinger bridge between two distributions},
+to appear in Bernoulli,
+\href{https://arxiv.org/abs/2401.05209}{arXiv:2401.05209}.
+
+\bibitem{Strassen}
+V.~Strassen,
+\emph{The existence of probability measures with given marginals},
+Ann. Math. Statist. \textbf{36} (1965), 423--439,
+\href{https://doi.org/10.1214/aoms/1177700153}
+{doi:10.1214/aoms/1177700153}.
+
+\bibitem{Talagrand}
+M.~Talagrand,
+\emph{Constructions of majorizing measures, Bernoulli processes and
+cotype},
+Geom. Funct. Anal. \textbf{4} (1994), 660--717,
+\href{https://doi.org/10.1007/BF01896658}{doi:10.1007/BF01896658}.
+
+\bibitem{vanHandel}
+R.~van Handel,
+\emph{On the subgaussian comparison theorem},
+2025, \href{https://arxiv.org/abs/2512.18588}{arXiv:2512.18588}.
+
+\bibitem{Vershynin}
+R.~Vershynin,
+\emph{High-Dimensional Probability: An Introduction with Applications
+in Data Science},
+second ed., Cambridge University Press, Cambridge, 2026,
+\href{https://doi.org/10.1017/9781009490672}
+{doi:10.1017/9781009490672}.
+
+\end{thebibliography}
+
+\end{document}
