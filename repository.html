@@ -184,6 +184,20 @@
           <li>
             <details class="paper-entry">
               <summary>
+                <span class="paper-title">Directed reachability from cut queries in <i>O&#771;</i>(<i>n</i><sup>3/2</sup>) queries</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/directed-reachability-cut-queries/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/9a58c8923feb4c81f92f0a5e31378252380a0751" title="View the commit that added this paper">Added August 12, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> We study directed <i>s</i>&ndash;<i>t</i> reachability when an unknown digraph <i>G</i> = (<i>V</i>, <i>E</i>) is accessible only through an outgoing-cut oracle: a query <i>S</i> &sube; <i>V</i> returns <i>F</i>(<i>S</i>) = |<i>E</i>(<i>S</i>, <i>V</i> &#8726; <i>S</i>)|. We give a randomized adaptive algorithm using <i>n</i><sup>3/2</sup> log<sup><i>O</i>(1)</sup> <i>n</i> queries and succeeding with probability 1 &minus; <i>n</i><sup>&minus;&Omega;(1)</sup>; computation between queries is unrestricted. The conceptual core is a rank-<i>n</i> fractional-orientation linear program. An inverse-polynomially accurate solution induces an implicit threshold digraph having exactly the same zero out-cuts, and hence the same reachability relation, as <i>G</i>. Although the LP has up to &Theta;(<i>n</i><sup>2</sup>) hidden rows, we implement a rank-sensitive Lee&ndash;Sidford box-LP method without materializing them. Our main oracle primitive is a spread-independent weighted spectral sparsifier for pair-evaluable conductances, constructed from cut queries by filtered weighted spanners, bundle leverage bounds, and whole-pair sampling. Duplicate hidden copies are kept block-symmetric. Approximate normal solves are handled by the standard stable Lee&ndash;Sidford interface, and a public star right inverse keeps every primal update exactly feasible. The result breaks the quadratic query barrier for directed reachability posed in recent work on the cut-query model.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details class="paper-entry">
+              <summary>
                 <span class="paper-title">Short proof of the Bernoulli conjecture</span>
                 <span class="paper-links">
                   <a class="paper-pdf" href="repo/bernoulli/paper.pdf">PDF</a>
