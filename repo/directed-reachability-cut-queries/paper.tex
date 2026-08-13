@@ -1,0 +1,2150 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Directed Reachability from Cut Queries in
+            O-tilde(n to the three-halves) Queries},
+  pdfauthor={Anonymous Authors},
+  pdfsubject={Directed graph algorithms, cut-query complexity, and
+              implicit interior-point methods},
+  pdfkeywords={directed reachability, cut queries, spectral sparsification,
+               interior-point methods, Lewis weights}
+}
+
+\allowdisplaybreaks
+\setlist{nosep}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\polylog}{\operatorname{polylog}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\OPT}{\mathrm{OPT}}
+\newcommand{\id}{\mathbf{1}}
+\newcommand{\ones}{\mathbf{1}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prb}{\mathbb{P}}
+\newcommand{\cH}{c_H}
+\newcommand{\Lap}{\mathcal{L}}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ip}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\wtO}{\widetilde O}
+\newcommand{\wtOmega}{\widetilde\Omega}
+\newcommand{\defeq}{\mathrel{:=}}
+
+\title{Directed Reachability from Cut Queries in
+       $\widetilde O(n^{3/2})$ Queries}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study directed $s$--$t$ reachability when an unknown digraph
+$G=(V,E)$ is accessible only through an outgoing-cut oracle: a query
+$S\subseteq V$ returns $F(S)=|E(S,V\setminus S)|$.  We give a randomized
+adaptive algorithm using $n^{3/2}\log^{O(1)}n$ queries and succeeding with
+probability $1-n^{-\Omega(1)}$; computation between queries is unrestricted.
+The conceptual core is a rank-$n$ fractional-orientation linear program.  An
+inverse-polynomially accurate solution induces an implicit threshold digraph
+having exactly the same zero out-cuts, and hence the same reachability
+relation, as $G$.  Although the LP has up to $\Theta(n^2)$ hidden rows, we
+implement a rank-sensitive Lee--Sidford box-LP method without materializing
+them.  Our main oracle primitive is a spread-independent weighted spectral
+sparsifier for pair-evaluable conductances, constructed from cut queries by
+filtered weighted spanners, bundle leverage bounds, and whole-pair sampling.
+Duplicate hidden copies are kept block-symmetric.  Approximate normal solves
+are handled by the standard stable Lee--Sidford interface, and a public star
+right inverse keeps every primal update exactly feasible.  The result
+breaks the quadratic query barrier for directed reachability posed in recent
+work on the cut-query model.
+\end{abstract}
+
+\textbf{Note:} The algorithm and main proof were discovered by an agentic harness developed by George Z. Li and Janardhan Kulkarni that is built on OpenAI’s GPT-5.6 Sol and Gemini 3.1 Pro. 
+
+\section{Introduction}
+
+Let $G=(V,E)$ be an unknown directed graph on $n$ labeled vertices.  For a
+set $S\subseteq V$, define its outgoing cut value by
+\[
+    F(S) \defeq |E(S,V\setminus S)|.
+\]
+The algorithm may adaptively query $F$ on arbitrary sets, but receives no
+other information about $E$.  Given $s,t\in V$, the goal is to decide whether
+$G$ contains a directed path from $s$ to $t$ while minimizing the number of
+queries.  We do not charge computation between queries.
+
+Directed reachability is a particularly stark test of the power of this
+oracle.  The direct reconstruction algorithm uses $O(n^2)$ pair tests, and
+the outgoing-cut function does not determine the orientation of each arc:
+reversing a directed cycle leaves every cut value unchanged.  Nevertheless,
+$F$ directly identifies all zero out-cuts, and those cuts characterize
+reachability.  The question of obtaining any
+$O(n^{2-\gamma})$ bound, for a constant $\gamma>0$, was highlighted as open
+in recent work on cut queries~\cite{JiangNanongkaiSawettamalya2026} and as an
+explicit open problem by Nanongkai~\cite{NanongkaiOpen}.
+
+Our main result gives an exponent $3/2$.
+
+\begin{theorem}[Main theorem]\label{thm:main}
+Let $G=(V,E)$ be a loopless simple directed graph on $n$ vertices (so there
+is at most one copy of each ordered arc), and let $s,t\in V$.  There is a
+randomized adaptive algorithm which, given oracle access to
+$F(S)=|E(S,V\setminus S)|$, decides whether $t$ is reachable from $s$,
+succeeds with probability $1-n^{-\Omega(1)}$, and makes
+\[
+        n^{3/2}\log^{O(1)}n
+\]
+oracle queries.  More generally, if $G$ is a loopless directed multigraph
+and the total number of arc copies in both directions on every unordered
+pair is at most a constant $C$, the same algorithm uses
+$O(Cn^{3/2}\log^{O(1)}n)$ queries.  (The simple-graph case has $C\le2$.)
+Computation between queries is unrestricted, and the displayed query bound
+is a deterministic cap for every random tape.
+\end{theorem}
+
+Self-loops never affect a cut or reachability between distinct vertices and
+may be discarded.  The case $s=t$ is immediate.
+
+\subsection{Overview of the proof}
+
+The proof has four layers.
+
+\paragraph{Cut algebra.}
+For each unordered pair $\{u,v\}$, let
+\[
+ c_{uv}=\id[(u,v)\in E]+\id[(v,u)\in E]\in\{0,1,2\},
+\]
+and let $H$ be the undirected multigraph with $c_{uv}$ copies of
+$\{u,v\}$.  The imbalance
+\[
+ b_v=F(\{v\})-F(V\setminus\{v\})
+\]
+is the outdegree minus the indegree of $v$.  Direct cancellation gives
+\[
+        2F(S)=\cH(\delta S)+b(S).
+\]
+Thus the oracle exposes both the cut function of $H$ and the imbalance
+vector $b$, even though it does not expose the individual directions.
+
+\paragraph{A fractional orientation certificate.}
+Reference-orient every pair $u<v$ from $u$ to $v$ and associate a variable
+$z_{uv}\in[-1,1]$.  It represents the fractional orientation
+\[
+ p_{u\to v}=\frac{1+z_{uv}}2,
+ \qquad p_{v\to u}=\frac{1-z_{uv}}2.
+\]
+We construct $z$ whose divergence is extremely close to $(1-\eta)b$, where
+$\eta=2^{-\lceil12\log_2n\rceil}\le n^{-12}$.  If $P_z(S)$ is the total fractional mass
+leaving $S$, then
+\[
+  2P_z(S)=2(1-\eta)F(S)+\eta\cH(\delta S)+\rho(S),
+  \qquad \norm{\rho}_1\le n^{-20}.
+\]
+It follows that $P_z(S)<n^{-4}$ when $F(S)=0$, whereas
+$P_z(S)>1/2$ when $F(S)>0$.  Thresholding individual fractional arcs at
+$n^{-4}$ therefore preserves every zero out-cut and hence every reachability
+relation.
+
+\paragraph{A hidden rank-$n$ box LP.}
+We obtain $z$ from a Phase-I box LP with one conceptual row per copy in $H$
+and two public star rows per vertex.  It may have $\Theta(n^2)$ rows but has
+rank $n$.  Its optimum is zero: the unknown original orientation itself gives
+a block-symmetric witness.  We apply the rank-sensitive box-LP framework of
+Lee and Sidford~\cite{LeeSidford2020}, which uses
+$\sqrt n\log^{O(1)}n$ weighted-system-equivalent calls.
+
+\paragraph{Implicit implementation.}
+Each call is implemented in $n\log^{O(1)}n$ cut queries.  A new weighted
+spectral primitive constructs a sparsifier of
+\[
+  \sum_{u<v}c_{uv}D_{uv}(e_u-e_v)(e_u-e_v)^\top
+\]
+whenever $D_{uv}$ is computable from the endpoints.  It yields both a
+constant-condition preconditioner and simultaneous leverage estimates for
+all hidden rows.  Bit-class decomposition implements all coordinate
+aggregates.  A KKT formula implements the mixed-norm support oracle.  Finally,
+an explicit star right inverse repairs each approximate direction exactly, so
+feasibility never drifts.  Multiplying the call count by the
+per-call query cost gives
+\[
+  \sqrt n\log^{O(1)}n\cdot n\log^{O(1)}n
+       =n^{3/2}\log^{O(1)}n.
+\]
+
+\paragraph{How to read the proof.}
+The graph-theoretic correctness spine is
+Sections~\ref{sec:prelim}, \ref{sec:orientation}, and
+\ref{sec:completion}: cut algebra exposes an undirected support, the
+fractional certificate preserves zero out-cuts, and the final section turns
+an approximate LP solution into a reachability answer.  On a first reading,
+Theorem~\ref{thm:implicit-lp} may be treated as a black box while following
+that spine.  Section~\ref{sec:spectral} constructs the spectral oracle used
+to realize the black box; Section~\ref{sec:implicit-lp} implements its
+path-following primitives; and Section~\ref{sec:numerics} checks the short
+interface between those cut-query primitives and the stable Lee--Sidford
+solver.  Thus a
+reader interested first in the reduction need not understand interior-point
+methods before reading the correctness argument.
+
+\paragraph{Core notation.}
+The symbols used across several layers are collected here for reference.
+\begin{center}
+\small
+\begin{tabular}{@{}lp{0.77\linewidth}@{}}
+\toprule
+Symbol & Meaning\\
+\midrule
+$F(S)$ & number of input arc copies directed from $S$ to $V\setminus S$\\
+$c_{uv},H$ & total multiplicity on $\{u,v\}$, and the resulting undirected multigraph\\
+$b$ & input outdegree-minus-indegree vector; $d=(1-\eta)b$ is the Phase-I right-hand side\\
+$a_e$ & reference-oriented incidence vector $e_u-e_v$ for $e=\{u,v\}$, $u<v$\\
+$z_e,p_{u\to v}$ & common hidden-pair variable and its induced fractional directed mass\\
+$J,\tau$ & threshold digraph and threshold $\tau=n^{-4}$\\
+$A,x,M$ & full Phase-I row matrix, its row-variable vector, and its number of rows\\
+\bottomrule
+\end{tabular}
+\end{center}
+Section~\ref{sec:implicit-lp} gives a second, solver-state table before
+introducing the IPM notation.
+
+\subsection{Our contributions}
+
+Beyond the main bound, the proof provides the following reusable ingredients.
+\begin{enumerate}[label=(\roman*)]
+\item A reduction from outgoing-cut reachability to a rank-$n$
+      fractional-orientation LP whose approximate solutions preserve the
+      complete zero-outcut family.
+\item A spread-independent spectral sparsifier for unknown weighted
+      multigraphs with pair-evaluable conductances, using
+      $O(\eps^{-2}n\log^8(n/(\eps\delta)))$ cut queries.
+\item A block-symmetric cut-query implementation of a rank-sensitive box-LP
+      method, including simultaneous leverage estimation without assigning
+      independent random signs to indistinguishable parallel copies.
+\item A short interface from cut-query primitives to the standard stable
+      Lee--Sidford execution: residual-certified Richardson iteration gives
+      inverse-polynomial solve accuracy, and a public star right inverse
+      preserves affine feasibility exactly.
+\end{enumerate}
+
+\subsection{Related work}
+
+Rubinstein, Schramm, and Weinberg~\cite{RubinsteinSchrammWeinberg2018}
+introduced the modern cut-query study of exact graph cuts and obtained
+$\widetilde O(n^{5/3})$ queries for undirected minimum $s$--$t$ cut.
+Subsequent work obtained linear-query undirected edge connectivity via star
+contraction~\cite{ApersEtAl2022}, deterministic
+$\widetilde O(n^{5/3})$ undirected flow and connectivity bounds
+~\cite{AnandSaranurakWang2025}, and an
+$\widetilde O(n^{8/5})$ randomized bound for undirected minimum $s$--$t$
+cut~\cite{JiangNanongkaiSawettamalya2026}.  The last work explicitly notes
+that no subquadratic upper bound was known even for directed reachability.
+Our oracle is asymmetric: it returns arcs leaving $S$, rather than undirected
+edges crossing $S$.
+
+For linear programming we use the rank-sensitive box-LP framework of Lee and
+Sidford~\cite{LeeSidford2020}.  Its approximate Lewis-weight interface is
+part of that framework; the stability analysis for inverse-polynomially
+accurate linear solves is given in their earlier primal path-following
+work~\cite[Section~8]{LeeSidfordPathII}.  We use those results as a solver
+interface rather than reproving path-following stability.
+
+Our spectral routine builds on weighted spanners of Baswana and
+Sen~\cite{BaswanaSen2007}, the bundle-spanner sampling paradigm of
+Koutis~\cite{Koutis2014}, and matrix Bernstein inequalities in the form
+developed by Tropp~\cite{Tropp2012}.  The new points here are the filtered
+cut-query simulation, frozen phase snapshots, multiplicity-block sampling,
+and an interface for endpoint-computable weights of arbitrary spread.
+
+\section{Preliminaries and cut-query algebra}\label{sec:prelim}
+
+For an undirected multigraph $H$, let $\cH(\delta S)$ denote the number of
+copies crossing $(S,V\setminus S)$, and let $\cH(A,B)$ denote the number of
+copies with one endpoint in each of two disjoint sets $A,B$.  We use
+$L\preceq M$ for the Loewner order on symmetric matrices.  For a positive
+semidefinite matrix $L$, $L^\dagger$ is its Moore--Penrose pseudoinverse.
+The effective resistance of $e=uv$ in a weighted graph with Laplacian $L$ is
+$(e_u-e_v)^\top L^\dagger(e_u-e_v)$.
+
+\begin{definition}[Pair-evaluable scalar]
+A scalar $q_{uv}$ is \emph{pair-evaluable} if, from the public transcript and
+the labels $u,v$, the algorithm can compute $q_{uv}$ without querying whether
+$c_{uv}>0$.  Offline computation and the size of the representing arithmetic
+circuit are not charged.
+\end{definition}
+
+This definition allows dependence on public hashes, current endpoint states,
+known cluster labels, and all previous answers.
+
+\paragraph{Query-model convention (optional on a first reading).}
+As is standard for query complexity, exact real arithmetic and comparisons
+between queries are free.  A primal coordinate or a path weight may therefore
+be represented by a public arithmetic circuit rather than by a fixed-precision
+word.  Whenever such a value enters a cut-query reduction, certified
+evaluation freezes a dyadic approximation of the accuracy requested by the
+solver.  Lemma~\ref{lem:rounded-aggregate} bounds the resulting error, and
+Section~\ref{sec:numerics} checks that the stable Lee--Sidford interface
+absorbs it.
+
+Filtered search may evaluate a row formula on an absent candidate pair.  We
+make every such circuit total by clipping virtual slacks away from zero; this
+choice is irrelevant to an aggregate because an absent pair is multiplied by
+$c_{uv}=0$.  Before using a batch, one filtered search rejects if an
+\emph{actual} row is outside the domain required by the original formula.
+The Lee--Sidford interiority and conditioning bounds imply that this never
+happens on a successful execution.  Fixed caps make an unsuccessful random
+execution terminate within the advertised query bound.
+
+\begin{lemma}[Cut algebra]\label{lem:cut-algebra}
+Let
+\[
+ c_{uv}=\id[(u,v)\in E]+\id[(v,u)\in E]
+ \quad\text{and}\quad
+ b_v=F(\{v\})-F(V\setminus\{v\}).
+\]
+Let $H$ be the undirected multigraph with multiplicities $c_{uv}$.  Then for
+every $S\subseteq V$,
+\begin{equation}\label{eq:cut-algebra}
+        2F(S)=\cH(\delta S)+b(S).
+\end{equation}
+Moreover, for disjoint $A,B\subseteq V$,
+\begin{equation}\label{eq:rectangle}
+        \cH(A,B)=F(A)+F(B)-F(A\cup B).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For every arc internal to $S$ or to $V\setminus S$, both sides of
+\eqref{eq:cut-algebra} receive zero.  An arc from $S$ to $V\setminus S$
+contributes two to the right-hand side: one through $\cH(\delta S)$ and one
+through $b(S)$.  An arc in the opposite direction contributes one and minus
+one, hence zero.  This proves \eqref{eq:cut-algebra}.  In
+$F(A)+F(B)-F(A\cup B)$, all arcs from $A\cup B$ to its complement cancel;
+the surviving arcs are precisely those in either direction between $A$ and
+$B$, proving \eqref{eq:rectangle}.
+\end{proof}
+
+
+
+\begin{corollary}[Filtered-neighbor oracle]\label{cor:filtered-neighbor}
+Fix $u\notin T$.  Three outgoing-cut queries determine
+$\sum_{v\in T}c_{uv}$ for every publicly computable candidate set $T$.
+Consequently, a qualifying neighbor can be found by binary search in
+$O(\log n)$ such tests.
+\end{corollary}
+
+The candidate set may depend on the entire public transcript but not on an
+unqueried adjacency bit.  This distinction is used repeatedly below.
+
+\begin{lemma}[Bit-class aggregation]\label{lem:aggregate}
+Let $q_{uv}$ be a signed $B$-bit pair-evaluable scalar.  All values
+\[
+        Q_u=\sum_{v\ne u}c_{uv}q_{uv},\qquad u\in V,
+\]
+can be computed using $O(nB)$ outgoing-cut queries.  The same bound applies
+to signed incidence products, predicate-restricted sums, and weighted
+Laplacian products whose coordinate data are $B$-bit pair circuits.
+\end{lemma}
+
+\begin{proof}
+Write the positive and negative parts of $q_{uv}$ in binary.  For a fixed
+$u$, sign, and bit position $j$, form the public set of vertices whose
+corresponding bit is one and apply Corollary~\ref{cor:filtered-neighbor}.
+Recombining the answers gives $Q_u$ exactly for the stored fixed-point
+values.  Incidence signs and public predicates are incorporated when the
+candidate sets are formed.
+\end{proof}
+
+\paragraph{Example: reconstructing one weighted sum.}
+Fix $u$ and suppose three candidate endpoints $v_1,v_2,v_3$ have nonnegative
+three-bit values
+\[
+ q_{uv_1}=5=(101)_2,\qquad
+ q_{uv_2}=2=(010)_2,\qquad
+ q_{uv_3}=3=(011)_2.
+\]
+The public endpoint sets for the $4$-, $2$-, and $1$-bits are respectively
+\[
+ T_2=\{v_1\},\qquad T_1=\{v_2,v_3\},\qquad
+ T_0=\{v_1,v_3\}.
+\]
+Using the rectangle identity to obtain
+$\cH(\{u\},T_j)=\sum_{v\in T_j}c_{uv}$, the algorithm reconstructs
+\[
+ \sum_{i=1}^3 c_{uv_i}q_{uv_i}
+ =4\cH(\{u\},T_2)+2\cH(\{u\},T_1)+\cH(\{u\},T_0).
+\]
+Signed values are handled by performing the same calculation separately for
+their positive and negative parts.  Notice that the sets $T_j$ depend only
+on the pair-evaluable values; they do not reveal which candidate pairs
+actually occur.
+
+\begin{lemma}[Rounded circuit aggregation]\label{lem:rounded-aggregate}
+Let $q_{uv}$ be a pair-evaluable circuit and suppose a public envelope gives
+$|q_{uv}|\le\Lambda$.  If certified evaluation produces a signed dyadic
+$\widehat q_{uv}$ with
+\[
+        |\widehat q_{uv}-q_{uv}|\le\beta ,
+\]
+then all sums
+\[
+ \widehat Q_u=\sum_{v\ne u}c_{uv}\widehat q_{uv}
+\]
+are computed exactly with
+$O(n\log(\Lambda/\beta))$ outgoing-cut queries and satisfy
+\[
+ |\widehat Q_u-Q_u|
+ \le \beta\sum_{v\ne u}c_{uv}.
+\]
+If $D$ and $\widehat D$ are diagonal row weights with
+$|D_i-\widehat D_i|\le\beta$, every row of $A$ has squared norm at most two,
+and $A$ has $M$ rows, then
+\begin{equation}\label{eq:rounded-normal-error}
+ \norm{A^\top(\widehat D-D)A}_2\le2M\beta .
+\end{equation}
+The same conclusions hold for predicate-restricted sums and right-hand sides.
+\end{lemma}
+
+\begin{proof}
+Apply Lemma~\ref{lem:aggregate} to the certified dyadic values.  The scalar
+error bound follows by the triangle inequality.  For the matrix statement,
+\[
+ \norm{\sum_i(\widehat D_i-D_i)a_ia_i^\top}_2
+ \le\sum_i\beta\norm{a_i}_2^2\le2M\beta .
+\]
+\end{proof}
+
+\begin{lemma}[Hidden maxima and predicates]\label{lem:hidden-max}
+Let $q_{uv}$ be a public pair-evaluable dyadic value and let $P(u,v)$ be a
+public predicate.  The maximum of $q_{uv}$ over actual support pairs satisfying
+$P$, an actual maximizing pair when one exists, and emptiness of the
+qualifying support can be found using $O(n\log n)$ outgoing-cut queries.
+\end{lemma}
+
+\begin{proof}
+For each fixed $u$, order all candidate endpoints $v$ by
+$(q_{uv},v)$.  Binary search this public order, using
+Corollary~\ref{cor:filtered-neighbor} on suffixes intersected with $P$, to find
+the largest actual qualifying neighbor of $u$.  Take the best of the at most
+$n$ returned candidates offline.  The same search with a constant value
+implements emptiness and threshold predicates.
+\end{proof}
+
+\section{A fractional-orientation certificate}\label{sec:orientation}
+
+Reference-orient each unordered pair $e=\{u,v\}$ from the smaller endpoint
+$u$ to the larger endpoint $v$, and write $a_e=e_u-e_v\in\R^n$.  Each of the
+$c_e$ conceptual copies receives a variable $z_{e,j}$.  The implementation
+will keep all copies equal, but it is useful to retain the conceptual copies
+when defining the LP.
+
+\paragraph{What the Phase-I construction is doing.}
+The reference sign fixes the meaning of every hidden coordinate: a positive
+$z_{uv}$ contributes positive divergence at the smaller endpoint $u$ and
+negative divergence at $v$.  There are $c_{uv}$ conceptual coordinates
+because an unordered pair may support several input arc copies.  They are
+kept equal by the implementation, but retaining the copies makes their total
+incidence contribution exactly $c_{uv}a_{uv}z_{uv}$.  The extra grounded
+root has no retained coordinate, so a star edge from $v$ to the root has row
+$e_v$ (and its reverse has row $-e_v$).  The difference
+$y_v^+-y_v^-$ can therefore absorb any remaining divergence at $v$.
+Minimizing $y_v^++y_v^-$ drives the $\ell_1$ size of this public correction
+to zero.  Finally, the factors $1-\eta$ and $\eta/2$ keep the optimum away
+from the hidden box boundary, which supplies the strict interior required by
+the barrier method.
+
+\paragraph{A three-vertex example.}
+Suppose $\{1,2\}$ supports only the arc $1\to2$, while $\{2,3\}$ supports one
+arc in each direction.  Then
+\[
+ c_{12}=1,\quad \Delta_{12}=1,\qquad
+ c_{23}=2,\quad \Delta_{23}=0,
+\]
+and the reference rows are $a_{12}=e_1-e_2$ and
+$a_{23}=e_2-e_3$.  The block-symmetric zero-objective witness used below
+sets
+\[
+ z_{12,1}=1-\eta,\qquad z_{23,1}=z_{23,2}=0.
+\]
+Thus the single directed pair supplies its shrunken original orientation,
+whereas the antiparallel pair has zero net divergence.  At the known
+starting point all hidden variables are instead zero, and the two explicit
+star variables at each vertex supply the entire target divergence $d$.
+
+Set
+\[
+        \eta=2^{-\lceil12\log_2n\rceil}\le n^{-12},
+        \qquad d=(1-\eta)b,
+        \qquad K_0=1+\max_v |d_v|.
+\]
+Add a new root and ground its coordinate.  For every original vertex $v$,
+add two explicit rows $e_v$ and $-e_v$, with variables $y_v^+$ and $y_v^-$.
+Consider the closed-box LP
+\begin{equation}\label{eq:phase-one}
+\begin{aligned}
+ \min\quad & \sum_{v\in V}(y_v^++y_v^-) \\
+ \text{s.t.}\quad &
+   \sum_{e}\sum_{j=1}^{c_e}a_e z_{e,j}
+      +\sum_{v\in V}e_v(y_v^+-y_v^-)=d,\\
+ & -1+\eta/2\le z_{e,j}\le1-\eta/2,\\
+ & 0\le y_v^+,y_v^-\le2K_0.
+\end{aligned}
+\end{equation}
+The barrier algorithm operates in the strict interior of these boxes.
+If $B\in\R^{m\times n}$ contains one row $a_e^\top$ per conceptual hidden
+copy, then the full row matrix and primal vector are
+\[
+ M=m+2n,\qquad
+ A=\begin{bmatrix}B\\I_n\\-I_n\end{bmatrix}
+    \in\R^{M\times n},
+ \qquad x=(z,y^+,y^-)\in\R^M,
+\]
+and the equality in \eqref{eq:phase-one} is $A^\top x=d$.
+The conceptual hidden row count is also known without reconstructing the
+support:
+\[
+        m=|E|=\sum_{v\in V}F(\{v\}),
+\]
+because every directed arc is counted once at its tail.
+
+\begin{lemma}[Phase-I structure]\label{lem:phase-one}
+The constraint matrix of \eqref{eq:phase-one} has rank $n$.  The point
+\[
+ z_{e,j}=0,\qquad
+ y_v^+=K_0+d_v/2,\qquad y_v^-=K_0-d_v/2
+\]
+is explicitly known, exactly feasible, and strictly interior.  Moreover,
+the optimum of \eqref{eq:phase-one} is zero, and there is an optimal hidden
+assignment constant across all copies of an unordered pair.
+\end{lemma}
+
+\begin{proof}
+The $e_v$ rows form an identity matrix, so the rank is $n$.  The displayed
+point has signed star flow $d$ and zero hidden flow.  Since $K_0>|d_v|$, both
+star variables lie strictly between $0$ and $2K_0$.
+
+For $e=\{u,v\}$ with $u<v$, define
+\[
+ \Delta_e=\id[(u,v)\in E]-\id[(v,u)\in E].
+\]
+For every copy set
+\[
+        z_{e,j}=\frac{(1-\eta)\Delta_e}{c_e},
+        \qquad y_v^+=y_v^-=0.
+\]
+Its divergence is $(1-\eta)b=d$.  Because $|\Delta_e|\le c_e$, each hidden
+coordinate lies in $[-1+\eta,1-\eta]$, strictly inside the narrower hidden
+box.  If both antiparallel arcs exist, then $c_e=2$ and $\Delta_e=0$, so the
+common-copy assignment remains valid.  The objective is nonnegative and the
+displayed witness has value zero.
+\end{proof}
+
+Suppose now that a common pair value $z_e$ satisfies $|z_e|\le1$.  For
+$e=\{u,v\}$, $u<v$, define
+\begin{equation}\label{eq:fractional-orientation}
+ p_{u\to v}=\frac{1+z_e}{2},
+ \qquad
+ p_{v\to u}=\frac{1-z_e}{2}.
+\end{equation}
+For an arbitrary ordered pair, this means
+\[
+ p_{u\to v}=\begin{cases}
+ (1+z_{uv})/2,&u<v,\\
+ (1-z_{vu})/2,&v<u.
+ \end{cases}
+\]
+Let $P_z(S)$ be the sum, over all conceptual copies crossing the cut, of the
+fractional mass directed from $S$ to $V\setminus S$.
+
+\begin{lemma}[Zero/positive outcut gap]\label{lem:gap}
+Assume
+\begin{equation}\label{eq:certificate}
+ |z_e|\le1\quad\text{for every actual pair},
+ \qquad
+ \norm{B^\top z-(1-\eta)b}_1\le n^{-20},
+\end{equation}
+where $B^\top z=\sum_e c_ea_ez_e$.  Put
+$\rho=B^\top z-(1-\eta)b$.  Then, for every $S\subseteq V$,
+\begin{equation}\label{eq:fractional-cut}
+ 2P_z(S)=2(1-\eta)F(S)+\eta\cH(\delta S)+\rho(S).
+\end{equation}
+Consequently, for all sufficiently large $n$,
+\[
+ F(S)=0 \Longrightarrow P_z(S)<n^{-4},
+ \qquad
+ F(S)>0 \Longrightarrow P_z(S)>1/2.
+\]
+\end{lemma}
+
+\begin{proof}
+For any fractional orientation, twice the outgoing mass is the undirected
+crossing multiplicity plus the fractional divergence.  Thus
+\[
+ 2P_z(S)=\cH(\delta S)+(1-\eta)b(S)+\rho(S).
+\]
+Substitute $b(S)=2F(S)-\cH(\delta S)$ from
+Lemma~\ref{lem:cut-algebra}.  If $F(S)=0$, then
+\[
+ P_z(S)\le \frac{\eta n^2+n^{-20}}2<n^{-4}.
+\]
+If $F(S)\ge1$, the nonnegative $\eta\cH(\delta S)$ term and
+$|\rho(S)|\le n^{-20}$ give
+\[
+ P_z(S)\ge1-\eta-n^{-20}/2>1/2.
+\]
+The finitely many smaller $n$ can be handled by learning all pairs, changing
+only the absolute constant in the theorem.
+\end{proof}
+
+If the total multiplicity of an unordered pair is at most a fixed $C$, the
+only change in this argument is
+$\cH(\delta S)\le Cn^2$.  Thus the same choices
+$\eta\le n^{-12}$ and $\tau=n^{-4}$ give the stated gap for all sufficiently
+large $n$; the finitely many remaining sizes are again absorbed into the
+absolute constant.
+
+Define the implicit threshold digraph
+\begin{equation}\label{eq:threshold-graph}
+ J=\set{u\to v:c_{uv}>0\text{ and }p_{u\to v}\ge\tau},
+ \qquad \tau=n^{-4}.
+\end{equation}
+The graph $J$ need not be a directed subgraph of $G$: it may orient an
+underlying pair opposite to its sole input arc.  What is preserved is the
+zero-outcut family.  Moreover, $J$ is not an orientation in the sense of
+choosing exactly one direction per pair.  Since
+$p_{u\to v}+p_{v\to u}=1$ and $\tau<1/2$, both ordered arcs may pass the
+threshold.  The quantity $P_z(S)$ counts fractional mass once for each of
+the $c_{uv}$ conceptual copies, whereas $J$ records only whether the
+thresholded ordered pair exists; parallel copies do not create parallel arcs
+in $J$.
+
+\begin{lemma}[Threshold preservation]\label{lem:threshold}
+For every $S\subseteq V$,
+\[
+ F(S)=0
+ \quad\Longleftrightarrow\quad
+ J\text{ has no arc from }S\text{ to }V\setminus S.
+\]
+Consequently, $G$ and $J$ have identical reachability relations.
+\end{lemma}
+
+\begin{proof}
+If $F(S)=0$, Lemma~\ref{lem:gap} gives $P_z(S)<\tau$, so no individual
+fractional arc leaving $S$ reaches threshold.  If $F(S)>0$, then
+$P_z(S)>1/2$.  At most $Cn^2$ conceptual copies cross the cut (with
+$C\le2$ for a simple digraph), so if all their leaving masses were below
+$\tau=n^{-4}$ their sum would be at most $C/n^2<1/2$ for all sufficiently
+large $n$, a contradiction.  As in Lemma~\ref{lem:gap}, the finitely many
+remaining sizes are handled by adjusting the absolute constant.
+
+For the reachability claim, $t$ is not reachable from $s$ exactly when the
+set of vertices reachable from $s$ is an $s$-containing, $t$-excluding set
+with no outgoing arc.  The family of such zero out-cuts is the same in $G$
+and $J$.
+\end{proof}
+
+\begin{lemma}[Implicit search in $J$]\label{lem:implicit-bfs}
+Given a pair-evaluable circuit for $z$ satisfying \eqref{eq:certificate},
+reachability from $s$ in $J$ can be computed using $O(n\log n)$ additional
+outgoing-cut queries.
+\end{lemma}
+
+\begin{proof}
+We give the search and its invariant explicitly.  Maintain a discovered set
+$R$, initially $\{s\}$, and a queue containing the discovered vertices that
+have not yet been processed.  Both are determined by the public query
+transcript.  When $u$ is removed from the queue, repeatedly form
+\[
+ T(u,R)=\{v\in V\setminus R:p_{u\to v}\ge\tau\}.
+\]
+This set is public even though the support of $H$ is hidden: membership uses
+only $R$ and the pair-evaluable circuit for $z$, and does not test whether
+$c_{uv}>0$.
+
+If $T(u,R)$ is nonempty, use the rectangle identity to evaluate
+\begin{equation}\label{eq:implicit-search-count}
+ \cH(\{u\},T(u,R))
+ =F(\{u\})+F(T(u,R))-F(T(u,R)\cup\{u\}).
+\end{equation}
+The value is positive exactly when some actual support pair $\{u,v\}$ has
+$v\in T(u,R)$.  When it is positive, order $T(u,R)$ by the fixed public
+vertex order and bisect it.  Apply
+\eqref{eq:implicit-search-count} to the first half; if that count is
+positive, retain the first half, and otherwise retain the second.  The
+retained half always contains an actual neighbor, so after
+$O(\log n)$ such tests a singleton $\{v\}$ remains.  Add $v$ to $R$ and to
+the queue, recompute $T(u,R)$, and continue processing the same $u$.  When
+$T(u,R)$ is empty or its count is zero, mark $u$ processed.  The algorithm
+terminates when the queue is empty and returns $R$.
+
+We prove that the returned set is exactly the set reachable from $s$ in
+$J$.  Initially this is true for the only discovered vertex $s$.  Whenever
+$v$ is discovered while processing $u$, the positive singleton count gives
+$c_{uv}>0$, and membership in $T(u,R)$ gives
+$p_{u\to v}\ge\tau$.  Hence $u\to v$ is an arc of $J$.  By induction, every
+vertex placed in $R$ is reachable from $s$ in $J$.
+
+Conversely, consider the final failed test for a processed vertex $u$.  At
+that moment there is no actual pair from $u$ to any then-undiscovered
+$v$ satisfying $p_{u\to v}\ge\tau$.  The discovered set only grows
+afterwards, so there is also no $J$-arc from $u$ to the complement of the
+final set $R$.  Every vertex in the final $R$ is eventually processed;
+therefore $R$ is closed under outgoing arcs of $J$.  Since $s\in R$, no
+directed path from $s$ can leave $R$, proving that no $J$-reachable vertex
+was omitted.
+
+There are at most $n-1$ successful searches, because each discovers a new
+vertex, and at most one terminal failed search for each of at most $n$
+processed vertices.  A successful or failed search uses
+$O(\log n)$ count tests (an empty candidate set needs none), and each count
+test uses three outgoing-cut queries, which may be issued in parallel.
+Thus the total is $O(n\log n)$ queries.  The straightforward implementation
+uses $O(n\log n)$ adaptive test rounds; the theorem charges only the number
+of queries and does not claim a smaller round bound.
+\end{proof}
+
+\section{Weighted spectral sparsification from cut queries}
+\label{sec:spectral}
+
+The normal matrices arising later are weighted graph Laplacians whose support
+is hidden but whose prospective conductance on a pair is endpoint-computable.
+This section supplies the required oracle.
+
+\begin{theorem}[Pair-evaluable weighted sparsification]
+\label{thm:spectral}
+Let $G$ be an unknown loopless directed multigraph on $[n]$, accessed through
+the outgoing-cut oracle $F_G(S)=|E_G(S,[n]\setminus S)|$, where cardinality
+counts arc copies.  Let $H$ be its
+underlying undirected multigraph, and let
+$c_e\in\{0,\ldots,C\}$ be the total number of arcs of $G$ in both directions
+on the unordered pair $e$, where $C$ is a constant.  Let $w_e\ge0$ be
+symmetric and pair-evaluable, and assume that nonzero weights can be compared
+and output exactly.  For $0<\eps\le1/2$ and $0<\zeta<1/2$, there is a
+randomized algorithm which uses
+\[
+ O\!\left(C\eps^{-2}n\log^8\!\frac{n}{\eps\zeta}\right)
+\]
+queries to $F_G$ and, with probability at least $1-\zeta$, outputs a
+weighted graph $Q$ such that
+\[
+ (1-\eps)L\preceq L_Q\preceq(1+\eps)L,
+ \qquad
+ L=\sum_e c_ew_ea_ea_e^\top.
+\]
+The output has
+$O(C\eps^{-2}n\log^6(n/(\eps\zeta)))$ unordered pairs.  The bound is
+independent of the aspect ratio of the nonzero $w_e$.
+\end{theorem}
+
+\paragraph{Interface with the later normal systems.}
+The exact-weight hypothesis in Theorem~\ref{thm:spectral} is an interface
+condition, not an assertion that the analytic path state is stored exactly.
+In the LP implementation, certified evaluation first freezes a positive
+dyadic coefficient $\widehat D_e$ for every prospective hidden incidence
+row.  Once the duplicate copies on a pair have a common row state, as proved
+in Lemma~\ref{lem:block-symmetry}, their hidden normal-matrix contribution is
+\[
+        L_{\rm hid}
+        =\sum_e c_e\widehat D_ea_ea_e^\top .
+\]
+Thus Theorem~\ref{thm:spectral} is called with
+$w_e=\widehat D_e$.  This value is pair-evaluable because the row state is a
+public endpoint circuit, and it is exact at this interface because
+$\widehat D_e$ is dyadic.  The $O(n)$ explicit star-row contributions are
+then added to the returned sparsifier offline.  In particular, constructing a
+normal-system preconditioner or simultaneous leverage estimates never
+requires learning whether a prospective pair is present.
+
+No undirected-cut oracle is assumed.  The arc-by-arc proof of
+Lemma~\ref{lem:cut-algebra} is linear in arc multiplicities and therefore
+applies unchanged to this directed multigraph.  Thus, for $v\notin Y$, where
+$Y$ is determined by the public transcript,
+\[
+ \sum_{u\in Y}c_{\{u,v\}}
+ =F_G(\{v\})+F_G(Y)-F_G(Y\cup\{v\})
+\]
+by Lemma~\ref{lem:cut-algebra}.  Thus one filtered-neighborhood test costs
+three outgoing-cut queries, and binary search for a qualifying neighbor costs
+$O(\log n)$ such tests.  All bounds below include this translation.
+
+\paragraph{Implicit residual supports.}
+Every graph manipulated below is represented by a public survival predicate,
+not by an edge list.  At recursion depth $r$, let $P_r(e)$ be a predicate
+computable from the endpoints and the public transcript, and define
+\[
+ \mathcal E_r=\set{e:c_e>0\text{ and }P_r(e)},\qquad
+ L_r=\sum_{e\in\mathcal E_r}c_ep_{\rm samp}^{-r}w_ea_ea_e^\top ,
+ \qquad p_{\rm samp}=\tfrac14 .
+\]
+The symbol $p_{\rm samp}$ distinguishes this pair-sampling probability from
+the cluster-sampling probability used inside one spanner call.
+Initially $P_0(e)$ is the public test $w_e>0$.  When a public bundle
+$B_r\subseteq\mathcal E_r$ has been found, draw a fresh public independent
+Bernoulli hash $h_r(e)$ for every unordered endpoint pair, with
+$\Prb[h_r(e)=1]=p_{\rm samp}$, and set
+\begin{equation}\label{eq:survival-predicate}
+ P_{r+1}(e)=P_r(e)\wedge[e\notin B_r]\wedge[h_r(e)=1].
+\end{equation}
+The hash is evaluated from the endpoint labels and a public seed, so
+$P_{r+1}$ remains pair-evaluable.  Every filtered-neighbor query simply
+intersects its candidate set with the current predicate.  Thus the algorithm
+does not query whether an absent pair survived, and it materializes a pair
+only when a filtered search actually returns it.  Conditional on the preceding
+transcript, the hashes on the current actual pairs are independent fresh
+quarter-sampling decisions.  This is the residual-support invariant used by
+both the spanner construction and the recursion.  Within one spanner call,
+the phase support $E_i$ is represented in the same way: conjoin $P_r$ with
+the public block deletions and cluster predicates fixed by the completed
+phases.  No predicate is changed while the queries for one frozen phase are
+being answered.
+
+\subsection{Filtered weighted spanners}
+
+Give every support pair $e$ the distinct key
+\[
+        \operatorname{key}(e)=(1/w_e,\operatorname{ID}(e)),
+\]
+with zero-weight pairs excluded.  For a fixed vertex $v$, an arbitrary
+public predicate $P(v,u)$ is enforced by placing in the query set only those
+candidate endpoints satisfying $P$.  Corollary~\ref{cor:filtered-neighbor}
+then supplies emptiness and minimum-neighbor queries.
+
+We simulate the simultaneous weighted Baswana--Sen phases
+~\cite{BaswanaSen2007}.  Let $E_i$ and $\mathcal C_i$ be the support and
+clustering at the start of phase $i$, with $\mathcal C_1$ the singleton
+clustering, and put $p=n^{-1/k}$.  In each phase $i<k$, sample every cluster
+independently with probability $p$ and write $\mathcal S_i$ for the sampled
+family.  A vertex in a sampled cluster makes no reports; set
+$\mathcal R_i(v)=\varnothing$ for such a vertex.  For a vertex $v$ outside
+the sampled clusters and
+$C\in\mathcal C_i$, define
+\[
+ E_i(v,C)=\set{vu\in E_i:u\in C},\qquad
+ e_i(v,C)=\arg\min_{e\in E_i(v,C)}\operatorname{key}(e),
+\]
+and let $\kappa_i(v,C)$ be the key of this edge, or $+\infty$ if the set is
+empty.  The distinct pair IDs make every finite minimum unique.  Set
+\[
+ \sigma_i(v)=\min_{C\in\mathcal S_i}\kappa_i(v,C),
+\]
+and, when finite, let $C_i^\star(v)$ be its minimizing cluster.  The clusters
+reported by $v$ are exactly
+\[
+ \mathcal R_i(v)=
+ \begin{cases}
+  \set{C:\kappa_i(v,C)<\sigma_i(v)}\cup\set{C_i^\star(v)},
+       &\sigma_i(v)<+\infty,\\
+  \set{C:\kappa_i(v,C)<+\infty},&\sigma_i(v)=+\infty.
+ \end{cases}
+\]
+For every $C\in\mathcal R_i(v)$, insert $e_i(v,C)$ and record the entire
+block $E_i(v,C)$ for deletion.  After all vertices have been processed, a
+vertex with finite $\sigma_i(v)$ joins $C_i^\star(v)$; sampled clusters and
+their members persist, while a vertex with infinite $\sigma_i(v)$ becomes
+inactive.  Apply all recorded deletions simultaneously and then delete each
+pair whose endpoints have the same new cluster label.  These operations
+define $E_{i+1}$ and $\mathcal C_{i+1}$.  In phase $k$, take
+$\mathcal S_k=\varnothing$ and report every neighboring cluster.
+
+\paragraph{One phase, procedurally.}
+The preceding definitions amount to the following frozen-snapshot procedure.
+\begin{enumerate}[label=(\arabic*)]
+\item Sample the old clusters, but do not yet change any cluster label or
+      residual-support predicate.
+\item For each vertex $v$ outside the sampled clusters, find its minimum-key
+      edge to any sampled cluster; this determines $\sigma_i(v)$ and
+      $C_i^\star(v)$.
+\item Enumerate the old neighboring clusters whose minimum key is below
+      $\sigma_i(v)$, together with $C_i^\star(v)$ when it exists.  For each
+      reported cluster, insert its minimum-key edge and record the whole old
+      vertex--cluster block for later deletion.
+\item After every vertex has been examined against the same snapshot, apply
+      the new cluster assignments, apply all recorded block deletions, and
+      then delete pairs internal to a new cluster.
+\end{enumerate}
+All minimum, emptiness, and enumeration operations above are filtered searches:
+their candidate endpoints satisfy the current public survival predicate and
+the relevant public cluster predicate.
+
+For example, suppose the old clusters adjacent to $v$ have minimum keys
+\[
+        \kappa_i(v,C_1)<\kappa_i(v,C_2)<\kappa_i(v,C_3),
+\]
+and among them only $C_2$ is sampled.  Then
+$\sigma_i(v)=\kappa_i(v,C_2)$, the vertex reports $C_1$ and $C_2$, inserts
+one minimum edge to each, records both corresponding blocks for deletion, and
+joins $C_2$.  The block to $C_3$ survives this report unless it is removed by
+another recorded deletion or becomes internal after the simultaneous
+reclustering.  If $v$ already lies in a sampled cluster, it reports nothing.
+
+Every quantity above refers to the one snapshot
+$(E_i,\mathcal C_i,\mathcal S_i)$.  The filtered-neighbor oracle first finds
+$\sigma_i(v)$, then enumerates precisely $\mathcal R_i(v)$, removing an
+entire old cluster from the public candidate set after it is reported.
+Delayed application of the block records therefore implements the displayed
+phase exactly: one vertex's queries cannot change a later vertex's minimum,
+report set, or cluster assignment.
+
+\begin{lemma}[Query-efficient weighted spanner]
+\label{lem:spanner}
+For $k=\lceil\ln n\rceil$, a capped and restarted call returns a
+$(2k-1)$-spanner containing $O(n\log n)$ pairs using
+$n\log^{O(1)}(n/\zeta')$ outgoing-cut queries, except with probability
+$\zeta'$.  Its query count is deterministically capped.
+\end{lemma}
+
+\begin{proof}
+We verify stretch directly for these simultaneous phases.  Give pair $e$
+length $\ell_e=1/w_e$, and let $\mathcal H_i$ be the pairs inserted before
+phase $i$.  Inductively maintain the following invariant: for every
+$e=uv\in E_i$ and each endpoint $x\in\{u,v\}$, if $x$ belongs to
+$C\in\mathcal C_i$, then $\mathcal H_i$ contains an
+$x$--$\operatorname{center}(C)$ path of at most $i-1$ edges, every one of
+length at most $\ell_e$.  It is trivial for the singleton clustering.
+
+Suppose $v$ joins $C_i^\star(v)$ through
+$f=e_i(v,C_i^\star(v))$, and let $e=vu$ survive all recorded block
+deletions, temporarily before the same-new-cluster deletion.  The old cluster
+containing $u$ was not reported by $v$, so
+\[
+ \operatorname{key}(f)<\kappa_i(v,C_u)\le\operatorname{key}(e),
+ \qquad\text{hence}\qquad \ell_f\le\ell_e.
+\]
+The old invariant for the endpoint of $f$ in $C_i^\star(v)$, followed by
+$f$, gives the required path for $v$ with at most $i$ edges.  An endpoint
+already in a sampled cluster keeps its old path.  A vertex that becomes
+inactive reports every neighboring cluster, so no pair incident to it
+survives.  This proves the claimed center-path property for every pair
+surviving the block deletions; after pairs with equal new labels are removed,
+it is precisely the invariant for phase $i+1$.
+
+Now let $e=vu\in E_i(v,C)$ be deleted through a reported block, and put
+$f=e_i(v,C)$.  Since $\ell_f\le\ell_e$, the invariant gives paths from $u$
+and from the endpoint of $f$ in $C$ to the center of $C$, each using at most
+$i-1$ edges of length at most $\ell_e$.  Together with $f$ they form a
+$v$--$u$ path of length at most $(2i-1)\ell_e$.  If $e$ is instead deleted
+because its endpoints receive the same new cluster label, the two center
+paths use at most $i$ edges each, for total length at most $2i\ell_e$; this
+can happen only when $i<k$.  In the final phase every remaining neighboring
+cluster is reported, so every remaining pair obtains a path of length at
+most $(2k-1)\ell_e$.  The output is therefore a $(2k-1)$-spanner.
+
+For size and queries, condition on the frozen snapshot and order the old
+clusters neighboring a fixed vertex by $\kappa_i(v,C)$.  If the vertex does
+not itself lie in a sampled cluster, then in a sampling phase
+$|\mathcal R_i(v)|$ is the position of the first sampled neighboring cluster,
+truncated at the number of neighbors; if its own cluster is sampled, it
+reports zero clusters.  Consequently
+\[
+ \Prb[|\mathcal R_i(v)|\ge j\mid E_i,\mathcal C_i]
+ \le(1-p)^{j-1},\qquad
+ \E[|\mathcal R_i(v)|\mid E_i,\mathcal C_i]\le p^{-1}.
+\]
+Moreover, $\E[|\mathcal C_{i+1}|\mid\mathcal C_i]=p|\mathcal C_i|$, so
+$\E|\mathcal C_k|=np^{k-1}=n^{1/k}$.  The final phase reports at most
+$n|\mathcal C_k|$ incidences.  If $R$ is the total number of reports, then
+\[
+        \E R\le(k-1)np^{-1}+n\E|\mathcal C_k|
+             \le kn^{1+1/k}.
+\]
+At most one pair is inserted per report.  Abort once
+$R>2kn^{1+1/k}$; Markov's inequality gives completion probability at least
+$1/2$.  A trial performs one initial search per vertex per phase and
+$O(1)$ binary searches per report, hence
+$O((kn+R)\log n)$ filtered-neighborhood tests.  After
+$\lceil\log_2(1/\zeta')\rceil$ independent capped trials, failure is at most
+$\zeta'$, while the query count is deterministic.  With
+$k=\lceil\ln n\rceil$, both the cap and output size are $O(n\log n)$.
+\end{proof}
+
+Multiplicity is ignored while building a spanner: all copies of a pair have
+the same base length, and a selected pair is kept as one block.  Its
+multiplicity is learned by a singleton instance of
+Corollary~\ref{cor:filtered-neighbor}.
+
+\subsection{Bundle leverage}
+
+Fix one sparsification round.  Every current pair has conductance
+$\omega_e^{(r)}=c_ep_{\rm samp}^{-r}w_e$, where
+$p_{\rm samp}=1/4$ and $r$ is the number of previous pair-sampling rounds.
+Construct $t$ spanners successively, deleting every selected
+unordered pair before the next construction, and let $B$ be their union.
+
+\begin{lemma}[Grouped bundle leverage]\label{lem:bundle}
+Let each of the $t$ spanners have stretch $\alpha$.  If $e$ remains outside
+$B$, then its leverage in the full current graph $G_r$ satisfies
+\[
+        \omega_e^{(r)}R_e[G_r]\le \frac{C\alpha}{t}.
+\]
+\end{lemma}
+
+\begin{proof}
+For every spanner $S_i$, the surviving pair $e=uv$ has a $u$--$v$ path
+$P_i$ satisfying
+\[
+        \sum_{f\in P_i}\frac1{w_f}\le\frac{\alpha}{w_e}.
+\]
+The paths are pair-edge-disjoint because selected pairs are deleted between
+successive spanners.  Send $1/t$ units of flow on every $P_i$.  The actual
+resistance of $f$ is
+$(c_fp_{\rm samp}^{-r}w_f)^{-1}\le p_{\rm samp}^r/w_f$, so the flow energy is at most
+\[
+ \frac1{t^2}\sum_{i=1}^t\sum_{f\in P_i}\frac{p_{\rm samp}^r}{w_f}
+ \le \frac{p_{\rm samp}^r\alpha}{tw_e}.
+\]
+Thomson's principle bounds $R_e[G_r]$ by this energy.  Multiplication by
+$\omega_e^{(r)}=c_ep_{\rm samp}^{-r}w_e$ and $c_e\le C$ proves the claim.  Internal vertices need
+not be disjoint.
+\end{proof}
+
+\subsection{One sampling round}
+
+Keep $B$ deterministically.  Independently retain every remaining unordered
+pair with probability $p_{\rm samp}=1/4$, retaining all of its copies as one
+block, and multiply a survivor's conductance by $1/p_{\rm samp}=4$.  Let $L$ be the Laplacian of the
+\emph{full} graph at the start of the round, including $B$, and define on the
+range of $L$
+\[
+ A_e=L^{\dagger/2}L_eL^{\dagger/2},
+ \qquad L_e=\omega_e^{(r)}a_ea_e^\top,
+\]
+where $a_e=e_u-e_v$ is the canonical incidence vector.
+Lemma~\ref{lem:bundle} gives $\norm{A_e}\le\lambda$, where
+$\lambda=C\alpha/t$.  Moreover, the sum of $A_e$ over the sampled complement
+is at most the identity projector.
+
+If $\xi_e$ is the sampling indicator, the normalized zero-mean error is
+\[
+        Z_e=(\xi_e/p_{\rm samp}-1)A_e.
+\]
+For $p_{\rm samp}=1/4$,
+\[
+ \norm{Z_e}\le3\lambda,
+ \qquad
+ \E[(\xi_e/p_{\rm samp}-1)^2]=3,
+ \qquad
+ A_e^2\preceq\lambda A_e.
+\]
+Thus $\norm{\sum_e\E Z_e^2}\le3\lambda$.  Self-adjoint matrix Bernstein
+~\cite{Tropp2012} yields the following.
+
+\begin{lemma}[One-round concentration]\label{lem:one-round}
+For $0<\delta\le1$,
+\[
+ \Prb\!\left[
+  \norm{L^{\dagger/2}(\widehat L-L)L^{\dagger/2}}>\delta
+ \right]
+ \le 2n\exp\!\left(-\frac{\delta^2t}{8C\alpha}\right).
+\]
+\end{lemma}
+
+The use of the full $L$ is important: the sampled complement alone may be
+singular in directions controlled by the fixed bundle.
+
+\subsection{Recursion and proof of Theorem~\ref{thm:spectral}}
+
+Set
+\[
+ R=\left\lceil\log_4\frac{4n^2}{\zeta}\right\rceil,
+ \quad
+ \delta=\frac{\eps}{3R},
+ \quad
+ k=\lceil\ln n\rceil,
+ \quad
+ \alpha=2k-1,
+\]
+and choose
+\[
+ t=\Theta\!\left(C\alpha\delta^{-2}
+                  \log\frac{nR}{\zeta}\right).
+\]
+
+\paragraph{Recursive procedure.}
+Starting with $(r,P_r)=(0,P_0)$, for each
+$r=0,\ldots,R-1$ perform the following steps.
+\begin{enumerate}[label=(\arabic*)]
+\item On the support $\mathcal E_r$, construct the $t$ successive spanners
+      and let their explicit union be $B_r$.  When a pair first enters
+      $B_r$, learn its multiplicity and store it with conductance
+      $c_ep_{\rm samp}^{-r}w_e$.
+\item Keep $B_r$ in the output, draw the fresh public hash $h_r$, and define
+      the sampled residual by \eqref{eq:survival-predicate}.  Recurse on
+      $(r+1,P_{r+1})$, where every surviving pair has conductance
+      $c_ep_{\rm samp}^{-(r+1)}w_e$.
+\item Return the union of $B_r$ and the graph returned by the recursive call.
+\end{enumerate}
+At depth $R$, use one filtered-neighbor emptiness test per vertex to verify
+that $\mathcal E_R$ is empty.  If it is not, declare the capped attempt
+unsuccessful; otherwise the union of the explicit bundles is the returned
+graph.  The invariant above shows that every operation at level $r$ sees
+exactly the Laplacian $L_r$, although its support has never been enumerated.
+
+\paragraph{Approximation and termination.}
+Conditioned on the transcript so far, the current hashes are
+fresh, so Lemma~\ref{lem:one-round} applies.  If the recursive result
+approximates the sampled residual within factors $a,b$, adding the fixed PSD
+bundle and using the one-round event gives factors
+$a(1-\delta),b(1+\delta)$ for the preceding graph.  Hence the final factors
+are $(1-\delta)^R,(1+\delta)^R$, contained in
+$[1-\eps,1+\eps]$.
+
+The depth-$R$ check uses $n$ filtered-neighbor tests.  A fixed original pair
+remains only if it avoids all
+bundles and survives $R$ fresh quarter-samplings, so a union bound gives
+probability at most $n^2 4^{-R}\le\zeta/4$.  Capped spanner-call failures and
+the $R$ Bernstein events consume the remaining failure budget.
+
+Finally,
+\[
+ Rt=O\!\left(C\eps^{-2}\log^5\frac{n}{\eps\zeta}\right).
+\]
+There are $Rt$ spanner calls, each costing
+$O(n\log^3(n/(\eps\zeta)))$ queries after amplification.  This proves the
+$O(C\eps^{-2}n\log^8(n/(\eps\zeta)))$ query bound.  Multiplying the capped
+$O(n\log n)$ size per spanner by $Rt$ gives the asserted output size.
+
+\section{An implicit rank-sensitive box-LP solver}
+\label{sec:implicit-lp}
+
+We next show how to run the required LP algorithm without enumerating hidden
+rows.  Write a box LP in row-variable form as
+\begin{equation}\label{eq:generic-box-lp}
+ \min\{c_{\rm LP}^\top x:A^\top x=b_{\rm LP},\ \ell\le x\le u\},
+ \qquad A\in\R^{M\times r}.
+\end{equation}
+For a supplied exactly feasible strict interior point $x^0$, satisfying
+$A^\top x^0=b_{\rm LP}$, set
+\[
+ U=\max\set{
+  \norm{1/(u-x^0)}_\infty,
+  \norm{1/(x^0-\ell)}_\infty,
+ \norm{u-\ell}_\infty,
+ \norm{c_{\rm LP}}_\infty}.
+\]
+
+\subsection{IPM primer and interface dictionary}
+
+This section is written so that the Lee--Sidford method can be used as an
+interface theorem; familiarity with its interior-point analysis is not
+required.  The following paragraph gives the geometric picture needed for the
+rest of the proof.
+
+For each row-coordinate $i$, let $\phi_i$ be the standard finite-box barrier
+on $(\ell_i,u_i)$, and put
+\[
+ \Phi''(x)=\diag(\phi_i''(x_i)),\qquad W=\diag(w).
+\]
+At path parameter $t>0$ and positive path weights $w$, the method follows the
+weighted barrier objective
+\begin{equation}\label{eq:weighted-barrier-primer}
+ f_t(x,w)=t c_{\rm LP}^{\top}x+\sum_{i=1}^M w_i\phi_i(x_i)
+ \quad\text{subject to}\quad A^\top x=b_{\rm LP}.
+\end{equation}
+The exact minimizer of \eqref{eq:weighted-barrier-primer} is the
+\emph{weighted center}.  A projected Newton step moves the current point
+toward that center while remaining in the affine space.  The weights are not
+fixed: Lee--Sidford continually chases a target vector built from Lewis
+weights of a barrier-scaled copy of $A$.  This choice is what makes the number
+of path steps depend on the column rank $r$, rather than on the possibly
+quadratic number $M$ of row variables.
+
+The mixed norm used to measure both centering error and weight motion is
+\[
+ \norm{v}_{w+\infty}
+   \defeq \norm{v}_\infty+C_{\rm norm}\norm{v}_w,
+ \qquad
+ \norm{v}_w^2=v^\top Wv,
+\]
+where $C_{\rm norm}=\log^{O(1)}M$.  In this notation the centrality of a
+strictly interior feasible point is
+\begin{equation}\label{eq:centrality-primer}
+ \delta_t(x,w)=
+ \min_{\nu\in\R^r}
+ \norm{
+   \frac{t c_{\rm LP}+W\phi'(x)-A\nu}
+        {\sqrt{W\phi''(x)}}
+ }_{w+\infty}.
+\end{equation}
+Division and square roots are coordinatewise.  Thus $\delta_t(x,w)=0$ exactly
+when the first-order stationarity equation holds for some equality multiplier
+$\nu$; small centrality means that the current point is close enough to the
+weighted center for the local Newton and path-change estimates to apply.
+The stability result cited in Proposition~\ref{prop:ls-batches} allows the
+normal solves and row reductions below to have inverse-polynomial error.
+
+\paragraph{State-variable dictionary.}
+The distinction between row space and constraint space is particularly
+important here: $x,w,X$ have one coordinate per row, whereas $\nu,\pi$ and
+normal-system right-hand sides have only $r$ coordinates.
+\begin{center}
+\small
+\begin{tabular}{@{}p{.18\linewidth}p{.30\linewidth}p{.44\linewidth}@{}}
+\toprule
+Symbol & Role & Interpretation in this paper\\
+\midrule
+$M,r,A,b_{\rm LP}$ & dimensions, constraint matrix, and LP right-hand side
+  & $A\in\R^{M\times r}$; hidden pair rows and public rows are row variables,
+    while $A^\top x=b_{\rm LP}$ gives the $r$ equality constraints.\\
+$x,\ell,u$ & primal point and box
+  & $x$ is kept strictly between its coordinatewise endpoints during the
+    path computation and remains exactly feasible.\\
+$t,c_{\rm LP}$ & path parameter and objective
+  & $t$ controls the objective term in \eqref{eq:weighted-barrier-primer};
+    the execution has an artificial-cost phase and a true-cost phase.\\
+$w,W,X$ & path weights
+  & $W=\diag(w)$ and $X=\log w$ is the log-weight used by the chasing
+    update; both are represented by public arithmetic circuits.\\
+$\phi',\Phi''$ & barrier gradient and Hessian
+  & $\Phi''=\diag(\phi_i''(x_i))$ supplies the local coordinate scaling.\\
+$A_x,g(x)$ & Lewis target
+  & $A_x=\Phi''(x)^{-1/2}A$ and $g(x)$ is the regularized Lewis-weight vector
+    that the current $w$ chases.\\
+$D,A^\top DA$ & primitive row scaling and normal matrix
+  & $D$ changes from call to call; its hidden part is a weighted graph
+    Laplacian and its public-row part is added explicitly.\\
+$\pi,h$ & Newton multiplier and primal direction
+  & solving for the $r$-vector $\pi$ produces an $M$-coordinate direction
+    $h$ with $A^\top h=0$.\\
+$\delta_t(x,w)$ & centrality
+  & the mixed-norm stationarity residual in
+    \eqref{eq:centrality-primer}.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For the parameter choice used here, the regularized target weight is
+\begin{equation}\label{eq:regularized-lewis-target}
+ g_i(x)=c_0+w_{p_{\rm LS}}(A_x)_i,
+ \qquad c_0=2r/M,\qquad
+ p_{\rm LS}=1-1/\log(4M).
+\end{equation}
+Here $w_{p_{\rm LS}}(\mathcal A)$ denotes the vector of
+$\ell_{p_{\rm LS}}$ Lewis weights of a matrix $\mathcal A$; it is a function
+of the matrix and should not be confused with the current path-weight vector
+$w$.  The value $c_0=2r/M$ is a constant-factor retuning of the fastest
+parameter displayed by Lee--Sidford.  Their weight-function analysis permits
+arbitrary nonnegative regularization~\cite[Theorem 29]{LeeSidford2020}, with
+the constants below retuned accordingly.  We write
+$k_{\rm LS}=O(\log M)$ for the corresponding regularized Lewis parameter in
+the movement bounds.
+
+\paragraph{Lee--Sidford-to-oracle crosswalk.}
+The source algorithm is invoked only through the following interfaces.
+\begin{center}
+\small
+\begin{tabular}{@{}p{.29\linewidth}p{.29\linewidth}p{.34\linewidth}@{}}
+\toprule
+Lee--Sidford operation & Object requested & Realization below\\
+\midrule
+coordinate update & one common formula for every row
+  & a public pair-evaluable circuit, shared by duplicate copies\\
+row reduction & sums, maxima, predicates, and mixed norms
+  & bit-class aggregation and filtered-neighbor search\\
+projected Newton step & solve $A^\top DA$
+  & a spectral preconditioner followed by residual-certified Richardson
+    iteration\\
+Lewis update & simultaneous leverage estimates for a scaled $A_x$
+  & a sparsifier inverse evaluated on every potential pair\\
+weight chasing & support point of a mixed-norm ball
+  & the one-dimensional KKT search in
+    Subsection~\ref{subsec:mixed-support}\\
+inexact oracle interface & approximate row reductions and normal solves
+  & dyadic interface values from Lemma~\ref{lem:rounded-aggregate}, followed
+    by the exact star repair in Section~\ref{sec:numerics}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{One representative primitive batch.}
+Starting from the public state $(x,w,t)$, a centering-and-chasing batch
+can be read as the following data flow.  First, common row formulas evaluate
+the analytic barrier derivatives and requested diagonal row scaling.  Second,
+certified evaluation freezes sufficiently accurate dyadic interface values, and row
+reductions form the $r$-dimensional Newton right-hand side from those values.
+Third, the hidden normal matrix for the frozen, pair-evaluable diagonal is
+spectrally sparsified, and the resulting preconditioner is refined against the
+full frozen matrix to obtain the Newton multiplier.  Fourth, when
+the Lewis routine requests leverage scores, a more accurate sparsifier
+inverse gives all of them simultaneously, after which the Lewis update is
+coordinatewise.  Fifth, the mixed-norm support routine chooses the allowed
+log-weight motion.  The primal direction is repaired on the explicit star,
+and the batch-end domain check is made.  Not every batch invokes every
+primitive, but Proposition~\ref{prop:ls-batches} asserts that this list is
+exhaustive.  Section~\ref{sec:numerics} verifies that these approximations
+meet the imported stable-solver interface.
+
+\begin{proposition}[Lee--Sidford execution interface]
+\label{prop:ls-batches}
+If $A$ has full column rank and no zero row, the box-LP algorithm of Lee and
+Sidford uses
+\[
+ O\!\left(\sqrt r\,\log^{13}M\,
+          \log\frac{MU}{\eps}\right)
+\]
+primitive batches.  The execution in their Algorithms~1--3, including
+\texttt{computeInitialWeight}, the artificial-cost phase, the cost switch,
+and final centering, can be written so that a batch uses only a
+polylogarithmic number of the following operations:
+\begin{enumerate}[label=(\alph*)]
+\item apply one common coordinate formula to every row, using that row's
+      bounds, objective coefficient, current coordinate and weight, together
+      with public scalars and $r$-dimensional vectors;
+\item take sums, inner products, mixed norms, maxima, clipping decisions, and
+      predicate-restricted reductions of row-coordinate data;
+\item solve a positive definite system $A^\top DA$ for a positive diagonal
+      $D$;
+\item obtain simultaneous multiplicative leverage estimates for a diagonally
+      scaled copy of $A$ and perform the coordinatewise Lewis iteration; and
+\item return a support point of
+      $\{v:\|v\|_\infty+C_{\rm norm}\|v\|_w\le R\}$.
+\end{enumerate}
+The proof of the source algorithm uses the leverage routine only through its
+simultaneous multiplicative output guarantee.  In particular, its internal
+random sketch is not part of the state-transition specification and may be
+replaced by any routine with that guarantee.  With exact versions of
+(a)--(e), the execution returns an $\eps$-suboptimal point in the box.
+The same conclusion, with constant-factor retuning of the invariant margins,
+holds when row reductions, mixed-ball support points, and normal solves meet
+the inverse-polynomial additive, multiplicative, and energy-norm accuracies
+requested by the execution.
+\end{proposition}
+
+\begin{proof}
+Theorem~1 and Algorithm~3 of the arXiv version of
+Lee--Sidford~\cite{LeeSidford2020} give the displayed rank-sensitive count and
+spell out the artificial-cost and true-cost phases.  Their Theorem~40 reduces
+each path step to a centering call, a mixed-ball projection, and approximate
+Lewis weights.  Appendix~B implements the initial and subsequent Lewis
+weights by coordinatewise arithmetic and simultaneous leverage estimates;
+its Theorem~39 assumes only the resulting multiplicative estimates.
+Appendix~D, culminating in Theorem~62, is precisely the support problem in
+(e) after the diagonal change of variables used below.  The remaining lines
+of Algorithms~1--3 are the coordinate maps and reductions in (a)--(b).
+Grouping the polylogarithmically many occurrences in one path step and
+absorbing that factor into $\log^{13}M$ gives the stated batches.  This
+enumeration includes initialization and the cost switch; no additional
+row-access operation is used by the source execution.
+
+For the last sentence of the proposition, the journal version explicitly
+uses approximate Lewis weights and notes that inverse-polynomially accurate
+linear solves suffice.  The detailed stability argument appears in
+Section~8, especially Theorem~28, of the earlier primal path-following
+paper~\cite{LeeSidfordPathII}.  That theorem is an interface statement in
+energy-relative solve error; decreasing all requested accuracies by a fixed
+polynomial factor only adds logarithmically many refinement iterations.
+\end{proof}
+
+\begin{lemma}[Conditional Lewis computation]\label{lem:conditional-lewis}
+Fix a matrix $\mathcal A$ with full column rank.  In the approximate- and
+initial-weight routines of Lee--Sidford, replace every randomized
+leverage-score call by arbitrary simultaneously valid
+multiplicative estimates of the requested accuracy.  Conditional on those
+estimates, all subsequent updates are deterministic coordinatewise formulas,
+and the conclusions and iteration bounds of Theorems~39 and~58, using
+Lemma~60, of
+Lee--Sidford~\cite{LeeSidford2020} continue to hold.  In particular,
+the initial-weight routine may be started at $p=2$ with simultaneous
+leverage estimates for $\mathcal A$.  At the $\log^{-O(1)}M$ accuracies requested by
+the path algorithm, every accuracy-dependent factor is absorbed by the number
+of leverage calls charged in Proposition~\ref{prop:ls-batches}.
+\end{lemma}
+
+\begin{proof}
+For $p=2$ the Lewis weights are exactly the leverage scores of $\mathcal A$.
+Algorithm~7 of the cited paper then changes $p$ by its displayed homotopy
+schedule and invokes \texttt{computeApxWeight}.  Once the simultaneous
+leverage inequalities requested by a call are supplied, Algorithms~6--7 use
+only coordinatewise powers, medians, clipping, and arithmetic.  The proofs of
+Theorems~39 and~58 and Lemma~60 condition only on those simultaneous
+inequalities; the
+Johnson--Lindenstrauss signs are one implementation of the interface, not an
+additional hypothesis about the update.  Induction over the homotopy calls
+therefore proves the statement.  The final call in Algorithm~7 accepts the
+requested accuracy parameter.  Its polynomial dependence on reciprocal
+accuracy is polylogarithmic for the accuracies used here and is already
+included in the $\log^{13}M$ batch bound.  Higher fixed-point precision at an
+interface is not being conflated with a more accurate Lewis iteration.
+\end{proof}
+
+Section~\ref{sec:numerics} checks that our cut-query implementation meets
+this inexact interface while preserving affine feasibility exactly.
+
+\begin{theorem}[Implicit incidence box LP]\label{thm:implicit-lp}
+Fix a constant $C$.  Consider \eqref{eq:generic-box-lp}, whose $r$ columns
+are indexed by $[r]$, an accuracy $0<\eps<1$, and a supplied point $x^0$
+satisfying
+\[ 
+        A^\top x^0=b_{\rm LP},\qquad \ell<x^0<u.
+\]
+The hidden support is the symmetrization of a directed multigraph accessed by
+its outgoing-cut oracle.  Suppose:
+\begin{enumerate}[label=(\roman*)]
+\item for each unordered pair $\{u,v\}\subseteq[r]$, the hidden rows consist
+      of $c_{uv}\le C$ copies of $e_u-e_v$;
+\item all copies on a pair have identical pair-evaluable interval bounds,
+      objective coefficient, and initial coordinate;
+\item the remaining $O(r)$ rows are explicit, all rows have Euclidean norm at
+      most $\sqrt2$, and the explicit rows include a finite-box $+I_r$ block;
+      and
+\item every explicit matrix coefficient, right-hand side, box endpoint,
+      objective coefficient, and coordinate of $x^0$ is dyadic, has
+      $O(\log(MU/\eps))$ total bit length, and has absolute value
+      $(MU/\eps)^{O(1)}$; the hidden incidence coefficients are integral; and
+\item $M,U,\eps^{-1}=r^{O(1)}$.
+\end{enumerate}
+Then, with probability at least $1-r^{-\Omega(1)}$, the algorithm returns a
+pair-evaluable represented point $x$ satisfying
+\[
+ \ell\le x\le u,\qquad A^\top x=b_{\rm LP},\qquad
+ c_{\rm LP}^\top x\le\OPT+\eps,
+\]
+using $r^{3/2}\log^{O(1)}r$ outgoing-cut queries.  Every represented primal
+iterate satisfies its equality constraints exactly.
+\end{theorem}
+
+For the Phase-I instance, $b_{\rm LP}=d$, $M\le n^2+2n$, and $r=n$.  Moreover
+$|b_v|\le n-1$, hence $K_0\le n$; the artificial start slack is at least
+$(K_0+1)/2$, the hidden start slack is constant, and the above width
+parameter satisfies $U\le2n$.  Thus the theorem costs
+$n^{3/2}\log^{O(1)}n$ queries.
+
+\paragraph{Proof boundary and dependency roadmap.}
+The proof of Theorem~\ref{thm:implicit-lp} begins here and ends at the close of
+Section~\ref{sec:numerics}.  Two facts are imported from Lee--Sidford:
+Proposition~\ref{prop:ls-batches} gives the exact-arithmetic batch count and
+the exhaustive primitive interface, while
+Lemma~\ref{lem:conditional-lewis} records that their Lewis-weight analysis
+needs only simultaneous leverage guarantees.  The remainder of the proof has
+four internal components:
+\begin{enumerate}[label=(\arabic*)]
+\item Lemma~\ref{lem:block-symmetry} collapses identical conceptual copies to
+      one pair circuit without changing their linear contribution to a normal
+      matrix.
+\item Lemma~\ref{lem:transcript-simulation} inducts over the public transcript
+      and reduces coordinate operations and row aggregates to cut queries.
+\item The next two subsections implement the non-coordinate primitives:
+      normal solves and leverage scores via Theorem~\ref{thm:spectral}, and
+      mixed-norm support via a scalar KKT search.
+\item Section~\ref{sec:numerics} checks the imported inexact interface and
+      uses the explicit star rows to preserve affine feasibility exactly.
+\end{enumerate}
+Each batch then costs $r\log^{O(1)}r$ queries.  Multiplying by the
+$\sqrt r\log^{O(1)}r$ batch count proves the claimed query bound; the same
+induction shows that no operation tests an unqueried adjacency bit.
+
+\subsection{Duplicate-copy symmetry}
+
+A conceptual copy is a separate row coordinate, not a row whose incidence
+vector has been multiplied by the pair multiplicity.  In general, if the
+rows of $A$ are $a_i^\top$, then
+$A^\top DA=\sum_iD_i a_i a_i^\top$.  Hence $c_{uv}$ identical rows, each with
+diagonal value $D_{uv}$, contribute
+$c_{uv}D_{uv}a_{uv}a_{uv}^\top$.  Replacing them by the single scaled row
+$c_{uv}a_{uv}^\top$ would incorrectly square the multiplicity.  The following
+lemma justifies retaining only one represented formula while still using the
+former, linear contribution.
+
+\begin{lemma}[Block symmetry]\label{lem:block-symmetry}
+If all hidden copies of an unordered pair start identically, every operation
+of the compiled box-LP algorithm preserves their equality.  Consequently,
+every hidden normal matrix is
+\begin{equation}\label{eq:hidden-normal}
+        L_D=\sum_{u<v}c_{uv}D_{uv}a_{uv}a_{uv}^\top,
+\end{equation}
+not a matrix with coefficient $c_{uv}^2D_{uv}$.
+\end{lemma}
+
+\begin{proof}
+Equal copies have the same row, box, objective coefficient, coordinate,
+barrier derivatives, and weight.  A Newton coordinate is a common
+coordinatewise expression plus the endpoint potential difference
+$a_{uv}^\top\pi$.  Its leverage is
+$D_{uv}a_{uv}^\top(A^\top DA)^{-1}a_{uv}$, also common.  Lewis updates use
+coordinatewise powers, affine combinations, medians, and clipping.  The
+mixed-ball optimizer below assigns equal outputs to equal data.  Induction
+therefore proves equality throughout.  Summing the $c_{uv}$ identical
+rank-one contributions gives \eqref{eq:hidden-normal}.
+\end{proof}
+
+Independent JL signs cannot be assigned to indistinguishable copies through
+the cut oracle.  We avoid them by obtaining deterministic simultaneous
+leverage estimates from a sparsifier inverse.
+
+\begin{lemma}[Transcript simulation invariant]\label{lem:transcript-simulation}
+At the beginning and end of every batch in
+Proposition~\ref{prop:ls-batches}, each hidden row coordinate is represented
+by one public pair-evaluable circuit, common to all copies of its unordered
+pair.  Every operation (a)--(e) can be simulated with
+$r\log^{O(1)}r$ outgoing-cut queries, and its represented outputs again satisfy
+this invariant.
+\end{lemma}
+
+\begin{proof}
+Initially the bounds, objective, and primal coordinate are public pair
+circuits by assumption.  There is no circular appeal to an already computed
+initial weight.  At $p=2$, the Lewis weights of
+$\mathcal A_0=\Phi''(x^0)^{-1/2}A$ are its leverage scores.  One simultaneous-leverage
+call therefore produces a pair-evaluable approximation to the
+regularized $p=2$ target.  Lemma~\ref{lem:conditional-lewis} then inducts
+through the $p=2$-to-$p_{\rm LS}$ homotopy, so its final log-weight is also a
+public pair circuit.
+
+This first leverage call is licensed directly from the supplied start, whose
+slack is at least $1/U$, so
+$\Phi''(x^0)$ has polynomial upper and lower bounds, while the explicit
+$+I_r$ block gives a polynomial lower spectral bound for its normal matrix.
+To make the induction quantitative, let $w_p(\mathcal A_0)$ be the exact
+$p$-Lewis
+weights for $p\in[p_{\rm LS},2]$, let $j$ minimize their coordinates, put
+$a=1-2/p\le0$, and write $\alpha_i^\top$ for a row of $\mathcal A_0$.  The Lewis fixed-point
+identity and
+\[
+ \mathcal A_0^\top W_p^a\mathcal A_0\preceq
+ (w_p)_j^a \mathcal A_0^\top\mathcal A_0
+\]
+give
+\[
+ (w_p)_j=(w_p)_j^a \alpha_j^\top
+ (\mathcal A_0^\top W_p^a\mathcal A_0)^{-1}\alpha_j
+ \ge \alpha_j^\top
+       (\mathcal A_0^\top\mathcal A_0)^{-1}\alpha_j
+ \ge(MU)^{-O(1)}.
+\]
+The last inequality uses the polynomial spectral upper bound, the absence of
+zero rows, and the dyadic input-bit hypothesis; a nonzero explicit
+coefficient and every scaled hidden incidence coefficient have
+inverse-polynomial magnitude.
+Every exact Lewis weight is at most one.  During the initial-weight homotopy
+$x=x^0$ is fixed, and Lemma~60 together with the median clipping in
+Algorithm~7 therefore keeps every intermediate approximate scaling between
+inverse polynomials and polynomials.  Each successive scaled normal matrix is
+thus polynomially conditioned, so the same direct argument licenses every
+call counted by Proposition~\ref{prop:ls-batches}.
+
+A common coordinate formula preserves the pair-circuit property.  Sums,
+inner products, incidence products, and predicate-restricted sums use
+Lemmas~\ref{lem:aggregate} and~\ref{lem:rounded-aggregate}; mixed norms add
+one square root after such sums.  Maxima, $\ell_\infty$ norms, emptiness
+tests, and clipping predicates use Lemma~\ref{lem:hidden-max}.  When a
+certified interval straddles a threshold, either branch changes the
+corresponding coordinate by at most the interval width.  We choose that width
+below the inverse-polynomial tolerance in
+Proposition~\ref{prop:ls-batches}.
+
+Normal solves and simultaneous leverage estimates are implemented in the
+next subsection, and the mixed-ball support point in the following one.  Their
+outputs consist of public $r$-vectors, public scalars, or a common
+pair-evaluable row formula, so they also preserve the invariant.  All random
+hashes used by the spectral calls are public transcript data.
+
+For completeness, the artificial cost is kept as the exact elementary
+circuit
+\[
+        (c_{\rm art})_i=-\exp(X_i^0)\phi_i'(x_i^0).
+\]
+Consequently $x^0$ is the exact center of the analytic artificial objective;
+only evaluations of this fixed circuit are rounded at aggregate interfaces.
+The cost switch replaces this circuit by the supplied true-cost circuit and
+does not inspect hidden support.  This covers the initialization, both path
+phases, and the final centering listed in
+Proposition~\ref{prop:ls-batches}.
+\end{proof}
+
+\subsection{Normal systems and leverage scores}
+
+\begin{lemma}[Certified dyadic inverse interface]
+\label{lem:dyadic-inverse}
+Let $K$ be an explicit dyadic positive definite $r\times r$ matrix with
+\[
+        K_-I\preceq K\preceq K_+I,
+\]
+where $K_+,$ $K_-^{-1}$, and $\vartheta^{-1}$ are polynomially bounded in
+$MU/\eps$.  Offline certified arithmetic can output a dyadic symmetric $Q$
+with $O(\log(MU/\eps))$ bits per entry such that
+\[
+ (1-\vartheta)K^{-1}\preceq Q
+ \preceq(1+\vartheta)K^{-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+Compute certified intervals for the entries of $K^{-1}$ until their widths
+are at most
+$\delta=\vartheta/(4rK_+) $, and take the symmetric dyadic midpoints.
+Certified Gaussian elimination or interval Cholesky terminates because
+$K\succeq K_-I$.  For $E=Q-K^{-1}$, the entrywise bound gives
+$\norm E_2\le r\delta\le\vartheta/(2K_+)$ after harmless constant
+rounding.  Since $K^{-1}\succeq K_+^{-1}I$, this implies
+$-\vartheta K^{-1}\preceq E\preceq\vartheta K^{-1}$.
+The magnitudes of inverse entries are at most $K_-^{-1}$, while the requested
+absolute accuracy is inverse polynomial, proving the bit bound.
+\end{proof}
+
+\paragraph{How a normal matrix enters Theorem~\ref{thm:spectral}.}
+This is the precise bridge between the IPM and the graph primitive.  During
+one normal-system or leverage call, the analytic positive row scaling $D$ is
+held fixed.  Certified interval evaluation chooses a positive dyadic value
+$\widehat D_{uv}$ for every potential hidden pair, using the same value for
+all conceptual copies of that pair.  The resulting hidden contribution is
+\[
+ \widehat L_{\rm hid}
+   =\sum_{u<v}c_{uv}\widehat D_{uv}
+      a_{uv}a_{uv}^\top .
+\]
+Thus Theorem~\ref{thm:spectral} is instantiated with the exact
+pair-evaluable edge weight
+\[
+        w_{\{u,v\}}^{\rm spec}=\widehat D_{uv}.
+\]
+The public dyadic circuit can compare and output these weights exactly, as
+required by that theorem; the unknown multiplicity $c_{uv}$ remains part of
+the hidden graph and is learned only through cut queries.  In particular, the
+spectral routine never receives an unevaluated exponential or barrier
+derivative.  All explicit-row contributions are instead formed exactly and
+added to the returned hidden sparsifier.  Consequently the graph theorem is
+applied to precisely the hidden summand of the frozen dyadic normal matrix,
+not directly to the analytic matrix and not to a graph in which duplicate
+rows have been combined by scaling their incidence vectors.
+
+For an analytic system $L=A^\top DA$, certified evaluation first forms a
+positive dyadic diagonal $\widehat D$ satisfying
+\begin{equation}\label{eq:dyadic-diagonal}
+        (1-\beta_N)D\preceq\widehat D\preceq(1+\beta_N)D,
+        \qquad \beta_N=(MU/\eps)^{-C_N}.
+\end{equation}
+Corollary~68 and Lemma~69 of Lee--Sidford~\cite{LeeSidford2020} give a
+polynomial envelope for every normal system used by their execution.  A
+sufficiently large absolute $C_N$ therefore makes this possible with
+logarithmic precision.
+These dyadic values are frozen for the entire spectral call and all
+subsequent refinement steps belonging to that normal solve.  Put
+$\widehat L=A^\top\widehat DA$.  Apply
+Theorem~\ref{thm:spectral} with constant accuracy to the hidden contribution
+of $\widehat L$ and add every explicit-row contribution exactly.  PSD addition
+gives an explicit preconditioner $P$ with
+\[
+        \tfrac12\widehat L\preceq P\preceq2\widehat L .
+\]
+A full product by $\widehat L$ is computed exactly for the dyadic interface
+values by Lemma~\ref{lem:aggregate}.  Preconditioned Richardson therefore
+converges geometrically for the frozen dyadic system.  Here and below an
+explicit positive definite preconditioner is not inverted as an exact
+rational matrix.  Lemma~\ref{lem:dyadic-inverse} instead produces a
+dyadic matrix $Q_P$ with
+\begin{equation}\label{eq:dyadic-preconditioner-inverse}
+ (1-\beta_P)P^{-1}\preceq Q_P\preceq(1+\beta_P)P^{-1},
+ \qquad \beta_P\le1/20 .
+\end{equation}
+The polynomial spectral envelope supplies the hypotheses of the lemma.
+Preconditioned Richardson contracts the energy error by a constant factor,
+so $O(\log(MU/\eps))$ iterations give the inverse-polynomial relative
+accuracy requested in Proposition~\ref{prop:ls-batches}.  Each iteration
+multiplies by the full frozen matrix using
+Lemma~\ref{lem:rounded-aggregate}; hence one such solve uses
+$r\log^{O(1)}r$ queries.  Section~\ref{sec:numerics} compares the resulting
+direction with the analytic one and applies the exact star repair.
+
+For leverage scores, request a $(1\pm\theta)$ sparsifier $L_S$ of the full
+dyadic normal matrix $\widehat L$, with
+$\theta=1/\polylog r$.  Lemma~\ref{lem:dyadic-inverse} produces a
+dyadic symmetric matrix $Q_S$ satisfying
+\begin{equation}\label{eq:dyadic-sparsifier-inverse}
+ (1-\theta/4)L_S^{-1}\preceq Q_S
+ \preceq(1+\theta/4)L_S^{-1}.
+\end{equation}
+For a
+hidden copy on $e=uv$, define
+\begin{equation}\label{eq:leverage-estimate}
+ \widehat\sigma_e
+   =\widehat D_e\bigl((Q_S)_{uu}+(Q_S)_{vv}
+                       -2(Q_S)_{uv}\bigr).
+\end{equation}
+Inverse monotonicity and \eqref{eq:dyadic-sparsifier-inverse} give
+\[
+ (1-3\theta)\widehat D_ea_e^\top\widehat L^{-1}a_e
+ \le\widehat\sigma_e\le
+ (1+3\theta)\widehat D_ea_e^\top\widehat L^{-1}a_e
+\]
+for $\theta$ below an absolute constant.
+Together with \eqref{eq:dyadic-diagonal}, this is a
+$1\pm O(\theta+\beta_N)$ estimate of the analytic leverage score.  Requesting
+half the tolerance from each source gives the tolerance required by
+Lee--Sidford.  The conclusion holds simultaneously for every actual or
+potential pair.  Formula~\eqref{eq:leverage-estimate} is pair-evaluable and
+common across duplicate copies, so the approximate Lewis updates remain
+coordinatewise pair circuits.
+
+\subsection{The mixed-norm support primitive}
+\label{subsec:mixed-support}
+
+For a symmetric compact convex set $\mathcal K$, write
+\[
+ h_{\mathcal K}(p)\defeq\max_{v\in\mathcal K}\ip{p}{v},
+ \qquad \norm{p}_{\mathcal K}\defeq h_{\mathcal K}(p).
+\]
+The second notation is only shorthand for the support function.  The chasing
+update requires a support point of
+\[
+ \mathcal U_R=
+ \set{u:\norm{u}_\infty+C_{\rm norm}\norm{u}_w\le R},
+ \qquad \norm{u}_w^2=u^\top Wu.
+\]
+This primitive is the decision step in Lewis-weight chasing.  Given the
+current gradient-like objective $p$, it chooses the admissible log-weight
+motion with nearly maximum predicted progress.  The $\ell_\infty$ term
+prevents any one row weight from moving too far, while the weighted
+$\ell_2$ term controls aggregate motion.  Because the coordinates include
+hidden rows, the optimizer cannot be constructed by scanning the support.
+
+\paragraph{Algorithmic view.}
+The computation has four steps.  First, diagonally rescale the ball to
+\eqref{eq:normalized-mixed-support}.  Second, introduce a scalar
+$\tau\in[0,1]$ that splits the unit budget between the Euclidean radius
+$1-\tau$ and the coordinate caps $\tau\kappa_i$.  For a fixed $\tau$, the KKT
+conditions reduce the optimizer to one scalar multiplier $\lambda$, found by
+bisection from predicate-restricted aggregates.  Third, maximize the resulting
+one-dimensional concave value function $G(\tau)$ by certified interval
+search.  Finally, undo the diagonal scaling and, if necessary, rescale
+the dyadic output conservatively to preserve feasibility.  The formulas
+below establish the relative support guarantee and the
+query bound for these four steps.  The letter $\tau$ here is only this local
+budget split and is unrelated to the central-path parameter $t$.
+
+If $R=0$, the routine returns zero exactly.  Assume $R>0$.  For an objective
+vector $p$, set
+\[
+ x=\frac{C_{\rm norm}}R W^{1/2}u,
+ \qquad \kappa_i=C_{\rm norm}\sqrt{w_i},
+ \qquad a=\frac{R}{C_{\rm norm}}W^{-1/2}p.
+\]
+Then $\ip{p}{u}=\ip{a}{x}$ and the normalized problem is
+\begin{equation}\label{eq:normalized-mixed-support}
+ \max a^\top x
+ \quad\text{s.t.}\quad
+ \norm{x}_2+\norm{\kappa^{-1}x}_\infty\le1.
+\end{equation}
+For $\tau\in[0,1]$, define
+\begin{equation}\label{eq:mixed-value-function}
+ G(\tau)=\max\set{a^\top x:\norm{x}_2\le1-\tau,
+                         \ |x_i|\le \tau\kappa_i\ \text{for every }i}.
+\end{equation}
+The endpoints have the unique feasible optimizer $x=0$.  If
+$0<\tau<1$ and
+\[
+ \sum_{i:a_i\ne0}\tau^2\kappa_i^2\le(1-\tau)^2,
+\]
+the optimizer is
+$x_i=\operatorname{sign}(a_i)\tau\kappa_i$ for $a_i\ne0$ and
+$x_i=0$ otherwise.  In the remaining case, the KKT conditions give
+\begin{equation}\label{eq:mixed-kkt}
+ x_i=\operatorname{sign}(a_i)
+       \min\set{\tau\kappa_i,\frac{|a_i|}{2\lambda}},
+\end{equation}
+where the unique $\lambda>0$ satisfies
+\begin{equation}\label{eq:mixed-lambda}
+ \sum_i\min\set{\tau^2\kappa_i^2,\frac{a_i^2}{4\lambda^2}}
+       =(1-\tau)^2.
+\end{equation}
+Every predicate and sum in \eqref{eq:mixed-lambda}, and the resulting
+objective value, is a predicate-restricted pair aggregate.
+
+We record the relative guarantee needed later.  The function $G$ is concave:
+interpolating feasible solutions at $\sigma,\tau$ gives a feasible solution at the
+same interpolation of the parameters.  It is also Lipschitz, with
+\begin{equation}\label{eq:mixed-value-lipschitz}
+ |G(\tau)-G(\sigma)|\le L_a|\tau-\sigma|,
+ \qquad L_a=\max\set{\norm{a}_2,\sum_i|a_i|\kappa_i}.
+\end{equation}
+Indeed, for $\sigma<\tau$, scale an optimizer at $\sigma$ by
+$(1-\tau)/(1-\sigma)$ to obtain a feasible point at $\tau$, losing at most
+$\norm{a}_2(\tau-\sigma)$; scaling an optimizer at $\tau$ by
+$\sigma/\tau$ gives a feasible point at $\sigma$, losing at most
+$(\tau-\sigma)\sum_i|a_i|\kappa_i$.
+
+If $a=0$, return zero.  Otherwise the one-coordinate point
+\[
+ x_i=\operatorname{sign}(a_i)\frac{\kappa_i}{1+\kappa_i},
+ \qquad x_j=0\quad(j\ne i),
+\]
+is feasible for every $i$ with $a_i\ne0$.  Hence, if
+$H=\max_{\tau}G(\tau)=h_{\mathcal U_R}(p)$, then
+\begin{equation}\label{eq:mixed-support-lower-bound}
+ H\ge\nu_0\defeq
+ \max_{i:a_i\ne0}\frac{|a_i|\kappa_i}{1+\kappa_i}.
+\end{equation}
+At an implemented call the objective is frozen on an inverse-polynomial
+dyadic mesh.  If its support value is below the requested additive tolerance,
+the zero vector is already an admissible answer.  Otherwise a nonzero frozen
+coordinate has inverse-polynomial magnitude.  The source weight bounds
+(Lee--Sidford~\cite[Lemma~67]{LeeSidford2020}) make
+$W^{\pm1/2}$ polynomially bounded, and every positive radius requested by
+their path schedule is inverse polynomial in $MU/\eps$.  Thus
+$\nu_0\ge(MU/\eps)^{-O(1)}$ in the only case where a relative search is
+needed.
+
+Bisection on \eqref{eq:mixed-lambda}, followed if needed by a conservative
+common rescaling, evaluates $G(\tau)$ and returns a feasible sign-aligned point
+to any additive accuracy $\zeta$.  A noise-robust one-dimensional concave
+search then maximizes $G$: compare certified value intervals at two interior
+trisection points, discard a side when the intervals separate, and otherwise
+retain the better queried point.  Concavity and
+\eqref{eq:mixed-value-lipschitz} show that
+$O(\log(L_a/\zeta))$ evaluations achieve additive error $O(\zeta)$.
+Taking $\zeta\le\gamma\nu_0/32$ and accounting for both searches yields a
+feasible, sign-aligned $u\in\mathcal U_R$ satisfying
+\begin{equation}\label{eq:relative-mixed-support}
+        \ip{p}{u}\ge(1-\gamma)h_{\mathcal U_R}(p).
+\end{equation}
+For inverse-polynomial $\gamma$, all scalar searches use $O(\log(MU/\eps))$
+aggregate evaluations, and the query cost is $r\log^{O(1)}r$.
+All sums involving the analytic weights are evaluated by certified dyadic
+intervals.  The routine rescales using an upper interval for the mixed norm,
+so the returned point is feasible for the \emph{analytic} ball.
+Lemma~\ref{lem:rounded-aggregate} and the Lipschitz
+bound \eqref{eq:mixed-value-lipschitz} show that width $\beta$ in each
+interface changes the support value by at most
+$\poly(MU/\eps)\beta$.  Choosing $\beta$ below the source tolerance includes
+this loss in $\zeta$.
+
+The list in Proposition~\ref{prop:ls-batches} is exhaustive.
+Lemma~\ref{lem:transcript-simulation} handles its coordinate operations and
+reductions, while the two preceding subsections handle its remaining
+primitives.  Consequently no step branches on an unqueried adjacency bit.
+This completes the cut-query simulation part of the proof of
+Theorem~\ref{thm:implicit-lp}.  It remains only to check the stable-solver
+accuracy interface and exact affine feasibility; that is the purpose of the
+next section.
+
+\section{The solver interface and exact feasibility}
+\label{sec:numerics}
+
+The numerical layer is short once the right boundary is drawn.  We use the
+stable Lee--Sidford execution as an imported solver theorem and prove only
+that our cut-query primitives meet its accuracy requirements.  This is the
+one place where the explicit $+I_r$ block is used algorithmically.
+
+At a current point let
+\[
+ H=W\Phi''(x),\qquad D=H^{-1},\qquad
+ L=A^\top DA,\qquad q=t c_{\rm LP}+W\phi'(x).
+\]
+The exact projected Newton direction has the form
+\begin{equation}\label{eq:exact-newton}
+ h=-D(q-A\pi),\qquad L\pi=A^\top Dq,\qquad A^\top h=0.
+\end{equation}
+Let $R_\star\in\mathbb R^{M\times r}$ embed a vector on the explicit
+$+I_r$ rows.  Then
+\begin{equation}\label{eq:star-right-inverse}
+             A^\top R_\star=I_r.
+\end{equation}
+
+\begin{lemma}[Cut-query solver interface]\label{lem:solver-interface}
+Under the hypotheses of Theorem~\ref{thm:implicit-lp}, there is an absolute
+constant $C_{\rm stab}$ for which the following implementation is valid.
+Evaluate every row reduction and mixed-norm support call to additive or
+multiplicative error at most
+\[
+             \alpha=(MU/\eps)^{-C_{\rm stab}},
+\]
+and solve every normal system to relative $\alpha$ error in its energy norm.
+After forming the resulting raw primal direction $\widetilde h$, replace it
+by
+\begin{equation}\label{eq:star-repair}
+ h_{\rm rep}=\widetilde h-R_\star(A^\top\widetilde h).
+\end{equation}
+Then the execution satisfies the inexact interface of
+Proposition~\ref{prop:ls-batches}, every represented primal iterate obeys
+$A^\top x=b_{\rm LP}$ exactly, and the final point lies in the box and has
+objective at most $\OPT+\eps$.
+
+Each primitive batch uses $r\log^{O(1)}r$ cut queries.  All dyadic values
+passed to bit-class aggregation need only
+$\log^{O(1)}(MU/\eps)$ bits.
+\end{lemma}
+
+\begin{proof}
+We first record what is imported.  The inexact path-following analysis of
+Lee--Sidford~\cite[Section~8, especially Theorem~28]{LeeSidfordPathII}
+shows that inverse-polynomial energy-relative errors in the linear solves can
+be absorbed by constant-factor slack in the centering invariants.  The later
+rank-sensitive formulation uses approximate Lewis weights explicitly
+~\cite[Theorems~39--40]{LeeSidford2020}.  Its Corollary~68 bounds every
+barrier Hessian encountered by a polynomial in $MU/\eps$, and Lemma~69 gives
+the corresponding polynomial relative conditioning of the normal systems.
+Lemma~67 bounds path weights between inverse polynomials and constants; the
+finite-box barrier formulas and the width parameter $U$ give the complementary
+lower Hessian bounds.
+Consequently there is one fixed polynomial accuracy that suffices
+simultaneously for all the row reductions, support computations, leverage
+estimates, and normal solves listed in
+Proposition~\ref{prop:ls-batches}.  We choose $C_{\rm stab}$ larger than its
+degree.
+
+The coordinate reductions meet this accuracy directly.  Certified evaluation
+freezes a row circuit to dyadic width $\beta$.  By
+Lemma~\ref{lem:rounded-aggregate}, every scalar aggregate changes by at most
+$M\beta$ and every normal matrix changes in operator norm by at most
+$2M\beta$.  The polynomial conditioning just cited lets us choose
+$\beta=(MU/\eps)^{-C}$, for one sufficiently large constant $C$, so that the
+induced error is at most $\alpha$.  Maxima and predicates are handled by
+Lemma~\ref{lem:hidden-max}; an interval that straddles a threshold may take
+either branch, since the two returned coordinate values then differ by at
+most the same interface tolerance.  All remaining state maps are compositions
+of arithmetic, barrier derivatives, powers, medians, and clipping.  On the
+source polynomial envelope their denominators are bounded away from zero by
+an inverse polynomial; the smooth maps are therefore polynomially Lipschitz,
+while median and clipping are nonexpansive.  Hence their accumulated error
+over one batch is $\poly(MU/\eps)\beta$, which is again at most $\alpha$ after
+increasing $C$.  The support construction in
+Subsection~\ref{subsec:mixed-support} and the leverage construction in the
+preceding subsection already give the additive and multiplicative guarantees
+required by the proposition.
+
+For a normal solve, freeze $\widehat D$ and its right-hand side as in
+\eqref{eq:dyadic-diagonal}, and put
+\[
+ \widehat L=A^\top\widehat D A,\qquad
+ \widehat b=A^\top\widehat Dq.
+\]
+The sparsifier gives
+$\frac12\widehat L\preceq P\preceq2\widehat L$.
+Preconditioned Richardson iteration therefore contracts the
+$\widehat L$-energy error by a constant factor.  After
+$O(\log(1/\alpha))=O(\log(MU/\eps))$ iterations it returns
+$\widetilde\pi$ satisfying
+\[
+ \|\widetilde\pi-\widehat L^{-1}\widehat b\|_{\widehat L}
+ \le
+ \alpha\|\widehat L^{-1}\widehat b\|_{\widehat L};
+\]
+when $\widehat b=0$ we return zero.  Multiplication by the full
+$\widehat L$, rather than by the sparsifier, makes this a solve of the
+desired frozen system.  The perturbation
+\eqref{eq:dyadic-diagonal} and polynomial conditioning transfer the same
+bound, up to a polynomial factor already absorbed in $C_{\rm stab}$, to the
+analytic system in \eqref{eq:exact-newton}.
+
+It remains to explain why the exact repair does not spoil that bound.  Write
+$e=\widetilde h-h$, where $h$ is the analytic direction requested by the
+stable execution.  Since $A^\top h=0$,
+\[
+ h_{\rm rep}-h=e-R_\star A^\top e .
+\]
+In the local norm this gives
+\begin{align*}
+ \|H^{1/2}(h_{\rm rep}-h)\|_2
+ &\le
+ \bigl(1+
+ \|H^{1/2}R_\star\|_2
+ \|A^\top H^{-1/2}\|_2\bigr)
+ \|H^{1/2}e\|_2\\
+ &\le \poly(MU/\eps)\,\|H^{1/2}e\|_2.
+\end{align*}
+The first inequality is the triangle inequality followed by
+submultiplicativity.  The second follows from the source Hessian bounds and from
+$\|A^\top H^{-1/2}\|_2^2=\lambda_{\max}(A^\top H^{-1}A)$.
+Thus requesting the raw direction to a correspondingly smaller fixed
+inverse-polynomial tolerance makes the repaired direction a valid inexact
+direction.  The raw coordinate circuit is formed from the frozen dyadic row
+values and the dyadic approximate potential, so
+Lemma~\ref{lem:aggregate} computes $A^\top\widetilde h$ exactly with
+$r\log^{O(1)}r$ queries.  Therefore
+\eqref{eq:star-right-inverse} gives the exact identity
+\[
+ A^\top h_{\rm rep}
+ =A^\top\widetilde h-A^\top R_\star A^\top\widetilde h=0.
+\]
+Starting from the supplied exactly feasible point, induction keeps every
+iterate exactly feasible.  The repair touches only explicit star rows, so it
+does not disturb duplicate-copy symmetry or pair-evaluability.
+
+All arithmetic between queries is free in the query model.  The only finite
+representations seen by the oracle reductions are the dyadic interfaces, and
+their accuracy is inverse polynomial, so their bit length is polylogarithmic
+in $MU/\eps$.  Richardson adds only another logarithmic factor.
+If a randomized spectral call fails, or an actual row fails its domain check,
+the capped execution rejects; on the simultaneous success event neither
+occurs.  The imported stability conclusion then gives strict interiority and
+the $\eps$ objective guarantee, proving the lemma.
+\end{proof}
+
+\paragraph{End of the proof of Theorem~\ref{thm:implicit-lp}.}
+Proposition~\ref{prop:ls-batches} uses
+$\sqrt r\log^{O(1)}r$ primitive batches.  Lemmas
+\ref{lem:transcript-simulation} and~\ref{lem:solver-interface} implement each
+batch in $r\log^{O(1)}r$ cut queries, while preserving exact affine
+feasibility.  Multiplying the two bounds gives
+$r^{3/2}\log^{O(1)}r$.  The conditional success probabilities of the
+spectral calls are combined in Section~\ref{sec:completion}.  This proves
+Theorem~\ref{thm:implicit-lp}.
+\section{Completing the reachability algorithm}
+\label{sec:completion}
+
+Apply Theorem~\ref{thm:implicit-lp} to \eqref{eq:phase-one} with output
+accuracy
+\[
+        \eps_{\rm LP}=n^{-30}.
+\]
+On the successful oracle event, the represented output is in the hidden box,
+exactly feasible, and satisfies
+\begin{equation}\label{eq:artificial-objective}
+        \sum_v(y_v^++y_v^-)\le n^{-30}.
+\end{equation}
+Exact feasibility gives
+\[
+ B^\top z-(1-\eta)b=-(y^+-y^-).
+\]
+Because the artificial variables are nonnegative,
+\begin{equation}\label{eq:objective-to-residual}
+ \norm{B^\top z-(1-\eta)b}_1
+ \le\sum_v|y_v^+-y_v^-|
+ \le\sum_v(y_v^++y_v^-)
+ \le n^{-30}.
+\end{equation}
+
+\paragraph{Acceptance and the final algorithm.}
+Run one capped execution of the implicit Phase-I solver.  It returns either a
+pair-evaluable candidate $z$ or \textsc{Reject}.  If it rejects, return
+\textsc{No}.  Otherwise test \eqref{eq:certificate}.  An out-of-box actual
+pair is found by filtered search.  For the residual test, use
+the public circuit clipped to $[-1,1]$ (which agrees with $z$ on every actual
+pair after the box test) and Lemma~\ref{lem:rounded-aggregate} to enclose every coordinate of
+$B^\top z-(1-\eta)b$ within absolute error $n^{-25}$, and accept only if the
+resulting upper bound on its $\ell_1$ norm is at most $n^{-20}$.  This uses
+$n\log^{O(1)}n$ queries.  Equation~\eqref{eq:objective-to-residual} shows that
+a successful solver output is accepted, since its true residual is at most
+$n^{-30}$.
+
+For an accepted candidate, construct the threshold digraph $J$ implicitly and
+run Lemma~\ref{lem:implicit-bfs} from $s$.  Return \textsc{Yes} exactly when
+that search discovers $t$.  Every accepted candidate is deterministically
+safe: the conservative test certifies \eqref{eq:certificate}, so
+Lemmas~\ref{lem:gap} and~\ref{lem:threshold} show that $J$ has the same
+reachability relation as the input.  Returning \textsc{No} is always correct
+on a no-instance; on a yes-instance it can be wrong only if the implicit
+solver's high-probability event fails.
+
+\paragraph{Query and failure bound.}
+Let $N_{\rm spec}$ be a deterministic upper bound on the number of spectral
+calls in the single capped execution; by
+Proposition~\ref{prop:ls-batches},
+$N_{\rm spec}\le\sqrt n\log^{O(1)}n$.  Give each potential call conditional
+failure probability at most
+$n^{-C_{\rm fail}}/N_{\rm spec}$, conditional on the entire preceding
+transcript.  The adaptive union bound is then at most
+$n^{-C_{\rm fail}}$.  Conditional on its complement, every primitive meets
+the hypotheses of Lemma~\ref{lem:solver-interface}, so the candidate is
+returned and accepted.
+
+The LP execution uses $\sqrt n\log^{O(1)}n$ batches of
+$n\log^{O(1)}n$ queries.  The acceptance test costs
+$n\log^{O(1)}n$, and the final search costs $O(n\log n)$.  Fixed caps on every
+spanner attempt, Richardson refinement, and primitive batch give the same
+$n^{3/2}\log^{O(1)}n$ upper bound on every random tape.  This proves
+Theorem~\ref{thm:main}.
+
+\section{Discussion}
+
+The main open question is whether directed reachability admits
+$n^{1+o(1)}$ outgoing-cut queries.  It would also be interesting to obtain
+meaningful superlinear lower bounds, to make the pair-evaluable spectral
+routine efficient in computation as well as queries, and to remove the
+linear dependence on a nonconstant unordered-pair multiplicity cap.
+
+\small\sloppy
+\begin{thebibliography}{99}
+
+\bibitem{AnandSaranurakWang2025}
+A.~Anand, T.~Saranurak, and Y.~Wang.
+\newblock Deterministic edge connectivity and max flow using subquadratic
+cut queries.
+\newblock In \emph{Proceedings of the 2025 Annual ACM--SIAM Symposium on
+Discrete Algorithms (SODA)}, pages 124--142, 2025.
+\newblock \url{https://doi.org/10.1137/1.9781611978322.4}.
+
+\bibitem{ApersEtAl2022}
+S.~Apers, Y.~Efron, P.~Gawrychowski, T.~Lee, S.~Mukhopadhyay, and
+D.~Nanongkai.
+\newblock Cut query algorithms with star contraction.
+\newblock arXiv:2201.05674, 2022.
+\newblock \url{https://arxiv.org/abs/2201.05674}.
+
+\bibitem{BaswanaSen2007}
+S.~Baswana and S.~Sen.
+\newblock A simple and linear time randomized algorithm for computing sparse
+spanners in weighted graphs.
+\newblock \emph{Random Structures \& Algorithms}, 30(4):532--563, 2007.
+\newblock \url{https://doi.org/10.1002/rsa.20130}.
+
+\bibitem{JiangNanongkaiSawettamalya2026}
+Y.~Jiang, D.~Nanongkai, and P.~Sawettamalya.
+\newblock Minimum $s$--$t$ cuts with fewer cut queries.
+\newblock In \emph{Proceedings of the 2026 Annual ACM--SIAM Symposium on
+Discrete Algorithms (SODA)}, pages 258--296, 2026.
+\newblock \url{https://doi.org/10.1137/1.9781611978971.12}.
+
+\bibitem{Koutis2014}
+I.~Koutis.
+\newblock Simple parallel and distributed algorithms for spectral graph
+sparsification.
+\newblock In \emph{Proceedings of the 26th ACM Symposium on Parallelism in
+Algorithms and Architectures (SPAA)}, pages 61--66, 2014.
+\newblock \url{https://doi.org/10.1145/2612669.2612676}.
+
+\bibitem{LeeSidfordPathII}
+Y.~T.~Lee and A.~Sidford.
+\newblock Path Finding II: An $\widetilde O(m\sqrt n)$ algorithm for the
+minimum cost flow problem.
+\newblock arXiv:1312.6713v2, 2015.
+\newblock \url{https://arxiv.org/abs/1312.6713}.
+
+\bibitem{LeeSidford2020}
+Y.~T.~Lee and A.~Sidford.
+\newblock Solving linear programs with
+$\widetilde O(\sqrt{\operatorname{rank}})$ linear system solves.
+\newblock arXiv:1910.08033v2, 2020.
+\newblock \url{https://arxiv.org/abs/1910.08033}.
+
+\bibitem{NanongkaiOpen}
+D.~Nanongkai.
+\newblock Cut query for reachability: open problem.
+\newblock Open-problem page, first offered at ICALP 2024.
+\newblock \url{https://sites.google.com/site/dannanongkai/open}.
+
+\bibitem{RubinsteinSchrammWeinberg2018}
+A.~Rubinstein, T.~Schramm, and S.~M.~Weinberg.
+\newblock Computing exact minimum cuts without knowing the graph.
+\newblock In \emph{9th Innovations in Theoretical Computer Science
+Conference (ITCS)}, volume 94 of LIPIcs, pages 39:1--39:16, 2018.
+\newblock \url{https://doi.org/10.4230/LIPIcs.ITCS.2018.39}.
+
+\bibitem{Tropp2012}
+J.~A.~Tropp.
+\newblock User-friendly tail bounds for sums of random matrices.
+\newblock \emph{Foundations of Computational Mathematics}, 12(4):389--434,
+2012.
+\newblock \url{https://doi.org/10.1007/s10208-011-9099-z}.
+
+\end{thebibliography}
+
+\end{document}
