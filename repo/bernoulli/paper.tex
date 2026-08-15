@@ -80,10 +80,12 @@ $U\subset\ell^1(I)$ and $V\subset\ell^2(I)$ such that
 \end{theorem}
 
 The conjecture was proposed by Talagrand~\cite{Talagrand} and first proved
-by Bednorz and Lata\l a~\cite{BednorzLatala}. Our proof does not invoke
-their theorem. Its main input is the subgaussian convex-comparison theorem
-of van Handel~\cite{vanHandel}. The key input for
-\cref{thm:bernoulli} is the following convex domination result.
+by Bednorz and Lata\l a~\cite{BednorzLatala}. The main input for our proof
+is a subgaussian convex-comparison theorem, which follows by duality from
+Liu's comparison principle~\cite[Corollary~2]{LiuLifting} and was
+explicitly formulated in convex order by van Handel~\cite{vanHandel}.
+In fact, the key input for \cref{thm:bernoulli} is the following convex
+domination result.
 
 \begin{theorem}[Gaussian-to-Bernoulli comparison]\label{thm:comparison}
 There is a universal constant $C_0$ such that, for every
@@ -96,7 +98,7 @@ $\varepsilon\in\{-1,1\}^n$,
 \]
 \end{theorem}
 
-We use van Handel's Gaussian comparison in the following form: for a
+We use this Gaussian comparison in the following form: for a
 universal $C_G$, if $Y$ is centered and
 \begin{equation}\label{eq:subgaussian}
  \log\E e^{\ip{a}{Y}}
@@ -237,7 +239,7 @@ is developed by Nutz and Wiesel~\cite{NutzWiesel} and by Backhoff,
 Beiglb\"ock, Bifronte, and Ley~\cite{BackhoffEtAl}. We include the
 short argument for completeness.
 
-\begin{lemma}\label{lem:lifting}
+\begin{lemma}\label[lemma]{lem:lifting}
 Suppose $X$ has finite support and $X\cx G$. There exists a coupling
 of $X$ and $G\sim N(0,I_n)$ such that
 \begin{equation}\label{eq:half-lifting}
@@ -317,7 +319,7 @@ is everywhere positive and $1$-strongly log-concave.
 The following is an immediate consequence of the Brascamp--Lieb
 variance inequality~\cite[Theorem~4.1]{BrascampLieb}.
 
-\begin{lemma}\label{lem:variance}
+\begin{lemma}\label[lemma]{lem:variance}
 For the coupling in \cref{lem:lifting},
 \[
  \operatorname{Var}(G_i\mid X)\leq1,
@@ -329,7 +331,7 @@ For the coupling in \cref{lem:lifting},
 We next record a standard subgaussian estimate needed for
 \cref{lem:rounding}.
 
-\begin{lemma}\label{lem:bernstein}
+\begin{lemma}\label[lemma]{lem:bernstein}
 Let $V_1,\ldots,V_n$ be independent and centered, with
 $\E e^{|V_i|/\kappa}\leq2$, and let
 $Y_i=\E[V_i\mid\mathcal H]$ satisfy $|Y_i|\leq D$. Then
@@ -364,7 +366,7 @@ give
 The claimed bound follows.
 \end{proof}
 
-\begin{lemma}\label{lem:rounding}
+\begin{lemma}\label[lemma]{lem:rounding}
 Suppose $\|X\|_\infty\leq1$, and use the coupling of
 \cref{lem:lifting}. For every $L>0$, there exist a uniform
 $\varepsilon\in\{-1,1\}^n$ and a centered $Y\in\R^n$ such that
@@ -478,6 +480,11 @@ J. Funct. Anal. \textbf{22} (1976), 366--389,
 D.~M.~Hua, A.~Song, and S.~Tudose,
 \emph{On Talagrand's Convexity Conjecture},
 2026, \href{https://arxiv.org/abs/2605.10908}{arXiv:2605.10908}.
+
+\bibitem{LiuLifting}
+J.~Liu,
+\emph{Simple and Sharp Generalization Bounds via Lifting},
+2025, \href{https://arxiv.org/abs/2508.18682}{arXiv:2508.18682}.
 
 \bibitem{LiuZadik}
 J.~Liu and I.~Zadik,
