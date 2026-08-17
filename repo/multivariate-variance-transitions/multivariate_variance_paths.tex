@@ -1,0 +1,398 @@
+\subsection{The regularization path}
+\label{sec:regularization-path}
+
+This subsection proves Theorem~\ref{thm:regularization-path} and then refines
+it with the mass and spatial-mark limits in
+Proposition~\ref{prop:path-masses}. The fixed-parameter support identities can
+be made uniform across a compact part of the critical window. To obtain a path
+limit, we must also resolve what happens at each activation threshold: as the
+variance defect passes the threshold associated with one radial observation,
+the corresponding edge mass reaches zero transversally. We first record the
+radial process that supplies these thresholds, then prove the required uniform
+continuation.
+
+For dimension two and dimensions at least three, respectively, set
+\begin{equation}
+\label{eq:path-radial-processes}
+ \mathcal X_n^{(2)}
+ =\sum_{i=1}^n\delta_{\zeta_{n,i}^{(2)}},
+ \quad
+ \zeta_{n,i}^{(2)}=\frac{|Z_i|^2}{2}-\log n,
+ \qquad
+ \mathcal X_n^{(\ge3)}
+ =\sum_{i=1}^n\delta_{\zeta_{n,i}^{(\ge3)}},
+ \quad
+ \zeta_{n,i}^{(\ge3)}
+ =\frac{|Z_i-\bar Z_n|^2/(2\sigma_n^2)-b_n}{a_n}.
+\end{equation}
+Thus the exact excess in \eqref{eq:exact-transition-coordinate}, evaluated
+along \eqref{eq:intro-highd-path-parametrization}, is
+\(\xi_{n,i}^\star(s)=\zeta_{n,i}^{(\ge3)}-s\).
+
+The one-level exceedance limits used to prove
+Theorem~\ref{thm:main-support-law} hold jointly at every finite collection of
+levels. Equivalently, the whole radial cloud has the following limit.
+
+\begin{proposition}
+\label{prop:path-radial-process}
+In dimension two, and for every sequence \(d_n\ge3\),
+\begin{equation}
+\label{eq:path-radial-ppp}
+ \mathcal X_n^{(2)}\Longrightarrow\mathcal X,
+ \qquad
+ \mathcal X_n^{(\ge3)}\Longrightarrow\mathcal X
+\end{equation}
+vaguely on \(\R\), where \(\mathcal X\) has intensity \(e^{-x}\,dx\).
+For each fixed \(d\ge2\), the point-process convergence remains valid when
+each radial excess is marked by the direction of its observation; the
+limiting directions are independent and uniform on \(S^{d-1}\).
+\end{proposition}
+
+\begin{proof}
+For \(d=2\), the variables \(|Z_i|^2/2\) are standard exponential, and hence
+\(n\Pbb\{\zeta_{n,i}^{(2)}>x\}=e^{-x}\) for every fixed \(x\). Counts in
+disjoint bounded intervals are multinomial rare-event counts, which proves the
+first convergence.
+
+For uncentered Gamma energies, Lemma~\ref{lem:gamma-hazard} gives, uniformly
+for bounded \(x\),
+\[
+ n\overline F_n(b_n+a_nx)\longrightarrow e^{-x}.
+\]
+The rare-event multinomial calculation from the \(d=2\) case proves
+convergence of the uncentered point process. In the range where empirical
+centering is negligible on the
+\(a_n\)-scale, Lemmas~\ref{lem:centered-radial-max} and
+\ref{lem:centered-radial-max-high-d} transfer the process. In the remaining
+range, the proof of Proposition~\ref{prop:direct-centered-gamma-max} gives
+joint upper-tail factorization uniformly when finitely many thresholds lie in
+\(b_n+a_nO(1)\). Although \eqref{eq:centered-joint-tail-factorization} is
+displayed there with a common threshold, its determinant-and-tilting proof
+also allows bounded coordinate-dependent offsets: use the corresponding
+diagonal matrix of tilt parameters in place of the scalar tilt. The
+determinant comparison and tilted local limit are unchanged.
+Inclusion--exclusion then gives the factorization
+for disjoint intervals, so the factorial-moment criterion proves the second
+convergence in \eqref{eq:path-radial-ppp}. For fixed dimension, radius and
+direction are independent; the marking theorem completes the proof.
+\end{proof}
+
+We next follow the optimizer while one point crosses its activation level. In
+dimension two, let \(a_\lambda>0\) be the unique solution of
+\(\Phi(a_\lambda)+\phi(a_\lambda)/a_\lambda=e^\lambda\), and put
+\begin{equation}
+\label{eq:path-d2-mass-profile}
+ b_\lambda=1-e^{-\lambda}\Phi(a_\lambda),
+ \qquad
+ q_{\lambda,x}
+ =\frac{[1-e^{-(x-x_\lambda)}]_+}{b_\lambda},
+\end{equation}
+and recall that \(\Lambda\) is the inverse of
+\(\lambda\mapsto x_\lambda\). For \(d_n\ge3\), define
+\begin{equation}
+\label{eq:path-highd-scales}
+ \gamma_n(s)=\frac{\sigma_n^2(b_n+a_ns)}{R_n^\star},
+ \qquad
+ \delta_n(s)=\frac{\sigma_n^2a_n}{\gamma_n(s)}.
+\end{equation}
+
+The next proposition is the uniform edge reduction. Its separation
+hypothesis is only a proof device; Proposition~\ref{prop:path-radial-process}
+will remove it.
+
+\begin{proposition}
+\label{prop:path-uniform-activation}
+Fix compact intervals
+\(J\subset\operatorname{int}(J^+)\Subset(0,\infty)\) and
+\(I\subset\operatorname{int}(I^+)\subset\R\), and constants
+\(C,M<\infty\) and \(\eta>0\). In dimension two, work on the event
+\begin{equation}
+\label{eq:path-d2-buffer-event}
+ \max_i\zeta_{n,i}^{(2)}\le C,
+ \qquad
+ \#\{i:\zeta_{n,i}^{(2)}\ge x_{\inf J^+}\}\le M,
+\end{equation}
+on which the values \(\Lambda(\zeta_{n,i}^{(2)})\in J^+\) are pairwise at
+least \(4\eta\) apart and are at least \(4\eta\) from the endpoints of
+\(J^+\). Apart from an event whose probability tends to zero, each such point
+has one activation value
+\(\wh\lambda_{n,i}\), and
+\begin{equation}
+\label{eq:path-d2-activation}
+ \max_i|\wh\lambda_{n,i}-\Lambda(\zeta_{n,i}^{(2)})|=o_{\Pbb}(1).
+\end{equation}
+Its patch contains one fitted atom when
+\(\lambda<\wh\lambda_{n,i}\) and none when
+\(\lambda\ge\wh\lambda_{n,i}\), and, uniformly for \(\lambda\in J\),
+\begin{equation}
+\label{eq:path-d2-patch-mass}
+ n\pi_{n,i}^{(2)}(\lambda)
+ =q_{\lambda,\zeta_{n,i}^{(2)}}+o_{\Pbb}(1).
+\end{equation}
+Points above \(x_{\sup J^+}\) are active throughout \(J\), points below
+\(x_{\inf J^+}\) are inactive throughout \(J\), and the mass estimate applies
+to every point satisfying the second cutoff in
+\eqref{eq:path-d2-buffer-event}.
+
+For every sequence \(d_n\ge3\), work instead on the event
+\begin{equation}
+\label{eq:path-highd-buffer-event}
+ \max_i\zeta_{n,i}^{(\ge3)}\le C,
+ \qquad
+ \#\{i:\zeta_{n,i}^{(\ge3)}\ge\inf I^+-1\}\le M,
+\end{equation}
+on which the points in \(I^+\) are pairwise at least \(4\eta\) apart and at
+least \(4\eta\) from the endpoints of \(I^+\). Apart from an event whose
+probability tends to zero, each point in \(I^+\) has one activation value
+\(\wh s_{n,i}\), and
+\begin{equation}
+\label{eq:path-highd-activation}
+ \max_i|\wh s_{n,i}-\zeta_{n,i}^{(\ge3)}|=o_{\Pbb}(1).
+\end{equation}
+Its patch contains one fitted atom when \(s<\wh s_{n,i}\) and none when
+\(s\ge\wh s_{n,i}\). Fixing \(s_0\in I\) and writing
+\(\bar\delta_n=1\wedge\delta_n(s_0)\), its mass satisfies, uniformly for
+\(s\in I\),
+\begin{equation}
+\label{eq:path-highd-patch-mass}
+ n\pi_{n,i}^{(\ge3)}(s)
+ =\left[1-e^{-\delta_n(s)(\zeta_{n,i}^{(\ge3)}-s)}\right]_+
+  +o_{\Pbb}(\bar\delta_n),
+\end{equation}
+with the exponential expression replaced by its linearization when
+\(d_nL_n/n^2\) is bounded below, the regime in which the centered cloud is
+asymptotically simplex-like. Points above \(\sup I^+\) are active throughout \(I\), points
+below \(\inf I^+\) are inactive throughout \(I\), and the mass estimate applies
+to every point in the second cutoff in \eqref{eq:path-highd-buffer-event}. In
+both dimensions there are no other noncentral contacts, and the NPMLE is
+unique throughout the original compact interval.
+\end{proposition}
+
+\begin{proof}
+We first explain why the fixed-parameter estimates are uniform. In dimension
+two, the local diffuse background and the response of a radial point of excess
+\(x\) are
+\[
+ B_\lambda(r)=e^{-\lambda}\Phi(-r),
+ \qquad
+ C_{\lambda,x}(r,z)=e^{-\lambda}e^{x-r^2/2-z^2/2}.
+\]
+Their spatial derivatives through order two and their first
+\(\lambda\)-derivatives are bounded uniformly when \(\lambda\) ranges over a
+compact subset of \((0,\infty)\). At finite \(n\),
+\[
+ \partial_\lambda e^{-\kappa_n|t|^2}
+ =-\frac{|t|^2}{\rho_n^2}e^{-\kappa_n|t|^2},
+ \qquad \kappa_n=\lambda/\rho_n^2,
+\]
+so the Gaussian envelopes used for the undifferentiated field also dominate
+its \(\lambda\)-derivative on \(|t|=\rho_n+O(1)\). Applying the compact decomposition in
+Proposition~\ref{prop:two-d-compact-decomposition}, the lower-cloud bounds, and
+the \(C^2\) estimates of Section~\ref{sec:higher-dimensional-support-counts}
+on a deterministic \(\lambda\)-grid, then using these derivative bounds
+between grid points, makes every fixed-parameter estimate uniform in
+\(C^2(r,z)\cap C^1(\lambda)\). The radial compactness and outside-window gaps
+in Proposition~\ref{prop:d-two-radial-compactness} and
+Lemmas~\ref{lem:d-two-diffuse-outside}--\ref{lem:d-two-tail-outside} are
+uniform for the same reason: on \(J^+\), every damping constant stays in a
+fixed compact subset of \((0,\infty)\).
+
+It remains to inspect the limiting patch program
+\eqref{eq:support-d2-local-program}. Its unique spatial optimizer is
+\((-a_\lambda,0)\). After the other patch variables have been optimized, the
+derivative at zero rescaled mass is
+\begin{equation}
+\label{eq:path-d2-boundary-score}
+ S_{\lambda,x}(0)=b_\lambda\{e^{x-x_\lambda}-1\}.
+\end{equation}
+The functions \(a_\lambda,x_\lambda,b_\lambda\) are smooth on compact
+intervals, with \(x_\lambda'>0\) and \(b_\lambda>0\). At the unique zero
+\(\lambda=\Lambda(x)\),
+\[
+ \partial_\lambda S_{\lambda,x}(0)=-b_\lambda x_\lambda',
+\]
+which is bounded away from zero. The spatial Hessian there is
+\(-b_\lambda I_2\), and the mass curvature is strictly negative. The uniform
+finite-patch expansion therefore gives one empirical zero satisfying
+\eqref{eq:path-d2-activation}. Strict concavity places positive mass below
+that zero and zero mass at and above it. Solving the limiting interior score
+equation gives \eqref{eq:path-d2-patch-mass}. Continuity of the optimizer at
+zero makes the estimate uniform through the crossing.
+
+For \(d_n\ge3\), write
+\[
+ h_n(s)=\frac{\gamma_n'(s)}{\gamma_n(s)}
+       =\frac{a_n}{b_n+a_ns}.
+\]
+If \(q_j(s)=y_j/\sqrt{\gamma_n(s)}\), differentiation of an edge kernel gives
+\begin{align}
+ &\left|\partial_s
+ \exp\left\{(q_i(s)+z)\cdot q_j(s)-\frac{|q_i(s)+z|^2}{2}\right\}\right|
+ \notag\\
+ &\hspace{35mm}\le
+ C h_n(s)\{\log n+|q_j(s)-q_i(s)-z|^2\}
+ \exp\left\{(q_i(s)+z)\cdot q_j(s)-\frac{|q_i(s)+z|^2}{2}\right\}.
+\label{eq:path-kernel-derivative-main}
+\end{align}
+Moreover \(h_n(s)\log n\asymp\delta_n(s)\), uniformly on \(I\). Thus the
+order-zero and order-two absolute envelopes already proved in the spatial,
+entropy, and support-recovery arguments also control one derivative in \(s\).
+As in dimension two, a slowly refining deterministic grid makes all buffered
+support identities uniform on \(I\).
+
+Near one crossing, optimize the central contact and every other patch, leaving
+only the rescaled mass \(m_i=n\pi_i\ge0\) in the crossing patch free. The
+algebraic expansion in the proof of
+Lemma~\ref{lem:uniform-finite-edge-expansion} is obtained before the threshold
+buffer is used: its envelope assumptions do not depend on the sign of the
+crossing excess. Holding this one mass free therefore gives the expansion in
+Lemma~\ref{lem:uniform-finite-edge-expansion} uniformly while
+\(|\zeta_{n,i}^{(\ge3)}-s|\le2\eta\), with every other patch
+still buffered. In particular, the boundary score and its derivative are
+\begin{align}
+ \partial_{m_i}\mathcal L_{n,i}(s,0)
+ &=e^{\delta_n(s)(\zeta_{n,i}^{(\ge3)}-s)}-1
+   +o_{\Pbb}(\bar\delta_n),
+\label{eq:path-highd-boundary-score}\\
+ \partial_s\partial_{m_i}\mathcal L_{n,i}(s,0)
+ &=-\delta_n(s)+o_{\Pbb}(\bar\delta_n),
+\label{eq:path-highd-boundary-derivative}
+\end{align}
+while its second mass derivative is \(-1+o_{\Pbb}(1)\). Indeed,
+\(\delta_n'=-h_n\delta_n\), so differentiating the leading exponent adds
+only \(O\{h_n\delta_n|\zeta_{n,i}^{(\ge3)}-s|\}\) to
+\(-\delta_n\); inequality \eqref{eq:path-kernel-derivative-main} keeps every
+remainder \(o_{\Pbb}(\bar\delta_n)\) after differentiation. When
+\(d_nL_n/n^2\) is bounded below, the ordered-contact argument gives
+\eqref{eq:path-highd-boundary-score}--\eqref{eq:path-highd-boundary-derivative}
+with the exponential linearized. More explicitly, the ordered-contact
+response remainder in
+\eqref{eq:potts-corrected-height} is bounded by a constant times
+\[
+ \delta_n^2+\frac{C_n^2}{n}
+ +\frac{\log n\,(C_n+\delta_n)^2}{n^2}.
+\]
+Here \(\delta_n'=-h_n\delta_n\), and the Gram-error array defining \(C_n\)
+is rescaled by \(\gamma_n(s)^{-1}\), so its upper Dini derivative is at most
+\(h_nC_n\). The rates in \eqref{eq:terminal-simplex-derived-rates} therefore
+show directly that one \(s\)-derivative leaves this remainder
+\(o_{\Pbb}(\delta_n)\).
+
+Equation \eqref{eq:path-highd-boundary-derivative} is uniformly negative.
+Hence each boundary score has exactly one zero, which proves
+\eqref{eq:path-highd-activation}; strict mass curvature and the spatial
+certificate give one contact below the zero and none at or above it. Solving
+the interior score equation gives \eqref{eq:path-highd-patch-mass}. Finally,
+the uniform residual KKT gaps proved in the dimension-specific support
+identities exclude contacts outside these patches. The strict concavity of
+the local mass programs and the uniqueness of each spatial contact then prove
+simultaneous uniqueness, including at an activation value, where the crossing
+patch has zero mass.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:regularization-path}]
+Enlarge the parameter interval slightly. Proposition
+\ref{prop:path-radial-process} makes the radial maximum and the number of
+points in the enlarged critical window tight. The limiting process is simple,
+so after imposing fixed radial and cardinality cutoffs, its activation levels
+are separated from one another and from the enlarged interval's endpoints
+with probability tending to one as the separation constant decreases to zero.
+Apply Proposition~\ref{prop:path-uniform-activation} first with fixed cutoffs
+and separation, then let the cutoffs tend to infinity and the separation tend
+to zero. A diagonal choice gives a single event of probability tending to one
+on which all of its conclusions hold.
+
+In dimension two, the support-count path is the tail-count path of the
+perturbed activation measure
+\(\sum_i\delta_{\wh\lambda_{n,i}}\). Equation
+\eqref{eq:path-d2-activation} allows a piecewise-linear time change that moves
+each \(\wh\lambda_{n,i}\) to \(\Lambda(\zeta_{n,i}^{(2)})\) and converges
+uniformly to the identity. Points above the enlarged interval contribute the
+same constant to both paths. After adding them, the resulting path is exactly
+\(\mathcal X_n^{(2)}((x_\lambda,\infty))\). Proposition
+\ref{prop:path-radial-process} and the continuous-mapping theorem for tail
+counts of a simple point process prove \eqref{eq:intro-d2-path-limit} in the
+\(J_1\) topology.
+
+In dimensions at least three, equation
+\eqref{eq:path-highd-activation} supplies an analogous time change. After
+that time change and the addition of
+the points active throughout \(I\), the path is
+\(\mathcal X_n^{(\ge3)}((s,\infty))\). This proves
+\eqref{eq:intro-highd-path-limit}. Simultaneous uniqueness is part of
+Proposition~\ref{prop:path-uniform-activation}.
+\end{proof}
+
+Proposition~\ref{prop:path-uniform-activation} also identifies the mass and
+location carried by every jump. We state
+the mass limit explicitly because it is stronger than the support-count path
+and shows that the fitted mixing distribution itself changes continuously even
+when its support size jumps.
+
+\begin{proposition}
+\label{prop:path-masses}
+Associate each noncentral fitted atom with its radial observation, and extend
+its mass by zero after the corresponding patch becomes inactive. In dimension
+two, for compact \(J\Subset(0,\infty)\),
+\begin{equation}
+\label{eq:path-d2-mass-limit}
+ \max_{i:\,\zeta_{n,i}^{(2)}\ge x_{\inf J}-1}
+ \sup_{\lambda\in J}
+ \left|n\pi_{n,i}^{(2)}(\lambda)
+       -q_{\lambda,\zeta_{n,i}^{(2)}}\right|
+ \xrightarrow{\Pbb}0,
+\end{equation}
+after first imposing and then removing a fixed upper radial cutoff. Moreover,
+\begin{equation}
+\label{eq:path-d2-total-mass-limit}
+ \left\{n\sum_i\pi_{n,i}^{(2)}(\lambda):\lambda\in J\right\}
+ \Longrightarrow
+ \left\{\sum_{x\in\mathcal X}q_{\lambda,x}:\lambda\in J\right\}
+ \qquad\text{in }C(J).
+\end{equation}
+
+For \(d_n\ge3\), fix \(s_0\in I\), pass to a subsequence on which
+\(\delta_n(s_0)\to\delta\in[0,\infty]\), and define
+\[
+ \psi_\delta(y)=
+ \begin{cases}
+ (1-e^{-\delta y})/(1\wedge\delta),&0<\delta<\infty,\\
+ y,&\delta=0,\\
+ 1,&\delta=\infty,
+ \end{cases}
+ \qquad y>0,
+ \quad \psi_\delta(y)=0\quad(y\le0).
+\]
+Then
+\begin{equation}
+\label{eq:path-highd-mass-limit}
+ \max_{i:\,\zeta_{n,i}^{(\ge3)}\ge\inf I-1}
+ \sup_{s\in I}
+ \left|\frac{n\pi_{n,i}^{(\ge3)}(s)}{\bar\delta_n}
+       -\psi_\delta((\zeta_{n,i}^{(\ge3)}-s)_+)\right|
+ \xrightarrow{\Pbb}0,
+\end{equation}
+and the sum of these profiles converges in \(C(I)\) to
+\(s\mapsto\sum_{x\in\mathcal X}\psi_\delta((x-s)_+)\). For every fixed
+\(d\ge2\), the convergence is joint with the radial directions; each active
+atom has the direction of its associated extreme observation asymptotically.
+In dimension two its radial score location is
+\(\rho_n-a_\lambda+o_{\Pbb}(1)\), uniformly away from activation.
+\end{proposition}
+
+\begin{proof}
+Equations \eqref{eq:path-d2-patch-mass} and
+\eqref{eq:path-highd-patch-mass} give the individual limits on events with
+fixed radial and cardinality cutoffs. Lemma~\ref{lem:gamma-hazard} gives
+\(a_n/b_n\to0\), and hence
+\(\delta_n(s)/\delta_n(s_0)\to1\) uniformly on \(I\); this turns
+\eqref{eq:path-highd-patch-mass}, after division by \(\bar\delta_n\), into the
+profile \(\psi_\delta\). Proposition
+\ref{prop:path-radial-process} removes these cutoffs. The profiles are jointly
+continuous in the path parameter and radial mark, including at activation
+where they vanish. Only finitely many limiting Poisson points contribute on a
+compact parameter interval. Summation is therefore a continuous map into
+\(C(J)\) or \(C(I)\), which proves the total-mass limits. The marked part of
+Proposition~\ref{prop:path-radial-process}, together with the unique spatial
+optimizer in each local likelihood program, gives the final assertions.
+\end{proof}

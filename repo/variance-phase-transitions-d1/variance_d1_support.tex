@@ -1,0 +1,838 @@
+\subsection{Likelihood localization}
+\label{sec:support-likelihood-localization}
+
+The first step toward Theorem~\ref{thm:atom-count-limit} is a deterministic
+comparison around a fit that already carries a small amount of mass away from
+its central atom. The comparison shows that such edge mass cannot create KKT
+contacts where the central directional field has a quantitative gap below
+one.
+
+It is convenient to work in score coordinates. Replace a component location
+\(u\) by \(t=\sqrt{1-\eps_n}\,u\); this bijection preserves support size.
+We reuse \(G\) for the transformed mixing measure and set
+\[
+    \kappa_n=\frac{\eps_n}{2(1-\eps_n)},
+    \qquad
+    \gamma_n=(1-\eps_n)^{-1}=1+2\kappa_n.
+\]
+If the central atom is at
+\(\tau\), the likelihood ratio of the atom at \(\tau+a\) to the atom at
+\(\tau\), evaluated at \(Z_i\), is
+\[
+    q_{n,\tau,a}(i)
+    =\exp\left\{a(Z_i-\gamma_n\tau)
+                    -\frac{\gamma_na^2}{2}\right\}.
+\]
+We also write
+\[
+    q_t(z)=\exp\left\{tz-\frac{\gamma_nt^2}{2}\right\}
+\]
+for the likelihood ratio of the score atom \(t\) to the atom at zero.
+For a perturbation \(G=(1-W)\delta_\tau+G^{\rm out}\), write
+\[
+    m_G(i)
+    =1-W+\int q_{n,\tau,u-\tau}(i)\,G^{\rm out}(du)
+\]
+for its likelihood ratio to \(\delta_\tau\), and define
+\[
+    D_{n,\tau}(a)=\frac1n\sum_{i=1}^nq_{n,\tau,a}(i),
+    \qquad
+    \Psi_G(\tau+a)=\frac1n\sum_{i=1}^n
+        \frac{q_{n,\tau,a}(i)}{m_G(i)}.
+\]
+The KKT conditions are \(\Psi_G\le1\), with equality \(G\)-almost everywhere;
+continuity of \(\Psi_G\) upgrades this to equality at every support point.
+
+The deterministic no-propagation estimate below separates the total mass of
+the edge atoms from the geometry of their locations.
+\begin{lemma}
+\label{lem:support-no-percolation}
+For every measure \(G=(1-W)\delta_\tau+G^{\rm out}\) defined above,
+\[
+    \Psi_G(\tau+a)\le \frac{D_{n,\tau}(a)}{1-W},
+    \qquad a\in\mathbb R.
+\]
+Consequently, if \(D_{n,\tau}\le1-\eta\) on a set \(A\) and
+\(W\le\eta/2\), then \(G\) has no support point in \(\tau+A\).
+\end{lemma}
+
+\begin{proof}
+Every likelihood ratio is nonnegative, so \(m_G(i)\ge1-W\). Substitution in
+the definition of \(\Psi_G\) gives the first inequality, and
+\((1-\eta)/(1-\eta/2)<1\) gives the second. \qedhere
+\end{proof}
+
+An NPMLE places almost all its mass near the true score origin. The following
+coarse estimate isolates a central component before the edge analysis. For a
+mixing measure \(G\) in score coordinates, put
+\[
+    m_G(z)=\int
+       \exp\left\{tz-\frac{\gamma_nt^2}{2}\right\}G(dt),
+    \qquad
+    \Delta_n(G)=\int\{1-e^{-\kappa_n|t|^2}\}\,G(dt).
+\]
+If \(P\) is standard Gaussian measure, then
+\(Pm_G=1-\Delta_n(G)\), and hence
+\begin{equation}
+\label{eq:support-population-defect}
+    P\log m_G\le\log Pm_G
+       =\log\{1-\Delta_n(G)\}\le-\Delta_n(G).
+\end{equation}
+
+The population loss yields a coarse uniform empirical bound. Its
+polylogarithmic precision is sufficient to extract a central atom before the
+critical-edge analysis begins.
+\begin{lemma}
+\label{lem:support-coarse-defect}
+There is a constant \(C<\infty\) such that, uniformly over
+\(0\le\eps_n<1\),
+\[
+    \Delta_n(\widehat G_n)
+    =O_{\mathbb P}\left\{\frac{(\log n)^C}{n}\right\}
+\]
+for the NPMLE \(\widehat G_n\).
+\end{lemma}
+
+\begin{proof}
+It suffices to optimize over mixing measures supported in
+\(\operatorname{conv}\{Z_1/\gamma_n,\ldots,Z_n/\gamma_n\}\). Indeed, if
+\(p\) is the Euclidean projection of \(t\) onto this convex hull, then
+\[
+ (t-p)Z_i-\frac{\gamma_n}{2}(t^2-p^2)
+ =(t-p)(Z_i-\gamma_np)-\frac{\gamma_n}{2}(t-p)^2\le0,
+\]
+so moving \(t\) to \(p\) weakly increases every fitted density. With
+probability tending to one this interval lies in
+\([-C\sqrt{\log n},C\sqrt{\log n}]\).
+
+For \(\mathcal M(R)=\{m_G:\supp(G)\subset[-R,R]\}\), we use the compact
+Gaussian-mixture entropy bound from
+\cite[Section~2]{supportDivergenceCompanion}; see also
+\cite[Section~3]{ghosal2001entropies}:
+\begin{equation}
+\label{eq:support-coarse-entropy}
+ \log N_{[]}\{\eta,\mathcal M(R),L^1(P)\}
+ \le C(1+R)\{1+\log(1/\eta)\}^2,
+ \qquad 0<\eta\le\frac12.
+\end{equation}
+The constant is uniform in \(\kappa_n\), since
+\[
+    m_G(z)\phi(z)
+    =\int e^{-\kappa_n t^2}\phi(z-t)\,G(dt),
+\]
+and an \(L^1(P)\) bracket for \(m_G\) is an ordinary \(L^1\) bracket for
+a Gaussian location mixture of total mass at most one. To pass from the cited
+probability-mixture bound to subprobabilities, write the mixing measure as
+\(s\widetilde G\). Replace the endpoints of the probability-mixture brackets
+by their positive parts, which does not increase their width. Bracket
+\(s\in[0,1]\) on an \(\eta/4\)-grid and use probability-mixture brackets of
+width \(\eta/4\). If \(s_j\le s\le s_j+\eta/4\) and
+\(l\le m_{\widetilde G}\le u\), then
+\([s_jl,(s_j+\eta/4)u]\) has width at most
+\(\eta/2+\eta^2/16<\eta\). The additional
+\(O\{\log(1/\eta)\}\) entropy is absorbed by
+\eqref{eq:support-coarse-entropy}. Bracket inequalities are understood
+\(P\)-almost everywhere; the displayed classes are separable, so the suprema
+below are measurable.
+
+Fix a dyadic shell \(\delta<\Delta_n(G)\le2\delta\), and cover it by upper
+brackets \(u\) of \(L^1(P)\)-width \(\delta/4\). If \(m_G\le u\), then
+\(Pu\le1-3\delta/4\), and Markov's inequality gives
+\[
+ \mathbb P\{P_n\log m_G\ge-\delta/4,\ m_G\le u\}
+ \le e^{n\delta/4}(Pu)^n\le e^{-n\delta/2}.
+\]
+For \(R=O(\{\log n\}^{1/2})\), the logarithm of the number of brackets is
+at most \((\log n)^C\) whenever \(\delta\ge n^{-2}\). A union bound over
+brackets and dyadic shells therefore shows that every measure with
+\(\Delta_n(G)>C(\log n)^C/n\) has negative likelihood gain relative to
+\(\delta_0\), with probability tending to one. Such a measure cannot be an
+NPMLE, proving the claim.
+\end{proof}
+
+The defect bound does not rule out several nearby atoms. The local collapse
+lemma shows that the NPMLE carries all central mass on one atom, with the
+remaining edge mass smaller than the KKT gaps used later.
+\begin{lemma}
+\label{lem:support-fixed-core-collapse}
+Assume \(\kappa_n=n^{-\alpha+o(1)}\) for a fixed
+\(0<\alpha<1/4\). For a sufficiently small fixed \(r_0>0\), the NPMLE can,
+with probability tending to one,
+be written
+\begin{equation}
+\label{eq:support-central-decomposition}
+    \widehat G_n=(1-W_n)\delta_{\tau_n}+G_n^{\rm out},
+    \qquad
+    \supp(G_n^{\rm out})\subset[-r_0,r_0]^c,
+\end{equation}
+where
+\[
+    W_n+|\tau_n|^2
+    =O_{\mathbb P}\left\{\frac{(\log n)^C}{n\kappa_n}\right\}.
+\]
+Moreover, \(W_n=o_{\mathbb P}(\kappa_n)\).
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:support-coarse-defect} and
+\(1-e^{-\kappa_n|t|^2}\ge c\kappa_n\min\{|t|^2,1\}\) imply the displayed
+bounds for the mass outside \([-r_0,r_0]\) and for the second moment of the
+restriction to that interval. Normalize the central restriction to a probability
+measure \(G^{\rm cen}\), and let \(\tau\) and \(V\) be its mean and variance.
+Cauchy--Schwarz gives the asserted bound for \(|\tau|^2\).
+
+We show that replacing \(G^{\rm cen}\) by \(\delta_\tau\) strictly increases
+the likelihood unless \(V=0\). Keep the outside part fixed and interpolate
+\[
+ G_u=(1-W)\{(1-u)\delta_\tau+uG^{\rm cen}\}+G^{\rm out},
+ \qquad 0\le u\le1.
+\]
+By concavity it is enough to show that the derivative at \(u=0\) is negative.
+If \(m_i^0\) is the likelihood ratio under \(G_0\), put
+\(\omega_i=(1-W)q_\tau(Z_i)/m_i^0\). With \(h=t-\tau\), the derivative is
+\begin{equation}
+\label{eq:support-collapse-derivative}
+ \sum_{i=1}^n\omega_i
+ \int\left[
+   \exp\left\{h(Z_i-\gamma_n\tau)
+                   -\frac{\gamma_nh^2}{2}\right\}-1
+ \right]G^{\rm cen}(dt).
+\end{equation}
+
+First replace \(\omega_i\) by one. The bound on \(\tau\) allows us to choose a
+deterministic \(\delta_n\downarrow0\) such that
+\(|\tau|\le\delta_n\sqrt{\kappa_n}\) with probability tending to one. On this
+event, a compact empirical-process bound gives
+\[
+ \sup_{\substack{|\tau|\le\delta_n\sqrt{\kappa_n}\\|h|\le2r_0}}
+ \left|
+ \partial_h^2 P_n
+ e^{h(Z-\gamma_n\tau)-\gamma_nh^2/2}
+ -
+ \partial_h^2 P
+ e^{h(Z-\gamma_n\tau)-\gamma_nh^2/2}
+ \right|
+ =
+ O_{\mathbb P}\{n^{-1/2}(\log n)^C\}
+ =
+ o_{\mathbb P}(\kappa_n).
+\]
+Indeed, after two differentiations the envelope on the fixed parameter
+rectangle is a fixed polynomial in \(|Z|\) times \(e^{2r_0|Z|}\), and hence
+has finite moments of every order. The population average is
+\[
+    F_\tau(h)=\exp\{-\kappa_nh^2-\gamma_n\tau h\}.
+\]
+Its second derivative is at most \(-\kappa_n\) on \([-2r_0,2r_0]\), for small enough
+\(r_0\), with probability tending to one. Since
+\(\int h\,G^{\rm cen}(dt)=0\), the unweighted version of
+\eqref{eq:support-collapse-derivative} is at most
+\(-cn\kappa_nV\).
+
+It remains to restore the weights. Write
+\[
+    A_i=\int\left[
+    e^{h(Z_i-\gamma_n\tau)-\gamma_nh^2/2}-1
+    \right]G^{\rm cen}(dt),
+    \qquad r_i^0=1-\omega_i.
+\]
+Thus the likelihood ratio of the NPMLE differs from \(m_i^0\) by the factor
+\(1+\omega_iA_i\). Taylor's theorem and
+\(\int h\,G^{\rm cen}(dt)=0\) give
+\[
+ \left|
+ \int\left[
+ e^{h(Z_i-\gamma_n\tau)-\gamma_nh^2/2}-1
+ \right]G^{\rm cen}(dt)
+ \right|
+ \le
+ C(1+Z_i^2)e^{2r_0|Z_i|+C}V.
+\]
+On an event of probability tending to one, \(\max_i|Z_i|\le C_0\sqrt{\log n}\)
+for a fixed \(C_0\). Hence
+\[
+    \max_i|A_i|
+    \le C(1+\log n)e^{2C_0r_0\sqrt{\log n}}V
+    =o_{\mathbb P}(1).
+\]
+
+To bound \(\sum_i r_i^0\), let \(\widehat r_i\) be the posterior
+responsibility of \(G^{\rm out}\) under the original NPMLE. Integrating its
+KKT equality over \(G^{\rm out}\) gives the exact identity
+\(\sum_i\widehat r_i=nW\). The denominator comparison yields, uniformly in
+\(i\),
+\[
+    r_i^0=\widehat r_i(1+\omega_iA_i)
+    \le \{1+o_{\mathbb P}(1)\}\widehat r_i.
+\]
+Consequently \(\sum_i r_i^0=O_{\mathbb P}(nW)\). Replacing \(\omega_i\) by
+one in \eqref{eq:support-collapse-derivative} therefore changes it by at most
+\[
+    O_{\mathbb P}\!\left\{
+      nW(1+\log n)e^{2C_0r_0\sqrt{\log n}}V
+    \right\}
+    =o_{\mathbb P}\{n\kappa_nV\}.
+\]
+Indeed, the ratio of the first quantity to \(n\kappa_nV\) is
+\(O_{\mathbb P}(n^{-1+2\alpha+o(1)})\). The derivative is
+therefore negative whenever \(V\ne0\). Optimality forces \(V=0\), which proves
+\eqref{eq:support-central-decomposition}; the final assertion follows from
+\(\alpha<1/4\).
+\end{proof}
+
+
+We now control the total number of KKT contacts. On a fixed score interval,
+the likelihood converges to a Poisson optimization with an analytic KKT
+function and hence finitely many zeros. At the moving lower endpoint, where
+the variance penalty changes on the shorter scale \(u_n^{-2}\), a separate
+zero-counting argument controls the crossover.
+
+Fix for now \(0<\alpha<1/4\), assume
+\(\eps_n=n^{-\alpha+o(1)}\), and put
+\(\theta_\alpha=1-\sqrt\alpha\). Let \(N\) be the Poisson process from
+Proposition~\ref{prop:poisson-edge-field}, with intensity
+\(\mu(dx)=e^{-x}\,dx\), and let \(S\) be its compensated edge field. For a
+compact interval \(K=[b,c]\Subset(1/2,1)\) and a finite positive measure
+\(\nu\) on \(K\), define
+\[
+    F_\nu(x)=\int_K e^{\theta x}\,\nu(d\theta),
+    \qquad
+    h(y)=\log(1+y)-y,
+\]
+and
+\begin{equation}
+\label{eq:support-one-d-limit-functional}
+    \mathcal J_N^K(\nu)
+    =\int_KS(\theta)\,\nu(d\theta)
+      +\int_{\mathbb R}h(F_\nu(x))\,N(dx).
+\end{equation}
+The last integral is almost surely finite. For \(x<0\), use
+\(|h(y)|\le y^2/2\) and \(F_\nu(x)\le\nu(K)e^{bx}\). The resulting
+envelope is integrable against \(N\) because \(2b>1\). On
+\([0,\infty)\), the Poisson process has only finitely many points.
+
+To obtain \eqref{eq:support-one-d-limit-functional}, place masses
+\(w_j=s_j/\{nc_n(\theta_j)\}\) at finitely many score locations
+\(\theta_j u_n\). If \(v_i\) is the resulting likelihood increment at the
+\(i\)th observation, then
+\[
+    \sum_i\log(1+v_i)
+    =\sum_iv_i+\sum_i\{\log(1+v_i)-v_i\}.
+\]
+The first sum converges to \(\sum_js_jS(\theta_j)\). At an edge observation
+\(Z_i=u_n+x/u_n\), the second sum sees
+\(v_i\to\sum_js_je^{\theta_jx}\), while ordinary observations contribute
+only a negligible quadratic remainder. This gives the two terms in
+\eqref{eq:support-one-d-limit-functional}.
+
+\subsection{Compact Poisson likelihoods}
+
+After localization, tightness of the atom count reduces to finiteness of the
+active set in a compact limiting Poisson optimization. For a fixed realization
+of the Poisson process, the next proposition gives this finiteness uniformly
+over all maximizers.
+\begin{proposition}
+\label{prop:support-one-d-analytic-active-set}
+The functional \(\mathcal J_N^K\) is concave and coercive on finite positive
+measures on \(K\), and it has at least one maximizer. For every maximizer
+\(\nu\), its first-variation field
+\begin{equation}
+\label{eq:support-one-d-limit-kkt}
+    \Gamma_\nu(\theta)
+    =S(\theta)-\int_{\mathbb R}
+       e^{\theta x}\frac{F_\nu(x)}{1+F_\nu(x)}N(dx)
+\end{equation}
+is real analytic on \((1/2,1)\) and satisfies
+\[
+    \Gamma_\nu\le0\quad\hbox{on }K,
+    \qquad
+    \Gamma_\nu=0\quad\nu\hbox{-almost everywhere}.
+\]
+In particular, \(\supp(\nu)\) is finite. Almost surely, the support sizes are
+bounded uniformly over all maximizers of \(\mathcal J_N^K\). More generally,
+for every \(M<\infty\), the numbers of zeros of \(\Gamma_\nu\) on \(K\) are
+bounded uniformly over all positive measures \(\nu\) with \(\nu(K)\le M\).
+\end{proposition}
+
+\begin{proof}
+Concavity follows from concavity of \(\log(1+y)\). To prove coercivity, let
+\(m=\nu(K)\to\infty\), choose \(k\) with \(2^k\le m<2^{k+1}\), and put
+\(L_k=k\log2/(2c)\). On \(I_k=[-L_k-1,-L_k]\),
+\[
+    F_\nu(x)\ge me^{cx}\ge e^{-c}2^{k/2}.
+\]
+The count \(N(I_k)\) has mean \(\asymp2^{k/(2c)}\). Chernoff's bound and
+Borel--Cantelli imply that it is at least half its mean for every large \(k\),
+almost surely. Since \(h(y)\le-y/2\) for large \(y\), the contribution from
+\(I_k\) is at most \(-C2^{k(1/2+1/(2c))}\). This dominates the linear term,
+which is \(O(m)=O(2^k)\), because \(c<1\). Thus the functional is coercive.
+On sets of bounded mass it is continuous for weak convergence: the negative
+Poisson tail is uniform by \(|h(F_\nu(x))|\le C_Me^{2bx}\), and the positive
+tail is finite. Compactness of bounded sets of positive measures on \(K\)
+then gives existence.
+
+Differentiation in the direction of a point mass gives
+\eqref{eq:support-one-d-limit-kkt} and the KKT inequalities. Both terms extend
+analytically to a complex neighborhood of each compact subinterval of
+\((1/2,1)\); on the negative half-line the integrand in the second term is
+bounded by \(Ce^{(b+\operatorname{Re}\theta)x}\), which is integrable when
+\(b+\operatorname{Re}\theta>1\). The function \(\Gamma_\nu\) is not
+identically zero, since \(S(\theta)\to-\infty\) as \(\theta\uparrow1\) and
+the subtracted integral is nonnegative. Its zeros on \(K\) are therefore
+finite, and the KKT conditions place \(\supp(\nu)\) among them.
+
+For uniformity, let \(\nu_j(K)\le M\). Compactness of bounded sets of positive
+measures on \(K\) gives a weakly convergent subsequence, along which the
+functions \(\Gamma_{\nu_j}\) converge locally uniformly on a complex
+neighborhood of \(K\). The limit is \(\Gamma_\nu\) for the limiting measure
+and is not identically zero: \(S(\theta)\to-\infty\) as
+\(\theta\uparrow1\), whereas the integral subtracted in
+\eqref{eq:support-one-d-limit-kkt} is nonnegative. Choose a bounded
+domain \(U\) containing \(K\), with closure in this neighborhood, such that
+\(\Gamma_\nu\) has no zeros on \(\partial U\). Rouch\'e's theorem then bounds
+the number of zeros in \(K\) for all sufficiently large \(j\). This proves
+the uniform zero bound, which in turn bounds the support of every maximizer.
+\end{proof}
+
+To transfer the limiting problem to the finite-sample likelihood,
+Lemma~\ref{lem:support-fixed-core-collapse} supplies a central atom
+\(\tau_n\). Put \(Y_{n,i}=Z_i-\gamma_n\tau_n\). For a sign
+\(\xi\in\{-1,1\}\) and \(\theta\in K\), the likelihood ratio relative to
+that central atom is
+\[
+ q_{n,\xi,\theta}(Z_i)
+ =\exp\left\{\xi\theta u_nY_{n,i}
+       -\frac{\theta^2u_n^2}{2}-\lambda_n\theta^2\right\},
+ \qquad \lambda_n=\kappa_nu_n^2.
+\]
+Given positive measures \(\nu_+,\nu_-\) on \(K\), place physical mass
+\(\nu_\xi(d\theta)/\{nc_n(\theta)\}\) at
+\(\tau_n+\xi\theta u_n\), removing the same total mass from the central atom.
+Denote the resulting likelihood gain by
+\(\mathcal L_{n,K}(\nu_+,\nu_-)\).
+The deterministic part of a normalized first variation is
+\begin{equation}
+\label{eq:support-deterministic-penalty}
+    \mathcal P_n(\theta)
+    =\frac{1-e^{-\lambda_n\theta^2}}{c_n(\theta)}.
+\end{equation}
+
+Uniform convergence and a scaled-mass bound allow the optimizing measure,
+rather than only a fixed perturbation, to pass to the limit.
+\begin{proposition}
+\label{prop:support-one-d-compact-likelihood}
+If \(K\Subset(\theta_\alpha,1)\), then on every set
+\(\nu_+(K)+\nu_-(K)\le M\),
+\[
+ \mathcal L_{n,K}(\nu_+,\nu_-)
+ \Rightarrow
+ \mathcal J_{N_+}^K(\nu_+)+\mathcal J_{N_-}^K(\nu_-)
+\]
+in the space of continuous functions on the compact set of such measure
+pairs, where \(N_+\) and \(N_-\) are independent copies of \(N\). The first
+variations converge jointly, locally uniformly in a fixed complex
+neighborhood of every smaller interval \(K'\Subset K\).
+
+If \(K\Subset(1/2,1)\) is allowed to contain \(\theta_\alpha\), an NPMLE
+whose noncentral support lies in the two signed copies of \(K\) has total
+scaled edge mass \(O_{\mathbb P}(1)\).
+
+More precisely, let \(K=[b,c]\Subset(1/2,1)\) contain \(\theta_\alpha\) and
+assume
+\[
+    \frac\alpha2+(1-b)^2<\frac12.
+\]
+For NPMLEs whose noncentral support lies in the signed copies of \(K\), let
+\(\nu_{n,+},\nu_{n,-}\) be their scaled edge measures. The normalized
+first-variation fields, after adding \(\mathcal P_n\), are jointly tight for
+locally uniform convergence on a fixed complex neighborhood of every
+\(K'\Subset K\). Along any subsequence on which
+\(\nu_{n,\xi}\Rightarrow\nu_\xi\), their limits are the analytic fields
+\(\Gamma_{\nu_\xi}\) in \eqref{eq:support-one-d-limit-kkt}.
+\end{proposition}
+
+\begin{proof}
+For finitely atomic measures, write
+\[
+ v_i=\sum_{\xi=\pm1}\int_K
+       \frac{q_{n,\xi,\theta}(Z_i)-1}{nc_n(\theta)}
+       \,\nu_\xi(d\theta).
+\]
+The identity
+\(\sum_i\log(1+v_i)=\sum_iv_i+
+\sum_i\{\log(1+v_i)-v_i\}\) separates the two limits. Proposition
+\ref{prop:poisson-edge-field} sends the linear term to
+\(\int S_+d\nu_++\int S_-d\nu_-\). The deterministic damping vanishes
+uniformly on \(K\Subset(\theta_\alpha,1)\). Translation by the central atom
+is also negligible after normalization by \(c_n(\theta)\), because, for
+\(b=\min K\),
+\[
+    \frac{u_n|\tau_n|}{c_n(b)}
+    =O_{\mathbb P}\!\left\{(\log n)^C
+      n^{-1/2+\alpha/2+(1-b)^2+o(1)}\right\}
+    =o_{\mathbb P}(1).
+\]
+At a right-edge observation \(Z_i=u_n+x/u_n\), the positive part of \(v_i\)
+converges to \(F_{\nu_+}(x)\), while the negative part is exponentially small;
+the left edge is analogous. This yields the nonlinear Poisson integrals.
+
+The convergence is uniform over bounded measure sets. Indeed, the physical
+edge mass is at most \(2M/\{nc_n(b)\}\), so its square contributes \(o(1)\).
+On a bounded edge window, the kernels and their first few derivatives are
+uniformly bounded and equicontinuous. Below \(-A\), the likelihood remainder
+is bounded by \(C_Me^{2bx}\), and its first variation by
+\(C_Me^{(b+\operatorname{Re}\theta)x}\). The finite-sample analogues follow
+from the exponential-moment bounds used in Proposition
+\ref{prop:poisson-edge-field}. A finite weak net of the compact measure set,
+followed by \(A\to\infty\), proves the asserted functional and analytic
+convergence.
+
+The bounded-window equicontinuity and the negative-tail envelopes
+\(C_Me^{2bx}\) and \(C_Me^{(b+\operatorname{Re}\theta)x}\) also prove the
+analytic tightness assertion for an interval that crosses
+\(\theta_\alpha\). The random linear term still
+converges to \(S\), while its deterministic mean is exactly
+\(-\mathcal P_n\); adding \(\mathcal P_n\) removes the only term that is not
+tight across the crossover. In the nonlinear term,
+\(e^{-\lambda_n\theta^2}=1+o(1)\) uniformly on the fixed complex
+neighborhood, so the envelopes \(C_Me^{2bx}\) and
+\(C_Me^{(b+\operatorname{Re}\theta)x}\) on the negative tail remain valid. The
+translation by \(\tau_n\) is negligible, together with all derivatives, by
+the displayed condition on \(b\). Uniformity over bounded measure sets allows
+the fields to be evaluated at the sample-dependent \(\nu_{n,\xi}\); after a
+weakly convergent subsequence, their limits are precisely
+\(\Gamma_{\nu_\xi}\).
+
+For the mass bound, put \(m=\nu_+(K)+\nu_-(K)\) and choose a sign carrying at
+least \(m/2\). Uniformly on \(K\), the linear term is at most
+\(B_nm\), where \(B_n=O_{\mathbb P}(1)\); this remains true when \(K\)
+slightly crosses \(\theta_\alpha\), because the normalized variance penalty
+is nonpositive. Let \(N_n(I)\) denote the number of observations whose edge
+coordinate lies in \(I\). For a suitable constant \(c_1>0\),
+\[
+    \lim_{L\to\infty}\liminf_{n\to\infty}
+    \mathbb P\!\left\{N_n([-L-1,-L])\ge c_1e^L\right\}=1,
+\]
+by the edge-process convergence. Each such observation has likelihood
+increment at least \((m/3)e^{-c(L+1)}\), where \(c=\max K<1\). Since
+\(h(y)\le-c_2y\) for large \(y\), this block contributes at most
+\(-c_3me^{(1-c)L}\); all other nonlinear terms are nonpositive. First
+restrict to \(B_n\le B\), then choose \(L\) so that this negative coefficient
+exceeds \(2B\), and finally take \(m\) large. The resulting likelihood gain
+is negative, while zero edge mass has gain zero. Hence the maximizing scaled
+mass is tight.
+\end{proof}
+
+\subsection{The moving lower edge}
+
+The compact Poisson limit leaves one gap in the proof of support tightness: a
+narrow crossover where the normalized variance penalty changes from dominant
+to negligible. There the penalty varies exponentially faster than the random
+analytic remainder, which yields the deterministic zero bound needed to
+control KKT contacts at the moving lower edge.
+\begin{lemma}
+\label{lem:support-steep-crossing}
+Let \(I\) be a compact interval, and suppose \(R_n\) and \(b_n\) are analytic
+on a fixed complex neighborhood of \(I\) and real-valued on \(I\). Assume
+that every subsequence has a further subsequence
+converging locally uniformly to a nonzero analytic function. Let
+\[
+    \mathcal P_n(\theta)=\exp\{a_n\varphi(\theta)+b_n(\theta)\},
+    \qquad a_n\to\infty,
+\]
+where \(\varphi\) is analytic on the same neighborhood, real-valued on \(I\),
+with \(\varphi'<0\) there, and
+\(\{b_n-b_n(\theta_0)\}\) is locally uniformly bounded there for one
+\(\theta_0\in I\). Along every subsequence on which \(R_n\) converges, the
+number of real zeros of \(R_n-\mathcal P_n\) on \(I\) is bounded.
+\end{lemma}
+
+\begin{proof}
+Pass to a subsequence with \(R_n\to R\not\equiv0\). Away from small disjoint
+complex disks around the finitely many zeros of \(R\), both \(R_n'/R_n\) and
+\(b_n'\) are bounded. Hence, on each component where \(R_n>0\),
+\[
+ \frac{d}{d\theta}\log\frac{R_n(\theta)}{\mathcal P_n(\theta)}
+ =\frac{R_n'(\theta)}{R_n(\theta)}-a_n\varphi'(\theta)-b_n'(\theta)>0
+\]
+for large \(n\). There is at most one intersection on that component and none
+where \(R_n<0\).
+
+It remains to count intersections near a zero \(\theta_0\) of \(R\), of
+multiplicity \(m\). Analytic factorization and Rouch\'e's theorem give
+\[
+    R_n(z)=g_n(z)\prod_{j=1}^m(z-z_{n,j}),
+\]
+where \(z_{n,j}\to\theta_0\), while \(g_n\), \(1/g_n\), and
+\(g_n'/g_n\) are uniformly bounded. On a real interval where \(R_n>0\), set
+\(H_n=\log R_n-a_n\varphi-b_n\). Its critical points satisfy
+\begin{equation}
+\label{eq:support-steep-log-derivative}
+ 0=H_n'(\theta)=A_n(\theta)+\sum_{j=1}^m\frac1{\theta-z_{n,j}},
+ \qquad
+ A_n=\frac{g_n'}{g_n}-a_n\varphi'-b_n'.
+\end{equation}
+If \(c_0=\min_I(-\varphi')\), then \(A_n\ge c_0a_n/2\) on the real axis.
+Thus every critical point lies within \(O(a_n^{-1})\) of one of the roots
+\(z_{n,j}\).
+
+In each cluster of such roots, rescale \(y=a_n(\theta-x_n)\). After a
+subsequence, the rescaled roots either converge or leave every compact set.
+Multiplying \(a_n^{-1}H_n'\) by the polynomial \(Q_n\) formed from the
+convergent roots gives
+\[
+    F_n(y)=C_n(y)Q_n(y)+Q_n'(y),
+    \qquad C_n\to C=-\varphi'(\theta_0)>0.
+\]
+The limit \(CQ+Q'\) is not identically zero: at a root of \(Q\) of
+multiplicity \(q\), the derivative has order \(q-1\), whereas \(CQ\) has
+order at least \(q\). Rouch\'e's theorem therefore bounds the number of
+critical points in each cluster. Rolle's theorem then bounds the zeros of
+\(H_n\), equivalently the intersections \(R_n=\mathcal P_n\). Summing over the
+finitely many zero disks and complementary components proves the claim.
+\end{proof}
+
+We apply this lemma to the finite-sample KKT certificate. For the penalty
+\(\mathcal P_n\) in \eqref{eq:support-deterministic-penalty}, on a fixed
+neighborhood of \(\theta_\alpha\),
+\[
+    \frac{d}{d\theta}\log \mathcal P_n(\theta)
+    =-(1-\theta)u_n^2+O(1),
+\]
+so its transition has width \(O(u_n^{-2})\). Choose
+\(I=[b,c]\Subset(1/2,1)\) around \(\theta_\alpha\) with
+\begin{equation}
+\label{eq:support-crossover-translation-condition}
+    \frac\alpha2+(1-b)^2<\frac12.
+\end{equation}
+For the fitted measure, normalize the KKT certificate by
+\[
+    D_{\tau_n,\xi}(\theta)
+    =\frac1n\sum_{i=1}^nq_{n,\xi,\theta}(Z_i),
+    \qquad
+    \Gamma_{n,\xi}(\theta)
+    =\frac{\Psi_{\widehat G_n}(\tau_n+\xi\theta u_n)-1}{c_n(\theta)}.
+\]
+Write the fitted likelihood ratio relative to its central atom as \(1+v_i\).
+Since that atom has positive mass, its KKT equality gives
+\(n^{-1}\sum_i(1+v_i)^{-1}=1\). Consequently,
+\begin{align}
+ \Gamma_{n,\xi}(\theta)
+ &=\frac1{nc_n(\theta)}\sum_{i=1}^n
+   \frac{q_{n,\xi,\theta}(Z_i)-1}{1+v_i}\notag\\
+ &=\frac{D_{\tau_n,\xi}(\theta)-1}{c_n(\theta)}
+ -\frac1{nc_n(\theta)}\sum_{i=1}^n
+   \{q_{n,\xi,\theta}(Z_i)-1\}\frac{v_i}{1+v_i}.
+\label{eq:support-finite-kkt-split}
+\end{align}
+There is no residual contribution from the \(-1\) in the last sum, because
+\[
+    \sum_i\frac{v_i}{1+v_i}
+    =\sum_i\left(1-\frac1{1+v_i}\right)=0.
+\]
+Proposition~\ref{prop:poisson-edge-field} controls the first term. In the
+second, an observation with right-edge coordinate \(x\) converges to
+\(-e^{\theta x}F_{\nu_+}(x)/\{1+F_{\nu_+}(x)\}\), and the left edge is
+analogous. The negative-tail envelope is
+\(C_Me^{(b+\operatorname{Re}\theta)x}\), which is integrable because
+\(b+\operatorname{Re}\theta>1\). Once
+Lemma~\ref{lem:support-one-d-exclusion-margins} confines the noncentral
+support to the signed copies of \(I\), the crossover assertion of
+Proposition~\ref{prop:support-one-d-compact-likelihood} gives
+\begin{equation}
+\label{eq:support-moving-edge-decomposition}
+    \Gamma_{n,\xi}(\theta)=R_{n,\xi}(\theta)-\mathcal P_n(\theta),
+\end{equation}
+where \(\{R_{n,\xi}\}\) is tight for locally uniform convergence on the
+complex neighborhood, and every subsequential limit is the nonzero function
+\(\Gamma_\nu\) in
+\eqref{eq:support-one-d-limit-kkt}. The only extra term is the translation by
+\(\tau_n\), which is negligible with all derivatives by
+\eqref{eq:support-crossover-translation-condition} and
+\[
+    \sup_{\theta\in I}\frac{u_n|\tau_n|}{c_n(\theta)}
+    =O_{\mathbb P}\!\left\{(\log n)^C
+      n^{-1/2+\alpha/2+(1-b)^2+o(1)}\right\}
+    =o_{\mathbb P}(1).
+\]
+Finally,
+\[
+    \mathcal P_n(\theta)
+    =\exp\left\{u_n^2(-\theta+\theta^2/2)
+       +\log n+\log(1-e^{-\lambda_n\theta^2})\right\}.
+\]
+On a fixed simply connected complex neighborhood of \(I\), bounded away from
+zero, \(1-e^{-\lambda_nz^2}\) has no zeros for all large \(n\). We choose the
+analytic logarithm there that is real on \(I\). After subtraction at one fixed point, this logarithm
+and all its derivatives are locally uniformly bounded. Lemma
+\ref{lem:support-steep-crossing} therefore bounds the number of contacts in
+the moving crossover.
+
+To exclude contacts outside a compact edge interval, we collect the
+quantitative gaps already proved in the phase-diagram analysis. Put
+\[
+ \tau_{0,n}=\frac{\bar Z_n}{\gamma_n},
+ \qquad
+ D_{0,\xi}(\theta)=D_{n,\tau_{0,n}}(\xi\theta u_n),
+\]
+so \(D_{0,\xi}\) is the KKT field relative to the best one-atom fit.
+\begin{lemma}
+\label{lem:support-one-d-exclusion-margins}
+Fix \(r_0>0\) and
+\(0<\eta<\theta_\alpha-1/2\). There is \(c>0\) such that, with probability
+tending to one,
+\[
+ \sup_{\xi=\pm1}\sup_{r_0/u_n\le\theta\le\theta_\alpha-\eta}
+ D_{0,\xi}(\theta)\le1-c\kappa_n.
+\]
+Moreover, for every \(\delta>0\), there are \(\rho>0\) and \(a>0\), with
+\(\rho^2<\alpha\), such that, with probability at least
+\(1-\delta+o(1)\),
+\[
+ \sup_{\xi=\pm1}\sup_{1-\rho\le\theta<1}
+ \frac{D_{0,\xi}(\theta)-1}{c_n(\theta)}\le-a,
+ \qquad
+ \sup_{\xi=\pm1}\sup_{\theta\ge1}D_{0,\xi}(\theta)\le0.9.
+\]
+\end{lemma}
+
+\begin{proof}
+For the lower range, choose
+\(\theta_*\in(1/2,\theta_\alpha-\eta)\) with
+\(\theta_*^2<1/2-\alpha\). The Gaussian-range estimate used in Lemma
+\ref{lem:subthreshold-envelope} gives
+\[
+ \sup_{\xi=\pm1}\sup_{0<\theta\le\theta_*}
+ \frac{|K_{n,\xi}(\theta)-1|}{\theta^2}
+ =O_{\mathbb P}\{n^{-1/2+\theta_*^2+o(1)}\}
+ =o_{\mathbb P}(\lambda_n).
+\]
+Since \(D_{0,\xi}=e^{-\lambda_n\theta^2}K_{n,\xi}\), this leaves a deficit
+at least \(c\kappa_n\) for \(r_0/u_n\le\theta\le\theta_*\). On
+\([\theta_*,\theta_\alpha-\eta]\), Proposition
+\ref{prop:poisson-edge-field} and Lemma~\ref{lem:uniform-centering} make the
+random error \(o_{\mathbb P}(\lambda_n)\), while the damping loss is at least
+\(c\lambda_n\). This proves the first assertion.
+
+For the upper endpoint, use the decomposition in the proof of
+Lemma~\ref{lem:endpoint-exclusion}. Fix \(M\). After points above the edge
+level \(M\) are removed, the compensated field and its derivative are tight
+on \([3/4,1]\). Thus, for a suitable \(K=K(M,\delta)\), both truncated fields
+have supremum at most \(K\) with probability at least \(1-\delta/4+o(1)\).
+The probability that either edge process has a point above \(M\) is at most
+\(2e^{-M}+o(1)\). On the complementary event, the omitted compensator is at
+least
+\[
+    \frac{e^{-(1-\theta)M}}{1-\theta},
+    \qquad 1-\rho\le\theta<1.
+\]
+Choose \(M\) so that \(2e^{-M}<\delta/4\), and then choose \(\rho>0\) so
+small that this lower bound exceeds \(K+2\) throughout the interval. The
+normalized null field is then at most \(-2\). The damping is nonpositive, and
+\(\rho^2<\alpha\) makes the empirical-centering error \(o_{\mathbb P}(c_n)\);
+after decreasing the margin, this proves the first upper-endpoint inequality
+with \(a=1\).
+
+For \(\theta\ge1\), choose \(R\) so large that both centered sample extremes
+are below the score \(1+R/u_n^2\), except on an event of probability at most
+\(\delta/4+o(1)\). The right-of-one estimate in the proof of
+Lemma~\ref{lem:endpoint-exclusion}, applied up to this score, gives
+\(D_{0,\xi}\le0.9\). Beyond it, Lemma~\ref{lem:one-atom-D} makes the field
+monotone away from the corresponding sample extreme. This proves the second
+inequality, simultaneously for both signs, with total failure probability
+at most \(\delta+o(1)\).
+\end{proof}
+
+The limiting-law argument requires compactness of the finite-sample active
+sets before the limiting optimizer can be identified. The central-atom
+localization, the exclusion margins, and the analytic zero bound combine to
+give this fixed-exponent tightness.
+\begin{lemma}
+\label{lem:fixed-exponent-support-tightness}
+If \(r_n\to\alpha\in(0,1/4)\), then
+\[
+    |\supp(\widehat G_n)|=O_{\mathbb P}(1).
+\]
+\end{lemma}
+
+\begin{proof}
+Lemma
+\ref{lem:support-fixed-core-collapse} gives one central atom and outside mass
+\[
+    W_n=O_{\mathbb P}\{(\log n)^C/(n\kappa_n)\}
+        =o_{\mathbb P}(\kappa_n).
+\]
+Relative to the best one-atom center, write
+\(D_{\tau_n,\xi}(\theta)=D_{n,\tau_n}(\xi\theta u_n)\). The central atom
+introduces the exact translation
+\[
+ D_{\tau_n,\xi}(\theta)
+ =e^{-\xi\theta u_n\delta_n}D_{0,\xi}(\theta),
+ \qquad \delta_n=\gamma_n\tau_n-\bar Z_n,
+\]
+where
+\[
+    |\delta_n|
+    =O_{\mathbb P}\!\left\{(\log n)^C
+      n^{-1/2+\alpha/2+o(1)}\right\}.
+\]
+
+Choose \(\eta>0\) so small that
+\(\alpha/2+(\sqrt\alpha+2\eta)^2<1/2\). The first bound in Lemma
+\ref{lem:support-one-d-exclusion-margins}, the translation estimate, and
+Lemma~\ref{lem:support-no-percolation} exclude contacts between the fixed core
+and \((\theta_\alpha-\eta)u_n\). For the upper endpoint choose \(\rho\) from
+the second bound, with \(1-\rho>\theta_\alpha-\eta\). There the normalized
+gap is at least \(ac_n(1-\rho)=n^{-\rho^2+o(1)}\), whereas
+\[
+    W_n=O_{\mathbb P}\!\left\{(\log n)^C
+      n^{-1+\alpha+o(1)}\right\},
+    \qquad
+    u_n|\delta_n|
+    =O_{\mathbb P}\!\left\{(\log n)^C
+      n^{-1/2+\alpha/2+o(1)}\right\}.
+\]
+Both are negligible relative to the gap because \(\rho^2<\alpha<1/4\).
+It remains only to note that a support point cannot have an arbitrarily large
+translated score. The convex-hull localization in the proof of
+Lemma~\ref{lem:support-coarse-defect} places every score atom of
+\(\widehat G_n\) in
+\([\min_iZ_i/\gamma_n,\max_iZ_i/\gamma_n]\). After increasing the fixed
+\(R\) in Lemma~\ref{lem:support-one-d-exclusion-margins}, this implies that
+every displacement from \(\tau_n\) has
+\[
+    \theta\le1+\frac{R+1}{u_n^2}
+\]
+outside an event of probability \(\delta+o(1)\); here
+\(u_n|\tau_n|=o_{\mathbb P}(1)\). On this bounded endpoint window the
+translation factor \(e^{-\xi\theta u_n\delta_n}\) is uniformly
+\(1+o_{\mathbb P}(1)\). The normalized gap for \(1-\rho\le\theta<1\), the
+fixed (0.1) gap for \(1\le\theta\le1+(R+1)/u_n^2\), and
+Lemma~\ref{lem:support-no-percolation} therefore exclude all contacts beyond
+\((1-\rho)u_n\), apart from an event of probability \(O(\delta)+o(1)\).
+
+Every noncentral support point now lies in a signed copy of
+\([\theta_\alpha-\eta,1-\rho]\), which is compactly contained in
+\[
+    K=[\theta_\alpha-2\eta,1-\rho/2]\Subset(1/2,1).
+\]
+Proposition~\ref{prop:support-one-d-compact-likelihood} makes the scaled mass
+on \(K\) tight and gives joint analytic convergence on a complex neighborhood
+of the smaller support interval.
+Prokhorov's theorem and a Skorokhod representation therefore allow us, from
+every subsequence, to extract a further subsequence on which the edge measures
+converge weakly and the analytic remainders in
+\eqref{eq:support-moving-edge-decomposition} converge locally uniformly,
+almost surely on a common probability space.
+Away from a fixed neighborhood of \(\theta_\alpha\), the uniform analytic
+zero bound in Proposition~\ref{prop:support-one-d-analytic-active-set} applies
+to the limiting remainders. Inside that neighborhood,
+Lemma~\ref{lem:support-steep-crossing} controls the intersections with the
+rapidly varying penalty. Rouch\'e's theorem transfers both bounds to the exact
+KKT certificates along the subsequence. Since every support point is a zero,
+the support counts are tight. Otherwise one could choose a subsequence
+on which they escape every deterministic bound with fixed positive
+probability. Repeating the Prokhorov--Skorokhod subsequence extraction just
+described would then give a contradiction.
+
+\end{proof}

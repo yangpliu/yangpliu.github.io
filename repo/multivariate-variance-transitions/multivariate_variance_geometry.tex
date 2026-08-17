@@ -1,0 +1,1088 @@
+\subsection{Notation and one-atom likelihood geometry}\label{sec:mv-one-atom-geometry}
+
+The deterministic part of both main theorems is the reduction from mixture
+likelihood to a Gaussian-bump field. This subsection derives that KKT
+criterion, proves monotonicity in the variance defect, and records the exact
+single-contact calculation used later in the simplex regime. We first fix the
+notation used throughout the paper.
+
+All asymptotic notation is as $n\to\infty$. For a deterministic positive
+sequence $r_n$, the relation $U_n=O_{\Pbb}(r_n)$ means that
+$|U_n|/r_n$ is tight, while $U_n=o_{\Pbb}(r_n)$ means that
+$U_n/r_n\to0$ in probability. We write $r_n\lesssim s_n$ when
+$r_n\le C s_n$ for a constant independent of $n$, and use
+$\gtrsim,\asymp,\ll$, and $\gg$ analogously. We write
+$U_n\xrightarrow{\Pbb}U$ for convergence in
+probability and $U_n\Rightarrow U$ for convergence in distribution. A
+positive random sequence satisfies $U_n=n^{o_{\Pbb}(1)}$ when, for every
+$\eta>0$, $\Pbb\{n^{-\eta}\le U_n\le n^\eta\}\to1$. A
+subscript on asymptotic notation records allowed dependence: for example,
+$O_{\Pbb,R}(1)$ is tight for each fixed $R$. In iterated limits,
+$o_A(1)$ denotes a deterministic quantity that tends to zero as
+$A\to\infty$ after the $n\to\infty$ limit. Constants implicit in
+$O_m(\cdot)$ may depend on the fixed integer $m$, and other constants may
+change from line to line. Point processes carry the vague topology, and a
+standard Gumbel variable has distribution function
+$s\mapsto\exp\{-e^{-s}\}$.
+
+Let \(d=d_n\ge2\), let \(Z_1,\ldots,Z_n\) be independent
+\(\cN(0,I_d)\) vectors, and observe
+\[
+  X_i=\sqrt{1-\eps_n}\,Z_i,
+  \qquad 0\le\eps_n<1.
+\]
+We fit location mixtures of \(\cN(\mu,I_d)\) densities. The only one-atom
+maximum-likelihood candidate is the point mass at the sample mean. Writing
+\(\bar Z_n=n^{-1}\sum_iZ_i\) and
+\(\widetilde Z_i=Z_i-\bar Z_n\), the directional-derivative criterion says
+that this candidate is optimal exactly when
+\begin{equation}
+\label{eq:one-atom-event}
+  E_n^{(1)}
+  :=
+  \left\{\sup_{t\in\R^d}D_n(t)\le1\right\},
+  \qquad
+  D_n(t)
+  =
+  \frac1n\sum_{i=1}^n
+  \exp\left\{t\cdot\widetilde Z_i-\frac{\gamma_n|t|^2}{2}\right\},
+\end{equation}
+where
+\begin{equation}
+\label{eq:gamma-definition}
+  \kappa_n=\frac{\eps_n}{2(1-\eps_n)},
+  \qquad
+  \gamma_n=\frac1{1-\eps_n}=1+2\kappa_n.
+\end{equation}
+Indeed, if \(a\) denotes displacement of a fitted component mean from the
+sample mean, the usual directional derivative is
+\[
+  \frac1n\sum_i
+  \exp\left\{a\cdot(X_i-\bar X_n)-\frac{|a|^2}{2}\right\}.
+\]
+The change of variables \(t=\sqrt{1-\eps_n}\,a\) gives
+\eqref{eq:one-atom-event}. Notice that \(D_n(0)=1\), so the issue is whether
+the field rises above its value at the origin.
+
+Although a multivariate mixture NPMLE need not be unique, this causes no
+ambiguity for the event studied here.  The following dimension-free fact
+shows that \(E_n^{(1)}\) is almost surely the event that the NPMLE is unique
+and one-atomic.
+
+\begin{proposition}
+\label{prop:one-atom-unique}
+Let \(n\ge2\), and let \(X_1,\ldots,X_n\) be i.i.d.\ from a nondegenerate
+spherical Gaussian distribution in \(\R^d\). The probability that
+\(\delta_{\bar X_n}\) and a different mixing measure both maximize the
+Gaussian-mixture likelihood is zero.
+\end{proposition}
+
+\begin{proof}
+If \(\delta_{\bar X_n}\) and \(G\ne\delta_{\bar X_n}\) both maximize the
+likelihood, strict concavity in the vector of fitted values implies
+\(q_G(X_i)=q_{\delta_{\bar X_n}}(X_i)\) for every \(i\).  Since the one-atom
+fit is optimal, its physical-coordinate directional field
+\[
+ \mathcal D_{X,n}(a)
+ =\frac1n\sum_{i=1}^n
+ \exp\left\{a\cdot(X_i-\bar X_n)-\frac{|a|^2}{2}\right\}
+\]
+satisfies \(\mathcal D_{X,n}(a)\le1\).
+Moreover,
+\[
+ \int \mathcal D_{X,n}(u-\bar X_n)\,dG(u)
+ =\frac1n\sum_i\frac{q_G(X_i)}
+ {q_{\delta_{\bar X_n}}(X_i)}=1.
+\]
+Thus \(\mathcal D_{X,n}(a)=1\) for some \(a\ne0\).
+
+Write \(Y=(X_1-\bar X_n,\ldots,X_n-\bar X_n)=RU\) in polar form in the subspace
+\(\{(y_1,\ldots,y_n):\sum_i y_i=0\}\). Conditional on its direction \(U\),
+the radius \(R\) has a density. After setting \(t=Ra\), the
+directional-derivative field is
+\[
+ \mathcal D_{R,U}(t)
+ =\frac1n\sum_i
+ \exp\left\{t\cdot U_i-\frac{|t|^2}{2R^2}\right\}.
+\]
+For fixed \(U\) and \(t\ne0\), this is strictly increasing in \(R\).
+Consequently, for each \(U\), at most one radius can admit both a one-atom
+maximizer and a nonzero contact: at any larger radius that same contact
+would make the directional derivative exceed one. Thus, conditional on
+\(U\), the radius belongs to an at-most-singleton exceptional set, which has
+probability zero because \(R\mid U\) has a density. Integration over \(U\)
+proves the claim.
+\end{proof}
+
+The one-atom event is monotone in the variance defect. This elementary fact
+allows all sharp-window limits below to be converted into laws for a
+samplewise critical shrinkage.
+\begin{lemma}
+\label{lem:variance-monotonicity}
+Fix $z_1,\ldots,z_n\in\R^d$, and let
+$x_i^{(\eps)}=\sqrt{1-\eps}\,z_i$ for $0\le\eps<1$. If the sample based on
+$x_1^{(\eps_1)},\ldots,x_n^{(\eps_1)}$ admits a one-atom NPMLE and
+$\eps_2\ge\eps_1$, then the sample based on
+$x_1^{(\eps_2)},\ldots,x_n^{(\eps_2)}$ also admits a one-atom NPMLE.
+\end{lemma}
+
+\begin{proof}
+Let $\bar z=n^{-1}\sum_i z_i$ and
+\[
+ K_n(t)=\frac1n\sum_{i=1}^n
+ \exp\left\{t\cdot(z_i-\bar z)-\frac{|t|^2}{2}\right\}.
+\]
+After the change of variables $t=a\sqrt{1-\eps}$, the one-atom directional
+field is
+\[
+ e^{-\kappa(\eps)|t|^2}K_n(t),
+ \qquad
+ \kappa(\eps)=\frac{\eps}{2(1-\eps)}.
+\]
+Because $\kappa$ is increasing, the supremum of this field is nonincreasing
+in $\eps$. The directional-derivative criterion proves the claim.
+\end{proof}
+
+The next lemma shows that the monotone one-atom set is nonempty and closed,
+hence has the form \([\eps_*,1)\). Its endpoint \(\eps_*\) is the samplewise
+critical defect used in the introduction.
+\begin{lemma}
+\label{lem:critical-defect-interval}
+For every fixed sample $z_1,\ldots,z_n\in\R^d$, the set of
+$\eps\in[0,1)$ for which
+$\sqrt{1-\eps}\,z_1,\ldots,\sqrt{1-\eps}\,z_n$ admits a one-atom NPMLE is
+a nonempty interval of the form $[\eps_*,1)$.
+\end{lemma}
+
+\begin{proof}
+Let $y_i=z_i-\bar z$ and $M=\max_i|y_i|$. The empirical random variable
+taking the values $t\cdot y_i$ has mean zero and range of length at most
+$2M|t|$. Hoeffding's lemma gives
+\[
+ \log\left(\frac1n\sum_i e^{t\cdot y_i-|t|^2/2}\right)
+ \le \frac{M^2-1}{2}|t|^2.
+\]
+Hence the one-atom field
+$e^{-\kappa|t|^2}n^{-1}\sum_i e^{t\cdot y_i-|t|^2/2}$ is at most one
+for every $t$ once $\kappa\ge(M^2-1)_+/2$, proving nonemptiness. Lemma
+\ref{lem:variance-monotonicity} makes the set an upper interval. Finally, if
+$\eps_m$ belongs to the set and $\eps_m\to\eps<1$, then the one-atom
+criterion holds at $\eps$ by pointwise convergence of its field for every
+$t$. The interval is therefore closed in $[0,1)$ and contains its infimum.
+\end{proof}
+
+For the spatial analysis, it is useful to rewrite \(D_n\) as a Gaussian
+radial-basis field whose centers and heights are determined by the sample.
+This representation will allow the radial and angular contributions to be
+studied separately.
+
+\begin{lemma}
+\label{lem:bump-representation}
+Set
+\[
+  w=\sqrt{\gamma_n}\,t,
+  \qquad
+  q_i=\frac{\widetilde Z_i}{\sqrt{\gamma_n}},
+  \qquad
+  h_i=\frac1n\exp\left\{\frac{|q_i|^2}{2}\right\}.
+\]
+Define the bump-coordinate field
+\[
+  B_n(w):=D_n(w/\sqrt{\gamma_n}).
+\]
+Then, exactly,
+\begin{equation}
+\label{eq:bump-representation}
+  B_n(w)
+  =
+  \sum_{i=1}^n h_i
+  \exp\left\{-\frac{|w-q_i|^2}{2}\right\}.
+\end{equation}
+In particular, the \(i\)th bump has maximum \(h_i\), attained at \(w=q_i\),
+and
+\begin{equation}
+\label{eq:one-point-threshold}
+  h_i>1
+  \quad\Longleftrightarrow\quad
+  \frac{|\widetilde Z_i|^2}{2}>\gamma_n\log n.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Completing the square gives
+\[
+  t\cdot\widetilde Z_i-\frac{\gamma_n|t|^2}{2}
+  =
+  w\cdot q_i-\frac{|w|^2}{2}
+  =
+  \frac{|q_i|^2}{2}-\frac{|w-q_i|^2}{2}.
+\]
+Summing proves \eqref{eq:bump-representation}; maximizing one summand proves
+\eqref{eq:one-point-threshold}.
+\end{proof}
+
+The bump representation isolates the basic mechanism. A radial extreme creates a
+localized bump whose height is close to one. Other observations contribute a
+diffuse background, and one-atomicity fails precisely when the full bump field
+exceeds one. At the transition the centers capable of producing a crossing have
+radius approximately \(\sqrt{2\log n}\) in \(w\)-coordinates, even when the
+original dimension is much larger than \(\log n\).
+
+There is also an exact dual formulation which will be decisive in
+Section~\ref{sec:explicit-regime}. Let
+\(\Delta_n=\{p\in[0,1]^n:\sum_i p_i=1\}\), let
+\(\mathbf u_n=(1/n,\ldots,1/n)\), and write
+\[
+  K(p\Vert \mathbf u_n)=\sum_{i=1}^n p_i\log(np_i)
+\]
+for relative entropy, with \(0\log0=0\).
+
+\begin{lemma}
+\label{lem:entropy-dual}
+For every centered collection \(q_1,\ldots,q_n\in\R^d\),
+\begin{equation}
+\label{eq:entropy-dual}
+  \log\sup_{w\in\R^d}B_n(w)
+  =
+  \sup_{p\in\Delta_n}
+  \left\{
+    \frac12\left|\sum_{i=1}^np_iq_i\right|^2
+    -K(p\Vert \mathbf u_n)
+  \right\}.
+\end{equation}
+The expression on the right is always nonnegative, since it vanishes at
+\(p=\mathbf u_n\).
+\end{lemma}
+
+\begin{proof}
+The Gibbs variational formula gives, for every \(w\),
+\[
+  \log\left\{\frac1n\sum_i e^{w\cdot q_i}\right\}
+  =
+  \sup_{p\in\Delta_n}
+  \left\{w\cdot\sum_i p_iq_i-K(p\Vert \mathbf u_n)\right\}.
+\]
+Subtract \(|w|^2/2\), take the supremum over \(w\), and use
+\(\sup_w\{w\cdot v-|w|^2/2\}=|v|^2/2\). Finally,
+\(\sum_iq_i=0\), so \(p=\mathbf u_n\) gives zero.
+\end{proof}
+
+The point-mass choice \(p=e_i\) in \eqref{eq:entropy-dual} gives the
+one-bump obstruction \eqref{eq:one-point-threshold}.  A slightly diffuse
+competitor gives an exact and strictly stronger finite-sample threshold.
+
+\begin{proposition}
+\label{prop:potts-radial-obstruction}
+For \(n\ge3\), define
+\begin{equation}
+\label{eq:potts-radial-threshold}
+ R_n^\star
+ =
+ \frac{(n-1)^2}{n(n-2)}\log(n-1)
+ =
+ \log n-\frac1n+O\left(\frac{\log n}{n^2}\right).
+\end{equation}
+If
+\[
+ \max_i\frac{|q_i|^2}{2}>R_n^\star,
+\]
+then \(\sup_wB_n(w)>1\). Consequently, \(E_n^{(1)}\) implies
+\(\max_i|q_i|^2/2\le R_n^\star\).
+\end{proposition}
+
+\begin{proof}
+Fix \(i\), and define \(p\in\Delta_n\) by
+\[
+ p_i=\frac{n-1}{n},
+ \qquad
+ p_j=\frac1{n(n-1)}\quad(j\ne i).
+\]
+Since \(\sum_jq_j=0\),
+\[
+ \sum_jp_jq_j=\frac{n-2}{n-1}q_i,
+ \qquad
+ K(p\Vert \mathbf u_n)=\frac{n-2}{n}\log(n-1).
+\]
+The expression in braces in \eqref{eq:entropy-dual} is therefore positive
+exactly when
+\[
+ \frac{|q_i|^2}{2}>
+ \frac{(n-1)^2}{n(n-2)}\log(n-1).
+\]
+The expansion in \eqref{eq:potts-radial-threshold} follows from Taylor
+expansion of \(\log(n-1)\).
+\end{proof}
+
+\subsection{Gamma extremes and empirical centering}\label{sec:mv-gamma-normalization}
+
+The normalization in Theorem~\ref{thm:main-support-law} is chosen so that the
+largest centered radial energies have an order-one Poisson limit. This
+subsection proves that limit uniformly over arbitrary dimension sequences and
+quantifies the effect of replacing \(Z_i\) by \(Z_i-\bar Z_n\).
+
+Put
+\[
+  L_n=\log n,
+  \qquad
+  k_n=\frac{d_n}{2},
+\]
+and let \(Y_n\) have the \(\Gamma(k_n,1)\) distribution. Write \(f_n\) and
+\(\overline F_n\) for its density and upper tail. Define \(b_n\) and \(a_n\)
+by
+\begin{equation}
+\label{eq:b-a-definition}
+  n\overline F_n(b_n)=1,
+  \qquad
+  a_n=\frac{\overline F_n(b_n)}{f_n(b_n)}.
+\end{equation}
+Thus \(b_n\) is the exact radial \(1-1/n\) quantile and \(a_n\) is the
+reciprocal hazard there. Unlike the fixed-dimensional expansion of \(b_n\),
+these definitions remain valid without specifying a relation between \(d_n\)
+and \(n\).
+
+We first verify that \(a_n\) is the correct extreme-value scale for every
+triangular array of Gamma shapes. The proof is included because uniformity in
+\(k_n\) is essential here.
+
+\begin{lemma}
+\label{lem:gamma-hazard}
+For any sequence \(k_n\ge1\), the quantile \(b_n\) in
+\eqref{eq:b-a-definition} satisfies
+\[
+  \frac{b_n-k_n}{\sqrt{k_n}}\longrightarrow\infty.
+\]
+Moreover,
+\begin{equation}
+\label{eq:hazard-asymptotic}
+  a_n
+  =
+  \frac{b_n}{b_n-k_n+1}\{1+o(1)\},
+\end{equation}
+and, uniformly for \(x\) in compact subsets of \(\R\),
+\begin{equation}
+\label{eq:gamma-tail-ratio}
+  \frac{\overline F_n(b_n+a_nx)}{\overline F_n(b_n)}
+  \longrightarrow e^{-x}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We may argue along subsequences. If \(k_n\) remains bounded, then
+\(b_n\to\infty\), and the first assertion is immediate. If \(k_n\to\infty\),
+the central limit theorem gives
+\[
+  \Pbb\{Y_n>k_n+M\sqrt{k_n}\}\longrightarrow1-\Phi(M)
+\]
+for every fixed \(M\), where \(\Phi\) is the standard normal distribution
+function. Since \(\overline F_n(b_n)=1/n\to0\), eventually
+\(b_n>k_n+M\sqrt{k_n}\). Letting \(M\to\infty\) proves the first claim.
+
+For \(y>k_n-1\), changing variables \(z=y+u\) in the Gamma tail gives the
+exact identity
+\begin{equation}
+\label{eq:tail-density-ratio}
+  \frac{\overline F_n(y)}{f_n(y)}
+  =
+  \int_0^\infty
+  \exp\left\{-u+(k_n-1)\log\left(1+\frac uy\right)\right\}\,du.
+\end{equation}
+Set
+\(\delta_y=1-(k_n-1)/y=(y-k_n+1)/y\). The inequality
+\(\log(1+v)\le v\) shows that the last integral is at most
+\(\delta_y^{-1}\). After the substitution \(v=\delta_yu\), its exponent is
+\[
+  -v-\frac{k_n-1}{2y^2\delta_y^2}v^2
+  +O\left(\frac{k_n}{y^3\delta_y^3}v^3\right)
+\]
+on every bounded \(v\)-interval. At \(y=b_n\),
+\[
+  \frac{k_n}{b_n^2\delta_{b_n}^2}
+  =
+  \frac{k_n}{(b_n-k_n+1)^2}
+  \longrightarrow0.
+\]
+Dominated convergence in \eqref{eq:tail-density-ratio}, using the upper
+envelope \(e^{-v}\), therefore yields
+\(a_n\delta_{b_n}\to1\), which is \eqref{eq:hazard-asymptotic}.
+
+If \(y=b_n+O(a_n)\), then
+\[
+  \frac{\delta_y}{\delta_{b_n}}=1+o(1),
+  \qquad
+  \frac{\overline F_n(y)}{f_n(y)}=a_n\{1+o(1)\},
+\]
+uniformly over the indicated range. The first relation follows by
+differentiating \(\delta_y\) and using
+\(k_n/(b_n-k_n+1)^2\to0\); the second follows because the dominated-convergence
+argument applied to \eqref{eq:tail-density-ratio} is uniform for
+\(y=b_n+O(a_n)\). Since
+\((\log\overline F_n)'(y)=-f_n(y)/\overline F_n(y)\), integration from
+\(b_n\) to \(b_n+a_nx\) gives \eqref{eq:gamma-tail-ratio}.
+\end{proof}
+
+The triangular-array maximum therefore has the usual Gumbel law. No
+dimension-dependent centering expansion is needed.
+
+\begin{proposition}
+\label{prop:gamma-max}
+Let \(Y_{n,1},\ldots,Y_{n,n}\) be independent
+\(\Gamma(k_n,1)\) variables. Then, for every \(x\in\R\),
+\begin{equation}
+\label{eq:gumbel-unscaled}
+  \Pbb\left\{
+    \max_{1\le i\le n}\frac{Y_{n,i}-b_n}{a_n}\le x
+  \right\}
+  \longrightarrow
+  \exp\{-e^{-x}\}.
+\end{equation}
+More generally, the number of indices satisfying
+\(Y_{n,i}>b_n+a_nx\) converges to a Poisson variable with mean \(e^{-x}\).
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:gamma-hazard},
+\(n\overline F_n(b_n+a_nx)\to e^{-x}\). The exceedance count is binomial
+with success probability asymptotic to \(e^{-x}/n\), proving the Poisson
+limit. Its probability of being zero gives \eqref{eq:gumbel-unscaled}.
+\end{proof}
+
+Throughout the radial analysis, put
+\begin{equation}
+\label{eq:residual-variance}
+ \sigma_n^2=1-\frac1n.
+\end{equation}
+The exact transition coordinate and the associated centered radial excesses
+are
+\begin{equation}
+\label{eq:exact-transition-coordinate}
+ s_n^\star
+ =\frac{\gamma_nR_n^\star/\sigma_n^2-b_n}{a_n},
+ \qquad
+ \xi_{n,i}^\star
+ =\frac{|Z_i-\bar Z_n|^2/(2\sigma_n^2)-b_n}{a_n}-s_n^\star,
+ \qquad
+ \delta_n^\star=\frac{\sigma_n^2a_n}{\gamma_n}.
+\end{equation}
+Thus, for \(q_i=(Z_i-\bar Z_n)/\sqrt{\gamma_n}\),
+\begin{equation}
+\label{eq:exact-support-radius}
+ \frac{|q_i|^2}{2}=R_n^\star+\delta_n^\star\xi_{n,i}^\star.
+\end{equation}
+These exact quantities will be used in every theorem statement. Some proofs
+temporarily replace \(R_n^\star\) by \(\log n\); the comparison is recorded
+once in Lemma~\ref{lem:exact-old-edge-coordinate}.
+
+The exact Gamma normalization agrees with the moving-shell normalization in
+every fixed dimension. The following bridge is used when the bounded- and
+growing-dimensional arguments are combined.
+\begin{lemma}
+\label{lem:fixed-d-normalization-bridge}
+Fix \(d\ge3\), put \(k=d/2\), and define
+\[
+ b_{n,d}=\log n+(k-1)\log\log n-\log\Gamma(k).
+\]
+Then \(a_n\to1\), \(b_n-b_{n,d}\to0\), and
+\(R_n^\star/\sigma_n^2=\log n+o(1)\). If \(s_n^\star=O(1)\), then
+\begin{equation}
+\label{eq:fixed-d-coordinate-bridge}
+ s_n^\star
+ =\frac{\gamma_n\log n-b_n}{a_n}+o(1)
+ =\frac{\eps_n}{1-\eps_n}\log n
+   -(k-1)\log\log n+\log\Gamma(k)+o(1).
+\end{equation}
+Moreover, uniformly over \(1\le i\le n\),
+\begin{equation}
+\label{eq:fixed-d-excess-bridge}
+ \frac{|Z_i-\bar Z_n|^2/(2\sigma_n^2)-b_n}{a_n}
+ =\frac{|Z_i|^2}{2}-b_{n,d}+o_{\Pbb}(1).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The fixed-shape Gamma tail expansion gives
+\[
+ \overline F_n(y)=\frac{y^{k-1}e^{-y}}{\Gamma(k)}\{1+O(y^{-1})\},
+ \qquad y\to\infty.
+\]
+Substitution in \(n\overline F_n(b_n)=1\) yields
+\(b_n=b_{n,d}+o(1)\), and Lemma~\ref{lem:gamma-hazard} gives
+\(a_n\to1\). The expansion of \(R_n^\star\) in
+\eqref{eq:potts-radial-threshold} gives
+\(R_n^\star/\sigma_n^2=\log n+o(1)\). Since \(s_n^\star=O(1)\) forces
+\(\gamma_n=O(1)\), the first equality in
+\eqref{eq:fixed-d-coordinate-bridge} follows. The second uses
+\(\gamma_n-1=\eps_n/(1-\eps_n)\).
+
+Finally, \(\max_i|Z_i|=O_{\Pbb}(\sqrt{\log n})\) and
+\(|\bar Z_n|=O_{\Pbb}(n^{-1/2})\). Hence
+\[
+ \max_i\bigl||Z_i-\bar Z_n|^2-|Z_i|^2\bigr|
+ =O_{\Pbb}\left(\sqrt{\frac{\log n}{n}}\right)=o_{\Pbb}(1),
+\]
+while multiplication by \(\sigma_n^{-2}=1+O(n^{-1})\) changes the maximum
+energy by \(O_{\Pbb}(\log n/n)=o_{\Pbb}(1)\). Together with
+\(a_n\to1\) and \(b_n-b_{n,d}\to0\), this proves
+\eqref{eq:fixed-d-excess-bridge}.
+\end{proof}
+
+The Karush--Kuhn--Tucker (KKT) field uses centered observations. The next
+condition is sufficient
+for empirical centering to be negligible on the Gamma extreme scale:
+\begin{equation}
+\label{eq:centering-condition}
+  \frac{\sqrt{b_nd_n/n}}{a_n}\longrightarrow0.
+\end{equation}
+It is automatic throughout \(d_n=o(\log n)\).  In high dimension the direct
+norm bound behind this condition is wasteful; the leave-one-out estimate
+below reaches \(d_n\log n=o(n^2)\).
+
+\begin{lemma}
+\label{lem:centered-radial-max}
+Assume \eqref{eq:centering-condition}. Then
+\begin{equation}
+\label{eq:centered-uniform-energy-equivalence}
+  \max_i
+  \left|
+    \frac{|Z_i-\bar Z_n|^2-|Z_i|^2}{2a_n}
+  \right|
+  \longrightarrow_{\Pbb}0.
+\end{equation}
+In particular,
+\begin{equation}
+\label{eq:centered-max-equivalence}
+  \max_i
+  \frac{|Z_i-\bar Z_n|^2/2-b_n}{a_n}
+  -
+  \max_i
+  \frac{|Z_i|^2/2-b_n}{a_n}
+  \longrightarrow_{\Pbb}0.
+\end{equation}
+Consequently, the centered maximum has the Gumbel limit
+\eqref{eq:gumbel-unscaled}.
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:gamma-max} and tightness imply
+\(\max_i|Z_i|^2/2=b_n+O_{\Pbb}(a_n)\). Lemma~\ref{lem:gamma-hazard} also
+implies \(a_n=O(b_n)\), so \(\max_i|Z_i|=O_{\Pbb}(\sqrt{b_n})\). Since
+\(|\bar Z_n|=O_{\Pbb}(\sqrt{d_n/n})\),
+\[
+  \max_i
+  \left|
+    \frac{|Z_i-\bar Z_n|^2-|Z_i|^2}{2a_n}
+  \right|
+  \le
+  \frac{\max_i|Z_i|\,|\bar Z_n|+|\bar Z_n|^2/2}{a_n}
+  =o_{\Pbb}(1)
+\]
+by \eqref{eq:centering-condition}. This proves
+\eqref{eq:centered-uniform-energy-equivalence}; taking maxima gives
+\eqref{eq:centered-max-equivalence}.
+\end{proof}
+
+The norm bound in Lemma~\ref{lem:centered-radial-max} controls
+\(Z_i\cdot\bar Z_n\) by the product of two norms and is unnecessarily
+wasteful when \(d_n\) is large. A
+leave-one-out decomposition retains the cancellation in this inner product.
+
+\begin{lemma}
+\label{lem:centered-radial-max-high-d}
+Uniformly over \(d_n\ge1\),
+\begin{equation}
+\label{eq:centered-energy-leave-one-out}
+ \max_{1\le i\le n}
+ \left|
+  \frac{|Z_i-\bar Z_n|^2-|Z_i|^2}{2}
+ \right|
+ =
+ O_{\Pbb}\left\{
+  \frac{d_n}{n}
+  +\sqrt{\frac{d_nL_n}{n}}
+  +\frac{L_n}{\sqrt n}
+ \right\}.
+\end{equation}
+Consequently, if \(L_n=o(d_n)\) and \(d_nL_n=o(n^2)\), then
+\eqref{eq:centered-max-equivalence} holds.
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+ Z_i\cdot\bar Z_n
+ =
+ \frac{|Z_i|^2}{n}
+ +Z_i\cdot\bar Z_{-i},
+ \qquad
+ \bar Z_{-i}=\frac1n\sum_{j\ne i}Z_j.
+\]
+The two vectors in the second inner product are independent, and
+\(\bar Z_{-i}\sim\mathcal N(0,(n-1)n^{-2}I_{d_n})\).  Its moment generating
+function therefore gives the subexponential bound
+\[
+ \max_i|Z_i\cdot\bar Z_{-i}|
+ =
+ O_{\Pbb}\left\{
+  \sqrt{\frac{d_nL_n}{n}}+\frac{L_n}{\sqrt n}
+ \right\}.
+\]
+The standard chi-square tail bound and a union bound also give
+\[
+ \max_i|Z_i|^2
+ =
+ O_{\Pbb}\{d_n+\sqrt{d_nL_n}+L_n\},
+ \qquad
+ |\bar Z_n|^2=O_{\Pbb}\{(d_n+1)/n\}.
+\]
+Substituting these estimates into
+\[
+ \frac{|Z_i-\bar Z_n|^2-|Z_i|^2}{2}
+ =-Z_i\cdot\bar Z_n+\frac{|\bar Z_n|^2}{2}
+\]
+proves \eqref{eq:centered-energy-leave-one-out}.
+
+In the stated range,
+\(a_n\sim\sqrt{d_n/(4L_n)}\).  Dividing the three terms in
+\eqref{eq:centered-energy-leave-one-out} by \(a_n\) gives, respectively,
+\[
+ O\left(\frac{\sqrt{d_nL_n}}n\right),\qquad
+ O\left(\frac{L_n}{\sqrt n}\right),\qquad
+ O\left(\frac{L_n^{3/2}}{\sqrt{d_nn}}\right),
+\]
+all of which tend to zero.  This proves
+\eqref{eq:centered-max-equivalence}.
+\end{proof}
+
+The two norm-based centering lemmas do not use the exact marginal
+distribution of a centered residual. In fact,
+\[
+ \frac{Z_i-\bar Z_n}{\sigma_n}\sim\mathcal N(0,I_{d_n})
+\]
+for every \(i\).  The residuals are dependent, but their correlations are
+weak enough that the extreme exceedance counts still have Poisson limits.
+The next proposition uses this exact marginal law to reach dimensions beyond
+the range of Lemma~\ref{lem:centered-radial-max-high-d}.
+
+\begin{proposition}
+\label{prop:direct-centered-gamma-max}
+Suppose
+\[
+ L_n=o(d_n).
+\]
+For every fixed \(x\in\mathbb R\),
+\begin{equation}
+\label{eq:direct-centered-gumbel}
+ \Pbb\left\{
+  \max_i
+  \frac{|Z_i-\bar Z_n|^2/(2\sigma_n^2)-b_n}{a_n}
+  \le x
+ \right\}
+ \longrightarrow e^{-e^{-x}}.
+\end{equation}
+More generally, the number of indices for which
+\[
+ \frac{|Z_i-\bar Z_n|^2}{2\sigma_n^2}>b_n+a_nx
+\]
+converges to \(\operatorname{Pois}(e^{-x})\).
+\end{proposition}
+
+\begin{proof}
+Fix \(m\ge1\). We prove, uniformly for \(x\) in compact subsets of
+\(\mathbb R\), that
+\begin{equation}
+\label{eq:centered-joint-tail-factorization}
+ \Pbb\{Y_1>y_n,\ldots,Y_m>y_n\}
+ =
+ \{1+o(1)\}\Pbb\{Y_1>y_n\}^m,
+ \qquad y_n=b_n+a_nx,
+\end{equation}
+where
+\[
+ V_i=\frac{Z_i-\bar Z_n}{\sigma_n},
+ \qquad
+ Y_i=\frac{|V_i|^2}{2}.
+\]
+The proposition will then follow by the method of factorial moments.
+
+We first record the Gamma estimates needed below. Put \(k=k_n=d_n/2\),
+\(L=L_n=\log n\), and
+\[
+ h(\delta)=\delta-\log(1+\delta),\qquad \delta>-1.
+\]
+If \(Y\sim\Gamma(k,1)\) and \(y=k(1+\delta)\), where
+\(\delta\to0\) and \(k\delta^2\to\infty\), then
+\begin{equation}
+\label{eq:centered-gamma-moderate-tail}
+ \Pbb\{Y>y\}
+ =
+ \frac{1+o(1)}{\delta\sqrt{2\pi k}}
+ \exp\{-kh(\delta)\}.
+\end{equation}
+Writing \(f_k\) for the density of \(Y\), Stirling's formula gives
+\[
+ f_k\{k(1+\delta)\}
+ =
+ \frac{1+o(1)}{(1+\delta)\sqrt{2\pi k}}
+ \exp\{-kh(\delta)\}.
+\]
+Moreover, the exact identity
+\[
+ \frac{\Pbb\{Y>y\}}{f_k(y)}
+ =
+ \int_0^\infty
+ \exp\left\{-v+(k-1)\log\left(1+\frac{v}{y}\right)\right\}\,dv
+\]
+shows that
+\begin{equation}
+\label{eq:centered-gamma-mills}
+ \frac{\Pbb\{Y>y\}}{f_k(y)}
+ =
+ \frac{y}{y-k+1}\{1+o(1)\}
+ =
+ \frac{1+\delta}{\delta}\{1+o(1)\}.
+\end{equation}
+For completeness, set \(\eta=(y-k+1)/y\) and substitute \(s=\eta v\)
+in the integral. Its exponent becomes
+\[
+ -s-\frac{k-1}{2y^2\eta^2}s^2
+ +O\left(\frac{k}{y^3\eta^3}s^3\right)
+\]
+on bounded \(s\)-intervals, while
+\(\log(1+v/y)\le v/y\) supplies the dominating function \(e^{-s}\).
+Since \(k/(y^2\eta^2)\sim(k\delta^2)^{-1}\to0\), dominated convergence
+proves \eqref{eq:centered-gamma-mills}, and hence
+\eqref{eq:centered-gamma-moderate-tail}.
+
+Let
+\[
+ \delta_n=\frac{b_n-k}{k}.
+\]
+The central limit theorem and \(\Pbb\{Y>b_n\}=n^{-1}\) imply
+\(\delta_n\sqrt{k}\to\infty\). The Chernoff bound
+\[
+ \Pbb\{Y>k(1+\delta)\}\le e^{-kh(\delta)}
+\]
+gives \(kh(\delta_n)\le L=o(k)\), and therefore \(\delta_n\to0\).
+Applying \eqref{eq:centered-gamma-moderate-tail} at \(b_n\) yields
+\[
+ L
+ =
+ kh(\delta_n)+\log(\delta_n\sqrt{2\pi k})+o(1).
+\]
+Because \(h(\delta)\sim\delta^2/2\), this implies
+\begin{equation}
+\label{eq:centered-gamma-local-scales}
+ \delta_n\sim\sqrt{\frac{2L}{k}},
+ \qquad
+ b_n-k\sim\sqrt{2kL},
+ \qquad
+ a_n\sim\frac1{\delta_n}\sim\sqrt{\frac{k}{2L}}.
+\end{equation}
+If \(y_n=b_n+a_nx=k(1+\delta_{n,x})\), then, uniformly for bounded \(x\),
+\[
+ \frac{\delta_{n,x}}{\delta_n}=1+o(1).
+\]
+Using \(h'(\delta)=\delta/(1+\delta)\),
+\eqref{eq:centered-gamma-moderate-tail}, and
+\(a_n\delta_n/(1+\delta_n)\to1\), we obtain
+\[
+ k\{h(\delta_{n,x})-h(\delta_n)\}
+ =
+ x+O\left(\frac{a_n^2}{k}\right)+o(1)
+ =
+ x+o(1).
+\]
+Consequently,
+\begin{equation}
+\label{eq:centered-gamma-local-tail-ratio}
+ p_n(x):=\Pbb\{Y_i>y_n\}
+ =
+ \frac{e^{-x}+o(1)}{n}.
+\end{equation}
+
+We next compare the joint law of \(Y_1,\ldots,Y_m\) with \(m\)
+independent Gamma variables. For each Euclidean coordinate, the Gaussian
+vector \((V_1,\ldots,V_m)\) has covariance
+\[
+ A=A_{n,m}
+ =
+ \frac n{n-1}I_m-\frac1{n-1}\mathbf1\mathbf1^\top
+ =
+ I_m+C,
+\]
+where
+\[
+ C_{ii}=0,
+ \qquad
+ C_{ij}=-\frac1{n-1}\quad(i\ne j),
+ \qquad
+ \|C\|_{\mathrm{op}}+\|C\|_{\mathrm F}=O_m(n^{-1}).
+\]
+Set
+\[
+ t=t_n=1-\frac{k}{y_n},
+ \qquad
+ \beta=\beta_n=1-t=\frac{k}{y_n}.
+\]
+By \eqref{eq:centered-gamma-local-scales},
+\begin{equation}
+\label{eq:centered-tilt-scale}
+ t\to0,
+ \qquad
+ t\sqrt{d_n}=(2+o(1))\sqrt{L_n},
+ \qquad
+ d_nt^2=(4+o(1))L_n.
+\end{equation}
+
+Let \(M_{n,m}^{\mathrm{dep}}(t)\) be the joint moment-generating function
+of \((Y_1,\ldots,Y_m)\) at the common argument \(t\). The Gaussian
+quadratic-form formula gives
+\[
+ M_{n,m}^{\mathrm{dep}}(t)
+ =
+ \det(I_m-tA)^{-d_n/2}.
+\]
+For \(m\) independent copies,
+\[
+ M_{n,m}^{\mathrm{ind}}(t)=\beta^{-md_n/2}.
+\]
+Since \(\operatorname{tr}C=0\),
+\begin{align}
+\label{eq:centered-tilt-normalizer}
+ \log\frac{M_{n,m}^{\mathrm{dep}}(t)}
+               {M_{n,m}^{\mathrm{ind}}(t)}
+ &=
+ -\frac{d_n}{2}
+ \log\det\left(I_m-\frac{t}{\beta}C\right) \notag\\
+ &=
+ O_m\left(\frac{d_nt^2}{n^2}\right)
+ =
+ O_m\left(\frac{L_n}{n^2}\right)
+ =
+ o(1).
+\end{align}
+
+Under the dependent exponential tilt, each coordinate vector is Gaussian
+with covariance
+\[
+ \Sigma^{\mathrm{dep}}
+ =
+ (A^{-1}-tI_m)^{-1}
+ =
+ A(I_m-tA)^{-1}.
+\]
+Under the independent tilt the corresponding covariance is
+\[
+ \Sigma^{\mathrm{ind}}=\beta^{-1}I_m.
+\]
+We write \(\E_t^{\mathrm{dep}}\) and \(\E_t^{\mathrm{ind}}\) for expectation
+under these two tilted laws, and use \(\E_t^\star\) when the same formula
+applies to either one.
+Writing \(f_t(a)=a/(1-ta)\) and expanding \(f_t(I_m+C)\) at \(I_m\)
+gives
+\[
+ \Sigma^{\mathrm{dep}}
+ =
+ \beta^{-1}I_m+\beta^{-2}C+R_{n,m},
+ \qquad
+ \|R_{n,m}\|_{\mathrm{op}}
+ \le C_m t\|C\|_{\mathrm{op}}^2.
+\]
+In particular,
+\begin{equation}
+\label{eq:centered-tilted-covariance}
+ (\Sigma^{\mathrm{dep}})_{ii}
+ =
+ \beta^{-1}+O_m(tn^{-2}),
+ \qquad
+ (\Sigma^{\mathrm{dep}})_{ij}
+ =
+ -\frac{\beta^{-2}}{n-1}+O_m(tn^{-2})
+ \quad(i\ne j).
+\end{equation}
+The eigenvalues of both tilted covariance matrices therefore lie in a
+fixed compact subset of \((0,\infty)\).
+
+We now prove the local limit estimate needed for the tilted overshoots.
+Let \(f_{n,m}^{\mathrm{dep}}\) and \(f_{n,m}^{\mathrm{ind}}\) denote the
+respective densities of
+\[
+ W_n
+ =
+ \frac1{\sqrt{d_n}}
+ (Y_1-y_n,\ldots,Y_m-y_n)
+\]
+under the dependent and independent tilted laws. We claim that
+\begin{equation}
+\label{eq:centered-tilted-local-limit}
+ \sup_{w\in\mathbb R^m}
+ \left|f_{n,m}^{\star}(w)-\varphi_m(w)\right|
+ \longrightarrow0,
+ \qquad
+ \varphi_m(w)=\pi^{-m/2}e^{-|w|^2},
+\end{equation}
+for \(\star\in\{\mathrm{dep},\mathrm{ind}\}\).
+
+To prove the claim, let \(\Sigma^\star\) be the appropriate tilted
+covariance, let \(D_z=\operatorname{diag}(z_1,\ldots,z_m)\), and define
+\[
+ B_z^\star=(\Sigma^\star)^{1/2}D_z(\Sigma^\star)^{1/2}.
+\]
+The characteristic function of \(W_n\) is
+\begin{equation}
+\label{eq:centered-tilted-characteristic-function}
+ \chi_{n,m}^{\star}(z)
+ =
+ \exp\left\{-\frac{iy_n}{\sqrt{d_n}}\sum_{j=1}^mz_j\right\}
+ \det\left(
+ I_m-\frac{i}{\sqrt{d_n}}\Sigma^\star D_z
+ \right)^{-d_n/2}.
+\end{equation}
+For fixed \(z\), expansion of the logarithm gives
+\begin{align*}
+ \log\chi_{n,m}^{\star}(z)
+ &=
+ \frac{i\sqrt{d_n}}2
+ \sum_{j=1}^m
+ \left\{(\Sigma^\star)_{jj}-\beta^{-1}\right\}z_j\\
+ &\quad
+ -\frac14
+ \operatorname{tr}(\Sigma^\star D_z\Sigma^\star D_z)
+ +O_m\left(\frac{|z|^3}{\sqrt{d_n}}\right).
+\end{align*}
+The linear term vanishes identically in the independent case and is
+\(O_m(t\sqrt{d_n}|z|/n^2)=o(1)\) in the dependent case by
+\eqref{eq:centered-tilt-scale} and
+\eqref{eq:centered-tilted-covariance}. Since
+\(\Sigma^\star\to I_m\), it follows that
+\[
+ \chi_{n,m}^{\star}(z)\longrightarrow e^{-|z|^2/4}
+\]
+for every fixed \(z\).
+
+We next give an integrable domination uniform in the two tilted laws.
+Since \(B_z^\star\) is real symmetric,
+\begin{equation}
+\label{eq:centered-characteristic-modulus}
+ |\chi_{n,m}^{\star}(z)|
+ =
+ \det\left(
+ I_m+\frac{(B_z^\star)^2}{d_n}
+ \right)^{-d_n/4}.
+\end{equation}
+If \(\mu_1,\ldots,\mu_m\) are the eigenvalues of \(B_z^\star\), the
+uniform lower eigenvalue bound for \(\Sigma^\star\) gives
+\[
+ \sum_{j=1}^m\mu_j^2
+ =
+ \|B_z^\star\|_{\mathrm F}^2
+ \ge c_m|z|^2.
+\]
+Hence
+\begin{equation}
+\label{eq:centered-characteristic-global-bound}
+ |\chi_{n,m}^{\star}(z)|
+ \le
+ \left(1+\frac{c_m|z|^2}{d_n}\right)^{-d_n/4}.
+\end{equation}
+Choose \(c_0>0\) sufficiently small. If
+\(|z|\le c_0\sqrt{d_n}\), then all
+\(\mu_j^2/d_n\le1\); using \(\log(1+v)\ge v/2\) in
+\eqref{eq:centered-characteristic-modulus} yields
+\begin{equation}
+\label{eq:centered-characteristic-gaussian-bound}
+ |\chi_{n,m}^{\star}(z)|\le e^{-c_m'|z|^2}.
+\end{equation}
+On the complementary region, polar coordinates and
+\eqref{eq:centered-characteristic-global-bound} give
+\begin{align*}
+ &\int_{|z|>c_0\sqrt{d_n}}
+ \left(1+\frac{c_m|z|^2}{d_n}\right)^{-d_n/4}\,dz\\
+ &\qquad\le
+ C_m d_n^{m/2}(1+c_m'')^{-d_n/8}
+ \mathrm B\left(\frac m2,\frac{d_n}{8}-\frac m2\right)
+ =o(1).
+\end{align*}
+Here \(\mathrm B\) denotes the Euler beta function.
+Thus the characteristic functions are uniformly integrable. Pointwise
+convergence, \eqref{eq:centered-characteristic-gaussian-bound}, and the
+last tail estimate imply
+\[
+ \int_{\mathbb R^m}
+ \left|\chi_{n,m}^{\star}(z)-e^{-|z|^2/4}\right|\,dz
+ \longrightarrow0.
+\]
+Fourier inversion proves \eqref{eq:centered-tilted-local-limit}. Notice
+that this argument treats the dependent and independent tilted densities
+separately; both converge uniformly to the same density \(\varphi_m\), and
+in particular
+\[
+ f_{n,m}^{\mathrm{dep}}(0),
+ \ f_{n,m}^{\mathrm{ind}}(0)
+ \longrightarrow
+ \varphi_m(0)=\pi^{-m/2}.
+\]
+
+It remains to compare the tilted overshoot integrals. For
+\(\star\in\{\mathrm{dep},\mathrm{ind}\}\), put
+\[
+ J_{n,m}^{\star}
+ =
+ \E_t^\star\left[
+  \exp\left\{-t\sum_{j=1}^m(Y_j-y_n)\right\}
+  \mathbf1_{\{Y_j>y_n,\ 1\le j\le m\}}
+ \right].
+\]
+Writing \(q_n=t\sqrt{d_n}\), the density of \(W_n\) gives
+\[
+ q_n^mJ_{n,m}^{\star}
+ =
+ \int_{\mathbb R_+^m}
+ e^{-\sum_jz_j}
+ f_{n,m}^{\star}(z/q_n)\,dz.
+\]
+By \eqref{eq:centered-tilt-scale}, \(q_n\to\infty\). The uniform local
+limit theorem supplies a common bound on the densities, so dominated
+convergence yields
+\[
+ q_n^mJ_{n,m}^{\star}\longrightarrow\varphi_m(0).
+\]
+Therefore
+\[
+ \frac{J_{n,m}^{\mathrm{dep}}}{J_{n,m}^{\mathrm{ind}}}\longrightarrow1.
+\]
+The exponential-tilting identities are
+\[
+ \Pbb\{Y_1>y_n,\ldots,Y_m>y_n\}
+ =
+ M_{n,m}^{\mathrm{dep}}(t)e^{-tmy_n}J_{n,m}^{\mathrm{dep}}
+\]
+and
+\[
+ p_n(x)^m
+ =
+ M_{n,m}^{\mathrm{ind}}(t)e^{-tmy_n}J_{n,m}^{\mathrm{ind}}.
+\]
+Together with \eqref{eq:centered-tilt-normalizer}, they prove
+\eqref{eq:centered-joint-tail-factorization}.
+
+Finally, let
+\[
+ N_n(x)=\sum_{i=1}^n\mathbf1_{\{Y_i>b_n+a_nx\}}.
+\]
+For an integer-valued variable \(N\), write
+\(\{N\}_m=N(N-1)\cdots(N-m+1)\), and similarly
+\((n)_m=n(n-1)\cdots(n-m+1)\).
+For every fixed \(m\), exchangeability,
+\eqref{eq:centered-joint-tail-factorization}, and
+\eqref{eq:centered-gamma-local-tail-ratio} give
+\[
+ \E\{N_n(x)\}_m
+ =
+ (n)_m\Pbb\{Y_1>y_n,\ldots,Y_m>y_n\}
+ \longrightarrow e^{-mx}
+\]
+for every fixed \(m\). These are the factorial moments of
+\(\operatorname{Pois}(e^{-x})\), so
+\(N_n(x)\Rightarrow\operatorname{Pois}(e^{-x})\). Taking the probability
+that \(N_n(x)=0\) proves \eqref{eq:direct-centered-gumbel}.
+\end{proof}

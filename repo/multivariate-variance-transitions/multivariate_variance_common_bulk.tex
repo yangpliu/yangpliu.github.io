@@ -1,0 +1,286 @@
+Very close to the origin, negative sample curvature rules out a KKT crossing
+without any edge analysis. The next lemma uses that curvature to prove the
+small-radius part of Proposition~\ref{prop:bulk-mgf-exclusion}.
+\begin{lemma}
+\label{lem:microscopic-bulk}
+Fix \(d\ge3\). At the sharp scale \(s_n=O(1)\),
+\[
+    \Pbb\left\{\sup_{0<|t|\le c_0\kappa_n}D_n(t)>1\right\}\to0
+\]
+for a sufficiently small constant \(c_0>0\).
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+    D_n(t)=\frac1n\sum_{i=1}^n
+    \exp\{t\cdot \widetilde Z_i-(1/2+\kappa_n)|t|^2\},
+    \qquad \widetilde Z_i=Z_i-\bar Z_n .
+\]
+On an event whose probability tends to one,
+\[
+    \left\|\frac1n\sum_i\widetilde Z_i\widetilde Z_i^\top-I_d\right\|_{\mathrm{op}}
+    \le \kappa_n/4,\qquad
+    \max_i|\widetilde Z_i|\le3\rho_n,\qquad
+    \frac1n\sum_i|\widetilde Z_i|^3\le C .
+\]
+At \(t=0\), \(D_n(0)=1\), \(\nabla D_n(0)=0\), and
+\[
+    \nabla^2D_n(0)
+    =
+    \frac1n\sum_i\widetilde Z_i\widetilde Z_i^\top-(1+2\kappa_n)I_d
+    \preceq-\frac74\kappa_nI_d .
+\]
+For \(|t|\le c_0\kappa_n\), uniformly over unit vectors \(v\),
+\[
+\begin{aligned}
+    &\left|
+    v^\top\{\nabla^2D_n(t)-\nabla^2D_n(0)\}v
+    \right|  \\
+    &\qquad\le
+    C|t|\frac1n\sum_i(1+|\widetilde Z_i|^3)+C|t|^2
+    \le Cc_0\kappa_n .
+\end{aligned}
+\]
+The first inequality follows from the explicit Hessian formula and
+\(\max_i|t\cdot \widetilde Z_i|=o(1)\).  Choosing \(c_0\) small enough makes the
+Hessian at most \(-\kappa_n I_d\) throughout the ball.  Taylor's formula
+then gives \(D_n(t)\le1-c\kappa_n|t|^2<1\) for \(0<|t|\le c_0\kappa_n\).
+\end{proof}
+
+Empirical centering is negligible relative to the deterministic bulk damping.
+\begin{lemma}
+\label{lem:bulk-empirical-centering}
+Fix \(d\ge3\). At the sharp scale \(s_n=O(1)\), for every fixed \(c_0>0\),
+\[
+    \sup_{c_0\kappa_n\le |t|\le\rho_n/2}
+    \frac{|t\cdot\bar Z_n|}
+         {1-\exp\{-\kappa_n|t|^2\}}
+    \xrightarrow{\Pbb}0 .
+\]
+\end{lemma}
+
+\begin{proof}
+Since the supremum over directions is \(|t|\,|\bar Z_n|\), it remains to
+bound
+\[
+    \sup_{c_0\kappa_n\le r\le\rho_n/2}
+    \frac{r|\bar Z_n|}{1-e^{-\kappa_nr^2}} .
+\]
+For \(r\le\kappa_n^{-1/2}\), the denominator is at least
+\(c\kappa_nr^2\), and this part is bounded by
+\(C|\bar Z_n|\kappa_n^{-2}\).  For \(r\ge\kappa_n^{-1/2}\), the
+denominator is bounded below by a positive constant, and this part is
+bounded by \(C\rho_n|\bar Z_n|\).  At the sharp scale
+\(\kappa_n\asymp(\log\log n)/\log n\), while
+\(|\bar Z_n|=O_{\Pbb}(n^{-1/2})\).  Hence both bounds are
+\(o_{\Pbb}(1)\).
+\end{proof}
+
+The full empirical moment-generating function is likewise negligible relative
+to the bulk damping.
+\begin{lemma}
+\label{lem:bulk-exponential-process}
+Fix \(d\ge3\). At the sharp scale \(s_n=O(1)\), for every fixed \(c_0>0\),
+\[
+    \sup_{c_0\kappa_n\le |t|\le\rho_n/2}
+    \frac{|H_n(t)-1|+|t\cdot\bar Z_n|}
+         {1-\exp\{-\kappa_n|t|^2\}}
+    \xrightarrow{\Pbb}0 .
+\]
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:bulk-empirical-centering} proves the empirical-centering
+part, so it remains to prove the same display with \(|H_n(t)-1|\) in the
+numerator.  Write
+\[
+    m(r)=1-\exp\{-\kappa_nr^2\}.
+\]
+
+We first remove the tiny radii.  Put \(t=ru\), \(u\in S^{d-1}\), and
+define, continuously at \(r=0\),
+\[
+    \Psi_{r,u}(z)
+    =
+    \frac{\exp\{ru\cdot z-r^2/2\}-1-ru\cdot z}{r^2}.
+\]
+Then \(\E\Psi_{r,u}(Z)=0\).  On the compact parameter set
+\([0,1]\times S^{d-1}\), the first derivatives of \(\Psi_{r,u}\) are
+bounded by \(A(z)=C_de^{|z|}(1+|z|^3)\), which has finite moments of all
+orders.  Take an \(n^{-1/4}\)-net, whose size is \(O(n^{d/4})\).  Rosenthal's
+inequality gives an \(O(n^{-q/2})\) \(q\)-moment bound for any fixed \(q>d\)
+large enough, hence an \(O(n^{-q/4})\) tail at threshold \(n^{-1/4}\).  The
+union bound is \(O(n^{(d-q)/4})=o(1)\).  The bound
+\(n^{-1}\sum_iA(Z_i)=O_{\Pbb}(1)\) then extends the estimate from the net
+to the continuum and gives
+\[
+    \sup_{0<|t|\le1}
+    \frac{|H_n(t)-1-t\cdot\bar Z_n|}{|t|^2}
+    =O_{\Pbb}(n^{-1/4}).
+\]
+Since \(m(r)\ge c\kappa_nr^2\) for \(r\le1\), uniformly on
+\(c_0\kappa_n\le |t|\le1\),
+\[
+    \frac{|H_n(t)-1|}{m(|t|)}
+    \le
+    C\frac{|\bar Z_n|}{\kappa_n|t|}
+    +C\frac{n^{-1/4}}{\kappa_n}
+    =
+    o_{\Pbb}(1).
+\]
+Here \(|t|\ge c_0\kappa_n\), \(|\bar Z_n|=O_{\Pbb}(n^{-1/2})\), and
+\(\kappa_n\asymp(\log\log n)/\log n\).
+
+It remains to control \(1\le |t|\le\rho_n/2\).  Let
+\[
+    1=x_0<x_1<\cdots <x_J=b_{n,d}/2,\qquad x_{j+1}\le2x_j,
+\]
+be the dyadic partition in squared radius, and set
+\[
+    \mathcal A_j=\{t:x_j\le |t|^2\le x_{j+1}\},\quad
+    R_j=x_{j+1}^{1/2},\quad
+    m_j=1-e^{-\kappa_nx_j}.
+\]
+Since \(m(|t|)\ge m_j\) on \(\mathcal A_j\), it is enough to show that
+\[
+    \max_j\frac1{m_j}\sup_{t\in\mathcal A_j}|H_n(t)-1|
+    \xrightarrow{\Pbb}0 .
+\]
+Fix \(\eta>0\).  Put
+\[
+    \tau_n^2=20\log(1/\kappa_n)+20(d+3)\log\rho_n,\qquad
+    B_j=\exp\{R_j^2/2+R_j\tau_n\},
+\]
+and write \(f_t(z)=\exp\{t\cdot z-|t|^2/2\}\), \(f_{t,j}^B=f_t\wedge B_j\).
+
+The discarded lognormal tail is uniformly negligible.  For \(t\in
+\mathcal A_j\),
+\[
+    \E f_t(Z)\mathbf 1_{\{f_t(Z)>B_j\}}
+    \le \Pbb\{G>\tau_n\}
+    =o(m_j),\qquad G\sim\cN(0,1).
+\]
+For the empirical tail, use
+\[
+    \sup_{|t|\le R}f_t(z)
+    =
+    \begin{cases}
+        e^{|z|^2/2},& |z|\le R,\\
+        e^{R|z|-R^2/2},& |z|>R.
+    \end{cases}
+\]
+Because \(B_j>e^{R_j^2/2}\), the event
+\(\sup_{|t|\le R_j}f_t(Z)>B_j\) implies \(|Z|>R_j+\tau_n\). Therefore
+\[
+    \E\sup_{|t|\le R_j}
+    f_t(Z)\mathbf 1_{\{f_t(Z)>B_j\}}
+    \le
+    C_d(R_j+\tau_n)^{d-1}e^{-\tau_n^2/2}
+    =o(m_j/J).
+\]
+Markov's inequality and a union bound over \(j\) give
+\[
+    \max_j\frac1{m_j}
+    \sup_{t\in\mathcal A_j}
+    \frac1n\sum_{i=1}^n
+    f_t(Z_i)\mathbf 1_{\{f_t(Z_i)>B_j\}}
+    \xrightarrow{\Pbb}0 .
+\]
+
+It remains to control the clipped process.  On the event
+\(\max_i|Z_i|\le3\rho_n\), whose probability tends to one,
+\[
+    t\mapsto \frac1n\sum_i f_{t,j}^B(Z_i)
+\]
+is \(C\rho_nB_j\)-Lipschitz on \(\mathcal A_j\), and its expectation is
+no less regular: a.e.\ in \(t\),
+\[
+    |\nabla_t \E f_{t,j}^B(Z)|
+    \le
+    \E\{|Z-t|f_t(Z)\}
+    \le C_d .
+\]
+Take a Euclidean net of \(\mathcal A_j\) with mesh
+\[
+    \delta_j=\frac{\eta m_j}{16C\rho_nB_j}.
+\]
+Its cardinality satisfies
+\[
+    \log N_j
+    \le C_d\{\log(\rho_n/\eta m_j)+\log B_j\}
+    \le C_d\log n.
+\]
+At a fixed net point, Bernstein's inequality gives
+\[
+    \Pbb\left\{
+        \left|
+        \frac1n\sum_i\{f_{t,j}^B(Z_i)-\E f_{t,j}^B(Z)\}
+        \right|>\eta m_j/4
+    \right\}
+    \le
+    2\exp\left[
+        -c\frac{n m_j^2}{e^{R_j^2}+B_jm_j}
+    \right].
+\]
+Here
+\[
+    \operatorname{Var}\{f_{t,j}^B(Z)\}
+    \le
+    \E f_t(Z)^2
+    =
+    e^{|t|^2}
+    \le e^{R_j^2},
+    \qquad
+    |f_{t,j}^B|\le B_j,
+\]
+which gives the displayed Bernstein denominator.
+Here \(R_j^2\le b_{n,d}/2\), \(B_j\le n^{1/4+o(1)}\), and
+\(m_j\ge c\kappa_n\).  Hence the exponent is at least
+\[
+    n^{1/2-o(1)}\kappa_n^2,
+\]
+which dominates \(\log N_j+\log J=O(\log n)\).  A union bound over all
+net points and all \(j\), followed by the Lipschitz extension from the
+net, proves
+\[
+    \max_j\frac1{m_j}
+    \sup_{t\in\mathcal A_j}
+    \left|
+        \frac1n\sum_i\{f_{t,j}^B(Z_i)-\E f_{t,j}^B(Z)\}
+    \right|
+    \xrightarrow{\Pbb}0 .
+\]
+Combining the clipped concentration, the truncation bias, and the
+empirical tail bound proves the dyadic estimate and the lemma.
+\end{proof}
+
+The two bulk estimates exclude all crossings with \(|t|\le\rho_n/2\).
+\begin{proposition}
+\label{prop:bulk-mgf-exclusion}
+Fix \(d\ge3\). At the sharp scale \(s_n=O(1)\),
+\[
+    \Pbb\left\{\sup_{|t|\le\rho_n/2}D_n(t)>1\right\}\to0 .
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:microscopic-bulk} handles \(0<|t|\le c_0\kappa_n\).
+On the event in Lemma~\ref{lem:bulk-exponential-process}, put
+\(g(t)=1-\exp\{-\kappa_n|t|^2\}\).  Uniformly on
+\(c_0\kappa_n\le |t|\le\rho_n/2\), for a deterministic \(\delta_n\downarrow0\),
+\[
+    |H_n(t)-1|+|t\cdot\bar Z_n|\le\delta_n g(t).
+\]
+Therefore
+\[
+    D_n(t)
+    =
+    e^{-t\cdot\bar Z_n}e^{-\kappa_n|t|^2}H_n(t)
+    \le
+    e^{\delta_ng(t)}\{1-g(t)\}\{1+\delta_ng(t)\}.
+\]
+The right side is at most \(1-cg(t)\) for all large \(n\), uniformly in
+this range.  Hence \(D_n(t)<1\) there with probability tending to one,
+and the microscopic lemma completes the proof.
+\end{proof}

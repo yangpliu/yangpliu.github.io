@@ -1,0 +1,722 @@
+\subsection{Bounded-dimensional radial patches}
+\label{sec:fixed-d-patches}
+\label{sec:sharp-high-dimensional-edge}
+
+This subsection proves the fixed-dimensional spatial exclusion needed for the
+\(d\ge3\) support law in Theorem~\ref{thm:main-support-law}. The moving radial
+shell identifies the candidate KKT patches, and the uniform estimates in
+Subsection~\ref{sec:sharp-high-dimensional-estimates} exclude every other
+score location.
+
+Let \(Z_1,\ldots,Z_n\) be i.i.d.\ \(\cN(0,I_d)\), \(d\ge3\), and set
+\[
+    H_n(t)
+    =
+    \frac1n\sum_{i=1}^n
+    \exp\{t\cdot Z_i-|t|^2/2\},
+    \qquad t\in\R^d .
+\]
+
+\subsubsection{The moving radial shell}
+
+Let
+\[
+    Y_i=\frac{|Z_i|^2}{2},\qquad U_i=\frac{Z_i}{|Z_i|}\in S^{d-1},
+    \qquad k=\frac d2 .
+\]
+Since \(Y_i\) has the \(\Gamma(k,1)\) law,
+\[
+    b_{n,d}
+    =
+    \log n+(k-1)\log\log n-\log\Gamma(k),
+\]
+the fixed-dimensional specialization of the Gamma extreme-value theory in
+Section~\ref{sec:mv-gamma-normalization} gives the marked radial limit.
+\begin{lemma}
+\label{lem:radial-gamma-extremes}
+The extremal process
+\[
+    \Xi_n=\sum_{i=1}^n\delta_{(Y_i-b_{n,d},\,U_i)}
+\]
+converges to a Poisson point process on \(\R\times S^{d-1}\) with intensity
+\(e^{-x}dx\,\sigma_{d-1}(du)\), where \(\sigma_{d-1}\) is normalized surface
+measure.  In particular, \(M_n=\max_i(Y_i-b_{n,d})\) satisfies
+\[
+    \Pbb\{M_n\le x\}\to\exp\{-e^{-x}\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:gamma-max} and
+Lemma~\ref{lem:fixed-d-normalization-bridge} give the unmarked radial limit.
+Radius and direction are independent, and \(U_i\) has law
+\(\sigma_{d-1}\), so the standard marking theorem gives the displayed
+point-process convergence.
+\end{proof}
+
+Put \(\rho_n=\sqrt{2b_{n,d}}\) and
+\[
+    \lambda_n=\kappa_n\rho_n^2 .
+\]
+In the critical window \(\lambda_n=O(\log\log n)\), and it is useful to write
+\[
+    s_n=\lambda_n-(k-1)\log\log n+\log\Gamma(k).
+\]
+Completing the square in one summand of \(D_n\), or equivalently using
+Lemma~\ref{lem:bump-representation}, shows that an observation with
+\(Y_i=b_{n,d}+x\) has optimized log contribution \(x-s_n+o_{\Pbb}(1)\),
+uniformly for bounded \(x\). Thus an observation is locally supercritical
+precisely when its radial excess \(x\) exceeds \(s_n\); these observations
+index the candidate KKT crossings.
+
+To resolve each candidate spatially, write the score and observation in normal
+coordinates about a direction \(v\). Let
+\(\exp_v:T_vS^{d-1}\to S^{d-1}\) be the Riemannian exponential map and put
+\[
+    t=\left(\rho_n+\frac q{\rho_n}\right)v,\qquad
+    z=\left(\rho_n+\frac x{\rho_n}\right)\exp_v\left(\frac y{\rho_n}\right),
+    \qquad y\in T_vS^{d-1}.
+\]
+Then, uniformly for \(x,q,|y|=O(\log\log n)\),
+\[
+    t\cdot z-\frac{|t|^2}{2}-\log n-\kappa_n|t|^2
+    =
+    (k-1)\log\log n-\log\Gamma(k)-\lambda_n
+    +x-\frac{|y|^2}{2}
+    +
+    O\!\left(\frac{(\log\log n)^4}{\rho_n^2}\right).
+\]
+The radial score offset \(q\) cancels to first order. A radial excess \(x\)
+therefore raises the optimized contribution by \(x\), whereas an angular
+displacement \(y/\rho_n\) lowers it by \(|y|^2/2\); the variance defect
+subtracts \(\lambda_n\). The estimates below show that the rest of the sample
+contributes \(o_{\Pbb}(1)\) uniformly on each candidate patch.
+Subsection~\ref{sec:higher-dimensional-support-counts} uses these patch
+estimates to recover the fitted support.
+
+For the uniform exclusion argument, use the centered radial maximum
+\[
+    M_n^c
+    =
+    \max_i\left(\frac{|Z_i-\bar Z_n|^2}{2}-b_{n,d}\right).
+\]
+It differs from \(M_n=\max_i(Y_i-b_{n,d})\) by \(o_{\Pbb}(1)\), since
+\[
+    |M_n^c-M_n|
+    \le
+    \max_i|Z_i|\,|\bar Z_n|+\frac{|\bar Z_n|^2}{2}
+    =
+    o_{\Pbb}(1).
+\]
+
+\subsection{Uniform moving-shell estimates}
+\label{sec:sharp-high-dimensional-estimates}
+
+This subsection supplies the estimates used to prune subthreshold radial
+patches in Lemma~\ref{lem:support-dge3-deleted-field}. Bennett's inequality
+controls the center of each angular patch, while scaled derivative bounds and
+Morrey's inequality control oscillation across patches of diameter
+\(1/\rho_n\). The following bulk estimates handle smaller score radii by a
+clipped empirical-process argument.
+
+For the moving-shell bound, replace the field by an independent truncated
+field. On the radial-maximum event used in the comparison, every observation
+lies below the deterministic truncation radius, so the two fields agree.
+
+Fix a gap \(a>0\).  Set \(r=|t|\),
+\[
+    T_n(a)=\log n+\lambda_n-a,
+    \qquad
+    R_n(a)=\{2T_n(a)\}^{1/2},
+\]
+and write \(R_a=R_n(a)\).  Define
+\[
+    V_{i,t}^{(a)}
+    =
+    \frac1n
+    e^{-\kappa_nr^2}
+    \exp\left\{t\cdot Z_i-\frac{r^2}{2}\right\}
+    \mathbf 1_{\{|Z_i|\le R_a\}},
+    \qquad
+    S_t^{(a)}=\sum_iV_{i,t}^{(a)}.
+\]
+Let
+\[
+    \mathcal T_n(B)=
+    \left\{t:\ \left||t|^2/2-b_{n,d}\right|\le B\log\log n\right\}.
+\]
+The centered field is compared to this independent truncated field with a
+small deterministic loss in the gap.  Put
+\[
+    \alpha_n=(\log\log n)^{-2},
+    \qquad
+    G_n=\{\rho_n|\bar Z_n|\le\alpha_n\}.
+\]
+Since \(\alpha_n\sqrt n/\rho_n\to\infty\), \(\Pbb(G_n^c)\to0\), and on
+\(G_n\), for all large \(n\),
+\[
+    \sup_{t\in\mathcal T_n(B)}|t\cdot\bar Z_n|\le2\alpha_n .
+\]
+If \(M_n^c\le s_n-\eta\), then
+\(|Z_i-\bar Z_n|^2/2\le\log n+\lambda_n-\eta\) for all \(i\).  On \(G_n\)
+this implies \(|Z_i|^2/2\le\log n+\lambda_n-\eta/2\) for all large \(n\).
+Consequently, uniformly over \(t\in\mathcal T_n(B)\),
+\[
+    D_n(t)\le e^{2\alpha_n}S_t^{(\eta/2)} .
+\]
+It is therefore enough to prove that, for fixed \(a>0\), the independent
+truncated field stays below \(1-o(1)\) uniformly on \(\mathcal T_n(B)\).
+
+The first input bounds the moments of one truncated summand. Exponential
+tilting turns each moment into the probability that a noncentral Gaussian lies
+in the truncation ball; a one-dimensional Gaussian tail estimate then gives
+the required decay.
+\begin{proposition}
+\label{prop:noncentral-ball}
+Fix \(d\ge3\), \(C_0<\infty\), \(B<\infty\), \(p>1\), and \(a>0\).  Suppose
+the sharp-scale relation
+\[
+    s_n
+    =
+    \lambda_n-\left(\frac d2-1\right)\log\log n+\log\Gamma(d/2)
+\]
+satisfies \(|s_n|\le C_0\).  Uniformly over deterministic sequences satisfying
+this relation, over directions \(t/|t|\), and over
+\[
+    \left|\frac{r^2}{2}-b_{n,d}\right|\le B\log\log n,
+\]
+one has
+\[
+    \sum_{i=1}^n\E \{V_{i,t}^{(a)}\}^p
+    \le
+    C_{p,a,B,C_0,d}\rho_n^{-1}
+    \exp\{-\lambda_n-(p-1)a+o(1)\}.
+\]
+\end{proposition}
+
+\begin{proof}
+The exact identity is
+\[
+    \sum_{i=1}^n\E \{V_{i,t}^{(a)}\}^p
+    =
+    n^{1-p}
+    e^{-p\kappa_nr^2+(p^2-p)r^2/2}
+    \Pbb\{|G+pt|\le R_n(a)\},
+    \]
+where \(G\sim\cN(0,I_d)\).  Align \(t=re_1\), write \(G=We_1+U\), and put
+\(\Delta=pr-R_n(a)\).  In the moving window,
+\(\Delta=(p-1)\rho_n+O((\log\log n)/\rho_n)\), so
+\(\Delta\ge c_p\rho_n\).  If \(|G+pt|\le R_n(a)\), then
+\[
+    W\le -\left(pr-\sqrt{R_n(a)^2-|U|^2}\right).
+\]
+Mills' bound and the inequality
+\[
+    pr-\sqrt{R_n(a)^2-|U|^2}
+    \ge
+    \Delta+\frac{|U|^2}{2R_n(a)}
+\]
+give
+\[
+    \Pbb\{|G+pt|\le R_n(a)\}
+    \le
+    C_{p,d}\rho_n^{-1}
+    \exp\left\{-\frac{(pr-R_n(a))^2}{2}\right\}.
+\]
+Substitution gives
+\[
+    \sum_{i=1}^n\E \{V_{i,t}^{(a)}\}^p
+    \le
+    C_{p,d}\rho_n^{-1}
+    \exp\left\{
+        -p\kappa_nr^2
+        +(p-1)(\lambda_n-a)
+        -\frac p2(r-R_n(a))^2
+    \right\}.
+\]
+Since the sharp-scale assumption gives \(\lambda_n=O(\log\log n)\), one has
+\(\kappa_nr^2=\lambda_n+o(1)\) uniformly in the displayed shell. This proves
+the stated estimate.
+\end{proof}
+
+Under the same sharp-scale assumptions, the truncation also gives the
+pointwise jump bound
+\[
+    V_{i,t}^{(a)}\le e^{-a+o(1)}
+\]
+uniformly in the moving shell.  Indeed
+\[
+    \log V_{i,t}^{(a)}
+    \le
+    -\log n-\kappa_nr^2-\frac{r^2}{2}+rR_n(a)
+    =
+    \lambda_n-a-\kappa_nr^2-\frac12(r-R_n(a))^2.
+\]
+Thus \(V_{i,t}^{(a)}\le c_a<1\) for large \(n\), where \(c_a\) is deterministic.
+
+The moment and jump bounds give a fixed-location tail strong enough for the
+angular union bound after the Morrey step.
+\begin{proposition}
+\label{prop:fixed-t-bennett}
+Fix \(d\ge3\), \(C_0<\infty\), \(B<\infty\), and \(a>0\), and suppose the
+sharp-scale relation in Proposition~\ref{prop:noncentral-ball} satisfies
+\(|s_n|\le C_0\).  Uniformly over deterministic sequences satisfying this
+relation and over the moving shell, for every deterministic
+\(\delta_n\to0\) with \(0\le\delta_n\le1/2\) eventually,
+\[
+    \Pbb\{S_t^{(a)}\ge1-\delta_n\}
+    \le
+    C_{a,B,C_0,d}
+    \left(\rho_n^{-1}e^{-\lambda_n}\right)^{
+        e^a(1-\delta_n)-o(1)} .
+\]
+In particular, at level \(1\) the exponent is \(e^a-o(1)\).
+\end{proposition}
+
+\begin{proof}
+Let \(\mu_t=\E S_t^{(a)}\), \(v_t=\sum_i\operatorname{Var}(V_{i,t}^{(a)})\),
+\(A_n=\rho_n^{-1}e^{-\lambda_n}\), and \(x_n=1-\delta_n\).
+Proposition~\ref{prop:noncentral-ball} with \(p=2\) gives
+\[
+    v_t\le C\rho_n^{-1}e^{-\lambda_n-a+o(1)},
+    \qquad
+    \mu_t\le e^{-\lambda_n+o(1)}=o(1)
+\]
+under the displayed \(d\ge3\) sharp-scale assumption.  Bennett's inequality for
+\(0\le V_{i,t}^{(a)}\le c_a<1\) gives
+\[
+    \Pbb\{S_t^{(a)}\ge x_n\}
+    \le
+    \exp\left[
+        -\frac{v_t}{c_a^2}
+        h\left(\frac{c_a(x_n-\mu_t)}{v_t}\right)
+    \right],
+    \qquad h(u)=(1+u)\log(1+u)-u .
+\]
+Using the sharp jump bound \(V_{i,t}^{(a)}\le e^{-a+o(1)}\) and
+\(\log A_n^{-1}=(d-1)\log\rho_n+O(1)\), the Bennett rate is at least
+\[
+    \{e^a(1-\delta_n)-o(1)\}\log A_n^{-1}.
+\]
+This proves the displayed estimate. Only the second moment is needed at a
+fixed location; the derivative estimates used for the Morrey transfer require
+higher moments.
+\end{proof}
+
+At the sharp scale \(s_n=O(1)\), equivalently
+\(\lambda_n=(d-2)\log\rho_n+O(1)\), the quantity
+\(\rho_n^{-1}e^{-\lambda_n}\) is \(\rho_n^{-(d-1)+o(1)}\).  The strict
+near-unit exponent \(e^a(1-o(1))>1\) is therefore exactly what is needed to
+union bound over \(\rho_n^{d-1+o(1)}\) angular locations.
+Throughout the remaining \(d\ge3\) estimates, ``at the sharp scale
+\(s_n=O(1)\)'' means uniformly over deterministic sequences satisfying
+\(|s_n|\le C\), for each fixed \(C<\infty\); constants may depend on \(C\).
+
+Scaled derivatives control oscillation on angular boxes at scale
+\(1/\rho_n\), reducing the continuum to a net of size
+\(\rho_n^{d-1+o(1)}\).
+\begin{lemma}
+\label{lem:scaled-derivative-morrey}
+Fix \(d\ge3\), \(p>d\), \(a>0\), and suppose \(s_n=O(1)\).
+Let \(Q\subset\R^{d-1}\) be a fixed cube, and let
+\(\{u_\alpha\}\) be a bounded-overlap family of smooth charts such that
+\(\{u_\alpha(Q/\rho_n)\}\) covers \(S^{d-1}\), the number of charts is
+\(O(\rho_n^{d-1})\), and all first two derivatives of the charts are
+bounded uniformly in \(\alpha\) and \(n\).  For each fixed \(B<\infty\), in
+moving-shell coordinates
+\[
+    t=t(q,y)=\sqrt{2(b_{n,d}+q)}\,u_\alpha(y/\rho_n),
+    \qquad |q|\le B\log\log n,\quad y\in Q,
+\]
+one has
+\[
+    \E\sum_\alpha\int_{|q|\le B\log\log n}\int_Q
+    |\nabla_{q,y}S_{t(q,y)}^{(a)}|^p\,dy\,dq
+    \le(\log\log n)^C .
+\]
+The displayed derivative-moment bound also holds on every fixed physical-offset annulus
+\[
+    t=t(h,y)=(R_a-h)u_\alpha(y/\rho_n),
+    \qquad |h|\le A,\quad y\in Q,
+\]
+with \(C=C(a,A,B,d,p)\). Consequently, in either region and for every fixed
+\(\gamma>0\), a net of cardinality
+\[
+    \rho_n^{d-1}(\log\log n)^{C_\gamma}=\rho_n^{d-1+o(1)}
+\]
+suffices, with probability tending to one, to approximate \(S_t^{(a)}\)
+up to the prescribed error
+\[
+    \varepsilon_{n,\gamma}=(\log\log n)^{-\gamma}.
+\]
+\end{lemma}
+
+\begin{proof}
+The truncation set \(\{|Z_i|\le R_a\}\) is independent of \(t\), so
+\(S_t^{(a)}\) is \(C^1\) in the displayed coordinates.  For any coordinate
+\(\xi\in\{q,y_1,\ldots,y_{d-1}\}\) or
+\(\xi\in\{h,y_1,\ldots,y_{d-1}\}\),
+\[
+    \partial_\xi V_{i,t}^{(a)}
+    =
+    V_{i,t}^{(a)}M_\xi(Z_i,t),
+    \qquad
+    M_\xi(z,t)=\{z-(1+2\kappa_n)t\}\cdot\partial_\xi t .
+\]
+The coordinate choices give
+\[
+    |\partial_qt|=O(\rho_n^{-1}),\qquad
+    |\partial_ht|=1,\qquad
+    |\partial_{y_j}t|=O(1),\qquad
+    t\cdot\partial_{y_j}t=0 .
+\]
+For \(m\in\{2,p\}\), exponential tilting gives the exact identity
+\[
+    \sum_i\E|\partial_\xi V_{i,t}^{(a)}|^m
+    =
+    n^{1-m}e^{-m\kappa_nr^2+(m^2-m)r^2/2}
+    \E\!\left[
+        |M_\xi(G+mt,t)|^m\mathbf 1_{\{|G+mt|\le R_a\}}
+    \right].
+\]
+We next bound the tilted expectation.  Align \(t=re_1\), write
+\(z=G+mt\), and decompose
+\[
+    z=z_1e_1+z_\perp,\qquad
+    \zeta=R_a-z_1,\qquad \Delta_m=mr-R_a .
+\]
+In both the moving shell and fixed physical-offset annuli,
+\(\Delta_m=(m-1)\rho_n+O(\log\log n)\), and hence
+\(\Delta_m\ge c_m\rho_n\) for large \(n\).  We claim that, for every fixed
+integer \(L\),
+\[
+    \E\!\left[
+        (1+\zeta_+ + |z_\perp|)^L\mathbf 1_{\{|z|\le R_a\}}
+    \right]
+    \le
+    C_{L,m}\rho_n^{-1}e^{-\Delta_m^2/2}.
+\]
+Indeed, write \(G=We_1+U\).  If \(|G+mt|\le R_a\), then
+\[
+    W\le -\Delta_m-\frac{|U|^2}{2R_a},
+\]
+because \(\sqrt{R_a^2-|U|^2}\le R_a-|U|^2/(2R_a)\).  The one-dimensional
+Gaussian tail-moment bound
+\[
+    \E\{(1+(-x-W)_+)^L\mathbf 1_{W\le -x}\}
+    \le C_Lx^{-1}e^{-x^2/2},\qquad x\ge1,
+\]
+with \(x=\Delta_m+|U|^2/(2R_a)\), gives the claim after integration in
+\(U\): since \(\Delta_m/R_a\) stays bounded away from zero and infinity,
+the factor \(e^{-x^2/2}\) is at most
+\(e^{-\Delta_m^2/2}e^{-c|U|^2}\).
+
+In these coordinates the derivative marks have the following deterministic
+bounds on \(\{|z|\le R_a\}\):
+\[
+\begin{aligned}
+    M_q(z,t)
+    &=
+    \{z-(1+2\kappa_n)t\}\cdot\partial_qt
+      =O\{(1+\zeta_+)/\rho_n+\kappa_n\rho_n\},\\
+    M_h(z,t)
+    &=
+    \{z-(1+2\kappa_n)t\}\cdot\partial_ht
+      =O_A(1+\zeta_++\kappa_n\rho_n),\\
+    M_{y_j}(z,t)
+    &=
+    \{z-(1+2\kappa_n)t\}\cdot\partial_{y_j}t
+      =O\{1+|z_\perp|+(\log\log n)(1+\zeta_+)/\rho_n\}.
+\end{aligned}
+\]
+For \(M_q\), use \(R_a-r=O(\log\log n/\rho_n)\) in the moving shell; for
+\(M_h\), use \(|h|\le A\); for \(M_{y_j}\), use
+\(t\cdot\partial_{y_j}t=0\) and the uniform chart derivative bounds.  Since
+\(\kappa_n\rho_n=O(\log\log n/\rho_n)=o(1)\), the tilted tail-moment estimate
+from Proposition~\ref{prop:noncentral-ball} shows that the derivative marks cost only fixed powers
+of \(\log\log n\).  Combining this with the same algebra as in
+Proposition~\ref{prop:noncentral-ball} yields, uniformly in the moving shell
+and in fixed physical-offset annuli,
+\[
+    \sum_i\E|\partial_\xi V_{i,t}^{(a)}|^m
+    \le
+    (\log\log n)^C\rho_n^{-1}e^{-\lambda_n}
+    \le
+    (\log\log n)^C\rho_n^{-(d-1)} .
+\]
+Here we used \(e^{-\lambda_n}\le C\rho_n^{-(d-2)}\), which follows from
+\(s_n=O(1)\).
+
+Apply Rosenthal's inequality to
+\(\partial_\xi S_t^{(a)}=\sum_i\partial_\xi V_{i,t}^{(a)}\).  The centered
+\(p\)th-moment term is bounded by the display with \(m=p\), and the variance
+term is bounded by the display with \(m=2\) raised to the power \(p/2\),
+which is smaller.  It remains only to bound the mean.  Rotational symmetry
+makes the angular means zero.  For radial derivatives, write
+\[
+    \E S_t^{(a)}=e^{-\kappa_nr^2}P_r,\qquad
+    P_r=\Pbb\{|G+re_1|\le R_a\}.
+\]
+The derivative \(P_r'\) is uniformly bounded, because
+\[
+    P_r'=\int_{|z|\le R_a}(z_1-r)\phi_d(z-re_1)\,dz
+\]
+and the absolute value of this integral is at most \(\E|G_1|\).  Hence
+\(\partial_q\E S_t^{(a)}=O(e^{-\lambda_n}/\rho_n)\), since
+\(\partial_q r=1/r=O(\rho_n^{-1})\) and
+\(\kappa_n=O(\log\log n/\rho_n^2)\).  On a fixed physical-offset annulus,
+\(\partial_h\E S_t^{(a)}=O_A(e^{-\lambda_n})\).  Their \(p\)th powers are
+also \(O(\rho_n^{-(d-1)})\), because \(p>d\) and \(d\ge3\).  Therefore
+\[
+    \E|\partial_\xi S_t^{(a)}|^p
+    \le(\log\log n)^C\rho_n^{-(d-1)}
+\]
+uniformly in all coordinates and all displayed parameter values.
+
+Integrating this pointwise bound over \(O(\rho_n^{d-1})\) angular charts and
+over \(q\)-length \(O(\log\log n)\), or fixed \(h\)-length \(O_A(1)\), gives
+the displayed integral bound.  By Markov, the total gradient integral is at
+most \((\log\log n)^{C'}\) with probability tending to one.  Fix
+\(\gamma>0\), choose
+\[
+    K>\frac{\gamma+C'/p}{1-d/p},
+\]
+and, on this event, partition every coordinate patch into \(d\)-dimensional
+cubes.  Take the side length to be
+\[
+    \ell_n=(\log\log n)^{-K}.
+\]
+The Morrey--Poincare inequality on each cube gives
+\[
+    O\!\left(\ell_n^{1-d/p}(\log\log n)^{C'/p}\right)
+    =
+    O\!\left((\log\log n)^{-K(1-d/p)+C'/p}\right),
+\]
+as a uniform bound for the oscillation of \(S_t^{(a)}\) on that cube.  For
+the displayed choice of \(K\), this is at most
+\((\log\log n)^{-\gamma}\).  Taking one point from each cube gives a net of
+size \(\rho_n^{d-1}(\log\log n)^C\) in either coordinate region.
+\end{proof}
+
+The Morrey estimate is used below only to transfer fixed-location bounds to
+the angular continuum. Its net has size \(\rho_n^{d-1+o(1)}\), which is small
+enough for the Bennett exponents in Proposition~\ref{prop:fixed-t-bennett}.
+
+For radii below the moving shell, use physical distance from the truncated
+sample edge. Put
+\[
+    R_a=R_n(a),\qquad h=R_a-|t|.
+\]
+A bounded interval of \(h\) corresponds to a radial-energy interval of length
+\(O(\rho_n)\), so a direct energy-coordinate net would be unnecessarily large.
+The fixed-location estimates retain the Gaussian penalty in \(h\).
+\begin{lemma}
+\label{lem:physical-offset-fixed-t}
+Fix \(d\ge3\), \(a>0\), and \(A<\infty\), and suppose \(s_n=O(1)\).
+Uniformly over directions and \(|h|\le A\), for each fixed \(p>1\),
+\[
+ V_{i,t}^{(a)}\le e^{-a-h^2/2+o(1)},\qquad
+ \sum_i\E\{V_{i,t}^{(a)}\}^p
+ \le C_{p,a,A,d}\rho_n^{-1}
+ e^{-\lambda_n-(p-1)a-ph^2/2+o(1)}.
+\]
+Consequently, for every fixed \(\zeta\in(0,1)\),
+\[
+ \Pbb\{S_t^{(a)}\ge\zeta\}
+ \le \left(\rho_n^{-1}e^{-\lambda_n}\right)^{
+ e^{a+h^2/2}\zeta-o(1)}.
+\]
+\end{lemma}
+
+\begin{proof}
+The completing-square and Mills-ratio calculation used in
+Proposition~\ref{prop:noncentral-ball} sharpens in the physical coordinate
+\(h=R_a-r\).  Uniformly for bounded \(h\) and every fixed \(p>1\),
+\[
+    V_{i,t}^{(a)}\le \exp\{-a-h^2/2+o(1)\},
+    \qquad
+    \sum_i\E\{V_{i,t}^{(a)}\}^p
+    \le
+    C\rho_n^{-1}\exp\{-\lambda_n-(p-1)a-ph^2/2+o(1)\}.
+\]
+The first bound is the completing-square inequality
+\[
+    \log V_{i,t}^{(a)}
+    \le
+    \lambda_n-a-\kappa_nr^2-\frac12(R_a-r)^2
+    =
+    -a-h^2/2+o(1).
+\]
+For the second bound, exponential tilting reduces
+\(\sum_i\E\{V_{i,t}^{(a)}\}^p\) to a Gaussian probability of the ball
+\(\{|G|\le R_a\}\) under a mean shifted by \(pr\) in the \(t\)-direction.
+The nearest boundary distance is
+\[
+    pr-R_a=(p-1)R_a-ph.
+\]
+Using the Mills bound as in Proposition~\ref{prop:noncentral-ball} gives
+\[
+    \Pbb\{|G+pt|\le R_a\}
+    \le
+    C_{p,A,d}\rho_n^{-1}
+    \exp\left\{-\frac{(pr-R_a)^2}{2}\right\}.
+\]
+Substituting \(r=R_a-h\), \(R_a^2/2=\log n+\lambda_n-a\), and
+\(\kappa_nr^2=\lambda_n+o(1)\) into the exact tilted identity gives
+\[
+\begin{aligned}
+&n^{1-p}e^{-p\kappa_nr^2+(p^2-p)r^2/2}
+    \exp\left\{-\frac{(pr-R_a)^2}{2}\right\}  \\
+&\qquad\le
+    \exp\{-\lambda_n-(p-1)a-ph^2/2+o(1)\},
+\end{aligned}
+\]
+which is the displayed moment estimate for \(p>1\).  Separately,
+\[
+    \mu_t=\E S_t^{(a)}
+    =
+    e^{-\kappa_nr^2}\Pbb\{|G+t|\le R_a\}
+    \le e^{-\kappa_nr^2}
+    =
+    e^{-\lambda_n+o(1)}
+    =
+    o(1).
+\]
+The \(p=2\) case gives
+\[
+    v_t:=\sum_i\operatorname{Var}(V_{i,t}^{(a)})
+    \le C\rho_n^{-1}e^{-\lambda_n-a-h^2+o(1)},
+\]
+and the jump bound is \(V_{i,t}^{(a)}\le e^{-a-h^2/2+o(1)}\). Bennett's
+inequality gives
+\[
+    \Pbb\{S_t^{(a)}\ge\zeta\}
+    \le
+    \left(\rho_n^{-1}e^{-\lambda_n}\right)^{e^{a+h^2/2}\zeta-o(1)}.
+\]
+\end{proof}
+
+For growing physical offset \(h=R_a-|t|\), the fixed-location tail becomes
+much smaller.
+\begin{lemma}
+\label{lem:growing-offset-fixed-t}
+Fix \(d\ge3\), \(a>0\), \(A_0>0\), and \(\tau\in(0,1)\).  At the sharp
+scale \(s_n=O(1)\), uniformly over directions and over
+\[
+    h=R_a-|t|\in[A_0,\rho_n/2+2],
+\]
+one has
+\[
+    \mu_t:=\E S_t^{(a)}=o(1),\qquad
+    \max_i V_{i,t}^{(a)}\le \beta_h:=\exp\{-a-h^2/4\},
+\]
+and
+\[
+    v_t:=\sum_i\operatorname{Var}(V_{i,t}^{(a)})
+    \le
+    \beta_h\,\rho_n^{-(d-2)+o(1)} .
+\]
+Consequently,
+\[
+    \Pbb\{S_t^{(a)}\ge\tau\}
+    \le
+    \exp\{-c_{\tau,d}e^{a+h^2/4}\log\rho_n\}
+\]
+for all large \(n\), with \(c_{\tau,d}>0\).
+\end{lemma}
+
+\begin{proof}
+Write \(R=R_a\), \(r=|t|=R-h\), and use \(R=\rho_n+O((\log\log n)/\rho_n)\),
+\(\lambda_n=\kappa_n\rho_n^2=O(\log\log n)\).  Since \(h\ge A_0\),
+\[
+    \kappa_n(\rho_n^2-r^2)
+    \le
+    C\lambda_n h/\rho_n
+    \le h^2/4
+\]
+uniformly on the displayed range, for all large \(n\).  The pointwise
+completing-square bound therefore gives
+\[
+    \log V_{i,t}^{(a)}
+    \le
+    \lambda_n-a-\kappa_nr^2-h^2/2
+    =
+    -a-h^2/2+\kappa_n(\rho_n^2-r^2)
+    \le -a-h^2/4 .
+\]
+This proves the jump bound.
+
+The mean satisfies
+\[
+    \mu_t
+    =
+    e^{-\kappa_nr^2}\Pbb\{|G+t|\le R\}
+    \le
+    e^{-\kappa_nr^2}
+    \le
+    e^{-\lambda_n/10}=o(1),
+\]
+because \(r\ge R-\rho_n/2-2\ge2\rho_n/5\) for large \(n\), and
+\(\lambda_n=(d-2)\log\rho_n+O(1)\).
+
+It remains to bound the variance.  The exact second-moment identity is
+\[
+    \sum_i\E\{V_{i,t}^{(a)}\}^2
+    =
+    n^{-1}e^{-2\kappa_nr^2+r^2}
+    \Pbb\{|G+2t|\le R\}.
+\]
+If \(h\le R/2-1\), then the ball event implies a one-dimensional
+left-tail event of size \(R-2h\).  Hence
+\[
+    \Pbb\{|G+2t|\le R\}
+    \le
+    C\exp\{-(R-2h)^2/2\},
+\]
+and the algebra
+\[
+    -\log n+r^2-(R-2h)^2/2
+    =
+    \lambda_n-a-h^2
+\]
+gives
+\[
+    \sum_i\E\{V_{i,t}^{(a)}\}^2
+    \le
+    C\exp\{-a-h^2-\lambda_n
+        +2\kappa_n(\rho_n^2-r^2)\}
+    \le
+    C e^{-a-h^2/2}\rho_n^{-(d-2)+o(1)} .
+\]
+This is bounded by \(\beta_h\rho_n^{-(d-2)+o(1)}\).  If
+\(h>R/2-1\), then \(\Pbb\{|G+2t|\le R\}\le1\) and
+\[
+    n^{-1}e^{-2\kappa_nr^2+r^2}
+    \le
+    \exp\{-(1/2+o(1))\log n\},
+\]
+because \(r\le R/2+1\).  Since \(h\le\rho_n/2+2\), this is again
+\(\le\beta_h\rho_n^{-(d-2)+o(1)}\): here the left side is
+\(\exp\{-(1/2+o(1))\log n\}\), whereas \(\beta_h^{-1}\) is at most
+\(\exp\{(1/8+o(1))\log n\}\).  The variance bound follows.
+
+For large \(n\), \(\mu_t\le\tau/2\).  Bennett's inequality for centered
+summands bounded by \(\beta_h\) and total variance \(v_t\) yields
+\[
+    \Pbb\{S_t^{(a)}\ge\tau\}
+    \le
+    \exp\left[
+        -\frac{v_t}{\beta_h^2}
+        H\!\left(\frac{\beta_h(\tau-\mu_t)}{v_t}\right)
+    \right],
+    \qquad
+    H(u)=(1+u)\log(1+u)-u .
+\]
+Since \(\beta_h(\tau-\mu_t)/v_t\ge c_\tau\rho_n^{d-2-o(1)}\), the
+exponent is at least \(c_{\tau,d}\beta_h^{-1}\log\rho_n\).  This is the
+claimed tail bound.
+\end{proof}
+
+The exponential decay in \(h^2\) permits a union bound over a polynomial-size
+Euclidean net. The next lemmas handle the remaining bulk
+\(|t|\le\rho_n/2\).

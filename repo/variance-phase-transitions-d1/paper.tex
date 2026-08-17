@@ -1,0 +1,663 @@
+\documentclass[11pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[top=1in,bottom=1.2in,left=1in,right=1in]{geometry}
+\usepackage{amssymb,amsmath,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=red,
+  urlcolor=blue,
+  pdfauthor={}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{equation}{section}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Pbb}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\wh}{\widehat}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\cJ}{\mathcal J}
+\newcommand{\cP}{\mathcal P}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\supp}{supp}
+
+\title{Variance Misspecification and the One-Dimensional Gaussian Mixture NPMLE}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Can a one-atom Gaussian mixture NPMLE serve as evidence that a sample comes
+from a single population? Without regularization the answer is no: even under
+one Gaussian component, the fitted support diverges. We study whether a small
+variance inflation prevents this spurious support growth. The observations are i.i.d.\
+\(\cN(0,1-\eps_n)\), while the fitted location mixture uses unit-variance
+Gaussian components.
+
+If \(\eps_n=n^{-r_n}\) and \(r_n\to r\), the one-atom probability converges to
+a phase curve \(p(r)\). The curve is continuous, equals one at \(r=0\), is
+strictly decreasing on \((0,1/4)\), and vanishes for \(r\ge1/4\). We identify
+its behavior at both endpoints; the upper endpoint is governed by the
+persistence exponent of a stationary Gaussian process. The limiting curve is
+defined through two independent compensated Poisson edge fields, which arise
+from the upper and lower sample extremes. More generally, for \(r<1/4\) the
+entire fitted atom count converges to an integer-valued law that depends only
+on \(r\) and varies continuously with \(r\). These limiting counts diverge in probability
+as \(r\uparrow1/4\), whereas the finite-sample counts are uniformly tight
+whenever \(\limsup r_n<1/4\).
+\end{abstract}
+
+\medskip
+\noindent\textbf{Note.} This draft was produced through an iterative process in which Mark Sellke repeatedly asked GPT-5.6 in OpenAI Codex to prove, refine, and write up further extensions.
+\medskip
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\section{Introduction}
+
+Can one detect from a finite sample whether the data come from a single
+Gaussian by fitting a Gaussian mixture model? For the nonparametric maximum
+likelihood estimator, this becomes a question about the fitted mixing
+distribution: does maximum likelihood choose one component mean, or does it
+introduce additional atoms? Polyanskiy and Wu asked how many atoms the NPMLE
+selects even under one Gaussian component
+\cite[Section~5.6]{polyanskiy2020self}. Our companion paper shows that, when
+the fitted component variance matches the data-generating variance, the
+support in fact diverges in probability \cite{supportDivergenceCompanion}.
+Thus an unregularized atom count is not by itself a calibrated diagnostic of
+latent heterogeneity.
+
+Here we ask whether fitting slightly wider Gaussian components prevents this
+spurious growth of the fitted support.
+Let \(Z_1,\dots,Z_n\) be i.i.d.\ \(\cN(0,1)\), and observe
+\begin{equation}
+\label{eq:model-intro}
+    X_i=\sqrt{1-\eps_n}\,Z_i,
+    \qquad 0\le\eps_n<1.
+\end{equation}
+We fit location mixtures of unit-variance Gaussians. Thus the fitted kernels
+are slightly wider than the data-generating component, and spreading the
+mixing distribution incurs a deterministic variance penalty. Our main results
+determine the scale at which this penalty first makes a one-atom fit optimal.
+
+For a probability measure \(G\) on \(\R\), write
+\[
+    q_G(x)=\int_\R\phi(x-u)\,dG(u),
+    \qquad
+    \ell_n(G)=\sum_{i=1}^n\log q_G(X_i),
+\]
+where \(\phi\) and \(\Phi\) are the standard normal density and distribution
+function, respectively. Let \(\wh G_n\) maximize
+\(\ell_n\) over all probability measures on \(\R\). The one-dimensional
+Gaussian-mixture NPMLE is almost surely unique
+\cite{lindsay1993uniqueness}, so its support size is unambiguous.
+
+The geometry behind the transition is simple to state. Put
+\(Y_i=X_i-\bar X_n\) and
+\begin{equation}
+\label{eq:D-intro}
+    D_n(a)=\frac1n\sum_{i=1}^n
+       \exp\left(aY_i-\frac{a^2}{2}\right).
+\end{equation}
+The measure \(\delta_{\bar X_n}\) is an NPMLE if and only if
+\(\sup_aD_n(a)\le1\). For the sample with variance defect \(\eps\), denote
+this field by \(D_{n,\eps}\). After writing \(t=a\sqrt{1-\eps}\),
+\[
+    D_{n,\eps}(a)=e^{-\kappa(\eps)t^2}K_n(t),
+    \qquad
+    \kappa(\eps)=\frac{\eps}{2(1-\eps)},
+\]
+where \(K_n\) depends only on the standardized sample \(Z_{1:n}\). Increasing
+\(\eps\) therefore suppresses every nonzero perturbation and can only favor a
+one-atom fit. Lemma~\ref{lem:variance-monotonicity} proves that the one-atom
+set is an upper interval in \(\eps\). We may therefore define the samplewise
+critical inflation
+\[
+    \eps_{*,n}
+    =\inf\left\{\eps\in[0,1):
+       \sqrt{1-\eps}\,Z_1,\dots,\sqrt{1-\eps}\,Z_n
+       \text{ have a one-atom NPMLE}\right\},
+\]
+and its exponent
+\[
+    R_{*,n}=-\frac{\log\eps_{*,n}}{\log n},
+    \qquad -\log0:=\infty.
+\]
+
+This monotonicity is the deterministic foundation of the paper, and it is
+specific to one atom. Proposition~\ref{prop:full-support-nonmonotonicity}
+shows how completely monotonicity fails for larger support counts: for any
+\(m\ge2\) and any component variances \(S<T\),
+a finite sample can have \(m\) atoms at variance \(T\) and two at variance
+\(S\). The value two is optimal, since a path that is one-atomic at \(S\)
+remains one-atomic at every larger variance. Thus one-atomicity has a
+well-defined critical variance, whereas no larger support threshold is
+monotone.
+
+The nontrivial scale is polynomial. Choose \(u_n\) so that
+\(n\Pbb\{Z>u_n\}=1\). The rescaled upper-edge points
+\(u_n(Z_i-u_n)\) converge to a Poisson point process on \(\R\) with intensity
+\(e^{-x}\,dx\). For score locations \(t=\theta u_n\),
+\(1/2<\theta<1\), the centered directional field converges to a compensated
+Poisson integral. The lower sample edge gives an independent copy.
+
+Let \(N\) be a Poisson point process on \(\R\) with intensity
+\(\mu(dx)=e^{-x}\,dx\). For \(1/2<\theta<1\), define
+\begin{equation}
+\label{eq:S-intro}
+    S(\theta)=\int_\R e^{\theta x}\{N-\mu\}(dx).
+\end{equation}
+The integral on \((-\infty,0)\) is a compensated \(L^2\) limit. On
+\([0,\infty)\), the process has only finitely many points almost surely, so
+the integral is the ordinary Poisson sum minus its compensator. This split is
+important: the positive-tail contribution need not be square-integrable.
+
+Let \(S_+\) and \(S_-\) be independent copies of \(S\). For
+\(0<r<1/4\), set \(\theta_r=1-\sqrt r\) and
+\begin{equation}
+\label{eq:p-intro}
+    p(r)=
+    \Pbb\left\{
+       \max_{\xi\in\{+,-\}}
+       \sup_{\theta_r\le\theta<1}S_\xi(\theta)\le0
+    \right\}.
+\end{equation}
+Extend \(p\) to \([0,\infty]\) by \(p(0)=1\) and
+\(p(r)=0\) for \(r\ge1/4\).
+
+The first theorem identifies the limiting one-atom probability at every
+polynomial exponent and, equivalently, the law of the samplewise critical
+inflation.
+\begin{theorem}
+\label{thm:exponent-phase-diagram}
+Assume \(0<\eps_n<1\), and write \(\eps_n=n^{-r_n}\). If
+\(r_n\to r\in[0,\infty]\), then
+\[
+    \Pbb\{|\supp(\wh G_n)|=1\}\longrightarrow p(r).
+\]
+More generally, if \(\liminf_{n\to\infty}r_n\ge1/4\), then
+\(\Pbb\{|\supp(\wh G_n)|=1\}\to0\).
+\end{theorem}
+
+Together with the continuity in Proposition~\ref{prop:phase-curve-properties},
+this is equivalent to \(R_{*,n}\Rightarrow R_*\), where
+\[
+    \Pbb\{R_*\ge r\}=p(r),
+    \qquad 0<r<1/4.
+\]
+
+The limiting curve has no flat pieces in its nontrivial interval. Its two
+endpoints are governed by different mechanisms: one large Poisson point near
+\(r=0\), and Gaussian persistence near \(r=1/4\).
+\begin{proposition}
+\label{prop:phase-curve-properties}
+The function \(p\) is continuous and nonincreasing on \([0,\infty]\), strictly
+decreasing on \((0,1/4)\), and satisfies \(0<p(r)<1\) there. Moreover,
+\[
+    1-p(r)\sim2\sqrt r
+    \qquad(r\downarrow0),
+\]
+while
+\[
+    p(r)=\left(\frac14-r\right)^{3/8+o(1)}
+    \qquad(r\uparrow1/4).
+\]
+\end{proposition}
+
+Near the upper endpoint, the small jumps of the Poisson field are coupled to
+a stationary Gaussian process with sech covariance. Its one-sided persistence
+exponent is \(3/16\)
+\cite{DemboPoonenShaoZeitouni2002,FitzGeraldTribeZaboronski2022}; the two
+independent sample edges double this to \(3/8\). The transfer from the Poisson
+field uses a Koml\'os--Major--Tusn\'ady (KMT) strong approximation and the
+small-level persistence estimates
+of Feldheim--Feldheim--Mukherjee
+\cite{komlos1975approximation,komlos1976approximation,FeldheimFeldheimMukherjee2025}.
+
+Figure~\ref{fig:phase-curve} illustrates the phase curve and the two endpoint
+asymptotics.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.82\textwidth]{figures/phase_curve.pdf}
+    \caption{Numerical illustration of the limiting one-atom phase curve. The
+    blue points are Monte Carlo estimates of \(p(r)\), with
+    two-standard-error bars, and the gray dashed line is the lower-endpoint
+    asymptotic \(1-2\sqrt r\). Proposition~\ref{prop:phase-curve-properties}
+    proves that \(p(r)=(1/4-r)^{3/8+o(1)}\) as \(r\uparrow1/4\); numerically,
+    \(0.79(1/4-r)^{3/8}\) appears to match near the endpoint, as shown by the
+    red dot-dashed line.}
+    \label{fig:phase-curve}
+\end{figure}
+\FloatBarrier
+
+The Poisson limit also determines the entire support size. For
+\(b\in(1/2,1)\), a finite positive measure \(\nu\) compactly supported in
+\([b,1)\), and \(h(y)=\log(1+y)-y\), put
+\begin{equation}
+\label{eq:atom-limit-functional}
+    F_\nu(x)=\int e^{\theta x}\,\nu(d\theta),
+    \qquad
+    \cJ_{N,b}(\nu)
+    =\int S(\theta)\,\nu(d\theta)
+      +\int_{\mathbb R}h\{F_\nu(x)\}\,N(dx).
+\end{equation}
+Proposition~\ref{prop:atom-limit-unique} proves that \(\cJ_{N,b}\) has an
+almost surely unique optimizer \(\nu_b^*\). Let
+\(\nu_b^{*,+}\) and \(\nu_b^{*,-}\) be the optimizers constructed from two
+independent copies of \(N\). Define \(\mathsf K_0=1\) and, for
+\(0<r<1/4\),
+\begin{equation}
+\label{eq:atom-count-intro}
+    \mathsf K_r
+    =1+|\supp(\nu_{1-\sqrt r}^{*,+})|
+       +|\supp(\nu_{1-\sqrt r}^{*,-})|.
+\end{equation}
+The next theorem shows that this explicit Poisson functional gives the unique
+limit of the fitted support size.
+\begin{theorem}
+\label{thm:atom-count-limit}
+If \(\eps_n=n^{-r_n}\) and \(r_n\to r<1/4\), then
+\[
+    |\supp(\wh G_n)|\Rightarrow\mathsf K_r.
+\]
+For \(0<r<1/4\),
+\[
+    \Pbb\{\mathsf K_r=1\}=p(r).
+\]
+The map \(r\mapsto\mathcal L(\mathsf K_r)\) is continuous in total variation
+on \([0,1/4)\).
+\end{theorem}
+
+Although each interior limiting law is finite, the Poisson optimizer becomes
+increasingly complex as its hard wall approaches \(1/2\). The endpoint
+likelihood comparison gives a lower bound for its atom count at the scale
+\(\log(1/\delta)/\log\log(1/\delta)\).
+\begin{proposition}
+\label{prop:atom-count-endpoint-divergence}
+For \(0<\delta<1/4\), set \(r_\delta=1/4-\delta\). Then
+\[
+    \lim_{\eta\downarrow0}\limsup_{\delta\downarrow0}
+    \Pbb\left\{
+       \mathsf K_{r_\delta}
+       \le \eta\frac{\log(1/\delta)}{\log\log(1/\delta)}
+    \right\}=0.
+\]
+In particular, \(\mathsf K_r\to\infty\) in probability as
+\(r\uparrow1/4\).
+\end{proposition}
+
+Proposition~\ref{prop:atom-count-endpoint-divergence} concerns the limiting
+variables \(\mathsf K_r\): one first takes the sample-size limit with \(r\)
+fixed and then lets \(r\uparrow1/4\). It does not give a uniform
+finite-sample approximation for a triangular sequence \(r_n\uparrow1/4\).
+
+The convergence theorem also gives uniform tightness away from the critical
+endpoint: if \(\limsup_n r_n<1/4\), then
+\(|\supp(\wh G_n)|=O_{\mathbb P}(1)\). Indeed, failure along some sequence
+would persist along a subsequence on which \(r_n\) converges to a point of
+\([0,1/4)\), contradicting Theorem~\ref{thm:atom-count-limit}.
+
+The one-dimensional mechanism is exceptional. In dimensions at least two,
+the angular geometry produces logarithmic radial transitions instead of the
+two-sided polynomial persistence curve above; that problem, including growing
+dimension, is treated in a companion paper
+\cite{varianceMultivariateCompanion}.
+
+\subsection{Preliminaries}
+
+We first settle the deterministic geometry of the variance path. The
+directional-derivative criterion reduces one-atom optimality to a scalar
+supremum, and increasing the variance defect can only lower this supremum.
+This makes the samplewise critical inflation well defined. We then show that
+no analogous monotonicity survives for any larger support threshold. The
+one-atom monotonicity and the counterexamples for larger support thresholds
+form the deterministic foundation for the scaling limits proved later.
+
+\subsubsection{Notation and convergence}
+
+All asymptotic notation is as \(n\to\infty\), unless another limit is
+specified. For a deterministic positive sequence \(a_n\), the relation
+\(X_n=O_{\mathbb P}(a_n)\) means that \(|X_n|/a_n\) is tight, while
+\(X_n=o_{\mathbb P}(a_n)\) means that \(X_n/a_n\to0\) in probability.
+Deterministic \(O(\cdot)\) and \(o(\cdot)\) have their usual meanings. We
+write \(a_n\sim b_n\) if \(a_n/b_n\to1\), \(a_n\ll b_n\) if
+\(a_n/b_n\to0\), and \(a_n\lesssim b_n\) if \(a_n\le Cb_n\) for a constant
+independent of \(n\). The reverse relations are \(\gg\) and \(\gtrsim\), and
+\(a_n\asymp b_n\) means that both one-sided bounds hold. Constants
+\(c,C,c_0,C_0,\dots\) may change from line to line.
+
+We write \(X_n\Rightarrow X\) for weak convergence. Random functions on a
+compact set \(K\) are viewed in \(C(K)\) with the supremum norm. Point
+processes carry the vague topology. For a measure \(G\), \(\supp(G)\) is its
+support and \(\delta_x\) is the unit point mass at \(x\). Finally,
+\(J\Subset I\) means that the interval \(J\) is compactly contained in
+\(I\).
+For a measurable function \(f\), we use the empirical-measure notation
+\(P_nf=n^{-1}\sum_{i=1}^nf(Z_i)\) and \(Pf=\E f(Z)\), where
+\(Z\sim\cN(0,1)\).
+
+We use bracketing only in the support-tightness argument. If \(\mathcal F\)
+is a class of measurable functions and \(P\) is a probability measure, an
+\(L^1(P)\)-bracket of width \(\eta\) is a pair \([l,u]\) with \(l\le u\),
+\(\|u-l\|_{L^1(P)}\le\eta\), and all functions between \(l\) and \(u\).
+The bracketing number \(N_{[]}\{\eta,\mathcal F,L^1(P)\}\) is the least
+number of such brackets needed to cover \(\mathcal F\).
+
+\subsubsection{One-atom optimality and uniqueness}
+
+The following criterion turns the infinite-dimensional likelihood problem
+into a scalar supremum. Its monotonicity outside the sample range will later
+exclude score locations beyond the extreme observations.
+\begin{lemma}
+\label{lem:one-atom-D}
+For arbitrary observations \(X_1,\dots,X_n\in\R\), the measure
+\(\delta_{\bar X_n}\) is an NPMLE if and only if
+\[
+    \sup_{a\in\R}D_n(a)\le1,
+\]
+where \(D_n\) is defined in \eqref{eq:D-intro}. Moreover, \(D_n(0)=1\),
+\(D_n\) is strictly decreasing on \((\max_iY_i,\infty)\), and it is strictly
+increasing on \((-\infty,\min_iY_i)\).
+\end{lemma}
+
+\begin{proof}
+For \(a\in\R\) and \(0\le t\le1\), perturb the one-atom measure in the
+direction of a second atom:
+
+\[
+    G_t=(1-t)\delta_{\bar X_n}+t\delta_{\bar X_n+a}.
+\]
+Since
+
+\[
+ \frac{q_{G_t}(X_i)}{q_{\delta_{\bar X_n}}(X_i)}
+ =1-t+t\exp\left(aY_i-\frac{a^2}{2}\right),
+\]
+the right derivative at \(t=0\) is
+
+\[
+ \left.\frac{d}{dt}\ell_n(G_t)\right|_{t=0+}
+ =n\{D_n(a)-1\}.
+\]
+Among point masses, \(\delta_{\bar X_n}\) uniquely maximizes the likelihood.
+Concavity of \(G\mapsto\ell_n(G)\), together with Lindsay's
+directional-derivative criterion \cite{lindsay1983geometryA}, therefore shows
+that it is globally optimal exactly when \(D_n(a)\le1\) for every \(a\).
+
+The identity \(D_n(0)=1\) is immediate. Differentiating gives
+
+\[
+    D_n'(a)=\frac1n\sum_{i=1}^n
+      (Y_i-a)\exp\left(aY_i-\frac{a^2}{2}\right).
+\]
+Every summand is negative when \(a>\max_iY_i\), and every summand is positive
+when \(a<\min_iY_i\), proving the final assertions.
+\end{proof}
+
+The NPMLE is known to be unique in one dimension. For the one-atom event we
+will use the following narrower consequence.
+\begin{proposition}
+\label{prop:one-atom-unique}
+Let \(n\ge2\) and let \(X_1,\dots,X_n\) be i.i.d.\ from a nondegenerate
+Gaussian distribution. Almost surely, if a one-atom NPMLE exists, then it is
+the unique NPMLE.
+\end{proposition}
+
+\begin{proof}
+The only possible one-atom maximizer is \(G_0=\delta_{\bar X_n}\). Suppose
+that \(G_0\) and a different mixing measure \(G\) both maximize the
+likelihood. Strict concavity of
+\((q_1,\dots,q_n)\mapsto\sum_i\log q_i\) implies
+
+\[
+    q_G(X_i)=q_{G_0}(X_i),\qquad 1\le i\le n;
+\]
+otherwise their midpoint would have larger likelihood. Lemma
+\ref{lem:one-atom-D} gives \(D_n(a)\le1\) for every \(a\), while
+
+\[
+    \int D_n(u-\bar X_n)\,dG(u)
+    =\frac1n\sum_{i=1}^n\frac{q_G(X_i)}{q_{G_0}(X_i)}=1.
+\]
+Thus \(D_n(u-\bar X_n)=1\) for \(G\)-almost every \(u\). Since
+\(G\ne G_0\), there is a nonzero \(a\) with \(D_n(a)=1\).
+
+It remains to show that such a contact has probability zero on the one-atom
+event. Regard the centered sample \(Y=(Y_1,\dots,Y_n)\) as a Gaussian vector
+in the hyperplane \(\mathcal H=\{y\in\R^n:\sum_i y_i=0\}\). Its law is
+spherical and nondegenerate on \(\mathcal H\), so \(Y=RU\), where \(R>0\)
+is independent of \(U\) and has a density. For a centered sample \(rU\), set
+
+\[
+    \mathcal D_{r,U}(t)
+    =D_{r,U}(t/r)
+    =\frac1n\sum_{i=1}^n
+      \exp\left(tU_i-\frac{t^2}{2r^2}\right).
+\]
+For fixed \(U\) and \(t\ne0\), this quantity is strictly increasing in \(r\).
+If two radii \(r_1<r_2\) both admitted a second maximizer tied with the
+one-atom fit, the KKT equality for that second maximizer would give
+\(t_1\ne0\) with \(\mathcal D_{r_1,U}(t_1)=1\). Then
+
+\[
+ \mathcal D_{r_2,U}(t_1)
+ =\exp\left\{\frac{t_1^2}{2}
+       \left(\frac1{r_1^2}-\frac1{r_2^2}\right)\right\}>1,
+\]
+contradicting Lemma~\ref{lem:one-atom-D} at radius \(r_2\). Hence for each
+fixed \(U\), at most one radius can produce a tie. Conditional on \(U\), the
+radius \(R\) has a density, so it hits this at-most-singleton set with
+probability zero. Integrating over \(U\) proves the claim.
+\end{proof}
+
+\subsubsection{Deterministic variance paths}
+
+We now determine which support properties are monotone along a fixed-sample
+variance path. A larger variance defect damps every nonzero likelihood
+perturbation, so the one-atom set is an upper interval in \(\eps\).
+\begin{lemma}
+\label{lem:variance-monotonicity}
+Fix \(z_1,\dots,z_n\in\R\), and for \(0\le\eps<1\) set
+\(x_i^{(\eps)}=\sqrt{1-\eps}\,z_i\). Let \(D_{n,\eps}\) be the field
+\eqref{eq:D-intro} formed from this sample. If
+\(0\le\eps_1\le\eps_2<1\), then
+\[
+    \sup_{a\in\R}D_{n,\eps_2}(a)
+    \le
+    \sup_{a\in\R}D_{n,\eps_1}(a).
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(\bar z=n^{-1}\sum_i z_i\) and define
+
+\[
+    K_n(t)=\frac1n\sum_{i=1}^n
+       \exp\left(t(z_i-\bar z)-\frac{t^2}{2}\right).
+\]
+For \(x_i^{(\eps)}=\sqrt{1-\eps}\,z_i\), the change of variables
+\(t=a\sqrt{1-\eps}\) gives
+
+\[
+    D_{n,\eps}(a)=e^{-\kappa(\eps)t^2}K_n(t),
+    \qquad \kappa(\eps)=\frac{\eps}{2(1-\eps)}.
+\]
+The map \(\eps\mapsto\kappa(\eps)\) is increasing, and \(t\) ranges over all
+of \(\R\) for every \(\eps<1\). Taking suprema proves the displayed
+inequality; Lemma~\ref{lem:one-atom-D} gives the corresponding monotonicity of
+the one-atom event.
+\end{proof}
+
+This monotonicity is special to one atom. To state the sharp obstruction, fix
+a finite sample \(X\), let \(\widehat G_{X,t}\) denote its Gaussian
+location-mixture NPMLE with component variance \(t\). The NPMLE is unique in
+one dimension, so we may write \(K_X(t)\) for its number of atoms. After
+rescaling to unit component variance, Lemma~\ref{lem:variance-monotonicity}
+shows that
+\[
+    K_X(S)=1\quad\Longrightarrow\quad K_X(t)=1
+    \quad\text{for every }t>S.
+\]
+Thus two is the smallest possible value at \(S\) in any example with
+\(K_X(T)>1\) for some \(T>S\). The next proposition reaches this minimum
+while making \(K_X(T)\) arbitrarily large.
+The construction, proved in
+Appendix~\ref{app:full-support-nonmonotonicity}, crucially uses that the
+Gaussian kernel decays faster than exponentially; it does not directly
+extend to Laplace mixtures.
+\begin{proposition}
+\label{prop:full-support-nonmonotonicity}
+Fix \(0<S<T\) and an integer \(m\ge2\). There is a finite sample \(X\subset
+\mathbb R\) for which the NPMLE is unique at variances \(S\) and \(T\), and
+\[
+    K_X(T)=m,
+    \qquad
+    K_X(S)=2.
+\]
+Finally, the sample \(X\) may be chosen to consist of exactly \(m\) distinct
+values.
+\end{proposition}
+
+\subsection{Related literature}
+
+The mixture NPMLE originates in Robbins and Kiefer--Wolfowitz
+\cite{robbins1950generalization,kiefer1956consistency}. In the normal-means
+empirical Bayes model, the fitted mixing distribution estimates the latent
+prior and the induced Bayes rule is used for inference; see, for example,
+Jiang--Zhang \cite{jiang2009general}, Koenker--Mizera
+\cite{koenker2014convex}, and Dicker--Zhao \cite{dicker2016high}. A point-mass
+prior describes a homogeneous population of signals, so whether the fitted
+prior has one atom is a simple, deliberately stringent structural diagnostic.
+
+The geometry of exact mixture likelihood maximizers was developed by Lindsay
+\cite{lindsay1983geometryA}. Koenker and Gu documented sparse NPMLE fits in
+\emph{Minimalist $g$-Modeling} \cite{koenker2019minimalist}; Polyanskiy and Wu
+proved an \(O_{\mathbb P}(\log n)\) support upper bound under subgaussian
+sampling \cite{polyanskiy2020self}. Our support-divergence companion shows
+that the support nevertheless diverges under any fixed finitely supported
+mixing distribution \cite{supportDivergenceCompanion}. These results concern
+a well-specified component variance. Here the fitted variance is deliberately
+inflated, and the object is the threshold at which this perturbation collapses
+the optimizer to one atom.
+
+Mixture homogeneity tests provide the closest inferential comparison.
+Gu--Koenker--Volgushev compare the point-mass likelihood with the likelihood
+at the Kiefer--Wolfowitz NPMLE \cite{guKoenkerVolgushev2018}; related
+likelihood-ratio statistics have nonstandard null behavior
+\cite{hartigan1985failure,azais2009likelihood,jiangZhang2019rate}.
+Our statistic is different: it records whether the unrestricted maximizer
+itself has one atom after a prescribed variance inflation. A useful analogue
+is Silverman's critical bandwidth, the smallest amount of kernel smoothing
+needed to reduce a density estimate to a prescribed number of modes
+\cite{silverman1981multimodality,hallYork2001calibration}.
+
+The fixed-sample path \(t\mapsto\widehat G_{X,t}\) also appears in scalar
+quadratic rate--distortion theory, with reciprocal variance acting as inverse
+temperature. In his analysis of deterministic annealing, Rose conjectured
+that the optimizer's support size grows monotonically as inverse temperature
+increases \cite[Section~IV-C, p.~1946]{rose1994mapping}.
+While Lemma~\ref{lem:variance-monotonicity} confirms the corresponding
+monotonicity for one-atomicity,
+Proposition~\ref{prop:full-support-nonmonotonicity} disproves every
+higher-support analogue in a strong form.
+
+A complementary line of NPMLE theory studies density or decision risk
+\cite{zhang2009generalized,saha2020nonparametric,doss2020optimal}.
+Kim and Sen's smooth NPMLE is particularly close in spirit: their Gaussian
+smoothing layer also inflates the marginal component variance, but their goal
+is estimation and inference in a smoothed mixing model
+\cite{KimSen2026SmoothNPMLE}. We instead let the inflation vanish and study
+the exact support selected by maximum likelihood.
+
+\section{The One-Dimensional Edge Field}
+\label{sec:one-dimensional-edge-field}
+
+This section supplies the probabilistic input shared by
+Theorems~\ref{thm:exponent-phase-diagram} and \ref{thm:atom-count-limit}. We
+resolve the Karush--Kuhn--Tucker (KKT) field at score locations
+\(t=\theta u_n\): each sample tail produces a Poisson cloud of extreme
+observations, and the centered exponential sum converges on compact
+subintervals of \((1/2,1)\) to the compensated field in
+\eqref{eq:S-intro}. The remaining estimates restore empirical centering,
+combine the two tails, and exclude score ranges outside this compact limit.
+
+\input{variance_d1_edge}
+
+\section{The Phase Diagram}
+\label{sec:phase-diagram}
+
+This section proves Theorem~\ref{thm:exponent-phase-diagram} and the interior
+continuity and strict monotonicity assertions in
+Proposition~\ref{prop:phase-curve-properties}. The compact process limit and
+the exclusion estimates first give an \(\eta\)-sandwich between two Poisson
+no-crossing events; the no-atom theorem for the limiting supremum then closes
+the sandwich. Section~\ref{sec:endpoints} proves the two remaining assertions
+of Proposition~\ref{prop:phase-curve-properties}.
+
+\input{variance_d1_phase}
+
+\section{Endpoint Behavior}
+\label{sec:endpoints}
+
+This section proves the two endpoint asymptotics in
+Proposition~\ref{prop:phase-curve-properties}. They have different
+probabilistic origins. Near \(r=0\), a crossing is caused by one unusually
+large positive Poisson point. Near \(r=1/4\), many small jumps accumulate and,
+after logarithmic reparametrization, behave like a stationary Gaussian
+process.
+
+\input{variance_d1_endpoints}
+
+\section{Support Size and Its Limiting Law}
+\label{sec:support-tightness}
+
+This section proves Theorem~\ref{thm:atom-count-limit} and
+Proposition~\ref{prop:atom-count-endpoint-divergence}. The phase diagram only
+decides whether the central atom is globally optimal; controlling the entire
+support requires excluding cascades of additional KKT contacts. We first show
+that the small fitted mass near each sample edge cannot create such a cascade.
+This localization reduces the two edges to compact random-analytic
+optimization problems. We then identify their unique optimizers, transfer the
+active sets back to the finite-sample likelihood, and finally let
+\(r\uparrow1/4\) to prove divergence of the limiting count.
+
+\input{variance_d1_support}
+
+\input{variance_d1_atom_count}
+
+\appendix
+
+\section{Transversality for the Limiting Poisson Likelihood}
+\label{app:poisson-transversality}
+
+\input{variance_d1_transversality}
+
+\section{Nonmonotonicity of the Full Support Count}
+\label{app:full-support-nonmonotonicity}
+
+\input{variance_d1_nonmonotonicity}
+
+\bibliographystyle{alpha}
+\bibliography{writing_examples/bib,references,gpt56_variance_d1_refs}
+
+\end{document}

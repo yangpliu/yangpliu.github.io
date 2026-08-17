@@ -1,0 +1,936 @@
+We use the unit-intensity extreme-value normalization: for
+\(Z\sim\cN(0,1)\), choose \(u_n\) by \(n\mathbb P\{Z>u_n\}=1\).
+Throughout this section, assume \(0\le\eps_n<1\) and write
+\[
+    X_i=\sigma_n Z_i,\qquad
+    \sigma_n=\sqrt{1-\eps_n},\qquad
+    Z_i\stackrel{\mathrm{i.i.d.}}{\sim}\cN(0,1).
+\]
+For a candidate shift \(a\), put \(t=a\sigma_n\). The exact KKT field contains
+an empirical-centering factor, which we restore below. Without that factor,
+the field is
+\[
+    e^{-\lambda_n(t/u_n)^2}
+    \frac1n\sum_{i=1}^n
+    \exp\!\Bigl(tZ_i-\frac{t^2}{2}\Bigr),
+    \qquad
+    \lambda_n=\frac{\eps_nu_n^2}{2(1-\eps_n)}.
+\]
+The exponential sum is the correctly specified field; the factor
+\(e^{-\lambda_n(t/u_n)^2}\) is the deterministic penalty caused by variance
+misspecification. Since $u_n^2/2=\log n+o(\log n)$, $\lambda_n$ and
+$\eps_n$ have the same polynomial exponent whenever $\eps_n\to0$. The
+one-atom question is whether the penalized field can exceed the KKT level one.
+
+We write \(t=\theta u_n\). After division by the scale
+\(c_n(\theta)\) defined below, only observations within distance
+\(O(1/u_n)\) of the sample maximum contribute at order one. These
+observations need not lie near the score location \(\theta u_n\). Writing an
+extreme observation as \(Z_i=u_n+x/u_n\), its contribution is
+\[
+    \frac1n
+    \exp\!\Bigl(\theta u_n^2-\frac{\theta^2u_n^2}{2}\Bigr)e^{\theta x}
+    =
+    c_n(\theta)e^{\theta x}
+\]
+to the exponential sum, where
+\[
+    c_n(\theta)
+    :=
+    \frac1n
+    \exp\!\Bigl(\theta u_n^2-\frac{\theta^2u_n^2}{2}\Bigr)
+    =
+    n^{-(1-\theta)^2+o(1)}.
+\]
+For $\theta>1/2$, the centered fluctuation of the correctly specified field is
+of order $c_n(\theta)$ and is governed by the Poisson process of extreme
+points. Proposition~\ref{prop:poisson-edge-field} proves this convergence
+uniformly for $\theta$ in any fixed compact interval
+$J\Subset(1/2,1)$.
+
+If \(\lambda_n=n^{-\alpha+o(1)}\), balancing the damping against
+\(c_n(\theta)\) gives \(\theta_\alpha=1-\sqrt\alpha\). To pass from compact
+convergence to the phase theorem, we must also combine the two sample tails
+and exclude crossings below \(1/2\) and near \(1\). The estimates below do so
+and establish the needed regularity of the limiting supremum.
+
+\subsection{Compact edge process}
+
+The first input to the polynomial sandwich in
+Theorem~\ref{thm:polynomial-stable-regime} is compact convergence of the
+normalized empirical exponential sum to the compensated Poisson field.
+\begin{proposition}
+\label{prop:poisson-edge-field}
+Let $Z_1,\dots,Z_n$ be i.i.d.\ $\cN(0,1)$, and let $u_n$ be defined by
+\[
+    n\mathbb P\{Z_1>u_n\}=1.
+\]
+For $\theta\in(0,1)$ set
+\[
+    H_n(\theta)
+    =
+    \frac1n\sum_{i=1}^n
+    \exp\!\Bigl(\theta u_nZ_i-\frac{\theta^2u_n^2}{2}\Bigr),
+    \qquad
+    c_n(\theta)
+    =
+    \frac1n
+    \exp\!\Bigl(\theta u_n^2-\frac{\theta^2u_n^2}{2}\Bigr).
+\]
+If $J=[\theta_0,\theta_1]\Subset(1/2,1)$, then
+\[
+    \left\{
+    \frac{H_n(\theta)-1}{c_n(\theta)}
+    :
+    \theta\in J
+    \right\}
+    \Rightarrow
+    \{S(\theta):\theta\in J\}
+    \qquad\text{in }C(J),
+\]
+where \(N\) is a Poisson point process on \(\R\) with intensity
+\(\mu(dx)=e^{-x}\,dx\), and
+\[
+\begin{aligned}
+    S(\theta)&=S^{\rm neg}(\theta)+S^{\rm pos}(\theta),\\
+    S^{\rm neg}(\theta)
+    &=\lim_{M\to\infty}
+      \int_{-M}^0 e^{\theta x}\{N-\mu\}(dx),\\
+    S^{\rm pos}(\theta)
+    &=\sum_{X\in N\cap[0,\infty)}e^{\theta X}
+      -\int_0^\infty e^{\theta x}\mu(dx).
+\end{aligned}
+\]
+The first limit holds in \(L^2(\Omega;C(J))\). The second sum is almost surely
+finite because \(\mu([0,\infty))=1\), and its compensator equals
+\((1-\theta)^{-1}\). Thus \(S^{\rm pos}(\theta)\) is integrable, though not
+square-integrable when \(\theta\ge1/2\).
+The process has an almost surely real-analytic version on \((1/2,1)\).
+Moreover
+\[
+    c_n(\theta)
+    =
+    n^{-(1-\theta)^2+o(1)}
+\]
+uniformly for $\theta$ in compact subintervals of $(0,1)$.
+
+Let \(X_i=\sigma_n Z_i\), where \(\sigma_n=\sqrt{1-\eps_n}\), and let \(D_n\)
+be the centered directional derivative from \eqref{eq:D-intro}. Put
+\[
+    a_n(\theta)=\frac{\theta u_n}{\sigma_n},
+    \qquad
+    \lambda_n=\frac{\eps_nu_n^2}{2(1-\eps_n)}.
+\]
+Then, uniformly on every $J\Subset(1/2,1)$,
+\[
+    \frac{D_n(a_n(\theta))-1}{c_n(\theta)}
+    =
+    e^{-\lambda_n\theta^2}
+    \frac{H_n(\theta)-1}{c_n(\theta)}
+    +
+    \frac{e^{-\lambda_n\theta^2}-1}{c_n(\theta)}
+    +
+    o_{\mathbb P}(1).
+\]
+\end{proposition}
+
+\begin{proof}
+Define the edge point process
+\[
+    N_n=\sum_{i=1}^n\delta_{u_n(Z_i-u_n)},
+    \qquad
+    \mu_n=\E N_n.
+\]
+Its intensity has density
+\[
+    \mu_n(dx)
+    =
+    n\frac{\phi(u_n+x/u_n)}{u_n}\,dx
+    =
+    \frac{n\phi(u_n)}{u_n}
+    \exp\!\Bigl(-x-\frac{x^2}{2u_n^2}\Bigr)\,dx.
+\]
+Since $n\phi(u_n)/u_n\to1$, the standard Poisson convergence theorem for extremes \cite{kallenberg2017random} gives vague convergence of $N_n$ on compact intervals to a Poisson point process $N$ with intensity $e^{-x}dx$. Also
+\[
+    \frac{H_n(\theta)-1}{c_n(\theta)}
+    =
+    \int_\R e^{\theta x}\{N_n-\mu_n\}(dx).
+\]
+
+Fix \(M<\infty\). Because the limiting intensity is diffuse, the Poisson
+process almost surely has no atom at either endpoint of \([-M,M]\). On this
+interval, vague convergence, the continuous mapping theorem for the
+equicontinuous family $\{e^{\theta x}:\theta\in J\}$, and the uniform
+convergence $\mu_n\to\mu$ imply convergence in $C(J)$ of the truncated
+centered integrals. We now show that the portions with $x<-M$ and $x>M$
+vanish uniformly in \(\theta\) as \(M\to\infty\).
+
+For the upper tail, monotonicity in $\theta$ gives
+\[
+    \E\sup_{\theta\in J}
+    \int_M^\infty e^{\theta x}\{N_n+\mu_n\}(dx)
+    \le
+    2\int_M^\infty e^{\theta_1x}\mu_n(dx)
+    \le
+    C_J e^{-(1-\theta_1)M}.
+\]
+Replacing $N_n,\mu_n$ by their limits $N,\mu$ gives the identical upper-tail
+bound.
+For the lower tail, write
+\[
+    R_n(\theta)
+    =
+    \int_{-\infty}^{-M} e^{\theta x}\{N_n-\mu_n\}(dx).
+\]
+Since $2\theta_0>1$,
+\[
+    \E |R_n(\theta_0)|^2
+    \le
+    \int_{-\infty}^{-M}e^{2\theta_0x}\mu_n(dx)
+    \le
+    C_J e^{-(2\theta_0-1)M}.
+\]
+Differentiating in \(\theta\) inserts a factor \(x\); the corresponding
+second-moment estimate is
+\[
+    \sup_{\theta\in J}
+    \E |R_n'(\theta)|^2
+    \le
+    C_J(1+M^2)e^{-(2\theta_0-1)M}.
+\]
+The squared Sobolev bound
+\[
+    \|f\|_\infty^2
+    \le
+    C_J\{|f(\theta_0)|^2+\|f'\|_{L^2(J)}^2\}
+\]
+on the interval $J$ therefore gives
+\[
+    \E\sup_{\theta\in J}|R_n(\theta)|^2
+    \le
+    C_J(1+M^2)e^{-c_JM}\to0
+    \qquad(M\to\infty),
+\]
+uniformly in $n$. The identical estimate with \(N_n,\mu_n\) replaced by
+\(N,\mu\) proves the asserted \(L^2(\Omega;C(J))\) construction of
+\(S^{\rm neg}\). Together with the upper-tail \(L^1\) bound, this proves the
+functional convergence. Repeating the negative-tail estimate after any fixed
+number of \(\theta\)-derivatives gives locally uniform convergence of the
+derivative series. The positive part is a finite exponential sum minus
+\((1-\theta)^{-1}\), so the resulting version of \(S\) is real analytic on
+\((1/2,1)\).
+
+Mills' ratio gives
+\[
+    n
+    =
+    u_n\sqrt{2\pi}\,e^{u_n^2/2}(1+o(1)).
+\]
+Hence
+\[
+    c_n(\theta)
+    =
+    (u_n\sqrt{2\pi})^{-1}
+    \exp\!\Bigl(-\frac{(1-\theta)^2u_n^2}{2}\Bigr)(1+o(1))
+    =
+    n^{-(1-\theta)^2+o(1)}
+\]
+uniformly on compact $\theta$-intervals.
+
+It remains to restore the damping and empirical centering in the KKT field.
+For $a_n(\theta)=\theta u_n/\sigma_n$,
+\[
+    D_n(a_n(\theta))
+    =
+    e^{-\theta u_n\bar Z_n}
+    e^{-\lambda_n\theta^2}
+    H_n(\theta),
+    \qquad
+    \bar Z_n=\frac1n\sum_{i=1}^n Z_i.
+\]
+On $J=[\theta_0,\theta_1]\Subset(1/2,1)$,
+\[
+    \inf_{\theta\in J}c_n(\theta)
+    \ge
+    n^{-(1-\theta_0)^2+o(1)}
+    \gg n^{-1/2}\sqrt{\log n},
+\]
+because $(1-\theta_0)^2<1/4$. Since $u_n\bar Z_n=O_{\mathbb P}(\sqrt{\log n/n})$ and
+\[
+    \sup_{\theta\in J}
+    \frac{|H_n(\theta)-1|}{c_n(\theta)}
+    =
+    O_{\mathbb P}(1),
+\]
+the empirical-centering factor contributes $o_{\mathbb P}(c_n(\theta))$ uniformly. Dividing by $c_n(\theta)$ gives the stated expansion.
+\end{proof}
+
+\subsection{Two tails and empirical centering}
+
+Proposition~\ref{prop:poisson-edge-field} treats positive candidate shifts and
+therefore uses the right tail of the sample. Applying it to the reflected
+sample $-Z_1,\ldots,-Z_n$ treats negative shifts and the left tail. We now
+introduce both signs explicitly.
+For $\xi\in\{-1,1\}$ and $\theta\ge0$, set
+\[
+    a_n(\theta)=\frac{\theta u_n}{\sqrt{1-\eps_n}},
+    \qquad
+    \lambda_n=\frac{\eps_nu_n^2}{2(1-\eps_n)},
+\]
+\[
+    H_{n,\xi}(\theta)
+    =
+    \frac1n\sum_{i=1}^n
+    \exp\!\Bigl(\theta u_n\xi Z_i-\frac{\theta^2u_n^2}{2}\Bigr),
+    \qquad
+    \overline D_{n,\xi}(\theta)
+    =
+    e^{-\lambda_n\theta^2}H_{n,\xi}(\theta),
+\]
+and
+\[
+    D_{n,\xi}(\theta)
+    =
+    D_n\bigl(\xi a_n(\theta)\bigr).
+\]
+Thus
+\[
+    D_{n,\xi}(\theta)
+    =
+    e^{-\xi\theta u_n\bar Z_n}\overline D_{n,\xi}(\theta),
+    \qquad
+    \bar Z_n=\frac1n\sum_{i=1}^n Z_i.
+\]
+
+The exact KKT field $D_{n,\xi}$ differs from $\overline D_{n,\xi}$ only by
+the sample-mean factor. Uniformly over both signs and \(0\le\theta\le1\),
+this factor changes the field by \(o_{\mathbb P}(\lambda_n)\).
+
+\begin{lemma}
+\label{lem:uniform-centering}
+Assume $\lambda_n=n^{-\alpha+o(1)}$ for some $\alpha\in(0,1/4)$. Then
+\[
+    \sup_{\xi=\pm1}\sup_{0\le\theta\le1}
+    \bigl|D_{n,\xi}(\theta)-\overline D_{n,\xi}(\theta)\bigr|
+    =
+    o_{\mathbb P}(\lambda_n).
+\]
+\end{lemma}
+
+\begin{proof}
+From
+\[
+    D_{n,\xi}(\theta)
+    =
+    e^{-\xi\theta u_n\bar Z_n}\overline D_{n,\xi}(\theta)
+\]
+and $u_n|\bar Z_n|=O_{\mathbb P}(\sqrt{\log n/n})=o_{\mathbb P}(1)$, we have
+\[
+    \sup_{\xi,\theta}
+    \bigl|D_{n,\xi}(\theta)-\overline D_{n,\xi}(\theta)\bigr|
+    \le
+    O_{\mathbb P}(u_n|\bar Z_n|)
+    \sup_{\xi,\theta}\overline D_{n,\xi}(\theta).
+\]
+Thus it is enough to prove
+\[
+    \sup_{\xi=\pm1}\sup_{0\le\theta\le1}\overline D_{n,\xi}(\theta)
+    =
+    O_{\mathbb P}(\sqrt{\log n}).
+\]
+For fixed data, each summand $\exp(\theta u_n\xi Z_i-\theta^2u_n^2/2)$ is maximized over $0\le\theta\le1$ either at $\theta=0$, at $\theta=1$, or at $\theta=\xi Z_i/u_n$ when $0\le\xi Z_i\le u_n$. Hence
+\[
+    \sup_{0\le\theta\le1}H_{n,\xi}(\theta)
+    \le
+    1+
+    \frac1n\sum_{i=1}^n
+    \exp\!\Bigl(\frac{(\xi Z_i)_+^2}{2}\Bigr)
+    \mathbf 1_{\{0\le \xi Z_i\le u_n\}}
+    +
+    H_{n,\xi}(1).
+\]
+The middle term has expectation $\E[e^{Z^2/2}\mathbf 1_{\{0\le Z\le u_n\}}]=u_n/\sqrt{2\pi}$, so Markov's inequality gives an \(O_{\mathbb P}(u_n)\) bound for the average. The endpoint term $H_{n,\xi}(1)$ is $O_{\mathbb P}(1)$. Indeed, for
+\[
+    A_n=
+    \frac1n\sum_{i=1}^n
+    e^{u_n\xi Z_i-u_n^2/2}
+    \mathbf 1_{\{\xi Z_i\le u_n\}},
+\]
+exponential tilting gives $\E A_n=1/2$ and
+\[
+    \Var(A_n)
+    \le
+    n^{-1}e^{u_n^2}\Phi(-u_n)
+    =
+    O(u_n^{-2}).
+\]
+If \(u_n<\xi Z_i\le u_n+L/u_n\), then the corresponding term in the average, including the factor \(1/n\), is at most \(C_L/u_n\). The number of observations in this window is tight. The probability of any observation above \(u_n+L/u_n\) is \(O(e^{-L})\). Letting \(L\to\infty\) gives \(H_{n,\xi}(1)=O_{\mathbb P}(1)\). Since $e^{-\lambda_n\theta^2}\le1$, the desired $O_{\mathbb P}(\sqrt{\log n})$ bound follows. Multiplying by $u_n|\bar Z_n|$ gives $O_{\mathbb P}(\log n/\sqrt n)=o_{\mathbb P}(\lambda_n)$ because $\alpha<1/4$.
+\end{proof}
+
+\subsection{Uniform exclusion and regularity}
+
+Compact convergence does not by itself control the full KKT supremum. The
+lemmas in this subsection supply the exclusion and regularity estimates used
+to pass from Proposition~\ref{prop:poisson-edge-field} to the polynomial
+sandwich in Theorem~\ref{thm:polynomial-stable-regime}. The Poisson
+normalization is sharp only for \(\theta>1/2\); below this point,
+ordinary fluctuations of the full sample dominate the extreme-tail scale. A
+direct second-moment argument controls the larger range
+\(\theta\le\theta_*<1/\sqrt2\) at order
+\(n^{-1/2+\theta_*^2+o(1)}\). The two methods therefore overlap on
+\((1/2,1/\sqrt2)\): the Poisson limit is sharper there, while the cruder
+second-moment bound is sufficient for excluding subthreshold crossings.
+
+\begin{lemma}
+\label{lem:gaussian-regime-centered}
+Fix $0<\theta_*<1/\sqrt2$ and define
+\[
+    K_{n,\xi}(\theta)
+    =
+    \frac1n\sum_{i=1}^n
+    \exp\!\Bigl(
+        \theta u_n\xi(Z_i-\bar Z_n)-\frac{\theta^2u_n^2}{2}
+    \Bigr),
+    \qquad
+    0\le\theta\le\theta_*.
+\]
+Then
+\[
+    \sup_{\xi=\pm1}\sup_{0<\theta\le\theta_*}
+    \frac{|K_{n,\xi}(\theta)-1|}{\theta^2}
+    =
+    O_{\mathbb P}\bigl(n^{-1/2+\theta_*^2+o(1)}\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+We give the proof for $\xi=1$; the other sign is identical. Let
+\[
+    H_n(\theta)
+    =
+    \frac1n\sum_{i=1}^n
+    \exp\!\Bigl(\theta u_nZ_i-\frac{\theta^2u_n^2}{2}\Bigr).
+\]
+For $r=1,2,3$, Gaussian integration gives, uniformly for $0\le\theta\le\theta_*$,
+\[
+    \E\left[
+        \left|
+        \partial_\theta^r
+        \exp\!\Bigl(\theta u_nZ-\frac{\theta^2u_n^2}{2}\Bigr)
+        \right|^2
+    \right]
+    \le
+    u_n^{C_r}e^{\theta^2u_n^2}.
+\]
+Since $\E H_n^{(r)}(\theta)=0$ for $r\ge1$, independence and the displayed
+derivative bound imply
+\[
+    \sup_{0\le\theta\le\theta_*}
+    \|H_n^{(r)}(\theta)\|_2
+    \le
+    u_n^{C_r}n^{-1/2+\theta_*^2+o(1)}.
+\]
+Applying the elementary Sobolev bound
+\[
+    \sup_{0\le\theta\le\theta_*}|f(\theta)|
+    \le
+    |f(0)|+\int_0^{\theta_*}|f'(\theta)|\,d\theta
+\]
+to $H_n'$ and $H_n''$ gives
+\[
+    \sup_{0\le\theta\le\theta_*}
+    \bigl(|H_n'(\theta)|+|H_n''(\theta)|\bigr)
+    =
+    O_{\mathbb P}\bigl(n^{-1/2+\theta_*^2+o(1)}\bigr).
+\]
+Applying the derivative argument once more to $H_n-1$, and using
+$H_n(0)=1$, gives
+\[
+    \sup_{0\le\theta\le\theta_*}|H_n(\theta)-1|
+    =
+    O_{\mathbb P}\bigl(n^{-1/2+\theta_*^2+o(1)}\bigr).
+\]
+
+Write $b_n=u_n\bar Z_n=O_{\mathbb P}(\sqrt{\log n/n})$. Then
+\[
+    K_{n,1}(\theta)=e^{-b_n\theta}H_n(\theta),
+\]
+so
+\[
+    K_{n,1}''(\theta)
+    =
+    e^{-b_n\theta}
+    \{H_n''(\theta)-2b_nH_n'(\theta)+b_n^2H_n(\theta)\}.
+\]
+The displayed bounds and $b_n=o_{\mathbb P}(1)$ give
+\[
+    \sup_{0\le\theta\le\theta_*}|K_{n,1}''(\theta)|
+    =
+    O_{\mathbb P}\bigl(n^{-1/2+\theta_*^2+o(1)}\bigr).
+\]
+Finally $K_{n,1}(0)=1$ and $K_{n,1}'(0)=0$, hence
+\[
+    K_{n,1}(\theta)-1
+    =
+    \int_0^\theta(\theta-s)K_{n,1}''(s)\,ds,
+\]
+and the asserted bound follows.
+\end{proof}
+
+Below \(\theta_\alpha\) by a fixed margin, the deterministic damping
+\(\lambda_n\theta^2\) dominates the fluctuations. Gaussian estimates handle
+the range up to a fixed $\theta_*>1/2$, and the compact Poisson estimate
+handles the remainder.
+
+\begin{lemma}
+\label{lem:subthreshold-envelope}
+Fix $\alpha\in(0,1/4)$, let
+\[
+    \theta_\alpha=1-\sqrt\alpha,
+\]
+and assume $\lambda_n=n^{-\alpha+o(1)}$. For every
+\[
+    0<\eta<\theta_\alpha-\frac12
+\]
+we have
+\[
+    \mathbb P\Bigl\{
+        \sup_{\xi=\pm1}
+        \sup_{0\le\theta\le\theta_\alpha-\eta}
+        D_{n,\xi}(\theta)>1
+    \Bigr\}\to0.
+\]
+\end{lemma}
+
+\begin{proof}
+Put $\theta_0=\theta_\alpha-\eta$. Choose
+\[
+    \theta_* \in
+    \Bigl(\frac12,\theta_0\Bigr)
+    \quad\text{so that}\quad
+    \theta_*^2<\frac12-\alpha;
+\]
+this is possible because $\theta_0>1/2$ and $\sqrt{1/2-\alpha}>1/2$.
+
+On $[0,\theta_*]$ we use the Gaussian-regime bound for the centered null field. Write
+\[
+    D_{n,\xi}(\theta)
+    =
+    e^{-\lambda_n\theta^2}K_{n,\xi}(\theta),
+\]
+where $K_{n,\xi}$ is the centered null field from Lemma~\ref{lem:gaussian-regime-centered}. Since $\theta_*^2<1/2-\alpha$,
+\[
+    \sup_{\xi=\pm1}\sup_{0<\theta\le\theta_*}
+    \frac{|K_{n,\xi}(\theta)-1|}{\theta^2}
+    =
+    o_{\mathbb P}(\lambda_n).
+\]
+Consequently,
+\[
+    \sup_{\xi=\pm1}\sup_{0<\theta\le\theta_*}
+    \frac{D_{n,\xi}(\theta)-1}{\theta^2}
+    \le
+    -\lambda_n+o_{\mathbb P}(\lambda_n),
+\]
+because $(1-e^{-\lambda_n\theta^2})/\theta^2=\lambda_n+O(\lambda_n^2)$ uniformly for $0\le\theta\le1$. Therefore $\sup_{\xi=\pm1}\sup_{0\le\theta\le\theta_*}D_{n,\xi}(\theta)\le1$ with probability tending to one.
+
+On the compact interval $[\theta_*,\theta_0]\Subset(1/2,1)$, Lemma~\ref{lem:uniform-centering} lets us replace $D_{n,\xi}$ by $\overline D_{n,\xi}$ at an $o_{\mathbb P}(\lambda_n)$ cost. Proposition~\ref{prop:poisson-edge-field} controls the null edge field uniformly on this compact interval: \(H_{n,\xi}(\theta)-1=O_{\mathbb P}(c_n(\theta))\), uniformly in \(\theta\) and \(\xi\). Moreover,
+\[
+    \sup_{\theta\le\theta_0}c_n(\theta)
+    =
+    n^{-(1-\theta_0)^2+o(1)}
+    =
+    o(\lambda_n),
+    \qquad
+    1-e^{-\lambda_n\theta^2}
+    \ge c_{\theta_*}\lambda_n
+\]
+for $\theta_*\le\theta\le\theta_0$. We therefore also have
+\[
+    \sup_{\xi=\pm1}\sup_{\theta_*\le\theta\le\theta_0}
+    \overline D_{n,\xi}(\theta)
+    \le
+    1-c\lambda_n+o_{\mathbb P}(\lambda_n)
+    \qquad\text{with probability tending to one}.
+\]
+Lemma~\ref{lem:uniform-centering} shows that replacing
+\(\overline D_{n,\xi}\) by the empirically centered field
+\(D_{n,\xi}\) changes the supremum over
+\(\xi=\pm1\) and \(\theta_*\le\theta\le\theta_0\) by
+\(o_{\mathbb P}(\lambda_n)\). Thus the supremum remains strictly below one
+with probability tending to one. \qedhere
+\end{proof}
+
+We also need to exclude crossings near \(\theta=1\), where compact
+convergence does not apply and the limiting compensator diverges. The next
+lemma controls this endpoint uniformly for the finite-sample field. It also
+covers the score window of width \(O(u_n^{-2})\) immediately to the right of
+\(\theta=1\), beyond the edge score \(t=u_n\).
+
+\begin{lemma}
+\label{lem:endpoint-exclusion}
+Assume $\lambda_n=n^{-\alpha+o(1)}$ for some $\alpha\in(0,1/4)$. For every fixed $R\in[0,\infty)$,
+\[
+    \lim_{\rho\downarrow0}\limsup_{n\to\infty}
+    \mathbb P\Bigl\{
+        \sup_{\xi=\pm1}
+        \sup_{1-\rho\le\theta\le1+R/u_n^2}
+        D_{n,\xi}(\theta)>1
+    \Bigr\}
+    =
+    0.
+\]
+\end{lemma}
+
+\begin{proof}
+We give the argument for $\xi=1$; the other tail is identical.
+
+We first record the endpoint behavior of the limiting field. Its compensated
+negative-half-line part extends continuously to \(\theta=1\). Indeed, for any
+\(b>1/2\), the stochastic integrals
+\[
+ T(\theta)=\int_{-\infty}^0e^{\theta x}\{N-\mu\}(dx),
+ \qquad
+ T'(\theta)=\int_{-\infty}^0xe^{\theta x}\{N-\mu\}(dx)
+\]
+have uniformly bounded second moments on \([b,1]\). Stochastic Fubini and the
+one-dimensional Sobolev inequality therefore give a continuous version of
+\(T\) on \([b,1]\). The positive half-line contains only finitely many
+Poisson points, so its random sum has a finite limit as \(\theta\uparrow1\),
+whereas its compensator is \((1-\theta)^{-1}\). Consequently,
+\begin{equation}
+\label{eq:poisson-field-right-endpoint}
+ S(\theta)\longrightarrow-\infty
+ \qquad\text{almost surely as }\theta\uparrow1.
+\end{equation}
+
+We now treat $1-\rho\le\theta<1$, taking \(\rho<1/4\) and
+\(\rho^2<\alpha\). The Mills-ratio formula in the proof of
+Proposition~\ref{prop:poisson-edge-field} is uniform for
+$1-\rho\le\theta\le1$ and gives
+\[
+    c_n(\theta)
+    =
+    (u_n\sqrt{2\pi})^{-1}
+    \exp\!\left\{
+        -\frac{(1-\theta)^2u_n^2}{2}
+    \right\}(1+o(1)).
+\]
+Thus
+\[
+    \inf_{1-\rho\le\theta<1}c_n(\theta)
+    =
+    n^{-\rho^2+o(1)}
+    \gg \lambda_n.
+\]
+Since \(c_n(\theta)\ge n^{-\rho^2+o(1)}\) and \(\rho^2<\alpha\),
+    \(\lambda_n=o(c_n(\theta))\) uniformly on this interval. Lemma
+    \ref{lem:uniform-centering} and the fact that the damping factor is at most
+one show that, for every fixed \(\eta>0\), a crossing of \(D_{n,1}\) implies,
+with probability tending to one, a crossing above level \(-\eta\) by
+\[
+    X_n(\theta)
+    :=
+    \frac{H_{n,1}(\theta)-1}{c_n(\theta)}
+    =
+    \int_\R e^{\theta x}\{N_n-\mu_n\}(dx).
+\]
+
+It remains to control \(X_n\) on a noncompact parameter interval. Split
+\([1-\rho,1)\) into
+\[
+ [1-\rho,1-\rho/2]\quad\text{and}\quad[1-\rho/2,1).
+\]
+The first interval is compactly contained in \((1/2,1)\), so
+Proposition~\ref{prop:poisson-edge-field} and the portmanteau theorem give
+\[
+ \limsup_{n\to\infty}
+ \mathbb P\left\{
+   \sup_{1-\rho\le\theta\le1-\rho/2}X_n(\theta)>-\eta
+ \right\}
+ \le
+ \mathbb P\left\{
+   \sup_{1-\rho\le\theta\le1-\rho/2}S(\theta)\ge-\eta
+ \right\}.
+\]
+By \eqref{eq:poisson-field-right-endpoint}, the probability on the right
+tends to zero as \(\rho\downarrow0\).
+
+For the remaining interval, fix \(M>0\) and write
+\[
+ A_{n,M}(\theta)
+ =
+ \int_{-\infty}^M e^{\theta x}\{N_n-\mu_n\}(dx),
+ \qquad
+ C_{n,M}(\theta)
+ =
+ \int_M^\infty e^{\theta x}\mu_n(dx).
+\]
+For \(3/4\le\theta\le1\), the Poisson isometry and the intensity formula in
+Proposition~\ref{prop:poisson-edge-field} give
+\[
+ \sup_{n,\theta}\mathbb E\{|A_{n,M}(\theta)|^2
+       +|A_{n,M}'(\theta)|^2\}
+ \le C_M.
+\]
+The Sobolev inequality therefore makes
+\(\{\|A_{n,M}\|_\infty:n\ge1\}\) tight. Given
+\(\beta>0\), choose \(K=K(M,\beta)\) so that
+\[
+ \sup_n\mathbb P\{\|A_{n,M}\|_\infty>K\}<\beta.
+\]
+On \(\{N_n(M,\infty)=0\}\), we have
+\(X_n=A_{n,M}-C_{n,M}\). Since \(C_{n,M}\) is increasing in \(\theta\),
+\[
+ \inf_{1-\rho/2\le\theta<1}C_{n,M}(\theta)
+ =
+ C_{n,M}(1-\rho/2)
+ \longrightarrow
+ \frac{2e^{-\rho M/2}}{\rho}
+\]
+for each fixed \(M,\rho\). This limit exceeds \(K+\eta\) once \(\rho\) is
+small enough. Moreover,
+\(\limsup_n\mathbb P\{N_n(M,\infty)>0\}\le e^{-M}\). Hence
+\[
+ \lim_{\rho\downarrow0}\limsup_{n\to\infty}
+ \mathbb P\left\{
+  \sup_{1-\rho/2\le\theta<1}X_n(\theta)>-\eta
+ \right\}
+ \le \beta+e^{-M}.
+\]
+Send first \(\beta\downarrow0\) and then \(M\to\infty\). Together with the
+compact interval, this proves the exclusion on \(1-\rho\le\theta<1\).
+
+We now treat the window immediately to the right of one. For each fixed
+$R$, we claim that
+\[
+    \sup_{0\le s\le R}
+    H_{n,1}\Bigl(1+\frac{s}{u_n^2}\Bigr)
+    \le
+    \frac34
+    \qquad\text{with probability tending to one}.
+\]
+Put $t_n(s)=u_n+s/u_n$, and split the average defining $H_{n,1}(1+s/u_n^2)$ at $u_n$. For the bulk term
+\[
+    B_n(s)
+    =
+    \frac1n\sum_{i=1}^n
+    e^{t_n(s)Z_i-t_n(s)^2/2}
+    \mathbf 1_{\{Z_i\le u_n\}},
+\]
+exponential tilting gives, uniformly for $0\le s\le R$,
+\[
+    \E B_n(s)
+    =
+    \mathbb P\{Z\le u_n-t_n(s)\}
+    =
+    \Phi(-s/u_n)
+    \le
+    \frac12+o(1),
+\]
+and
+\[
+    \Var(B_n(s))
+    \le
+    \frac1n e^{t_n(s)^2}\Phi(u_n-2t_n(s))
+    \le
+    \frac{C_R}{u_n^2}.
+\]
+Differentiating the summand in $s$ gives a factor $(Z_i-t_n(s))/u_n$, and the same tilted calculation yields
+\[
+    \sup_{0\le s\le R}\Var(B_n'(s))
+    \le
+    \frac{C_R}{u_n^2}.
+\]
+Since both \(\sup_s\Var(B_n(s))\) and \(\sup_s\Var(B_n'(s))\) are \(O(u_n^{-2})\), the Sobolev inequality on \([0,R]\) gives \(\sup_{0\le s\le R}|B_n(s)-\E B_n(s)|\to0\) in probability.
+
+For the edge part, first restrict to $u_n<Z_i\le u_n+L/u_n$. On this event each averaged summand is at most $C_{R,L}/u_n$, using $n e^{-u_n^2/2}\asymp u_n$, while the number of such observations is tight; hence this contribution is $o_{\mathbb P}(1)$ for fixed $L$. The probability of any observation above $u_n+L/u_n$ has limit at most $e^{-L}$, so
+\[
+    \limsup_{n\to\infty}
+    \mathbb P\left\{
+        \sup_{0\le s\le R}
+        \text{edge part}>\varepsilon
+    \right\}
+    \le
+    e^{-L}
+\]
+for every $\varepsilon>0$. Letting $L\to\infty$ proves the claim.
+
+The damping factor is at most one, and
+$e^{-\theta u_n\bar Z_n}=1+o_{\mathbb P}(1)$ uniformly on this window.
+Thus the bound for $H_{n,1}$ implies, for example,
+$\sup_{1\le\theta\le1+R/u_n^2}D_{n,1}(\theta)\le0.9$ with probability
+tending to one. This proves the right-endpoint exclusion. Combining the two
+endpoint ranges and then sending $\rho\downarrow0$ completes the proof.
+\end{proof}
+
+The phase theorem compares crossing probabilities with events determined by
+\(\sup S\). To pass between strict and weak inequalities, we need this
+supremum to have no atom at zero. We prove that fact by conditioning on all
+but one Poisson point: moving the remaining point changes the supremum
+strictly monotonically.
+
+\begin{lemma}
+\label{lem:poisson-sup-no-atom}
+For every $b\in(1/2,1)$, define
+\[
+    M_b=\sup_{b\le\theta<1}S(\theta).
+\]
+Then
+\[
+    \mathbb P\{M_b=0\}=0.
+\]
+The same holds for the maximum of two independent copies of $M_b$.
+\end{lemma}
+
+\begin{proof}
+Use the version of \(S\) that is continuous on compact subintervals of
+\([b,1)\) and satisfies \(S(\theta)\to-\infty\) as \(\theta\uparrow1\), as
+constructed in the proof of Lemma~\ref{lem:endpoint-exclusion}. For each
+bounded interval \(I\), this version can be chosen jointly for every possible
+location of a labeled Poisson point in \(I\). Hence \(M_b\) is finite, and its supremum is
+attained on a compact subinterval \([b,1-\delta]\).
+
+For $m\ge1$, let
+\[
+    I_m=[-m-1,-m].
+\]
+Condition on the Poisson configuration outside $I_m$ and on the number of points inside $I_m$. On the event $N(I_m)=k\ge1$, use the standard labeled representation of the $k$ points in $I_m$ \cite{kallenberg2017random}: after conditioning on $k-1$ labels, the remaining location, call it $Y$, has a continuous density on $I_m$ proportional to $e^{-y}$.
+
+For any conditioned configuration for which the supremum is finite and attained, write the resulting supremum as a function of $Y$:
+\[
+    \Psi(Y)
+    =
+    \sup_{b\le\theta<1}
+    \{R(\theta)+e^{\theta Y}\},
+\]
+where $R$ includes all contributions independent of $Y$, including the compensator. If $Y_2>Y_1$ and $\theta_1$ attains the supremum for $Y_1$, then $\theta_1\ge b>0$ and
+\[
+    \Psi(Y_2)
+    \ge
+    R(\theta_1)+e^{\theta_1Y_2}
+    >
+    R(\theta_1)+e^{\theta_1Y_1}
+    =
+    \Psi(Y_1).
+\]
+Thus $\Psi$ is strictly increasing, so the equation $\Psi(Y)=0$ has at most one solution. Since $Y$ has a continuous conditional density,
+\[
+    \mathbb P\{M_b=0\mid N(I_m)=k,\ \text{the conditioned data}\}=0
+    \qquad(k\ge1).
+\]
+After averaging over the conditioning, $\mathbb P\{M_b=0,\ N(I_m)\ge1\}=0$.
+Therefore
+\[
+    \mathbb P\{M_b=0\}
+    \le
+    \mathbb P\{N(I_m)=0\}
+    =
+    \exp\{-\mu(I_m)\}.
+\]
+But $\mu(I_m)=\int_{-m-1}^{-m}e^{-x}\,dx\to\infty$, so $\mathbb P\{M_b=0\}=0$.
+
+If $M_b^+$ and $M_b^-$ are independent copies, then $\mathbb P\{\max(M_b^+,M_b^-)=0\}\le \mathbb P\{M_b^+=0\}+\mathbb P\{M_b^-=0\}=0$.
+\end{proof}
+
+It remains to control \(M_b=\sup_{b\le\theta<1}S(\theta)\) as
+\(b\downarrow1/2\). The compensated integral over the negative half-line then
+accumulates variance of order \((\theta-1/2)^{-1}\). On a sparse geometric
+grid, its normalized values approach nearly independent centered Gaussians;
+consequently, the probability that every grid value is nonpositive tends to
+zero.
+
+\begin{lemma}
+\label{lem:poisson-left-endpoint}
+For
+\[
+    M_b=\sup_{b\le\theta<1}S(\theta),
+    \qquad
+    b\in(1/2,1),
+\]
+we have
+\[
+    \mathbb P\{M_b>0\}\to1
+    \qquad\text{as }b\downarrow\frac12.
+\]
+\end{lemma}
+
+\begin{proof}
+Split $S(\theta)$ into its negative and positive half-line contributions. On the negative half-line put $r=e^{-x}$. Then the intensity $e^{-x}dx$ becomes Lebesgue measure $dr$ on $[1,\infty)$, and the negative contribution is
+\[
+    T(\theta)
+    =
+    \int_1^\infty r^{-\theta}\{N(dr)-dr\},
+    \qquad \theta>\frac12,
+\]
+where $N$ is a unit-rate Poisson process on $[1,\infty)$. The positive half-line contribution is finite and continuous on compact subintervals of $[1/2,1)$, and hence is negligible after multiplication by $\sqrt{\theta-1/2}$. For the finite grid of \(\theta\)-values introduced below, this positive half-line contribution is almost surely bounded and vanishes after multiplication by \(\sqrt{\theta-1/2}\).
+
+We first record the finite-dimensional limit of $T$ near $1/2$. Fix $m\ge1$ and positive constants $a_1,\dots,a_m$. As $\beta\downarrow0$,
+\[
+    \left\{
+        \sqrt{2a_j\beta}\,
+        T\Bigl(\frac12+a_j\beta\Bigr)
+    \right\}_{j=1}^m
+    \Rightarrow
+    (G_1,\dots,G_m),
+\]
+where $(G_1,\dots,G_m)$ is centered Gaussian with covariance
+\[
+    \E G_iG_j
+    =
+    \frac{2\sqrt{a_ia_j}}{a_i+a_j}.
+\]
+Indeed, for any $c_1,\dots,c_m$, write
+\[
+ g_\beta(r)=
+ \sum_{j=1}^m c_j\sqrt{2a_j\beta}\,
+ r^{-1/2-a_j\beta}.
+\]
+Then \(\sup_{r\ge1}|g_\beta(r)|=O(\sqrt\beta)\), while
+\[
+ \int_1^\infty g_\beta(r)^2\,dr
+\]
+converges to the quadratic form determined by the displayed covariance.
+Expanding the compensated Poisson characteristic exponent gives
+\[
+ \int_1^\infty
+ \{e^{it g_\beta(r)}-1-itg_\beta(r)\}\,dr
+ =
+ -\frac{t^2}{2}\int_1^\infty g_\beta(r)^2\,dr+o(1),
+\]
+because the remainder is bounded by
+\(C_t\|g_\beta\|_\infty\int g_\beta^2=o(1)\). This proves the stated
+Gaussian finite-dimensional limit.
+
+Fix $m$ and $q\in(0,1)$. For $b>1/2$ set
+\[
+    \beta_b=b-\frac12,
+    \qquad
+    \theta_j(b)=\frac12+\beta_b q^{-j},
+    \qquad
+    0\le j\le m-1.
+\]
+For $b$ close enough to $1/2$, all these points lie in $[b,1)$. Applying the
+Gaussian finite-dimensional limit just proved with $a_j=q^{-j}$ gives
+\[
+    \left\{
+        \sqrt{2\beta_b q^{-j}}\,
+        S(\theta_j(b))
+    \right\}_{j=0}^{m-1}
+    \Rightarrow
+    (G_0,\dots,G_{m-1}),
+\]
+where
+\[
+    \E G_iG_j
+    =
+    \frac{2q^{|i-j|/2}}{1+q^{|i-j|}}.
+\]
+Thus
+\[
+    \limsup_{b\downarrow1/2}\mathbb P\{M_b\le0\}
+    \le
+    \mathbb P\{G_0\le0,\dots,G_{m-1}\le0\}.
+\]
+For fixed $m$, the covariance matrix above converges to the identity as $q\downarrow0$. Hence the right-hand side tends to $2^{-m}$ as $q\downarrow0$. Letting first $q\downarrow0$ and then $m\to\infty$ proves the lemma.
+\end{proof}

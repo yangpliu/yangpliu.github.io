@@ -1,0 +1,508 @@
+We prove Proposition~\ref{prop:full-support-nonmonotonicity}. Throughout this
+appendix,
+\[
+    k_t(x,y)=\exp\left\{-\frac{(x-y)^2}{2t}\right\};
+\]
+the omitted Gaussian normalizing constant is independent of the mixing
+distribution. For a weighted empirical measure
+\[
+    P=\sum_{i=1}^q w_i\delta_{x_i},
+    \qquad w_i>0,\quad \sum_iw_i=1,
+\]
+write \(q_{t,G}(x_i)=\int k_t(x_i,y)\,dG(y)\) and
+\begin{equation}
+\label{eq:nonmon-dual}
+    D_{t,P,G}(y)
+    =\sum_iw_i\frac{k_t(x_i,y)}{q_{t,G}(x_i)}.
+\end{equation}
+Lindsay's directional-derivative criterion
+\cite{lindsay1983geometryA} says that \(G\) is an NPMLE exactly when
+\begin{equation}
+\label{eq:nonmon-kkt}
+    D_{t,P,G}(y)\le1\quad(y\in\mathbb R).
+\end{equation}
+The identity
+\begin{equation}
+\label{eq:nonmon-dual-average}
+    \int D_{t,P,G}(y)\,dG(y)=1.
+\end{equation}
+then makes equality automatic \(G\)-almost everywhere. Strict concavity of
+the log likelihood in the fitted vector implies that all maximizers have the
+same fitted vector. Thus, if the equality set in
+\eqref{eq:nonmon-kkt} is finite and its kernel columns are linearly
+independent, the NPMLE is unique.
+
+We also use the standard stability of nondegenerate zeros: if \(F_N\to F\) in
+\(C^1\) near \(z_0\), \(F(z_0)=0\), and \(DF(z_0)\) is invertible, then
+\(F_N\) has a zero converging to \(z_0\).
+
+The first lemma produces the high-variance dual certificate. Its first
+\(r\) data locations remain fixed, while the last location and its contact
+move to \(+\infty\).
+\begin{lemma}
+\label{lem:nonmon-remote-certificate}
+Fix \(r\ge1\) and \(t>0\). There are fixed points
+\[
+    a_1<\cdots<a_r=0
+\]
+such that, for every sufficiently large \(B\), there are positive
+coefficients \(c_1(B),\ldots,c_{r+1}(B)\) for which
+\begin{equation}
+\label{eq:nonmon-remote-certificate}
+    C_B(y)
+    =
+    \sum_{i=1}^r c_i(B)k_t(a_i,y)
+    +c_{r+1}(B)k_t(B,y)
+    \le1.
+\end{equation}
+Equality holds at exactly \(r+1\) nondegenerate maxima
+\(\theta_1(B),\ldots,\theta_{r+1}(B)\). Moreover,
+\[
+    c_i(B)\to c_i^0>0,\quad
+    \theta_i(B)\to\alpha_i\quad(i\le r),
+    \qquad
+    c_{r+1}(B)\to1,\quad
+    \theta_{r+1}(B)-B\to0,
+\]
+and the square contact matrix
+\begin{equation}
+\label{eq:nonmon-contact-matrix}
+    K_B
+    =
+    \bigl(k_t(x_i,\theta_j(B))\bigr)_{i,j=1}^{r+1},
+    \qquad
+    (x_1,\ldots,x_{r+1})=(a_1,\ldots,a_r,B),
+\end{equation}
+is invertible.
+\end{lemma}
+
+\begin{proof}
+We first build the \(r\) fixed peaks. Choose a large separation \(L\) and
+put \(a_i=(i-r)L\). Let the coefficients
+\(c=(c_1,\ldots,c_r)\) range over a fixed neighborhood of
+\(\boldsymbol1\). For fixed \(R>0\), local coordinates \(y=a_i+s\) give,
+uniformly over \(i,c\) and \(|s|\le R\),
+\[
+    \sum_{j=1}^r c_jk_t(a_j,a_i+s)
+    =
+    c_i e^{-s^2/(2t)}+E_{i,L,c}(s),
+\]
+where
+\begin{equation}
+\label{eq:nonmon-separated-error}
+    \|E_{i,L,c}\|_{C^2[-R,R]}
+    \le
+    C_{r,R,t}(1+L^2)
+    \exp\left\{-\frac{(L-R)^2}{2t}\right\}
+    \longrightarrow0.
+\end{equation}
+Choose \(0<\delta<\min\{R,\sqrt t\}\). The derivative of the limiting
+single peak is bounded away from zero on
+\(\{\delta\le |s|\le R\}\), while its second derivative is negative on
+\([-\delta,\delta]\). Hence each interval
+\([a_i-R,a_i+R]\) contains exactly one critical point
+\[
+    \alpha_i(c,L)=a_i+s_i(c,L),
+    \qquad s_i(c,L)\to0,
+\]
+which is a nondegenerate maximum.
+
+Let \(M_i(c,L)\) be the value at this maximum. Since the spatial derivative
+vanishes there,
+\[
+    \frac{\partial M_i}{\partial c_j}(c,L)
+    =
+    k_t(a_j,\alpha_i(c,L)).
+\]
+Consequently \(M(c,L)-\boldsymbol1\to c-\boldsymbol1\) in \(C^1\) near
+\(\boldsymbol1\). Stability of nondegenerate zeros gives coefficients
+\(c(L)\to\boldsymbol1\) for which all \(r\) maximum heights equal one.
+Choose \(R\) so large that \(2r e^{-R^2/(2t)}<1\), and then choose
+\(L>2R\) large enough that the coefficients \(c(L)\) and critical points
+\(\alpha_i(c(L),L)\) constructed above exist. Outside the union of
+the \(r\) intervals, every center is at distance at least \(R\), so the
+Gaussian sum is strictly below one. Inside each interval its unique critical
+point is its maximum, of height one. We have therefore constructed
+\[
+    H_0(y)=\sum_{i=1}^r c_i^0k_t(a_i,y)\le1
+\]
+with exactly \(r\) nondegenerate contacts \(\alpha_i\). The matrix
+\[
+    A=\bigl(k_t(a_i,\alpha_j)\bigr)_{i,j=1}^r
+\]
+is invertible because it converges to the identity as \(L\to\infty\).
+
+We now add the remote peak. For coefficients near
+\((c_1^0,\ldots,c_r^0,1)\), the old maxima persist near the
+\(\alpha_i\), and a new nondegenerate maximum appears near \(B\). The map
+from the coefficients to these \(r+1\) maximum heights converges in \(C^1\),
+as \(B\to\infty\), to the decoupled height map. Its derivative at the
+limiting coefficient vector is
+\[
+    \begin{pmatrix}
+        A^{\mathsf T}&0\\
+        0&1
+    \end{pmatrix}.
+\]
+Stability of nondegenerate zeros gives positive coefficients for which all
+\(r+1\) heights are one, with the asserted limits.
+
+It remains to check the global inequality. On small fixed neighborhoods of
+the old contacts, the perturbed old cluster has a unique strictly concave
+maximum of height one, and the remote term is negligible. On the complement
+of these neighborhoods in a large fixed interval, \(H_0\) has a fixed gap
+below one. An identical local argument controls the new maximum in a fixed
+neighborhood of \(B\). Finally, enlarge the old and remote regions until the
+entire old cluster is below \(1/4\) outside the old region and the remote
+term is below \(1/4\) outside the region around \(B\). This proves
+\eqref{eq:nonmon-remote-certificate} globally and identifies every contact.
+The matrix \(K_B\) converges blockwise to
+\(\operatorname{diag}(A,1)\), so it is invertible for large \(B\).
+\end{proof}
+
+An equal-height certificate can be inverted into empirical weights. This
+lets us prescribe positive masses at all high-variance contacts before
+choosing the sample multiplicities.
+\begin{lemma}
+\label{lem:nonmon-inverse-kkt}
+Suppose
+\[
+    C(y)=\sum_{i=1}^q c_i k_t(x_i,y)\le1
+\]
+has equality exactly at \(\theta_1,\ldots,\theta_q\), where every \(c_i>0\),
+and suppose \(K=(k_t(x_i,\theta_j))_{i,j=1}^q\) is invertible. For
+\(p\in\Delta_q^\circ\), define
+\[
+    M=\operatorname{diag}(c_1,\ldots,c_q)K,
+    \qquad
+    w=Mp,
+    \qquad
+    G=\sum_{j=1}^q p_j\delta_{\theta_j}.
+\]
+Then \(w\in\Delta_q^\circ\), and \(G\) is the unique NPMLE for the weighted
+empirical distribution \(\sum_iw_i\delta_{x_i}\).
+\end{lemma}
+
+\begin{proof}
+Every column of \(M\) sums to one because
+\[
+    \sum_iM_{ij}
+    =\sum_ic_i k_t(x_i,\theta_j)
+    =C(\theta_j)=1.
+\]
+Thus \(w\) is a strictly positive probability vector. Moreover,
+\[
+    q_{t,G}(x_i)=(Kp)_i,
+    \qquad
+    \frac{w_i}{q_{t,G}(x_i)}=c_i.
+\]
+The dual certificate of \(G\) is exactly \(C\), so
+\eqref{eq:nonmon-kkt} proves optimality. Any other maximizer is supported on
+the same contact set and has a mass vector \(p'\) satisfying \(Kp'=Kp\).
+Invertibility gives \(p'=p\).
+\end{proof}
+
+We next show that a suitable two-cluster empirical distribution has exactly
+two atoms at the smaller variance. The exponent condition below says that
+the smaller cluster has much more mass than the Gaussian overlap between the
+two clusters.
+\begin{lemma}
+\label{lem:nonmon-two-cluster}
+Fix \(a_1<\cdots<a_r=0\). For \(B\to\infty\), let
+\[
+    P_B=\sum_{i=1}^r w_{i,B}\delta_{a_i}+w_{\star,B}\delta_B
+\]
+be a probability measure with all weights positive, and put
+\(\varepsilon_B=w_{r,B}\). Suppose
+\begin{align}
+    \varepsilon_B&\to0,\label{eq:nonmon-eps-zero}\\
+    \log\varepsilon_B
+      &=-\alpha B^2+o(B^2)
+        \quad\text{for some }0<\alpha<\frac12,\label{eq:nonmon-eps-rate}\\
+    \frac{w_{i,B}}{\varepsilon_B k_1(a_i,0)}
+      &\to0\qquad(i<r).\label{eq:nonmon-old-negligible}
+\end{align}
+Then, for all sufficiently large \(B\), the variance-one NPMLE is unique and
+has exactly two atoms.
+\end{lemma}
+
+\begin{proof}
+Condition \eqref{eq:nonmon-old-negligible} gives
+\(\sum_{i<r}w_{i,B}=o(\varepsilon_B)\), and hence
+\begin{equation}
+\label{eq:nonmon-remote-weight}
+    w_{\star,B}=1-\varepsilon_B\{1+o(1)\}.
+\end{equation}
+We seek an NPMLE of the form
+\[
+    G_{\rho,u,z}
+    =
+    \varepsilon_B\rho\,\delta_u
+    +(1-\varepsilon_B\rho)\delta_{B+z},
+\]
+where \((\rho,u,z)\) is near \((1,0,0)\). Let
+\begin{align*}
+    q_i(\rho,u,z)
+    &=
+    \varepsilon_B\rho k_1(a_i,u)
+    +(1-\varepsilon_B\rho)k_1(a_i,B+z),\\
+    q_\star(\rho,u,z)
+    &=
+    \varepsilon_B\rho k_1(B,u)
+    +(1-\varepsilon_B\rho)k_1(B,B+z),
+\end{align*}
+and denote the corresponding dual function by \(D_{\rho,u,z}\).
+
+For every fixed \(C>0\) and integer \(j\ge0\),
+\eqref{eq:nonmon-eps-rate} implies
+\begin{equation}
+\label{eq:nonmon-cross-cluster}
+    B^j\frac{\exp\{-(B-C)^2/2\}}{\varepsilon_B}\longrightarrow0.
+\end{equation}
+Indeed, the logarithm of the left side is
+\(-(\frac12-\alpha)B^2+O(B)+o(B^2)\). Since every derivative of a Gaussian
+kernel is the kernel times a polynomial,
+\eqref{eq:nonmon-cross-cluster} controls all parameter and spatial
+derivatives of the cross-cluster terms below.
+
+Set \(\lambda_i=w_{i,B}/q_i\) and
+\(\lambda_\star=w_{\star,B}/q_\star\). Uniformly for
+\((\rho,u,z)\) near \((1,0,0)\),
+\begin{align}
+    \lambda_i&\to0
+      &&\text{in \(C^1\), }i<r,\label{eq:nonmon-lambda-small}\\
+    \lambda_r&\to\frac{1}{\rho k_1(0,u)}
+      &&\text{in \(C^1\)},\label{eq:nonmon-lambda-zero}\\
+    \lambda_\star&\to\frac{1}{k_1(0,z)}
+      &&\text{in \(C^1\)}.\label{eq:nonmon-lambda-star}
+\end{align}
+For example, \(q_i\ge\varepsilon_B\rho k_1(a_i,u)\), so
+\[
+    0\le\lambda_i
+    \le
+    C\frac{w_{i,B}}{\varepsilon_Bk_1(a_i,0)}
+    \longrightarrow0.
+\]
+Differentiation introduces either a bounded local derivative or a
+cross-cluster derivative divided by \(\varepsilon_B\), which is controlled
+by \eqref{eq:nonmon-cross-cluster}. Differentiating the identity
+\(w_{r,B}=\varepsilon_B\) in the same way proves
+\eqref{eq:nonmon-lambda-zero}. Finally,
+\eqref{eq:nonmon-lambda-star} follows from
+\eqref{eq:nonmon-remote-weight} and
+\[
+    q_\star
+    =
+    (1-\varepsilon_B\rho)k_1(0,z)
+    +\varepsilon_B\rho k_1(B,u).
+\]
+
+Consider the three equations
+\[
+    F_B(\rho,u,z)
+    =
+    \begin{pmatrix}
+        D_{\rho,u,z}(u)-1\\
+        D'_{\rho,u,z}(u)\\
+        D'_{\rho,u,z}(B+z)
+    \end{pmatrix}
+    =0.
+\]
+Equations
+\eqref{eq:nonmon-cross-cluster}--\eqref{eq:nonmon-lambda-star} imply
+convergence in \(C^1\) near \((1,0,0)\) to
+\[
+    F_\infty(\rho,u,z)
+    =
+    \begin{pmatrix}
+        \rho^{-1}-1\\
+        -u/\rho\\
+        -z
+    \end{pmatrix}.
+\]
+Since \(F_\infty(1,0,0)=0\) and
+\(DF_\infty(1,0,0)=-I_3\), there is a solution
+\[
+    \rho_B\to1,\qquad u_B\to0,\qquad z_B\to0.
+\]
+Put
+\[
+    \pi_B=\varepsilon_B\rho_B,
+    \qquad
+    v_B=B+z_B,
+    \qquad
+    G_B=\pi_B\delta_{u_B}+(1-\pi_B)\delta_{v_B}.
+\]
+For all large \(B\), \(0<\pi_B<1\), and construction gives
+\[
+    D_B(u_B)=1,\qquad D_B'(u_B)=D_B'(v_B)=0.
+\]
+The second contact height is automatic: by
+\eqref{eq:nonmon-dual-average},
+\[
+    1=\pi_BD_B(u_B)+(1-\pi_B)D_B(v_B),
+\]
+so \(D_B(v_B)=1\).
+
+It remains to exclude other contacts. At the solution,
+\[
+    \lambda_r\to1,\qquad
+    \sum_{i<r}\lambda_i\to0,\qquad
+    \lambda_\star\to1.
+\]
+Consequently,
+\[
+    D_B(y)\to k_1(0,y)
+    \quad\text{in \(C^2\) on fixed compact sets},
+\]
+and
+\[
+    D_B(B+s)\to k_1(0,s)
+    \quad\text{in \(C^2\) on fixed compact \(s\)-sets}.
+\]
+Choose \(0<\delta<1\). The limiting Gaussian is strictly concave on
+\([-\delta,\delta]\), so \(u_B\) is the unique contact there. Uniform
+convergence gives a strict gap below one on
+\([-R,R]\setminus(-\delta,\delta)\). The translated argument shows that
+\(v_B\) is the only contact in \([B-R,B+R]\). Finally choose \(R\) so large
+that \(3e^{-R^2/2}<1\). Outside these intervals,
+\[
+    D_B(y)
+    \le
+    (1+o(1))k_1(0,y)
+    +(1+o(1))k_1(B,y)+o(1)
+    \le2e^{-R^2/2}+o(1)<1.
+\]
+Thus \(G_B\) satisfies \eqref{eq:nonmon-kkt}, with equality exactly at its
+two atoms.
+
+The two kernel columns are linearly independent because the rows
+corresponding to \(0\) and \(B\) have determinant
+\[
+\begin{aligned}
+    &\det
+    \begin{pmatrix}
+        k_1(0,u_B)&k_1(0,v_B)\\
+        k_1(B,u_B)&k_1(B,v_B)
+    \end{pmatrix}\\
+    &\qquad
+    =
+    k_1(0,v_B)k_1(B,u_B)
+    \left\{e^{B(v_B-u_B)}-1\right\}>0.
+\end{aligned}
+\]
+The NPMLE is therefore unique.
+\end{proof}
+
+We now choose the high-variance fitted masses so that the induced empirical
+weights satisfy the two-cluster lemma at variance one.
+\begin{proof}[Proof of Proposition~\ref{prop:full-support-nonmonotonicity}]
+Rescaling the observations and mixing locations by \(S^{-1/2}\) reduces the
+claim to \(S=1\) and \(T=\tau>1\). Put \(r=m-1\), and apply
+Lemma~\ref{lem:nonmon-remote-certificate} at variance \(\tau\). Thus
+\[
+    x_1=a_1<\cdots<x_r=a_r=0<x_m=B
+\]
+support a certificate
+\[
+    C_B(y)=\sum_{i=1}^mc_i(B)k_\tau(x_i,y)\le1
+\]
+with exactly \(m\) contacts, the last of which satisfies
+\(\theta_m(B)=B+o(1)\). Let \(K_B\) be the contact matrix
+\eqref{eq:nonmon-contact-matrix}, and set
+\[
+    M_B=\operatorname{diag}\{c_1(B),\ldots,c_m(B)\}K_B.
+\]
+
+Choose the high-variance NPMLE masses
+\[
+    \eta_B=e^{-B^2/\tau},
+    \qquad
+    p_j^{(B)}=\frac{\eta_B}{r}\quad(j\le r),
+    \qquad
+    p_m^{(B)}=1-\eta_B,
+\]
+and define the empirical weights \(w^{(B)}=M_Bp^{(B)}\).
+Lemma~\ref{lem:nonmon-inverse-kkt} gives a unique \(m\)-atom NPMLE at
+variance \(\tau\).
+
+For \(i\le r\), write
+\[
+    q_i^{(B)}
+    =
+    \sum_{j=1}^mp_j^{(B)}k_\tau(a_i,\theta_j(B)).
+\]
+Since the first \(r\) masses sum to \(\eta_B\),
+\[
+    q_i^{(B)}
+    =
+    (1-\eta_B)k_\tau(a_i,\theta_m(B))+O(\eta_B).
+\]
+Because \(a_i\) is fixed and \(\theta_m(B)=B+o(1)\),
+\[
+    \frac{\eta_B}{k_\tau(a_i,\theta_m(B))}
+    =
+    \exp\left\{-\frac{B^2}{2\tau}+O(B)+o(B)\right\}
+    \longrightarrow0.
+\]
+It follows that
+\begin{equation}
+\label{eq:nonmon-q-dominance}
+    q_i^{(B)}
+    =
+    \{1+o(1)\}k_\tau(a_i,\theta_m(B)).
+\end{equation}
+Put \(\varepsilon_B=w_r^{(B)}=c_r(B)q_r^{(B)}\). Since
+\(c_r(B)\to c_r^0>0\),
+\[
+    \log\varepsilon_B
+    =
+    -\frac{B^2}{2\tau}+o(B^2).
+\]
+Thus \eqref{eq:nonmon-eps-rate} holds with
+\(\alpha=1/(2\tau)<1/2\). For \(i<r\),
+\begin{align*}
+    \frac{w_i^{(B)}}{\varepsilon_Bk_1(a_i,0)}
+    &=
+    \{1+o(1)\}\frac{c_i^0}{c_r^0}
+    \frac{k_\tau(a_i,\theta_m(B))}
+         {k_\tau(0,\theta_m(B))k_1(a_i,0)}\\
+    &=
+    \{1+o(1)\}\frac{c_i^0}{c_r^0}
+    \exp\left\{
+        \frac{a_i\theta_m(B)}{\tau}
+        +\frac{a_i^2}{2}\left(1-\frac1\tau\right)
+    \right\}
+    \longrightarrow0,
+\end{align*}
+because \(a_i<0\) and \(\theta_m(B)\to\infty\).
+Lemma~\ref{lem:nonmon-two-cluster} now gives a unique two-atom NPMLE at
+variance one for all sufficiently large \(B\).
+
+It remains to replace the weights by integer multiplicities. The matrix
+\(M_B\) is invertible and satisfies
+\(\boldsymbol1^{\mathsf T}M_B=\boldsymbol1^{\mathsf T}\). Hence
+\(M_B\Delta_m^\circ\) is relatively open in the affine probability
+hyperplane and contains \(w^{(B)}\). Along a sequence \(B_N\to\infty\),
+choose a rational vector
+\[
+    \widetilde w^{(N)}
+    \in M_{B_N}\Delta_m^\circ\cap\mathbb Q^m
+\]
+so close to \(w^{(B_N)}\) that
+\[
+    \max_i
+    \left|
+       \frac{\widetilde w_i^{(N)}}{w_i^{(B_N)}}-1
+    \right|\longrightarrow0.
+\]
+Then
+\(\widetilde p^{(N)}=M_{B_N}^{-1}\widetilde w^{(N)}\) lies in
+\(\Delta_m^\circ\), so the same certificate gives a unique \(m\)-atom NPMLE
+at variance \(\tau\). The relative approximation preserves
+\eqref{eq:nonmon-eps-rate} and \eqref{eq:nonmon-old-negligible}, so the
+variance-one NPMLE still has two atoms. Expressing the coordinates of one
+such rational vector over a common denominator gives an ordinary sample with
+exactly \(m\) distinct values and positive integer multiplicities. Rescaling
+by \(\sqrt S\) completes the construction.
+\end{proof}

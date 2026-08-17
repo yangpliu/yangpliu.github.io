@@ -1,0 +1,130 @@
+For \(d_n\ge3\), let
+\begin{equation}
+\label{eq:exact-support-buffer}
+ \mathcal B_n(C,J,\eta)
+ =
+ \left\{
+ \max_i\xi_{n,i}^\star\le C,\quad
+ \#\{i:\xi_{n,i}^\star>-\eta\}\le J,\quad
+ \min_i|\xi_{n,i}^\star|>\eta
+ \right\}.
+\end{equation}
+\begin{proof}[Proof of Theorem~\ref{thm:main-support-law}]
+First let \(d=2\), and put
+\(\xi_{n,i}=|Z_i|^2/2-\log n\). For every fixed \(\eta>0\),
+Proposition~\ref{prop:fixed-dimensional-edge-sandwich} gives
+\[
+ \#\{i:\xi_{n,i}>x_\lambda+\eta\}
+ \le \widehat K_n-1
+ \le \#\{i:\xi_{n,i}>x_\lambda-\eta\},
+\]
+apart from an event whose limiting probability is \(O(\eta)\). The extremal
+process of the \(\xi_{n,i}\)'s converges to a Poisson process with intensity
+\(e^{-x}\,dx\). Letting \(n\to\infty\) and then \(\eta\downarrow0\) gives
+\[
+ \widehat K_n-1\Rightarrow\operatorname{Pois}(e^{-x_\lambda}).
+\]
+Taking the probability of zero gives
+\(\Pbb\{\widehat K_n=1\}\to Q_2(\lambda)\).
+Proposition~\ref{prop:fixed-dimensional-edge-sandwich} also shows that the
+NPMLE is unique with probability tending to one.
+
+Now suppose \(d_n\ge3\) and \(s_n^\star\to s\). We first connect support
+points to radial exceedances. For every fixed \(C,J<\infty\) and \(\eta>0\),
+\begin{equation}
+\label{eq:universal-edge-count-sandwich}
+ \#\{i:\xi_{n,i}^\star>\eta\}
+ \le \widehat K_n-1
+ \le \#\{i:\xi_{n,i}^\star>-\eta\}
+\end{equation}
+on \(\mathcal B_n(C,J,\eta)\), apart from an event whose probability tends to
+zero. To verify this uniformly, argue along subsequences. If \(d_n\) is
+bounded, pass to a further subsequence on which \(d_n=d\ge3\) is fixed.
+Lemma~\ref{lem:fixed-d-normalization-bridge} converts the exact excess and
+threshold into their fixed-dimensional versions, and
+Proposition~\ref{prop:fixed-dimensional-edge-sandwich} gives the claim. If
+\(d_n\to\infty\), pass to a further subsequence on which either
+\(d_n\log n=o(n^2)\) or \(d_n\log n/n^2\) is bounded below. The exact support
+identity follows respectively from
+Proposition~\ref{prop:buffered-support-below-simplex} or
+Corollary~\ref{cor:random-buffered-simplex-support}. These alternatives cover
+every subsequence and prove \eqref{eq:universal-edge-count-sandwich}.  They
+also show that, on \(\mathcal B_n(C,J,\eta)\), the NPMLE is unique apart from
+an event whose probability tends to zero.
+
+The centered radial exceedance count satisfies
+\begin{equation}
+\label{eq:exact-radial-exceedance-count}
+ \#\{i:\xi_{n,i}^\star>0\}
+ \ \Rightarrow\ \operatorname{Pois}(e^{-s}).
+\end{equation}
+For bounded \(d_n\), this follows from Lemmas
+\ref{lem:radial-gamma-extremes} and
+\ref{lem:fixed-d-normalization-bridge}. If \(d_n\to\infty\) and
+\(d_n\log n=o(n^2)\), Proposition~\ref{prop:gamma-max} gives the uncentered
+point-process limit. Lemmas~\ref{lem:centered-radial-max} and
+\ref{lem:centered-radial-max-high-d} compare the centered and uncentered
+radial energies uniformly over the sample. They therefore transfer counts at
+thresholds separated from zero by a fixed amount; letting the separation
+decrease proves \eqref{eq:exact-radial-exceedance-count}. In the complementary
+range, the count assertion is part of
+Proposition~\ref{prop:direct-centered-gamma-max}.
+
+For fixed \(\eta>0\), the expected number of excesses in
+\([-\eta,\eta]\) tends to
+\[
+ e^{-s}(e^\eta-e^{-\eta})=O_s(\eta).
+\]
+The radial point-process limits used in
+\eqref{eq:exact-radial-exceedance-count} also make the maximum excess and
+the number of excesses above \(-\eta\) tight. We may therefore choose
+\(C,J\) so that
+\(\mathcal B_n(C,J,\eta)\) fails, apart from an excess in
+\([-\eta,\eta]\), with arbitrarily small probability. The sandwich
+\eqref{eq:universal-edge-count-sandwich}, followed by \(n\to\infty\),
+\(C,J\to\infty\), and \(\eta\downarrow0\), gives
+\[
+ \widehat K_n-1\Rightarrow\operatorname{Pois}(e^{-s}).
+\]
+The uniqueness conclusions in
+Proposition~\ref{prop:fixed-dimensional-edge-sandwich},
+Proposition~\ref{prop:buffered-support-below-simplex}, and
+Corollary~\ref{cor:random-buffered-simplex-support}, together with the
+preceding buffer estimate, show that the probability of nonuniqueness tends
+to zero.
+Again, the probability of zero gives the one-atom limit.
+
+It remains to prove the off-critical tightness assertions in
+Theorem~\ref{thm:main-support-law}. In dimension two, pass
+along subsequences on which \(\lambda_n\) converges in
+\((0,\infty]\). A finite limit is covered above. If
+\(\lambda_n\to\infty\), monotonicity compares the one-atom event with every
+fixed \(\lambda_0\); its limiting probability is
+\(Q_2(\lambda_0)\uparrow1\).  For \(d_n\ge3\), any subsequence on which
+\(s_n^\star\) is bounded below has a further subsequence on which
+\(s_n^\star\) converges in \(\mathbb R\) or tends to \(+\infty\).
+The first case is covered by the Poisson limit. In the second, monotonicity
+and comparison with a fixed \(s_0\), followed by \(s_0\to\infty\), show that
+\(\widehat K_n=1\) with probability tending to one.
+\end{proof}
+
+Finally, monotonicity converts the one-atom limits into the samplewise
+critical-defect laws stated in the introduction.  In dimension two, the map
+\[
+ c_{2,n}(\eps)=\frac{\rho_n^2\eps}{2(1-\eps)}
+\]
+is continuous and strictly increasing. Hence, for every \(\lambda>0\),
+\[
+ \Pbb\{c_{2,n}(\eps_*(Z_{1:n}))\le\lambda\}
+ =\Pbb\{E_n^{(1)}(\eps_n(\lambda))\}
+ \longrightarrow Q_2(\lambda),
+\]
+where \(\eps_n(\lambda)=c_{2,n}^{-1}(\lambda)\). For \(d_n\ge3\), use
+instead the critical coordinate
+\[
+ c_{\ge3,n}(\eps)
+ =\frac{R_n^\star/[\sigma_n^2(1-\eps)]-b_n}{a_n}
+\]
+is also continuous and strictly increasing.  Evaluating the one-atom limit
+at \(c_{\ge3,n}(\eps)=s\) gives
+\(\Pbb\{S_{*,n}\le s\}\to\exp\{-e^{-s}\}\).

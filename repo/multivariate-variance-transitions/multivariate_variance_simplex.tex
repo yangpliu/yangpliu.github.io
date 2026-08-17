@@ -1,0 +1,837 @@
+\subsection{Entropy reduction above the sparse-edge range}
+\label{sec:explicit-regime}
+
+The spatial truncation argument is no longer efficient once the dimension is
+much larger than \((\log n)^3\). We use the entropy dual under
+\begin{equation}
+\label{eq:entropy-regime}
+  \frac{d_n\{\log(d_n/L_n)\}^2}{L_n^3}\longrightarrow\infty,
+  \qquad
+  d_nL_n=o(n^2).
+\end{equation}
+This range includes
+\(d_n=\lfloor(\log n)^4\rfloor\) and \(d_n\asymp n\). The entropy dual
+\eqref{eq:entropy-dual}
+provides a different route: away from the vertices of the probability
+simplex, entropy beats the quadratic likelihood gain by a quantitative
+margin; near a vertex, the corresponding radial observation controls the
+optimization.
+
+\subsubsection{Deterministic entropy inequalities}
+
+We first record the entropy estimate used to separate the diffuse and
+near-vertex regions of the simplex. Write \(H(p)=-\sum_i p_i\log p_i\), so that
+\(K(p\Vert \mathbf u_n)=L_n-H(p)\), and let
+\[
+  h_{\rm bin}(y)=-y\log y-(1-y)\log(1-y)
+\]
+denote binary entropy, with the usual continuous values at zero and one.
+
+\begin{lemma}
+\label{lem:simplex-entropy}
+There are universal constants \(c_0>0\) and \(n_0<\infty\) such that, for
+all \(n\ge n_0\) and \(p\in\Delta_n\),
+\begin{equation}
+\label{eq:entropy-collision}
+  K(p\Vert \mathbf u_n)
+  \ge
+  \frac{n-1}{n-2}\log(n-1)|p-\mathbf u_n|_2^2
+  \ge
+  L_n|p-\mathbf u_n|_2^2.
+\end{equation}
+Moreover, if
+\(\max_i p_i\le1-L_n^{-2}\), then
+\begin{equation}
+\label{eq:entropy-stability}
+  K(p\Vert \mathbf u_n)-L_n|p-\mathbf u_n|_2^2
+  \ge
+  \frac{c_0}{L_n}|p-\mathbf u_n|_1^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+  \mathfrak c_n=\frac{n-1}{n-2}\log(n-1),
+  \qquad \beta_n=2\mathfrak c_n,
+\]
+and first consider
+\[
+  G_n(p)=K(p\Vert \mathbf u_n)-\mathfrak c_n|p-\mathbf u_n|_2^2.
+\]
+We identify the global minima of \(G_n\). A minimum cannot lie on the
+boundary of the simplex: if \(p_j=0<p_i\), transferring mass \(t\) from
+coordinate \(i\) to coordinate \(j\) changes the entropy part by
+\(t\log t+O(t)\), whereas the quadratic part changes by \(O(t)\). The
+total change is therefore negative for all sufficiently small \(t>0\).
+
+At an interior minimum, the Lagrange equations are
+\begin{equation}
+\label{eq:potts-stationarity}
+  \log p_i-\beta_np_i=\text{constant}.
+\end{equation}
+The function \(x\mapsto\log x-\beta_nx\) increases up to
+\(1/\beta_n\) and decreases thereafter, so the coordinates of a stationary
+point take at most two values. If these values are \(a>b\), then
+\(b<1/\beta_n<a\). Moreover, the larger value has multiplicity one:
+if two coordinates were equal to \(a\), the second variation in the
+direction that transfers mass between them would be
+\(2(1/a-\beta_n)<0\). Thus every nonuniform local minimum has the form
+\[
+  p(a)=\left(a,\frac{1-a}{n-1},\ldots,
+                  \frac{1-a}{n-1}\right),
+  \qquad \frac1n<a<1.
+\]
+
+Put \(x=(n-1)a/(1-a)\). Direct differentiation gives
+\[
+  \frac{d}{da}G_n(p(a))
+  =g_n(x),
+  \qquad
+  g_n(x)=\log x-\beta_n\frac{x-1}{x+n-1}.
+\]
+The three zeros
+\[
+  x=1,\qquad x=n-1,\qquad x=(n-1)^2
+\]
+are immediate from the definition of \(\beta_n\). They are the only
+zeros: indeed,
+\[
+  g_n'(x)=\frac1x-\frac{n\beta_n}{(x+n-1)^2}
+\]
+has at most two zeros. Also \(g_n'(1)>0\) and
+\(g_n'((n-1)^2)>0\), because \(\beta_n<n\). For \(n=3\) the second
+inequality is immediate; for \(n\ge4\) it follows from
+\(\log m<m/2-1/(2m)\), \(m=n-1\): this holds at \(m=3\), and the
+derivative of the right side minus the left side is
+\((m-1)^2/(2m^2)>0\). Hence \(g_n\) is positive on \((1,n-1)\), negative on
+\((n-1,(n-1)^2)\), and positive on \(((n-1)^2,\infty)\).
+Now \(G_n(\mathbf u_n)=0\), while at \(x=(n-1)^2\),
+\[
+  p(a)=\left(\frac{n-1}{n},
+      \frac1{n(n-1)},\ldots,\frac1{n(n-1)}\right)
+  \quad\text{and}\quad G_n(p(a))=0.
+\]
+The preceding sign pattern therefore gives \(G_n(p(a))\ge0\) for every
+\(a\in[1/n,1]\). Since every global minimum of \(G_n\) is among the
+points just considered, this proves
+\(K(p\Vert\mathbf u_n)\ge \mathfrak c_n|p-\mathbf u_n|_2^2\). Finally,
+\(\mathfrak c_n\ge\log n=L_n\) for \(n\ge3\). For example, after writing
+\(m=n-1\), this is equivalent to
+\(r(m):=m\log m-(m-1)\log(m+1)\ge0\). Here \(r(2)>0\), and
+\[
+  r'(m)=\log\frac{m}{m+1}+\frac2{m+1}>0
+  \qquad(m\ge2),
+\]
+because \(-\log(1-t)<t/(1-t)<2t\) for
+\(t=1/(m+1)\). This proves \eqref{eq:entropy-collision}.
+
+We next prove the quantitative gap from the vertices. In the remainder of
+the proof take \(L=L_n\ge16\) and set
+\[
+  F_n(p)=K(p\Vert\mathbf u_n)-L|p-\mathbf u_n|_2^2,
+  \qquad T(p)=|p-\mathbf u_n|_1.
+\]
+We shall prove
+\begin{equation}
+\label{eq:entropy-stability-explicit}
+  F_n(p)\ge\frac1{32L}T(p)^2
+  \qquad\text{if}\qquad
+  \max_i p_i\le1-L^{-2}.
+\end{equation}
+
+We first dispose of diffuse vectors. The elementary scalar inequality
+\[
+  x\log x-x+1\ge\frac{(x-1)^2}{2(x+1)},
+  \qquad x\ge0,
+\]
+follows by differentiation. Applied coordinatewise, it gives
+\[
+  K(p\Vert\mathbf u_n)\ge\frac12 A(p),
+  \qquad
+  A(p)=\sum_i\frac{(p_i-1/n)^2}{p_i+1/n}.
+\]
+If \(\max_i p_i\le(8L)^{-1}\), then
+\(p_i+1/n\le(4L)^{-1}\) for all \(i\), once \(L\ge16\). Consequently,
+\[
+  L|p-\mathbf u_n|_2^2\le\frac14A(p),
+  \qquad
+  T(p)^2\le A(p)\sum_i(p_i+1/n)=2A(p),
+\]
+and hence \(F_n(p)\ge T(p)^2/8\), which is stronger than
+\eqref{eq:entropy-stability-explicit}.
+
+It remains to consider \(m=\max_i p_i\ge(8L)^{-1}\). Relabel so that
+\(p_1=m\), put \(y=1-m\), and write
+\[
+  p=(m,yq_1,\ldots,yq_{n-1}),
+  \qquad q\in\Delta_{n-1}.
+\]
+Let \(\bar p_m=(m,y/(n-1),\ldots,y/(n-1))\), and define
+\[
+  f_n(m)=F_n(\bar p_m),
+  \qquad t_0=|\bar p_m-\mathbf u_n|_1=2(m-1/n).
+\]
+The entropy chain rule and the orthogonal decomposition of the squared
+Euclidean distance give the exact identity
+\begin{equation}
+\label{eq:largest-coordinate-decomposition}
+  F_n(p)
+  =f_n(m)+y\left\{
+     K(q\Vert\mathbf u_{n-1})-Ly|q-\mathbf u_{n-1}|_2^2
+   \right\}.
+\end{equation}
+The first part of the lemma in dimension \(n-1\) gives
+\[
+  K(q\Vert\mathbf u_{n-1})\ge C_{n-1}|q-\mathbf u_{n-1}|_2^2,
+  \qquad
+  C_{n-1}=\frac{n-2}{n-3}\log(n-2)\ge L.
+\]
+The last inequality holds for \(n\ge4\): with \(x=n-2\), it is equivalent
+to \(x\log x\ge(x-1)\log(x+2)\); the derivative of the difference is
+\(\log(1-t)+3t/2\), where \(t=2/(x+2)\in(0,1/2]\). This derivative is
+nonnegative because \(-\log(1-t)/t\) is increasing and its value at
+\(t=1/2\) is \(2\log2<3/2\).
+Pinsker's inequality then yields
+\begin{equation}
+\label{eq:conditional-tail-stability}
+  K(q\Vert\mathbf u_{n-1})-Ly|q-\mathbf u_{n-1}|_2^2
+  \ge
+  \left(1-\frac{Ly}{C_{n-1}}\right)K(q\Vert\mathbf u_{n-1})
+  \ge\frac m2|q-\mathbf u_{n-1}|_1^2.
+\end{equation}
+Here Pinsker's inequality with natural logarithms follows by grouping the
+positive and negative coordinate deviations and applying the binary bound
+whose second derivative is at least four.
+
+It remains only to bound \(f_n\). Put
+\[
+  x=\frac{(n-1)m}{1-m},
+  \qquad
+  \widetilde g_n(x)=\log x-2L\frac{x-1}{x+n-1}.
+\]
+Then \(f_n'(m)=\widetilde g_n(x)\), while
+\[
+  \widetilde g_n'(x)=\frac1x-\frac{2nL}{(x+n-1)^2}
+\]
+has at most two zeros. Thus \(\widetilde g_n\) has at most three zeros on
+\((0,\infty)\), one of which is \(x=1\). Moreover,
+\(\widetilde g_n'(1)=1-2L/n>0\). At the left endpoint
+\(m=(8L)^{-1}\), we have \(x_0=(n-1)/(8L-1)\) and, since
+\[
+  2L\frac{x_0-1}{x_0+n-1}=\frac{n-8L}{4(n-1)}<\frac14,
+\]
+\[
+  \widetilde g_n(x_0)
+  >L-\log(16L)-\frac14>0.
+\]
+At the right endpoint
+\(M=1-L^{-2}\), where \(x=(n-1)(L^2-1)\),
+\begin{align*}
+  \widetilde g_n(x)
+  &=-L+2\log L+\log(1-1/n)+\log(1-L^{-2})
+       +\frac{2n}{(n-1)L}\\
+  &\le-L+2\log L+\frac4L<0.
+\end{align*}
+Thus the derivative of \(f_n\) is positive at the left endpoint and
+negative at the right endpoint. If \(f_n\) had an interior local minimum,
+its derivative would have to cross first from positive to negative, then
+from negative to positive at that minimum, and finally back to negative
+before \(M\). Together with the zero at \(x=1\), this would give at least
+four zeros of \(\widetilde g_n\), a contradiction. Therefore the minimum
+of \(f_n\) on this interval occurs at an endpoint.
+
+At \(m=(8L)^{-1}\), using
+\(-(1-m)\log(1-m)\le m\) and
+\(|\bar p_m-\mathbf u_n|_2^2\le2m^2\), we obtain
+\[
+  f_n(m)
+  \ge m\{L-\log(8L)-1\}-2Lm^2
+  =m\{L-\log(8L)-5/4\}
+  \ge\frac1{16}.
+\]
+At \(m=M\), put \(y=L^{-2}\). Since
+\(|\bar p_m-\mathbf u_n|_2^2\le m^2\) and
+\(h_{\rm bin}(y)\le y\log(e/y)\),
+\begin{align*}
+  f_n(M)
+  &\ge Ly(1-y)-h_{\rm bin}(y)\\
+  &\ge \frac1L-\frac1{L^3}-\frac{1+2\log L}{L^2}
+  \ge\frac1{2L}.
+\end{align*}
+All numerical inequalities in the last three displays hold for \(L\ge16\).
+It follows that, throughout \([(8L)^{-1},M]\),
+\begin{equation}
+\label{eq:scalar-endpoint-stability}
+  f_n(m)\ge\frac1{2L}\ge\frac1{8L}t_0^2.
+\end{equation}
+
+Combining \eqref{eq:largest-coordinate-decomposition},
+\eqref{eq:conditional-tail-stability}, and
+\eqref{eq:scalar-endpoint-stability}, and using
+\(m\ge(8L)^{-1}\), gives
+\[
+  F_n(p)
+  \ge\frac{t_0^2}{8L}
+      +\frac{y^2}{16L}|q-\mathbf u_{n-1}|_1^2.
+\]
+Finally,
+\(T(p)\le t_0+y|q-\mathbf u_{n-1}|_1\), so the last display implies
+\eqref{eq:entropy-stability-explicit}. Thus
+\eqref{eq:entropy-stability} holds with \(c_0=1/32\) and, for example,
+\(n_0=\lceil e^{16}\rceil\).
+\end{proof}
+
+\begin{remark}
+The sharp constant in \eqref{eq:entropy-collision} is the mean-field Potts
+transition coefficient. The proof also identifies all equality cases:
+the uniform distribution and the \(n\) permutations of
+\(( (n-1)/n,1/[n(n-1)],\ldots,1/[n(n-1)] )\).
+\end{remark}
+
+The next proposition converts the entropy estimate into a deterministic
+one-atom criterion. It is tailored to a radial gap much smaller than the
+largest off-diagonal inner product.
+
+\begin{proposition}
+\label{prop:deterministic-gram}
+Let \(q_1,\ldots,q_n\in\R^d\) satisfy \(\sum_iq_i=0\). Put
+\[
+  \mu_n^{\rm off}=\max_{i\ne j}|q_i\cdot q_j|.
+\]
+Suppose, for some \(0<g_n\le1\),
+\begin{equation}
+\label{eq:deterministic-gram-assumptions}
+  \max_i\frac{|q_i|^2}{2}\le L_n-g_n,
+  \qquad
+  \mu_n^{\rm off}=o(L_n^{-1}),
+  \qquad
+  ng_n\longrightarrow\infty.
+\end{equation}
+Then, for all sufficiently large \(n\),
+\[
+  \sup_{w\in\R^d}B_n(w)\le1.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix \(p\in\Delta_n\). Since \(\sum_iq_i=0\), writing
+\(r=p-\mathbf u_n\) gives
+\[
+  \frac12\left|\sum_i p_iq_i\right|^2
+  =
+  \frac12\left|\sum_i r_iq_i\right|^2
+  \le
+  L_n|r|_2^2+\frac{\mu_n^{\rm off}}{2}|r|_1^2.
+\]
+If \(\max_i p_i\le1-L_n^{-2}\), Lemma~\ref{lem:simplex-entropy} and
+\(\mu_n^{\rm off}=o(L_n^{-1})\) show that this is at most \(K(p\Vert \mathbf u_n)\).
+
+It remains to consider a distribution with
+\(\max_i p_i=1-y>1-L_n^{-2}\). Let \(i\) be its largest coordinate and
+write
+\[
+  \sum_jp_jq_j=(1-y)q_i+y\bar q,
+\]
+where \(\bar q\) is a convex combination of the remaining \(q_j\)'s.
+Convexity of the squared norm and
+\eqref{eq:deterministic-gram-assumptions} give
+\[
+  \frac{|\bar q|^2}{2}\le L_n-g_n,
+  \qquad
+  q_i\cdot\bar q\le \mu_n^{\rm off}.
+\]
+Consequently,
+\begin{equation}
+\label{eq:near-vertex-energy}
+  \frac12\left|\sum_jp_jq_j\right|^2
+  \le
+  (L_n-g_n)\{(1-y)^2+y^2\}
+  +\mu_n^{\rm off}y(1-y).
+\end{equation}
+On the other hand,
+\[
+  H(p)\le h_{\rm bin}(y)+y\log(n-1)\le h_{\rm bin}(y)+yL_n.
+\]
+Subtracting \eqref{eq:near-vertex-energy} from
+\(K(p\Vert \mathbf u_n)=L_n-H(p)\), and using \(y\le L_n^{-2}\), gives
+\begin{align*}
+  K(p\Vert \mathbf u_n)
+  -\frac12\left|\sum_jp_jq_j\right|^2
+  &\ge
+  g_n+\{2(L_n-g_n)-\mu_n^{\rm off}\}y(1-y)-h_{\rm bin}(y)-yL_n\\
+  &\ge
+  g_n+y\{L_n-4+\log y\}
+\end{align*}
+for all large \(n\), because \(h_{\rm bin}(y)\le y\log(e/y)\).
+The minimum of \(y\mapsto y(L_n-4+\log y)\) over \(y\ge0\) is
+\(-e^3/n\). The last display is therefore positive by \(ng_n\to\infty\).
+The entropy dual in Lemma~\ref{lem:entropy-dual} completes the proof.
+\end{proof}
+
+In very high dimension, the absolute off-diagonal bound in
+Proposition~\ref{prop:deterministic-gram} discards the regular-simplex
+geometry created by centering.  The next criterion retains it.  The
+quantity \(C_n\) measures the deviation of
+each row of the Gram matrix from the identity
+\(q_i\cdot\{(n-1)^{-1}\sum_{j\ne i}q_j\}=-|q_i|^2/(n-1)\).
+
+\begin{proposition}
+\label{prop:local-simplex-criterion}
+Let \(q_1,\ldots,q_n\in\mathbb R^d\) satisfy \(\sum_iq_i=0\), and put
+\[
+ G_n=(q_i\cdot q_j)_{i,j\le n},
+ \qquad
+ \mu_n^{\rm off}=\max_{i\ne j}|q_i\cdot q_j|,
+ \qquad
+ C_n=\max_{i\ne j}
+ \left|q_i\cdot q_j+\frac{|q_i|^2}{n-1}\right|.
+\]
+Suppose, for some \(g_n>0\), that
+\[
+ \max_i\frac{|q_i|^2}{2}\le R_n^\star-g_n,
+ \qquad
+ \mu_n^{\rm off}=o(L_n^{-1}),
+ \qquad
+ \|G_n\|_{\rm op}=O(L_n),
+ \qquad
+ C_n=o(g_nL_n^2).
+\]
+Then, for all sufficiently large \(n\),
+\[
+ \sup_{w\in\mathbb R^d}B_n(w)\le1.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix \(p\in\Delta_n\).  If
+\(\max_i p_i\le1-L_n^{-2}\), the argument away from the vertices in
+Proposition~\ref{prop:deterministic-gram} applies: since
+\(R_n^\star<L_n\), Lemma~\ref{lem:simplex-entropy} and
+\(\mu_n^{\rm off}=o(L_n^{-1})\) give
+\[
+ \frac12\left|\sum_i p_iq_i\right|^2\le K(p\Vert \mathbf u_n).
+\]
+
+Suppose instead that \(p_i=1-y>1-L_n^{-2}\).  Write
+\(p_j=yr_j\) for \(j\ne i\), where
+\(r=(r_j)_{j\ne i}\in\Delta_{n-1}\), and let \(\mathbf u_{n-1}\) denote the
+uniform distribution on these \(n-1\) coordinates.  Set
+\[
+ c_y=1-\frac{ny}{n-1},
+ \qquad
+ v_r=\sum_{j\ne i}\left(r_j-\frac1{n-1}\right)q_j.
+\]
+Since \(\sum_{j\ne i}q_j=-q_i\),
+\[
+ \sum_jp_jq_j=c_yq_i+yv_r.
+\]
+The relative entropy separates as
+\[
+ K(p\Vert \mathbf u_n)
+ =
+ k_n(y)+yK(r\Vert \mathbf u_{n-1}),
+\]
+where
+\[
+ k_n(y)
+ =(1-y)\log\{n(1-y)\}
+ +y\log\frac{ny}{n-1}.
+\]
+Apply the sharp inequality \eqref{eq:entropy-collision} to the vector
+\((1-y,y/(n-1),\ldots,y/(n-1))\).  Since its squared distance from
+\(\mathbf u_n\) is \((n-1)c_y^2/n\), we obtain
+\begin{equation}
+\label{eq:potts-scalar-profile}
+ k_n(y)\ge R_n^\star c_y^2.
+\end{equation}
+
+The definition of \(C_n\) gives
+\[
+ |q_i\cdot v_r|
+ =
+ \left|
+  \sum_{j\ne i}r_j
+  \left(q_i\cdot q_j+\frac{|q_i|^2}{n-1}\right)
+ \right|
+ \le C_n.
+\]
+Moreover,
+\[
+ |v_r|^2
+ \le\|G_n\|_{\rm op}|r-\mathbf u_{n-1}|_2^2
+ \le\frac{\|G_n\|_{\rm op}}{\log(n-1)}
+       K(r\Vert \mathbf u_{n-1}),
+\]
+where the last inequality is \eqref{eq:entropy-collision} with \(n-1\)
+in place of \(n\).  Because \(y\le L_n^{-2}\) and
+\(\|G_n\|_{\rm op}=O(L_n)\), it follows that
+\[
+ K(r\Vert \mathbf u_{n-1})-\frac y2|v_r|^2\ge0
+\]
+for all large \(n\).  Combining this with
+\eqref{eq:potts-scalar-profile} and
+\(|q_i|^2/2\le R_n^\star-g_n\) gives
+\begin{align*}
+ K(p\Vert \mathbf u_n)
+ -\frac12\left|\sum_jp_jq_j\right|^2
+ &\ge
+ g_nc_y^2-y|c_y|C_n\\
+ &\ge
+ g_n\{1-O(L_n^{-2})\}-\frac{C_n}{L_n^2}>0.
+\end{align*}
+The entropy dual in Lemma~\ref{lem:entropy-dual} completes the proof.
+\end{proof}
+
+The local-simplex criterion applies when \(d_nL_n/n^2\) is bounded below.
+When \(d_nL_n=o(n^2)\), the following criterion is more convenient: it
+separates diffuse probability vectors, controlled spectrally, from their
+heavy coordinates, controlled by entropy and \(\mu_n^{\rm off}\).
+
+\begin{proposition}
+\label{prop:refined-deterministic-gram}
+Let \(q_1,\ldots,q_n\in\mathbb R^d\) satisfy \(\sum_iq_i=0\), and put
+\[
+ G=(q_i\cdot q_j)_{i,j\le n},
+ \qquad
+ \upsilon_n=\frac{\|G\|_{\mathrm{op}}}{2n},
+ \qquad
+ \mu_n^{\rm off}=\max_{i\ne j}|q_i\cdot q_j|.
+\]
+Suppose \(\max_i|q_i|^2/2\le L_n-g_n\), where \(0<g_n\le1\).  Assume that
+there are deterministic \(a_n^\circ\to\infty\) and \(y_n\downarrow0\),
+with \(T_n=e^{a_n^\circ}\), such that
+\begin{equation}
+\label{eq:refined-gram-conditions}
+ a_n^\circ=o(L_n),\qquad
+ \frac{\upsilon_nT_n}{a_n^\circ}=o(1),\qquad
+ \frac{\mu_n^{\rm off}+L_nT_n/n}{a_n^\circ}=o(1),\qquad
+ \frac{L_ny_n}{a_n^\circ}\longrightarrow\infty,
+\end{equation}
+and
+\begin{equation}
+\label{eq:refined-vertex-condition}
+ e^{2L_ny_n+\mu_n^{\rm off}}=o(ng_n).
+\end{equation}
+Then, for all sufficiently large \(n\),
+\[
+ \sup_{w\in\mathbb R^d}B_n(w)\le1.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix \(p\in\Delta_n\), write \(f_i=np_i\), and let
+\(\phi(x)=x\log x-x+1\).  Then
+\[
+ K(p\Vert \mathbf u_n)=\frac1n\sum_i\phi(f_i).
+\]
+Set
+\[
+ \ell_i=f_i\wedge T_n,\qquad h_i=(f_i-T_n)_+,\qquad
+ \bar\ell=\frac1n\sum_i\ell_i.
+\]
+Since \(\sum_iq_i=0\),
+\[
+ \sum_i p_iq_i
+ =
+ \frac1n\sum_i(\ell_i-\bar\ell)q_i
+ +\frac1n\sum_i h_iq_i
+ =:v_0+v_1.
+\]
+The elementary inequality
+\[
+ (x-1)^2\le C\frac{T_n}{a_n^\circ}\phi(x),
+ \qquad 0\le x\le T_n,
+\]
+and the definition of \(\upsilon_n\) give, with
+\(K_0=n^{-1}\sum_i\phi(\ell_i)\),
+\begin{equation}
+\label{eq:light-energy}
+ \frac{|v_0|^2}{2}
+ \le C\frac{\upsilon_nT_n}{a_n^\circ}K_0=o(K_0).
+\end{equation}
+
+Put \(b_i=h_i/n\) and \(z=\sum_i b_i\).  The diagonal and off-diagonal
+parts of the Gram matrix give
+\begin{equation}
+\label{eq:heavy-energy}
+ \frac{|v_1|^2}{2}
+ \le L_n\sum_i b_i^2+\frac{\mu_n^{\rm off}}{2}z^2,
+ \qquad
+ |v_0\cdot v_1|
+ \le\left(2\mu_n^{\rm off}+\frac{2L_nT_n}{n}\right)z.
+\end{equation}
+Suppose first that \(\max_i p_i\le1-y_n\).  Uniformly for
+\(T_n\le x\le n(1-y_n)\), one-variable calculus gives
+\begin{equation}
+\label{eq:heavy-entropy-scalar}
+ \phi(x)-\phi(T_n)
+ \ge\frac{L_n}{n}(x-T_n)^2
+ +\frac{a_n^\circ}{4}(x-T_n).
+\end{equation}
+Indeed, after subtracting the right side, the derivative first increases
+and then decreases, and is positive at \(T_n\).  The minimum is therefore
+at an endpoint. At \(x_n=n(1-y_n)\), the difference between the two sides is
+\begin{align*}
+ &x_n\left\{L_ny_n+\log(1-y_n)-1-\frac{a_n^\circ}{4}\right\}\\
+ &\quad+2L_n(1-y_n)T_n-\frac{3a_n^\circ T_n}{4}
+       +T_n-\frac{L_nT_n^2}{n}.
+\end{align*}
+The first line is positive and of order \(nL_ny_n\), while the absolute
+value of the second line is \(o(nL_ny_n)\) by
+\eqref{eq:refined-gram-conditions}. Thus the upper-endpoint value is
+positive. Summing
+\eqref{eq:heavy-entropy-scalar} yields
+\[
+ K(p\Vert \mathbf u_n)-K_0
+ \ge L_n\sum_i b_i^2+\frac{a_n^\circ}{4}z.
+\]
+Equations \eqref{eq:refined-gram-conditions},
+\eqref{eq:light-energy}, and \eqref{eq:heavy-energy} now show that
+\(|v_0+v_1|^2/2\le K(p\Vert \mathbf u_n)\): indeed, \(z\le1\), and the last two
+conditions in \eqref{eq:refined-gram-conditions} make the off-diagonal and
+cross terms in \eqref{eq:heavy-energy} at most
+\(a_n^\circ z/4\), while \eqref{eq:light-energy} is at most \(K_0\).
+
+It remains to consider \(p_i=1-y>1-y_n\) for some \(i\).  If \(\bar q\)
+is the barycenter of the remaining \(q_j\)'s under their normalized
+weights, convexity gives
+\[
+ \frac12|(1-y)q_i+y\bar q|^2
+ \le(L_n-g_n)\{(1-y)^2+y^2\}+\mu_n^{\rm off}y(1-y).
+\]
+On the other hand,
+\(K(p\Vert \mathbf u_n)\ge(1-y)L_n-h_{\rm bin}(y)\). Their difference is at least
+\[
+ \frac{g_n}{2}
+ +y\{L_n-2L_ny-\mu_n^{\rm off}+\log y-1\}.
+\]
+The negative part of the second term is at most
+\(\exp\{-L_n+2L_ny_n+\mu_n^{\rm off}+1\}=o(g_n)\) by
+\eqref{eq:refined-vertex-condition}.  Thus the difference is positive.
+The entropy dual in Lemma~\ref{lem:entropy-dual} completes the proof.
+\end{proof}
+
+\subsubsection{The random Gram matrix}
+
+Under \eqref{eq:entropy-regime}, the next lemma verifies the off-diagonal and
+spectral Gram assumptions of
+Proposition~\ref{prop:refined-deterministic-gram}.
+
+\begin{lemma}
+\label{lem:random-off-diagonal}
+Suppose the first condition in \eqref{eq:entropy-regime} holds and
+\[
+ \frac{\gamma_nL_n}{\sigma_n^2b_n}\longrightarrow1.
+\]
+For
+\[
+  q_i=\frac{Z_i-\bar Z_n}{\sqrt{\gamma_n}},
+  \qquad
+  \mu_n^{\rm off}=\max_{i\ne j}|q_i\cdot q_j|,
+  \qquad
+  C_n=\max_{i\ne j}
+  \left|q_i\cdot q_j+\frac{|q_i|^2}{n-1}\right|,
+  \qquad
+  \upsilon_n=\frac{\|(q_i\cdot q_j)_{i,j\le n}\|_{\rm op}}{2n},
+\]
+one has
+\begin{equation}
+\label{eq:B-rate}
+  \mu_n^{\rm off}
+  =
+  O_{\Pbb}\left\{
+    \frac{L_n}{n}
+    +\frac{L_n^{3/2}}{\sqrt{d_n}}
+    +\frac{L_n^2}{d_n}
+  \right\},
+  \qquad
+  \upsilon_n
+  =
+  O_{\Pbb}\left(\frac{L_n}{d_n}+\frac{L_n}{n}\right).
+\end{equation}
+Moreover,
+\begin{equation}
+\label{eq:delta-entropy-regime}
+  \delta_n^\star:=\frac{\sigma_n^2a_n}{\gamma_n}
+  =
+  \sqrt{\frac{L_n}{d_n}}\{1+o(1)\}.
+\end{equation}
+In addition,
+\begin{equation}
+\label{eq:centered-row-gram-rate}
+ C_n=O_{\Pbb}\left(\frac{L_n^{3/2}}{\sqrt{d_n}}\right).
+\end{equation}
+If \(d_nL_n/n^2\) is bounded below by a positive constant, then
+\begin{equation}
+\label{eq:high-simplex-gram-rates}
+ \mu_n^{\rm off}=o_{\Pbb}(L_n^{-1}),
+ \qquad
+ \|(q_i\cdot q_j)_{i,j\le n}\|_{\rm op}=O_{\Pbb}(L_n).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Section~\ref{sec:regime-map}, with \(k_n=d_n/2\gg L_n\), gives
+\[
+  b_n\sim k_n,\qquad
+  a_n\sim\sqrt{\frac{k_n}{2L_n}},\qquad
+  \gamma_n\sim\frac{\sigma_n^2b_n}{L_n}
+  \sim\frac{d_n}{2L_n}.
+\]
+This proves \eqref{eq:delta-entropy-regime}.
+
+For the Gram bound, let \(P_n=I_n-\mathbf1\mathbf1^\top/n\). For every
+coordinate \(\ell\), the vector
+\[
+  (\widetilde Z_{1\ell},\ldots,\widetilde Z_{n\ell})
+\]
+is centered Gaussian with covariance \(P_n\), and these vectors are
+independent over \(\ell\). Hence, for \(i\ne j\),
+\[
+  \E(\widetilde Z_i\cdot\widetilde Z_j)=-\frac{d_n}{n}.
+\]
+Products of two standard Gaussian variables have uniformly bounded
+subexponential norm. Bernstein's inequality and a union bound over fewer than
+\(n^2\) pairs therefore give
+\[
+  \max_{i\ne j}
+  \left|
+    \widetilde Z_i\cdot\widetilde Z_j+\frac{d_n}{n}
+  \right|
+  =
+  O_{\Pbb}\{\sqrt{d_nL_n}+L_n\}.
+\]
+Dividing by \(\gamma_n\asymp d_n/L_n\) yields
+\[
+  \mu_n^{\rm off}
+  =
+  O_{\Pbb}\left\{
+    \frac{L_n}{n}
+    +\frac{L_n^{3/2}}{\sqrt{d_n}}
+    +\frac{L_n^2}{d_n}
+  \right\},
+\]
+as claimed.  The nonzero eigenvalues of the Gram matrix agree with those of
+\(\gamma_n^{-1}\widetilde Z^\top\widetilde Z\).  Hence the standard
+Gaussian operator-norm bound gives
+\[
+ \upsilon_n
+ \le
+ \frac{C}{\gamma_n}
+ \left(1+\sqrt{\frac{d_n}{n}}\right)^2
+ =
+ O_{\Pbb}\left(\frac{L_n}{d_n}+\frac{L_n}{n}\right).
+\]
+
+For the centered row bound, Gaussian regression gives, conditionally on
+\(\widetilde Z_i\),
+\[
+ \widetilde Z_j+\frac{\widetilde Z_i}{n-1}
+ \sim
+ \mathcal N\left(0,\frac{n-2}{n-1}I_{d_n}\right)
+ \qquad (j\ne i).
+\]
+Thus
+\[
+ \widetilde Z_i\cdot
+ \left(\widetilde Z_j+\frac{\widetilde Z_i}{n-1}\right)
+\]
+is conditionally centered Gaussian with variance at most
+\(|\widetilde Z_i|^2\).  Since
+\(\max_i|\widetilde Z_i|^2=O_{\Pbb}(d_n)\) in the present regime, a
+conditional Gaussian tail bound and a union bound over the \(n(n-1)\)
+pairs give
+\[
+ \max_{i\ne j}
+ \left|
+ \widetilde Z_i\cdot
+ \left(\widetilde Z_j+\frac{\widetilde Z_i}{n-1}\right)
+ \right|
+ =O_{\Pbb}(\sqrt{d_nL_n}).
+\]
+Division by \(\gamma_n\asymp d_n/L_n\) proves
+\eqref{eq:centered-row-gram-rate}.
+
+Finally, suppose \(d_nL_n/n^2\) is bounded below.  Since
+\[
+ \mu_n^{\rm off}\le C_n+\frac{\max_i|q_i|^2}{n-1}
+\]
+and \(\max_i|q_i|^2=O_{\Pbb}(L_n)\),
+\eqref{eq:centered-row-gram-rate} gives
+\(\mu_n^{\rm off}=o_{\Pbb}(L_n^{-1})\).  Applying the standard Gaussian
+operator-norm bound once more gives
+\[
+ \|(q_i\cdot q_j)_{i,j\le n}\|_{\rm op}
+ =
+ O_{\Pbb}\left\{\frac{(\sqrt{d_n}+\sqrt n)^2}{\gamma_n}\right\}
+ =
+ O_{\Pbb}(L_n).
+\]
+This proves \eqref{eq:high-simplex-gram-rates}.
+\end{proof}
+
+
+\subsection{Exact centering and the high-dimensional correction}
+\label{sec:full-growing-transition}
+
+The entropy reduction in this section uses \(\log n\) as the radial
+threshold. When \(d_n\asymp n^2\log n\), empirical centering and the
+regular-simplex geometry shift that threshold by an amount visible in the
+Gumbel coordinate. The exact coordinate \(s_n^\star\) in
+\eqref{eq:exact-transition-coordinate} includes both effects.
+
+The following calculation translates the exact coordinate into a critical
+variance defect and records when this finite-sample correction is visible.
+\begin{lemma}
+\label{lem:exact-critical-coordinate}
+Define
+\begin{equation}
+\label{eq:exact-critical-defect-window}
+ \eps_{c,n}^\star
+ =1-\frac{R_n^\star}{\sigma_n^2b_n},
+ \qquad
+ w_n^\star
+ =\frac{a_nR_n^\star}{\sigma_n^2b_n^2}.
+\end{equation}
+If \(x_n=(\eps_n-\eps_{c,n}^\star)/w_n^\star=O(1)\), then
+\[
+ s_n^\star=\frac{x_n}{1-a_nx_n/b_n}=x_n+o(1).
+\]
+Let
+\[
+ s_n^{\rm cen}
+ =\frac{\gamma_n\log n/\sigma_n^2-b_n}{a_n}.
+\]
+If \(s_n^\star=O(1)\), then
+\[
+ s_n^\star=s_n^{\rm cen}+o(1)
+ \quad\text{when }d_n=o(n^2\log n),
+\]
+whereas, if \(d_n/(n^2\log n)\to\tau\in(0,\infty)\),
+\begin{equation}
+\label{eq:terminal-coordinate-shift}
+ s_n^\star=s_n^{\rm cen}-\sqrt{\tau}+o(1).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The first identity follows by substituting
+\(\eps_n=\eps_{c,n}^\star+x_nw_n^\star\) into
+\(\gamma_n=(1-\eps_n)^{-1}\); Lemma~\ref{lem:gamma-hazard} gives
+\(a_n/b_n\to0\).  Also
+\[
+ s_n^{\rm cen}-s_n^\star
+ =\frac{\gamma_n(\log n-R_n^\star)}
+        {\sigma_n^2a_n}.
+\]
+Under \(s_n^\star=O(1)\), the expansion
+\(R_n^\star=\log n-n^{-1}+O(\log n/n^2)\), together with the Gamma
+asymptotics in Section~\ref{sec:regime-map}, gives
+\[
+ s_n^{\rm cen}-s_n^\star
+ =\frac{\sqrt{d_n}}{n\sqrt{\log n}}+o(1)
+\]
+in the superlogarithmic range; the error is smaller when
+\(d_n=O(\log n)\).  The two assertions follow.
+\end{proof}

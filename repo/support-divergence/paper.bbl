@@ -1,0 +1,155 @@
+\begin{thebibliography}{GGMT26}
+
+\bibitem[AGM09]{azais2009likelihood}
+Jean-Marc Aza{\"i}s, {\'E}lisabeth Gassiat, and C{\'e}cile Mercadier.
+\newblock The likelihood ratio test for general mixture models with or without
+  structural parameter.
+\newblock {\em ESAIM Probab. Stat.}, 13:301--327, 2009.
+
+\bibitem[Ano26a]{varianceMultivariateCompanion}
+Radial phase transitions for {Gaussian} mixture {NPMLE}s in fixed and growing
+  dimension, 2026.
+\newblock In preparation.
+
+\bibitem[Ano26b]{varianceD1Companion}
+Variance misspecification and the one-dimensional {Gaussian} mixture {NPMLE},
+  2026.
+\newblock In preparation.
+
+\bibitem[CW26]{ChenWu2026RegretHellinger}
+Jiafeng Chen and Yihong Wu.
+\newblock Sharp regret-{H}ellinger bounds for {Gaussian} empirical {Bayes} via
+  polynomial approximation.
+\newblock {\em arXiv preprint arXiv:2605.02070}, 2026.
+
+\bibitem[DWYZ23]{doss2020optimal}
+Natalie Doss, Yihong Wu, Pengkun Yang, and Harrison~H Zhou.
+\newblock {Optimal estimation of high-dimensional Gaussian location mixtures}.
+\newblock {\em Ann. Stat.}, 51(1):62--95, 2023.
+
+\bibitem[DZ16]{dicker2016high}
+Lee~H Dicker and Sihai~D Zhao.
+\newblock {High-dimensional classification via nonparametric empirical Bayes
+  and maximum likelihood inference}.
+\newblock {\em Biometrika}, 103(1):21--34, 2016.
+
+\bibitem[GGMT26]{GhoshGuntuboyinaMukherjeeTran2026}
+Subhroshekhar Ghosh, Adityanand Guntuboyina, Satyaki Mukherjee, and Hoang-Son
+  Tran.
+\newblock Gaussian mixtures and non-parametric likelihoods through the lens of
+  statistical mechanics.
+\newblock {\em arXiv preprint arXiv:2603.23196}, 2026.
+
+\bibitem[GvH14]{gassiatVanHandel2014}
+Elisabeth Gassiat and Ramon van Handel.
+\newblock The local geometry of finite mixtures.
+\newblock {\em Trans. Amer. Math. Soc.}, 366(2):1047--1072, 2014.
+
+\bibitem[Har85]{hartigan1985failure}
+John~A. Hartigan.
+\newblock A failure of likelihood asymptotics for normal mixtures.
+\newblock In {\em Proceedings of the Berkeley Conference in Honor of Jerzy
+  Neyman and Jack Kiefer}, volume~2, pages 807--810. Wadsworth, Belmont, CA,
+  1985.
+
+\bibitem[JZ09]{jiang2009general}
+Wenhua Jiang and Cun-Hui Zhang.
+\newblock {General maximum likelihood empirical Bayes estimation of normal
+  means}.
+\newblock {\em Ann. Stat.}, 37(4):1647--1684, 2009.
+
+\bibitem[JZ19]{jiangZhang2019rate}
+Wenhua Jiang and Cun-Hui Zhang.
+\newblock Rate of divergence of the nonparametric likelihood ratio test for
+  {Gaussian} mixtures.
+\newblock {\em Bernoulli}, 25(4B), 2019.
+
+\bibitem[KG19]{koenker2019minimalist}
+Roger Koenker and Jiaying Gu.
+\newblock {Minimalist $g$-Modeling}.
+\newblock {\em Statistical Science}, 34(2):209 -- 213, 2019.
+
+\bibitem[KM14]{koenker2014convex}
+Roger Koenker and Ivan Mizera.
+\newblock {Convex optimization, shape constraints, compound decisions, and
+  empirical Bayes rules}.
+\newblock {\em Journal of the American Statistical Association},
+  109(506):674--685, 2014.
+
+\bibitem[KW56]{kiefer1956consistency}
+Jack Kiefer and Jacob Wolfowitz.
+\newblock Consistency of the maximum likelihood estimator in the presence of
+  infinitely many incidental parameters.
+\newblock {\em Ann. Math. Stat.}, pages 887--906, 1956.
+
+\bibitem[Lin83]{lindsay1983geometryA}
+Bruce~G Lindsay.
+\newblock {The Geometry of Mixture Likelihoods: A General Theory}.
+\newblock {\em Ann. Stat.}, 11(1):86--94, 1983.
+
+\bibitem[LR93]{lindsay1993uniqueness}
+Bruce~G Lindsay and Kathryn Roeder.
+\newblock Uniqueness of estimation and identifiability in mixture models.
+\newblock {\em Canadian J. Stat.}, 21(2):139--147, 1993.
+
+\bibitem[PS25]{polyanskiySellke2025}
+Yury Polyanskiy and Mark Sellke.
+\newblock Nonparametric {MLE} for {Gaussian} location mixtures: Certified
+  computation and generic behavior.
+\newblock {\em arXiv preprint arXiv:2503.20193}, 2025.
+
+\bibitem[PW20]{polyanskiy2020self}
+Yury Polyanskiy and Yihong Wu.
+\newblock {Self-Regularizing Property of Nonparametric Maximum Likelihood
+  Estimator in Mixture Models}.
+\newblock {\em arXiv preprint arXiv:2008.08244}, 2020.
+
+\bibitem[Rob50]{robbins1950generalization}
+Herbert Robbins.
+\newblock A generalization of the method of maximum likelihood: {E}stimating a
+  mixing distribution ({A}bstract).
+\newblock {\em Annals of Mathematical Statistics}, 21(2):314--315, 1950.
+
+\bibitem[SG20]{saha2020nonparametric}
+Sujayam Saha and Adityanand Guntuboyina.
+\newblock {On the nonparametric maximum likelihood estimator for Gaussian
+  location mixture densities with application to Gaussian denoising}.
+\newblock {\em Ann. Stat.}, 48(2):738--762, 2020.
+
+\bibitem[SGS25]{soloff2024multivariate}
+Jake~A Soloff, Adityanand Guntuboyina, and Bodhisattva Sen.
+\newblock {Multivariate, heteroscedastic empirical Bayes via nonparametric
+  maximum likelihood}.
+\newblock {\em Journal of the Royal Statistical Society Series B: Statistical
+  Methodology}, 87(1):1--32, 2025.
+
+\bibitem[vdG00]{vandegeer2000empirical}
+Sara~A. van~de Geer.
+\newblock {\em Empirical Processes in {M}-Estimation}.
+\newblock Cambridge University Press, 2000.
+
+\bibitem[WS95]{wong1995probability}
+Wing~Hung Wong and Xiaotong Shen.
+\newblock Probability inequalities for likelihood ratios and convergence rates
+  of sieve {MLE}s.
+\newblock {\em Ann. Stat.}, 23(2):339--362, 1995.
+
+\bibitem[Zha09]{zhang2009generalized}
+Cun-Hui Zhang.
+\newblock Generalized maximum likelihood estimation of normal mixture
+  densities.
+\newblock {\em Statistica Sinica}, pages 1297--1318, 2009.
+
+\bibitem[ZV25]{zhangVolgushev2025surprising}
+Yan Zhang and Stanislav Volgushev.
+\newblock On a surprising behavior of the likelihood ratio test in
+  non-parametric mixture models.
+\newblock {\em arXiv preprint arXiv:2509.05610}, 2025.
+
+\bibitem[ZV26]{zhangVolgushev2026adaptivity}
+Yan Zhang and Stanislav Volgushev.
+\newblock Adaptivity of the {NPMLE} to finitely discrete mixing distributions
+  in {Gaussian}/{Poisson} mixtures.
+\newblock {\em arXiv preprint arXiv:2604.12087}, 2026.
+
+\end{thebibliography}

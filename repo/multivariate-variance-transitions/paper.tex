@@ -1,0 +1,496 @@
+\documentclass[11pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[top=1in,bottom=1.2in,left=1in,right=1in]{geometry}
+\usepackage{amssymb,amsmath,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{newtxtext,newtxmath}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=red,urlcolor=blue]{hyperref}
+\hypersetup{pdfauthor={}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{equation}{section}
+
+\newcommand{\E}{\mathbb E}
+\newcommand{\Pbb}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\cN}{\mathcal N}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\wh}{\widehat}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\Id}{\mathrm{Id}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\supp}{supp}
+
+\title{Radial Phase Transitions for Gaussian Mixture NPMLEs\\
+in Fixed and Growing Dimensions}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Can a fitted Gaussian mixture distinguish a single Gaussian population from
+latent heterogeneity? Without regularization, the support of the mixture
+nonparametric maximum likelihood estimator (NPMLE) diverges even when the data
+come from a single Gaussian component. We ask whether fitting wider
+Gaussian components regularizes this overfitting. The observations are
+i.i.d.\ spherical Gaussians with covariance $(1-\eps_n)I_d$, while the fitted
+mixture uses kernels with covariance $I_d$.
+
+In dimension two, the transition occurs when $\eps_n\log n$ is of constant
+order. The limiting profile is explicit and combines the largest point of a
+radial Poisson edge process with the aggregate contribution of observations
+just inside the edge. For every sequence $d_n\ge3$, fixed or growing, a single
+exact Gamma-quantile normalization describes the transition. When the
+normalized coordinate tends to \(s\), the NPMLE is unique with probability
+tending to one, and its support size minus one converges to
+\(\operatorname{Pois}(e^{-s})\). Thus the one-atom probability tends to
+\(\exp\{-e^{-s}\}\). For fixed $d\ge3$, the Gamma-quantile normalization
+reduces to
+\(\eps_n=(d/2-1)(\log\log n)/\log n+O(1/\log n)\). Under a common coupling
+of the data, the support counts across each critical window converge jointly
+to a Poisson tail-count process. We also identify the fitted edge masses and,
+in fixed dimension, their directions.
+\end{abstract}
+
+\medskip
+\noindent\textbf{Note.} This draft was produced through an iterative process in which Mark Sellke repeatedly asked GPT-5.6 in OpenAI Codex to prove, refine, and write up further extensions.
+\medskip
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\section{Introduction}
+\label{sec:introduction}
+
+A natural way to look for latent heterogeneity is to fit a mixture and inspect
+the number of fitted components. For the Gaussian mixture nonparametric
+maximum likelihood estimator, this suggests a basic question: when the data
+come from one spherical Gaussian, does maximum likelihood select a single
+component mean? Our companion paper shows that it does not when the fitted
+component covariance matches the data-generating covariance
+\cite{supportDivergenceCompanion}; in fact, the fitted support diverges in
+probability. Here we ask whether variance inflation can regularize this
+overfitting. We determine precisely how much inflation is
+needed in every dimension $d\ge2$, including dimensions that grow with the
+sample size.
+
+Let $d=d_n\ge2$, let $Z_1,\ldots,Z_n$ be independent
+$\cN(0,I_d)$ vectors, and observe
+\begin{equation}
+\label{eq:model}
+    X_i=\sqrt{1-\eps_n}\,Z_i,
+    \qquad 0\le\eps_n<1.
+\end{equation}
+We fit location mixtures of $\cN(\mu,I_d)$ densities, whose component
+covariance is therefore larger than the data covariance. For a probability
+measure $G$ on $\R^d$, write
+\[
+    q_G(x)=\int_{\R^d}\phi_d(x-u)\,dG(u),
+    \qquad
+    \ell_n(G)=\sum_{i=1}^n\log q_G(X_i),
+\]
+where $\phi_d$ is the $\cN(0,I_d)$ density. A mixture NPMLE is any maximizer
+$\wh G_n$ of $\ell_n$. Because multivariate NPMLEs need not be unique
+\cite{soloff2024multivariate}, we
+measure their support complexity by
+\begin{equation}
+\label{eq:minimum-support-size}
+    \wh K_n
+    =\min\bigl\{|\supp(G)|:G\text{ maximizes }\ell_n\bigr\}.
+\end{equation}
+Lindsay's support-reduction theorem gives a maximizer with at most \(n\) atoms,
+so the minimum in \eqref{eq:minimum-support-size} is attained
+\cite{lindsay1983geometryA}. Nonuniqueness does not affect the one-atom event:
+Proposition~\ref{prop:one-atom-unique} shows that, almost surely, any one-atom
+maximizer is the unique NPMLE.  The minimum-support convention is likewise
+immaterial in the critical regimes below: our proof shows that the NPMLE is
+unique with probability tending to one.
+
+For each sample, the one-atom event is monotone in the variance defect.
+Increasing $\eps_n$ damps every likelihood perturbation away from the sample
+mean, so once a one-atom fit is optimal, it remains optimal under any larger
+defect. We can therefore study a samplewise critical value of $\eps_n$;
+Lemmas~\ref{lem:variance-monotonicity}
+and~\ref{lem:critical-defect-interval} show that this critical value is well
+defined. The asymptotic law of the critical defect changes sharply between
+dimensions two and three: in
+dimension two, observations just inside the radial edge have a nonvanishing
+collective effect, whereas in dimensions at least three the radial extremes
+alone govern the transition.
+
+\subsection{Main results}
+\label{sec:intro-results}
+
+We first state the exceptional two-dimensional limit. Put
+\begin{equation}
+\label{eq:d2-intro-parameters}
+    \kappa_n=\frac{\eps_n}{2(1-\eps_n)},
+    \qquad
+    \rho_n=\sqrt{2\log n},
+    \qquad
+    \lambda_n=\kappa_n\rho_n^2.
+\end{equation}
+For $\lambda>0$, let $x_\lambda$ be the unique real number satisfying
+\begin{equation}
+\label{eq:x-lambda-definition}
+    \sup_{r\in\R}
+       \left\{\Phi(-r)+\exp\left(x_\lambda-\frac{r^2}{2}\right)\right\}
+    =e^\lambda,
+\end{equation}
+where $\Phi$ and $\phi$ are the standard normal distribution function and
+density, respectively, and set
+\begin{equation}
+\label{eq:Q2-definition}
+    Q_2(\lambda)=\exp\{-e^{-x_\lambda}\}.
+\end{equation}
+The term $\Phi(-r)$ in \eqref{eq:x-lambda-definition} is the limiting
+contribution of observations just inside the radial edge, while the
+exponential term comes from the largest radial observation. The function
+\(Q_2\) extends continuously and strictly increasingly to \([0,\infty]\), with
+\(Q_2(0)=0\) and \(Q_2(\infty)=1\); see Lemma~\ref{lem:q-two-curve}.
+
+For dimensions at least three, an exact radial normalization covers all
+growth regimes. Let $Y_n$ have the $\operatorname{Gamma}(d_n/2,1)$
+distribution, with density $f_n$ and upper tail $\overline F_n$. Define
+\begin{equation}
+\label{eq:ba-intro}
+    n\overline F_n(b_n)=1,
+    \qquad
+    a_n=\frac{\overline F_n(b_n)}{f_n(b_n)},
+\end{equation}
+and put
+\begin{equation}
+\label{eq:exact-intro-coordinate}
+    \gamma_n=(1-\eps_n)^{-1},
+    \qquad
+    \sigma_n^2=1-\frac1n,
+    \qquad
+    R_n^\star=\frac{(n-1)^2}{n(n-2)}\log(n-1),
+    \qquad
+    s_n^\star
+    =\frac{\gamma_nR_n^\star/\sigma_n^2-b_n}{a_n}.
+\end{equation}
+Thus $b_n$ is the \(1-1/n\) quantile of the radial energy \(|Z|^2/2\), and
+$a_n$ is its extreme-value scale. The correction $R_n^\star$ is asymptotically
+negligible in fixed and moderately growing dimension, but changes the limiting
+coordinate when $d_n\asymp n^2\log n$.
+
+We state the transition directly as a limit law for the support size; the
+one-atom probability is then the probability that \(\widehat K_n-1\) equals
+zero. Here \(\operatorname{Pois}(\mu)\) denotes the Poisson law with mean
+\(\mu\).
+\begin{theorem}
+\label{thm:main-support-law}
+Under either critical-window hypothesis below, the NPMLE is unique with
+probability tending to one.  For the model \eqref{eq:model}, the support-size
+variable in \eqref{eq:minimum-support-size} has the following limits.
+\begin{enumerate}
+\item If $d=2$ and $\lambda_n\to\lambda\in(0,\infty)$, then
+\begin{equation}
+\label{eq:main-d2-support-law}
+    \wh K_n-1\Rightarrow\operatorname{Pois}(e^{-x_\lambda}),
+    \qquad
+    \Pbb\{\wh K_n=1\}\to Q_2(\lambda).
+\end{equation}
+Moreover, $\wh K_n=O_{\Pbb}(1)$ whenever
+$\liminf_n\lambda_n>0$.
+\item If $d_n\ge3$ and $s_n^\star\to s\in\R$, then
+\begin{equation}
+\label{eq:main-highd-support-law}
+    \wh K_n-1\Rightarrow\operatorname{Pois}(e^{-s}),
+    \qquad
+    \Pbb\{\wh K_n=1\}\to\exp\{-e^{-s}\}.
+\end{equation}
+Moreover, $\wh K_n=O_{\Pbb}(1)$ whenever
+$\liminf_n s_n^\star> -\infty$, and $\wh K_n=1$ with probability tending
+to one if $s_n^\star\to\infty$.
+\end{enumerate}
+\end{theorem}
+
+For fixed $d\ge3$, the Gamma tail expansion gives
+\[
+    b_n=\log n+\left(\frac d2-1\right)\log\log n
+        -\log\Gamma(d/2)+o(1),
+    \qquad a_n\to1.
+\]
+The critical scaling forces \(\eps_n\to0\) and
+\(\eps_n^2\log n=o(1)\). Thus $s_n^\star\to s$ is equivalent to
+\begin{equation}
+\label{eq:fixed-d-intro-window}
+    \eps_n\log n-\left(\frac d2-1\right)\log\log n
+        +\log\Gamma(d/2)\longrightarrow s.
+\end{equation}
+The transition therefore occurs at scale $(\log\log n)/\log n$ in fixed
+dimensions $d\ge3$, but at scale $1/\log n$ in dimension two.
+
+The exact normalization also gives explicit scales when $d_n$ grows. For
+$d_n=o(\log n)$ with $d_n\to\infty$, the critical defect satisfies
+\begin{equation}
+\label{eq:sublog-intro-critical}
+    \eps_{c,n}
+    \sim\frac{d_n}{2\log n}
+       \log\frac{2\log n}{d_n},
+\end{equation}
+and the transition window has width asymptotic to $1/\log n$. In larger
+dimensions, the implicit Gamma quantile \eqref{eq:ba-intro} is simpler and more
+accurate than separate expansions for different growth rates. At scale
+$d_n\asymp n^2\log n$, the $O(n^{-1})$ correction in $R_n^\star$ shifts the
+Gumbel coordinate by order one, and the exact formula incorporates this shift.
+
+The two fixed-parameter limits in Theorem~\ref{thm:main-support-law} describe
+one variance defect at a time. In fact, a single radial Poisson cloud governs
+the entire regularization path. The path theorem below
+makes precise the sense in which an extreme observation creates a fitted atom
+and then loses it as the fitted variance is increased. Let \(\mathcal X\) be a
+Poisson point process on \(\R\) with intensity \(e^{-x}\,dx\). Couple each path
+through one standardized sample \(Z_1,\ldots,Z_n\). Write
+\(\wh K_n(z_{1:n})\) for \eqref{eq:minimum-support-size} computed from the data
+\(z_{1:n}\), and define
+\begin{align}
+\label{eq:intro-d2-path-parametrization}
+ \eps_{n,2}(\lambda)
+ &=\frac{2\lambda}{\rho_n^2+2\lambda},
+ &K_{n,2}(\lambda)
+ &=\wh K_n\bigl(\sqrt{1-\eps_{n,2}(\lambda)}\,Z_{1:n}\bigr),\\
+\label{eq:intro-highd-path-parametrization}
+ \eps_{n,\ge3}(s)
+ &=1-\frac{R_n^\star}{\sigma_n^2(b_n+a_ns)},
+ &K_{n,\ge3}(s)
+ &=\wh K_n\bigl(\sqrt{1-\eps_{n,\ge3}(s)}\,Z_{1:n}\bigr).
+\end{align}
+The parametrization in \eqref{eq:intro-highd-path-parametrization} applies to
+any sequence \(d_n\ge3\); both defects lie in
+\([0,1)\) uniformly
+on the compact intervals considered below, once \(n\) is large.
+
+\begin{theorem}
+\label{thm:regularization-path}
+For every compact \(J\Subset(0,\infty)\), in dimension two,
+\begin{equation}
+\label{eq:intro-d2-path-limit}
+ \{K_{n,2}(\lambda)-1:\lambda\in J\}
+ \Longrightarrow
+ \{\mathcal X((x_\lambda,\infty)):\lambda\in J\}
+ \qquad\text{in }D(J).
+\end{equation}
+For every compact \(I\subset\R\) and every sequence \(d_n\ge3\),
+\begin{equation}
+\label{eq:intro-highd-path-limit}
+ \{K_{n,\ge3}(s)-1:s\in I\}
+ \Longrightarrow
+ \{\mathcal X((s,\infty)):s\in I\}
+ \qquad\text{in }D(I).
+\end{equation}
+Here both Skorokhod spaces carry the \(J_1\) topology. In either case, with
+probability tending to one, the NPMLE is unique simultaneously throughout the
+specified interval.
+\end{theorem}
+
+The map \(\lambda\mapsto x_\lambda\) is a smooth increasing bijection; write
+\(\Lambda\) for its inverse. The limiting path is a decreasing step function:
+a Poisson point \(x\) disappears at \(\lambda=\Lambda(x)\) in dimension two
+and at \(s=x\) in dimensions at least three. Proposition
+\ref{prop:path-masses} gives the corresponding mass profiles and spatial marks.
+
+Samplewise monotonicity turns these probability limits into limit laws for the
+critical variance defect itself. For a standardized sample $z_{1:n}$, define
+\[
+    \eps_*(z_{1:n})
+    =\inf\{\eps\in[0,1):\sqrt{1-\eps}\,z_{1:n}
+       \text{ has a one-atom NPMLE}\}.
+\]
+In dimension two, the corresponding variable
+\(\rho_n^2\eps_*(Z_{1:n})/\{2(1-\eps_*(Z_{1:n}))\}\) has limiting
+distribution function \(Q_2\). For \(d_n\ge3\), define
+\[
+ S_{*,n}
+ =\frac{R_n^\star/
+     [\sigma_n^2\{1-\eps_*(Z_{1:n})\}]-b_n}{a_n}.
+\]
+Then \(S_{*,n}\) converges in distribution to a standard Gumbel variable.
+
+\subsection{Ideas of the proof}
+\label{sec:intro-proof-ideas}
+
+The first-order optimality criterion for a one-atom fit can be written as a
+random field. After centering the observations and rescaling displacements
+from the sample mean, this field becomes a sum of unit-width Gaussian bumps.
+The direction and radius of $Z_i-\bar Z_n$ determine the center and height of
+the $i$th bump. A sufficiently large observation can therefore push the field
+above its critical level and force an additional fitted atom.
+
+In dimension two, observations just below the radial maximum have an order-one
+aggregate contribution. In a local window centered at the maximizing
+direction, this contribution converges to $\Phi(-r)$ at radial offset $r$.
+Angular separation leaves at most one extreme observation in the same window,
+which yields \eqref{eq:x-lambda-definition}. In dimensions at least three, the
+aggregate inward contribution vanishes at the transition. The radial
+exceedances converge to a Poisson process with intensity $e^{-x}\,dx$, and
+each observation above the critical radial-energy threshold contributes one
+additional fitted atom.
+
+Although the limiting law is universal for $d_n\ge3$, proving that no other
+field crossing occurs requires two forms of control. In the lower-dimensional
+regimes, radial edge points are well separated, and spatial empirical-process
+estimates control the contribution of the remaining observations. When the
+dimension is large enough that the centered observations form an
+approximately regular simplex, an entropy dual replaces Euclidean covering
+and reduces the local optimization to an ordered mean-field Potts problem.
+Section~\ref{sec:support} then converts the surviving field crossings into
+fitted atoms. For the path limit, we differentiate the fixed-parameter local
+likelihood expansions in the variance parameter. After the dimension-dependent
+normalization of the edge masses, each mass crosses zero with a derivative
+bounded away from zero. The support identity therefore continues uniformly
+across the critical window.
+
+\subsection{Related literature}
+\label{sec:related-literature}
+
+The mixture NPMLE goes back to Robbins and Kiefer--Wolfowitz
+\cite{robbins1950generalization,kiefer1956consistency}. Lindsay developed its
+likelihood geometry and finite-support reduction
+\cite{lindsay1983geometryA}. In empirical Bayes, the fitted mixing
+distribution estimates the prior; representative treatments include
+Jiang--Zhang~\cite{jiang2009general}, Koenker--Mizera
+\cite{koenker2014convex}, Dicker--Zhao~\cite{dicker2016high}, and the
+multivariate theory of Soloff--Guntuboyina--Sen
+\cite{soloff2024multivariate}.
+
+Recent work distinguishes statistical accuracy from the combinatorial
+complexity of an NPMLE\@. Polyanskiy and Wu proved logarithmic upper bounds
+on the support size in one-dimensional subgaussian models and asked what
+happens under a single Gaussian component~\cite{polyanskiy2020self}. Our
+companion paper proves that the support diverges under every fixed finite
+mixing distribution \cite{supportDivergenceCompanion}. Polyanskiy and Sellke
+study certified computation and generic support behavior for multivariate
+Gaussian mixtures \cite{polyanskiySellke2025}. A separate companion paper
+treats one-dimensional variance misspecification, where the critical scale is
+polynomial and the limit is governed by a two-sided compensated Poisson field
+\cite{varianceD1Companion}.
+
+A separate line of Gaussian-mixture NPMLE theory concerns density estimation
+or empirical-Bayes risk; see Zhang~\cite{zhang2009generalized},
+Saha--Guntuboyina~\cite{saha2020nonparametric}, Doss et al.
+\cite{doss2020optimal}, and more recent stability and adaptivity results
+\cite{zhangVolgushev2026adaptivity,GhoshGuntuboyinaMukherjeeTran2026,
+ChenWu2026RegretHellinger}. Smooth mixture NPMLEs provide a closely related
+form of variance inflation for estimation and inference
+\cite{KimSen2026SmoothNPMLE}. In the present problem the variance inflation
+vanishes with $n$, and we study the support of the likelihood maximizer rather
+than its estimation risk.
+
+Mixture homogeneity tests compare a point-mass null with an unrestricted
+mixture alternative; see Gu--Koenker--Volgushev
+\cite{guKoenkerVolgushev2018} and the references therein. Our criterion asks
+for more than rejection or acceptance at a likelihood-ratio threshold: it
+requires the unrestricted optimizer itself to collapse to one atom. Because
+this event is monotone in the variance inflation, each sample has a critical
+inflation level, analogous in spirit to the critical bandwidth in modality
+testing
+\cite{silverman1981multimodality,hallYork2001calibration}.
+
+\section{Likelihood Geometry and Radial Normalization}
+\label{sec:geometry}
+
+Both Theorems~\ref{thm:main-support-law} and
+\ref{thm:regularization-path} rest on two dimension-free reductions. The KKT
+criterion identifies one-atomicity with a supremum of a Gaussian-bump field
+and makes its monotonicity in the variance defect explicit. The Gamma
+normalization then puts the radial extremes on a common Poisson scale for
+every sequence \(d_n\ge2\). This section establishes the KKT and radial
+reductions and the exact centering identities used in all later regimes.
+
+\input{multivariate_variance_geometry}
+
+\section{The Two-Dimensional Sharp Window}
+\label{sec:d2}
+\label{sec:d-two-sharp-window}
+
+This section establishes the field estimates for the two-dimensional clauses
+of Theorems~\ref{thm:main-support-law} and
+\ref{thm:regularization-path}. At the critical scale, the KKT field near its
+maximizing direction contains both a single extreme radial spike and a
+nonvanishing contribution from observations just inside the edge. We identify
+their limiting profile, confine every possible crossing to a compact radial
+window, and prove a uniform decomposition used for support recovery in
+Section~\ref{sec:support}.
+
+\input{multivariate_variance_d2}
+
+\section{The Spatial Edge in Dimensions \texorpdfstring{\(d_n\ge3\)}{at Least Three}}
+\label{sec:radial-transition}
+\label{sec:spatial-edge}
+
+This section proves the spatial-exclusion estimates needed for the
+\(d_n\ge3\) clause of Theorem~\ref{thm:main-support-law}. The exact Gamma
+normalization gives the same radial Poisson limit in every growth regime, but
+the argument showing that subthreshold observations cannot create additional
+KKT contacts changes with dimension. We first derive the common radial
+coordinate, then prove the required exclusion in bounded and growing
+dimensions below the simplex scale. Section~\ref{sec:simplex} treats the
+remaining high-dimensional regimes.
+
+\input{multivariate_variance_radial_transition}
+
+\input{multivariate_variance_fixed_sparse}
+\input{multivariate_variance_common_bulk}
+\input{multivariate_variance_growing_sparse}
+
+\section{Entropy and the Simplex Regime}
+\label{sec:simplex}
+
+This section completes the spatial-exclusion part of the
+\(d_n\ge3\) analysis in Theorem~\ref{thm:main-support-law}. Once Euclidean
+covering becomes inefficient, an entropy dual reduces the KKT optimization to
+the nearly regular simplex formed by the centered sample. The resulting
+estimates both rule out subthreshold contacts and identify the finite-sample
+correction in the exact Gumbel coordinate \(s_n^\star\).
+
+\input{multivariate_variance_simplex}
+
+\section{From Radial Edge Points to NPMLE Atoms}
+\label{sec:support}
+
+This section completes the proofs of Theorems~\ref{thm:main-support-law} and
+\ref{thm:regularization-path}. Sections~\ref{sec:d2}--\ref{sec:simplex}
+locate every possible noncentral KKT contact; the propositions below convert
+those field crossings into an exact support identity. In both fixed and
+growing dimensions, we show that each superthreshold radial observation
+creates exactly one fitted atom and that quantitative gaps away from the edge
+exclude all others. Subsection~\ref{sec:edge-count-reduction} combines these
+identities with the radial Poisson limit, and
+Subsection~\ref{sec:regularization-path} proves that the support identities
+hold uniformly along the variance path.
+
+\input{multivariate_variance_support_localization}
+\input{multivariate_variance_support_fixed}
+\input{multivariate_variance_support_growing}
+
+\subsection{Proof of the main theorem}
+\label{sec:edge-count-reduction}
+
+We finish by combining the dimension-specific localization estimates with
+the radial Poisson limits. This short argument proves all assertions in
+Theorem~\ref{thm:main-support-law}.
+
+\input{multivariate_variance_edge_reduction}
+
+\input{multivariate_variance_paths}
+
+\small
+\bibliographystyle{alpha}
+\bibliography{writing_examples/bib,references,gpt56_multivariate_variance_refs}
+
+\end{document}

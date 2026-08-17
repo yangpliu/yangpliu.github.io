@@ -1,0 +1,200 @@
+\begin{thebibliography}{DWYZ23}
+
+\bibitem[AGM09]{azais2009likelihood}
+Jean-Marc Aza{\"i}s, {\'E}lisabeth Gassiat, and C{\'e}cile Mercadier.
+\newblock The likelihood ratio test for general mixture models with or without
+  structural parameter.
+\newblock {\em ESAIM Probab. Stat.}, 13:301--327, 2009.
+
+\bibitem[Ano26a]{varianceMultivariateCompanion}
+Radial phase transitions for {Gaussian} mixture {NPMLE}s in fixed and growing
+  dimension, 2026.
+\newblock In preparation.
+
+\bibitem[Ano26b]{supportDivergenceCompanion}
+Support divergence of mixture {NPMLE}s under finite mixtures, 2026.
+\newblock In preparation.
+
+\bibitem[DPSZ02]{DemboPoonenShaoZeitouni2002}
+Amir Dembo, Bjorn Poonen, Qi-Man Shao, and Ofer Zeitouni.
+\newblock Random polynomials having few or no real zeros.
+\newblock {\em J. Amer. Math. Soc.}, 15(4):857--892, 2002.
+
+\bibitem[DWYZ23]{doss2020optimal}
+Natalie Doss, Yihong Wu, Pengkun Yang, and Harrison~H Zhou.
+\newblock {Optimal estimation of high-dimensional Gaussian location mixtures}.
+\newblock {\em Ann. Stat.}, 51(1):62--95, 2023.
+
+\bibitem[DZ16]{dicker2016high}
+Lee~H Dicker and Sihai~D Zhao.
+\newblock {High-dimensional classification via nonparametric empirical Bayes
+  and maximum likelihood inference}.
+\newblock {\em Biometrika}, 103(1):21--34, 2016.
+
+\bibitem[EK86]{ethier1986markov}
+Stewart~N. Ethier and Thomas~G. Kurtz.
+\newblock {\em Markov Processes: Characterization and Convergence}.
+\newblock Wiley, 1986.
+
+\bibitem[FFM25]{FeldheimFeldheimMukherjee2025}
+Naomi~D. Feldheim, Ohad~N. Feldheim, and Sumit Mukherjee.
+\newblock Persistence and ball exponents for {Gaussian} stationary processes.
+\newblock {\em Comm. Pure Appl. Math.}, 78(10):1949--2000, 2025.
+
+\bibitem[FKZ13]{foss2013introduction}
+Sergey Foss, Dmitry Korshunov, and Stan Zachary.
+\newblock {\em An Introduction to Heavy-Tailed and Subexponential
+  Distributions}.
+\newblock Springer, 2013.
+
+\bibitem[FTZ22]{FitzGeraldTribeZaboronski2022}
+Will FitzGerald, Roger Tribe, and Oleg Zaboronski.
+\newblock Asymptotic expansions for a class of {Fredholm} {Pfaffians} and
+  interacting particle systems.
+\newblock {\em Ann. Probab.}, 50(6):2409--2474, 2022.
+
+\bibitem[Gar07]{garnett2007bounded}
+John~B. Garnett.
+\newblock {\em Bounded Analytic Functions}, volume 236 of {\em Graduate Texts
+  in Mathematics}.
+\newblock Springer, revised first edition, 2007.
+
+\bibitem[GKV18]{guKoenkerVolgushev2018}
+Jiaying Gu, Roger Koenker, and Stanislav Volgushev.
+\newblock Testing for homogeneity in mixture models.
+\newblock {\em Econometric Theory}, 34(4):850--895, 2018.
+
+\bibitem[GP10]{guillemin2010differential}
+Victor Guillemin and Alan Pollack.
+\newblock {\em Differential topology}, volume 370.
+\newblock American Mathematical Soc., 2010.
+
+\bibitem[GVDV01]{ghosal2001entropies}
+Subhashis Ghosal and Aad~W Van Der~Vaart.
+\newblock {Entropies and rates of convergence for maximum likelihood and Bayes
+  estimation for mixtures of normal densities}.
+\newblock {\em Ann. Stat.}, 29(5):1233--1263, 2001.
+
+\bibitem[Har85]{hartigan1985failure}
+John~A. Hartigan.
+\newblock A failure of likelihood asymptotics for normal mixtures.
+\newblock In {\em Proceedings of the Berkeley Conference in Honor of Jerzy
+  Neyman and Jack Kiefer}, volume~2, pages 807--810. Wadsworth, Belmont, CA,
+  1985.
+
+\bibitem[HY01]{hallYork2001calibration}
+Peter Hall and Matthew York.
+\newblock On the calibration of {Silverman's} test for multimodality.
+\newblock {\em Statist. Sinica}, 11(2):515--536, 2001.
+
+\bibitem[JZ09]{jiang2009general}
+Wenhua Jiang and Cun-Hui Zhang.
+\newblock {General maximum likelihood empirical Bayes estimation of normal
+  means}.
+\newblock {\em Ann. Stat.}, 37(4):1647--1684, 2009.
+
+\bibitem[JZ19]{jiangZhang2019rate}
+Wenhua Jiang and Cun-Hui Zhang.
+\newblock Rate of divergence of the nonparametric likelihood ratio test for
+  {Gaussian} mixtures.
+\newblock {\em Bernoulli}, 25(4B), 2019.
+
+\bibitem[Kal17]{kallenberg2017random}
+Olav Kallenberg.
+\newblock {\em Random Measures, Theory and Applications}.
+\newblock Springer, 2017.
+
+\bibitem[KG19]{koenker2019minimalist}
+Roger Koenker and Jiaying Gu.
+\newblock {Minimalist $g$-Modeling}.
+\newblock {\em Statistical Science}, 34(2):209 -- 213, 2019.
+
+\bibitem[KM14]{koenker2014convex}
+Roger Koenker and Ivan Mizera.
+\newblock {Convex optimization, shape constraints, compound decisions, and
+  empirical Bayes rules}.
+\newblock {\em Journal of the American Statistical Association},
+  109(506):674--685, 2014.
+
+\bibitem[KMT75]{komlos1975approximation}
+J{\'a}nos Koml{\'o}s, P{\'e}ter Major, and G{\'a}bor Tusn{\'a}dy.
+\newblock An approximation of partial sums of independent {RV}'s, and the
+  sample {DF}. {I}.
+\newblock {\em Z. Wahrscheinlichkeitstheorie verw. Gebiete}, 32:111--131, 1975.
+
+\bibitem[KMT76]{komlos1976approximation}
+J{\'a}nos Koml{\'o}s, P{\'e}ter Major, and G{\'a}bor Tusn{\'a}dy.
+\newblock An approximation of partial sums of independent {RV}'s, and the
+  sample {DF}. {II}.
+\newblock {\em Z. Wahrscheinlichkeitstheorie verw. Gebiete}, 34:33--58, 1976.
+
+\bibitem[KS66]{karlin1966tchebycheff}
+Samuel Karlin and William~J. Studden.
+\newblock {\em Tchebycheff Systems: With Applications in Analysis and
+  Statistics}.
+\newblock Interscience Publishers, 1966.
+
+\bibitem[KS26]{KimSen2026SmoothNPMLE}
+Taehyun Kim and Bodhisattva Sen.
+\newblock Empirical {Bayes} estimation and inference via smooth nonparametric
+  maximum likelihood.
+\newblock {\em arXiv preprint arXiv:2603.27843}, 2026.
+
+\bibitem[KW56]{kiefer1956consistency}
+Jack Kiefer and Jacob Wolfowitz.
+\newblock Consistency of the maximum likelihood estimator in the presence of
+  infinitely many incidental parameters.
+\newblock {\em Ann. Math. Stat.}, pages 887--906, 1956.
+
+\bibitem[Lin83]{lindsay1983geometryA}
+Bruce~G Lindsay.
+\newblock {The Geometry of Mixture Likelihoods: A General Theory}.
+\newblock {\em Ann. Stat.}, 11(1):86--94, 1983.
+
+\bibitem[LR93]{lindsay1993uniqueness}
+Bruce~G Lindsay and Kathryn Roeder.
+\newblock Uniqueness of estimation and identifiability in mixture models.
+\newblock {\em Canadian J. Stat.}, 21(2):139--147, 1993.
+
+\bibitem[PS18]{PoplavskyiSchehr2018}
+Mihail Poplavskyi and Gr{\'e}gory Schehr.
+\newblock Exact persistence exponent for the {2D}-diffusion equation and
+  related {Kac} polynomials.
+\newblock {\em Phys. Rev. Lett.}, 121(15):150601, 2018.
+
+\bibitem[PW20]{polyanskiy2020self}
+Yury Polyanskiy and Yihong Wu.
+\newblock {Self-Regularizing Property of Nonparametric Maximum Likelihood
+  Estimator in Mixture Models}.
+\newblock {\em arXiv preprint arXiv:2008.08244}, 2020.
+
+\bibitem[Rob50]{robbins1950generalization}
+Herbert Robbins.
+\newblock A generalization of the method of maximum likelihood: {E}stimating a
+  mixing distribution ({A}bstract).
+\newblock {\em Annals of Mathematical Statistics}, 21(2):314--315, 1950.
+
+\bibitem[Ros94]{rose1994mapping}
+Kenneth Rose.
+\newblock A mapping approach to rate-distortion computation and analysis.
+\newblock {\em IEEE Transactions on Information Theory}, 40(6):1939--1952,
+  1994.
+
+\bibitem[SG20]{saha2020nonparametric}
+Sujayam Saha and Adityanand Guntuboyina.
+\newblock {On the nonparametric maximum likelihood estimator for Gaussian
+  location mixture densities with application to Gaussian denoising}.
+\newblock {\em Ann. Stat.}, 48(2):738--762, 2020.
+
+\bibitem[Sil81]{silverman1981multimodality}
+B.~W. Silverman.
+\newblock Using kernel density estimates to investigate multimodality.
+\newblock {\em J. Roy. Statist. Soc. Ser. B}, 43(1):97--99, 1981.
+
+\bibitem[Zha09]{zhang2009generalized}
+Cun-Hui Zhang.
+\newblock Generalized maximum likelihood estimation of normal mixture
+  densities.
+\newblock {\em Statistica Sinica}, pages 1297--1318, 2009.
+
+\end{thebibliography}

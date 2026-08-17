@@ -1,0 +1,226 @@
+\subsection{The radial coordinate}
+
+The exact coordinate \(s_n^\star\) appears in
+Theorem~\ref{thm:main-support-law}. In the range
+\(d_n\log n=o(n^2)\), the spatial estimates are cleaner in the following
+\(\log n\)-based coordinate:
+\begin{equation}
+\label{eq:s-definition}
+  s_n
+  =
+  \frac{\gamma_nL_n-b_n}{a_n}.
+\end{equation}
+The corresponding critical variance defect is
+\begin{equation}
+\label{eq:critical-epsilon}
+  \eps_{c,n}=1-\frac{L_n}{b_n},
+\end{equation}
+and an \(O(1)\) change in \(s_n\) changes \(\eps_n\) on the scale
+\begin{equation}
+\label{eq:epsilon-window}
+  \Delta\eps_n
+  \asymp
+  \frac{a_nL_n}{b_n^2}.
+\end{equation}
+Lemma~\ref{lem:exact-old-edge-coordinate} shows that \(s_n\) agrees with the
+exact coordinate \(s_n^\star\) whenever \(d_n\log n=o(n^2)\). Define
+\[
+  \xi_{n,i}
+  =
+  \frac{|\widetilde Z_i|^2/2-b_n}{a_n},
+  \qquad
+  \delta_n=\frac{a_n}{\gamma_n}.
+\]
+At the normalization \eqref{eq:s-definition}, the bump height is exactly
+\begin{equation}
+\label{eq:bump-height-xi}
+  h_i
+  =
+  \exp\{\delta_n(\xi_{n,i}-s_n)\}.
+\end{equation}
+The score radius satisfies the exact identity
+\begin{equation}
+\label{eq:universal-score-radius}
+  |q_i|^2
+  =
+  \frac{|\widetilde Z_i|^2}{\gamma_n}
+  =2L_n+2\delta_n(\xi_{n,i}-s_n).
+\end{equation}
+Consequently, $|q_i|^2=2L_n+O_{\Pbb}(\delta_n)$ for edge observations with
+$\xi_{n,i}=O_{\Pbb}(1)$ whenever $s_n=O(1)$.
+Thus the top bumps live on a sphere of radius \(\sqrt{2L_n}\). The dimension
+affects their angular geometry and the height scale \(\delta_n\), but not
+their leading score radius.
+
+When \(d_n\gg L_n\), however,
+\(\delta_n\to0\), so a radial gap of \(a_n\eta\) below threshold creates
+only a height gap of order \(\delta_n\eta\). The remainder of the field must
+therefore be \(o_{\Pbb}(\delta_n)\), not merely \(o_{\Pbb}(1)\).
+
+\subsection{Consequences across dimension scales}
+\label{sec:regime-map}
+
+The exact definitions \eqref{eq:b-a-definition} are preferable in the main
+theorem, but their asymptotic expansions reveal how the critical defect and
+window width depend on dimension. In this subsection
+\(\eps_{c,n}=1-L_n/b_n\) denotes a leading-order proxy for the critical
+defect. Section~\ref{sec:full-growing-transition} restores the finite-sample
+correction that becomes visible when \(d_n\asymp n^2\log n\).
+
+\medskip
+\noindent\emph{Sublogarithmic dimension.}
+
+Suppose \(k_n=o(L_n)\). Then \(b_n/L_n\to1\), \(a_n\to1\), and
+\begin{equation}
+\label{eq:b-sublog}
+  b_n
+  =
+  L_n+(k_n-1)\log L_n-\log\Gamma(k_n)
+  +O\left(
+    \frac{k_n}{L_n}
+    \left\{1+(k_n-1)\log L_n-\log\Gamma(k_n)\right\}
+  \right).
+\end{equation}
+When in addition \(k_n\to\infty\), Stirling's formula gives the simpler
+leading term
+\begin{equation}
+\label{eq:b-sublog-stirling}
+  b_n-L_n
+  \sim
+  k_n\log\frac{L_n}{k_n}.
+\end{equation}
+Consequently,
+\begin{equation}
+\label{eq:epsilon-sublog}
+  \eps_{c,n}
+  \sim
+  \frac{k_n}{L_n}\log\frac{L_n}{k_n}
+  =
+  \frac{d_n}{2\log n}
+  \log\frac{2\log n}{d_n},
+  \qquad
+  \Delta\eps_n\asymp\frac1{\log n}.
+\end{equation}
+
+For fixed \(d\ge3\), \eqref{eq:b-sublog} reduces to
+\[
+  b_n
+  =
+  \log n+\left(\frac d2-1\right)\log\log n
+  -\log\Gamma(d/2)+o(1),
+\]
+recovering the fixed-dimensional normalization used in
+Section~\ref{sec:fixed-d-patches}. If
+\(d_n\to\infty\), then \(b_n-L_n\to\infty\); this makes the diffuse edge
+background vanish, leaving the radial maximum as the limiting obstruction.
+
+\begin{proof}[Justification of \eqref{eq:b-sublog}]
+For \(y>k_n-1\), \eqref{eq:tail-density-ratio} and
+\(1\le\overline F_n(y)/f_n(y)\le\{1-(k_n-1)/y\}^{-1}\) give
+\[
+  \log\overline F_n(y)
+  =
+  -y+(k_n-1)\log y-\log\Gamma(k_n)+O(k_n/y).
+\]
+Standard Gamma Chernoff bounds first give \(b_n/L_n\to1\). Substitute
+\(y=b_n\), write \(b_n=L_n+r_n\), and expand
+\(\log b_n=\log L_n+O(r_n/L_n)\). The resulting equation first gives
+\(r_n=O((k_n-1)\log L_n-\log\Gamma(k_n)+1)\), and a second substitution
+gives \eqref{eq:b-sublog}. Formula \eqref{eq:b-sublog-stirling} follows
+because \(L_n/k_n\to\infty\).
+\end{proof}
+
+\medskip
+\noindent\emph{Logarithmic dimension.}
+
+Suppose \(k_n/L_n\to c\in(0,\infty)\). Let \(x_c>1\) be the unique
+solution of
+\begin{equation}
+\label{eq:xc}
+  x_c-1-\log x_c=\frac1c.
+\end{equation}
+Stirling's formula and the Gamma saddlepoint estimate yield
+\begin{equation}
+\label{eq:logarithmic-regime}
+  \frac{b_n}{k_n}\to x_c,
+  \qquad
+  a_n\to\frac{x_c}{x_c-1},
+  \qquad
+  \eps_{c,n}\to1-\frac1{cx_c}.
+\end{equation}
+The transition therefore occurs at a nonzero constant variance defect, while
+its width in \(\eps_n\) remains of order \(1/\log n\).
+
+\medskip
+\noindent\emph{Superlogarithmic dimension.}
+
+Suppose \(k_n/L_n\to\infty\). The Gamma quantile is in its
+moderate-deviation range:
+\begin{equation}
+\label{eq:superlog-regime}
+  b_n
+  =
+  k_n+\sqrt{2k_nL_n}\{1+o(1)\},
+  \qquad
+  a_n
+  =
+  \sqrt{\frac{k_n}{2L_n}}\{1+o(1)\}.
+\end{equation}
+Hence
+\begin{equation}
+\label{eq:epsilon-superlog}
+  \eps_{c,n}
+  =
+  1-\frac{L_n}{k_n}\{1+o(1)\},
+  \qquad
+  \Delta\eps_n
+  \asymp
+  \frac{\sqrt{L_n}}{k_n^{3/2}},
+  \qquad
+  \delta_n
+  \asymp
+  \sqrt{\frac{L_n}{k_n}}.
+\end{equation}
+The fitted variance must now be much larger than the data variance: the
+critical defect tends to one. The shrinking factor \(\delta_n\) in
+\eqref{eq:epsilon-superlog} is also the precision required of the
+single-bump approximation.
+
+In particular, the usual proportional-dimensional regime
+\(d_n/n\to\tau\in(0,\infty)\) is a special case of the superlogarithmic
+regime, not the logarithmic regime \(d_n\asymp\log n\).  In that case,
+\[
+  1-\eps_{c,n}
+  \sim\frac{2\log n}{d_n}
+  \sim\frac{2\log n}{\tau n},
+  \qquad
+  \Delta\eps_n\asymp\frac{\sqrt{\log n}}{n^{3/2}}.
+\]
+The raw squared radii are of order \(n\), but after the variance rescaling
+the likelihood of one empirical bump still has to overcome its factor
+\(1/n\); this is why the KKT threshold remains \(\log n\).
+
+For completeness, all three regimes follow from the same saddlepoint formula.
+If \(k_n\to\infty\), put \(x_n=b_n/k_n>1\). Uniformly at the extreme
+quantile,
+\begin{equation}
+\label{eq:gamma-saddlepoint}
+  \overline F_n(k_nx_n)
+  =
+  \frac{1+o(1)}{(x_n-1)\sqrt{2\pi k_n}}
+  \exp\{-k_n(x_n-1-\log x_n)\}.
+\end{equation}
+Indeed, Stirling's formula gives the density at \(k_nx_n\), while
+Lemma~\ref{lem:gamma-hazard} gives the tail-to-density ratio
+\(x_n/(x_n-1)\{1+o(1)\}\). Equating the logarithm of
+\eqref{eq:gamma-saddlepoint} to \(-L_n\) proves
+\eqref{eq:logarithmic-regime}; when \(k_n/L_n\to\infty\), expanding
+\(x-1-\log x=(x-1)^2/2+O((x-1)^3)\) proves
+\eqref{eq:superlog-regime}.
+
+Finally, \eqref{eq:centering-condition} is automatic when \(k_n=O(L_n)\).
+If \(k_n/L_n\to\infty\), \eqref{eq:superlog-regime} reduces it to
+\begin{equation}
+\label{eq:centering-superlog}
+  k_nL_n=o(n).
+\end{equation}

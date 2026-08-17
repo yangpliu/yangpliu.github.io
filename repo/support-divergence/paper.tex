@@ -1,0 +1,2218 @@
+\documentclass[11pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[top=1in,bottom=1.2in,left=1in,right=1in]{geometry}
+\usepackage{amssymb,amsmath,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=red,
+  urlcolor=blue,
+  pdfauthor={}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{equation}{section}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\wh}{\widehat}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\op}{\mathrm{op}}
+\newcommand{\Id}{\mathrm{Id}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\conv}{conv}
+
+\title{Support Divergence of Mixture NPMLEs Under Finite Mixtures}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Motivated by distribution testing and empirical Bayes calibration, we ask how sparse a mixture NPMLE can be when the true mixing distribution has fixed finite support. For Gaussian location mixtures in every fixed dimension \(d\), every maximizer has at least \(c(\log n)^{d/2}/\log\log n\) atoms with high probability. For Poisson mixtures, the lower bound is \(c\sqrt{\log n}/(\log\log n)^{3/2}\). Thus the NPMLE can have diverging support even under a fixed finite mixture.
+\end{abstract}
+
+\medskip
+\noindent\textbf{Note.} This draft was produced through an iterative process in which Mark Sellke repeatedly asked GPT-5.6 in OpenAI Codex to prove, refine, and write up further extensions.
+\medskip
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\section{Introduction}
+
+Mixture models describe heterogeneous populations through a probability
+distribution \(G\) over latent parameters. Writing
+\(p_G(x)=\int p_\theta(x)\,dG(\theta)\), each atom of \(G\) corresponds to a
+component of the mixture. When the number of components is unknown, the
+nonparametric maximum likelihood estimator (NPMLE) maximizes the likelihood
+over all probability measures \(G\), rather than fixing a support size in
+advance. This construction traces to Kiefer--Wolfowitz
+\cite{kiefer1956consistency} and has closely related empirical-Bayes roots in
+Robbins \cite{robbins1950generalization}: there \(G\) is an unknown prior,
+and the fitted mixing distribution is used to estimate posterior quantities
+or Bayes rules. Yet the mixture density, the induced decision rule, and the
+support of the mixing distribution are different statistical objects.
+
+We ask whether the atom count of the NPMLE adapts to a finitely supported
+truth. Suppose the data law is \(p_{G_0}\) for a fixed finite mixture
+\(G_0\). For Gaussian location and Poisson mixtures, we show that the support
+of every NPMLE diverges with the sample size. Thus accurate density or
+empirical-Bayes estimation can coexist with a fitted atom count that does not
+estimate the number of latent components. Approximate, thresholded, and
+penalized procedures define different estimators whose atom counts may
+depend on stopping or tuning rules.
+
+The question was posed explicitly for one-dimensional Gaussian location
+mixtures by Polyanskiy and Wu \cite{polyanskiy2020self}. They proved the
+self-regularization bound \(O_{\mathbb P}(\log n)\) for subgaussian data and
+asked in \cite[Section~5.6]{polyanskiy2020self} whether this order is attained
+even under a single Gaussian component. Lindsay's convex-geometric theory
+gives a maximizer with at most \(n\) atoms \cite{lindsay1983geometryA}, and
+the Lindsay--Roeder criterion makes the NPMLE unique in the one-dimensional
+models considered here \cite{lindsay1993uniqueness}. Multivariate Gaussian
+NPMLEs can be nonunique \cite{soloff2024multivariate}, so our Gaussian lower
+bound is uniform over all maximizers. We extend the single-Gaussian question
+to every fixed dimension and every fixed finite Gaussian location mixture,
+and prove an analogous result for finite Poisson mixtures with positive
+largest mean. Our companion papers determine how much variance inflation is
+needed to collapse the Gaussian fit to one atom in dimension one and in
+dimensions at least two
+\cite{varianceD1Companion,varianceMultivariateCompanion}.
+
+\subsection*{Preliminaries and notation}
+
+All asymptotic notation is as $n\to\infty$, unless another limit is
+specified. We write $\mathbb P$ and $\mathbb E$ for probability and
+expectation under the distribution currently under discussion. For a
+deterministic positive sequence $a_n$, the relation
+$X_n=O_{\mathbb P}(a_n)$ means that $|X_n|/a_n$ is tight, while
+$X_n=o_{\mathbb P}(a_n)$ means that $X_n/a_n\to0$ in probability.
+Deterministic $O(\cdot)$ and $o(\cdot)$ have their usual meanings. We write
+$a_n\sim b_n$ if $a_n/b_n\to1$, $a_n\ll b_n$ if $a_n/b_n\to0$, and
+$a_n\lesssim b_n$ if $a_n\le Cb_n$ for a constant independent of $n$.
+The reverse relations are denoted by $\gg$ and $\gtrsim$, and
+$a_n\asymp b_n$ means that both one-sided bounds hold. Subscripts, as in
+$\lesssim_\lambda$ or $\asymp_d$, indicate the parameters on which the
+implicit constants may depend. Constants denoted by
+$c,C,c_0,C_0,\dots$ may change from line to line, subject to any displayed
+dependencies.
+
+A well-specified finite mixture means that the data density is $p_{G_0}$
+for a fixed, finitely supported mixing distribution $G_0$. We call a measure
+$D$-atomic if it is supported on at most $D$ points. For a measure $G$,
+$\supp(G)$ denotes its support; for a set $A$, $\conv(A)$ denotes its convex
+hull; and $T_\#G$ denotes the pushforward of $G$ by a measurable map $T$.
+We write $B(x,r)$ for a Euclidean ball, $x^+=\max\{x,0\}$,
+$\log_+x=\max\{\log x,0\}$, and $\mathbf 1_A$ for the indicator of $A$.
+The operator norm is $\|\cdot\|_{\op}$. An $L^2$ norm is written
+$\|\cdot\|_2$ when its reference measure is clear and $\|\cdot\|_{L^2(Q)}$
+when it is not. For functions on $\mathbb N_0=\{0,1,2,\ldots\}$,
+$\ell^q$ and $\ell^q(Q)$ denote the norms with respect to counting measure
+and a probability measure $Q$, respectively. If a maximizer has infinite
+support, our support lower bounds hold automatically; the proofs therefore
+need only rule out maximizers with too few atoms.
+
+We also fix the bracketing notation used in the likelihood bounds. If
+\(\mathcal F\) is a class of square-integrable functions with reference
+measure \(Q\), an \(\eta\)-bracket is a pair \(\ell\le f\le u\), with
+inequalities understood \(Q\)-a.e., such that
+\(\|u-\ell\|_{L^2(Q)}\le\eta\). The bracketing number
+\(N_{[]}(\eta,\mathcal F,L^2(Q))\) is the minimum number of such brackets
+needed to cover \(\mathcal F\). Near a true density \(p_0\), we use the
+coordinates \(\sqrt{p/p_0}-1\). Their \(L^2(p_0)\) norm is
+\(\|\sqrt p-\sqrt{p_0}\|_2\), the Hellinger distance under our convention.
+
+\subsection*{Gaussian location mixtures}
+
+Let $\phi_d(x)=(2\pi)^{-d/2}e^{-|x|^2/2}$, $x\in\R^d$. For a probability measure $G$ on $\R^d$, set $p_G(x)=\int \phi_d(x-a)\,dG(a)$. Given $X_1,\dots,X_n\in\R^d$, an NPMLE is any maximizer of $G\mapsto \sum_{i=1}^n \log p_G(X_i)$ over probability measures on $\R^d$.
+
+Our first theorem answers the support question for every fixed finite Gaussian
+location mixture. The constant in the lower bound may depend on the true
+mixture and on the dimension, but the power of \(\log n\) depends only on the
+dimension.
+
+\begin{theorem}
+\label{thm:gaussian-finite-main}
+Fix $d\ge1$, and let $G_0$ be a probability measure on $\R^d$ with finite nonempty support. Let $X_1,\dots,X_n$ be i.i.d.\ with density $p_{G_0}$, and let $\wh G_n$ be any Gaussian location NPMLE over $\R^d$. Then there exists a constant $c_{G_0,d}>0$ such that
+\[
+    \mathbb P\Bigl\{
+        |\supp(\wh G_n)|
+        \ge
+        c_{G_0,d}\,
+        \frac{(\log n)^{d/2}}{\log\log n}
+    \Bigr\}\to1.
+\]
+\end{theorem}
+
+For \(d=1\) and \(G_0=\delta_0\), the theorem gives
+\(c\sqrt{\log n}/\log\log n\) fitted atoms from data drawn from a single
+standard Gaussian. This gives the first diverging lower bound in the setting
+asked about by Polyanskiy and Wu.
+
+The proof compares the best likelihood gains available with and without a
+support constraint. To lower-bound the unrestricted likelihood, first suppose
+that \(G_0=\delta_0\). Moving small amounts of mass from zero to many separated
+locations produces nearly uncorrelated likelihood scores and a total gain of
+order \((\log n)^{d/2}\). For a general finite mixture, we perform the same
+perturbation at a vertex of the convex hull of its support, moving mass outward
+in directions for which that component dominates the other components. To
+upper-bound the likelihood over all \(D\)-atomic mixtures, a localized
+bracketing argument gives a gain of order at most \(D\log\log n\). Comparing
+the two bounds yields the theorem.
+
+\subsection*{Poisson mixtures}
+
+Poisson mixtures also acquire extra atoms under a fixed finite mixture, but
+the lower-bound rate is different. For \(\theta\ge0\), let
+\(p_\theta(k)=e^{-\theta}\theta^k/k!\), \(k\in\mathbb N_0\), with
+\(p_0\) interpreted as the point mass at zero. For a probability measure
+\(G\) on \([0,\infty)\), write
+\(p_G(k)=\int p_\theta(k)\,dG(\theta)\); we use the same notation for finite
+nonnegative measures. Given observations in \(\mathbb N_0\), a
+Poisson-mixture NPMLE maximizes \(\sum_i\log p_G(X_i)\) over all such
+probability measures \(G\).
+
+The Poisson theorem uses the largest true mean as the exposed component. The assumption that this largest mean is positive excludes only the degenerate law concentrated at zero.
+
+\begin{theorem}
+\label{thm:poisson-finite-main}
+Let $G_0$ be a probability measure on $[0,\infty)$ with finite support, and suppose its largest support point $\lambda_*$ is positive. Let $X_1,\dots,X_n$ be i.i.d.\ with mass function $p_{G_0}$, and let $\wh G_n^{\mathrm{Pois}}$ be any Poisson-mixture NPMLE. Then there exists $c_{G_0}>0$ such that
+\[
+    \mathbb P\Bigl\{
+        |\supp(\wh G_n^{\mathrm{Pois}})|
+        \ge
+        c_{G_0}\,\frac{\sqrt{\log n}}{(\log\log n)^{3/2}}
+    \Bigr\}\to1.
+\]
+\end{theorem}
+
+To construct a likelihood gain, we move mass from the largest true mean
+\(\lambda_*\) to points
+\(\lambda_*+a\sqrt{\lambda_*}\). After normalization, the resulting scores
+have the same covariance kernel as the Gaussian scores. Their untruncated
+fourth moments are dominated by count values far larger than any observation
+in the sample and would restrict the construction to
+\(|a|\lesssim(\log n)^{1/4}\). Truncating those irrelevant tails allows
+\(a^2\le\gamma\log n/\log\log n\) for every fixed \(\gamma<1\), which
+produces the stated rate.
+
+In both one-dimensional models, known upper bounds are logarithmic. A fixed
+finite Gaussian mixture is subgaussian, so Polyanskiy and Wu's
+self-regularization theorem gives
+\(|\supp(\wh G_n)|=O_{\mathbb P}(\log n)\)
+\cite{polyanskiy2020self}. For Poisson mixtures, let
+\(M_n=\max_iX_i\). Since every observed count lies in
+\(\{0,\dots,M_n\}\), Lindsay's theorem gives a maximizer with at most
+\(M_n+1\) atoms \cite{lindsay1983geometryA}; uniqueness then gives the same
+bound for the NPMLE itself \cite{lindsay1993uniqueness}. Under every fixed
+finite Poisson mixture with positive largest mean,
+\(M_n=(1+o_{\mathbb P}(1))\log n/\log\log n\). In both models, therefore,
+the lower and upper bounds differ by a factor of order \(\sqrt{\log n}\),
+apart from powers of \(\log\log n\).
+
+For Gaussian mixtures in dimensions \(d\ge2\), the gap is much larger. The
+only general comparison is the finite-sample bound that some maximizer has at
+most \(n\) atoms. No upper bound is known near the polylogarithmic lower bound
+\((\log n)^{d/2}/\log\log n\), and nonuniqueness prevents the bound for one
+selected maximizer from applying automatically to all maximizers.
+
+\subsection*{Related literature and empirical Bayes motivation}
+
+In empirical Bayes applications, the NPMLE mixing distribution is used as an
+estimated prior; see, for example, Jiang--Zhang \cite{jiang2009general},
+Koenker--Mizera \cite{koenker2014convex}, Dicker--Zhao
+\cite{dicker2016high}, and Soloff--Guntuboyina--Sen
+\cite{soloff2024multivariate}. This use raises two separate questions: how
+well the fitted mixture estimates the data distribution or Bayes rule, and how
+many atoms the maximizing mixing distribution contains. Our results address
+the second question under a fixed finite-mixture data law.
+
+Previous work on NPMLE support size has emphasized computation and upper
+bounds. Koenker and Gu's \emph{Minimalist $g$-Modeling}
+\cite{koenker2019minimalist} documented sparse NPMLE fits; as reported by
+Polyanskiy and Wu \cite{polyanskiy2020self}, their numerical examples suggested
+support sizes on the \(\sqrt n\) scale. Polyanskiy and Wu proved the much
+smaller upper bound \(|\supp(\wh G_n)|=O_{\mathbb P}(\log n)\) under
+subgaussian sampling and asked whether it is tight for data from a single
+Gaussian component. Polyanskiy and Sellke \cite{polyanskiySellke2025} study
+certified computation and support behavior for Gaussian-location NPMLEs.
+
+A separate literature establishes statistical guarantees for mixture NPMLEs.
+Zhang \cite{zhang2009generalized} and Saha--Guntuboyina
+\cite{saha2020nonparametric} prove density-risk bounds for Gaussian mixture
+NPMLEs, while Doss--Wu--Yang--Zhou \cite{doss2020optimal} treat
+high-dimensional Gaussian location mixtures. Zhang--Volgushev
+\cite{zhangVolgushev2026adaptivity} prove adaptation to finitely supported
+mixing distributions in Gaussian and Poisson models.
+Ghosh--Guntuboyina--Mukherjee--Tran
+\cite{GhoshGuntuboyinaMukherjeeTran2026} obtain KL stability bounds for
+Gaussian-mixture NPMLEs and their approximate solutions, and Chen--Wu
+\cite{ChenWu2026RegretHellinger} prove regret--Hellinger inequalities for
+Gaussian empirical Bayes. These guarantees do not control the number of atoms
+in the optimizer. The present results show that accurate estimation can
+coexist with diverging fitted support under a fixed finite mixture.
+
+Mixture likelihood-ratio statistics also have nonstandard asymptotics.
+Hartigan \cite{hartigan1985failure} gave an early example for normal mixtures;
+Aza{\"i}s--Gassiat--Mercadier \cite{azais2009likelihood} and Jiang--Zhang
+\cite{jiangZhang2019rate} obtained further nonstandard limits; and
+Zhang--Volgushev \cite{zhangVolgushev2025surprising} proved a
+tight-versus-divergent dichotomy for nonparametric mixture likelihood-ratio
+tests with bounded parameter spaces. Those works study the value of a
+likelihood-ratio statistic. We instead study the smallest support size among
+likelihood maximizers.
+
+\section{Likelihood Geometry and Entropy Tools}
+\label{sec:tools}
+
+The proofs of Theorems~\ref{thm:gaussian-finite-main} and
+\ref{thm:poisson-finite-main} use a common upper bound for mixtures with a
+prescribed number of atoms. After constructing an unrestricted likelihood
+gain, we must show that
+no mixture with only \(D\) atoms can match it. This section supplies the two
+reductions used for that comparison. The first restricts the atoms of a
+competitor to a sample-dependent compact set without decreasing likelihood;
+the second uses
+localized bracketing entropy to bound the likelihood gain over the resulting
+sparse class. The model-specific applications appear in
+Propositions~\ref{prop:gaussian-finite-upper} and
+\ref{prop:poisson-finite-upper}.
+
+\subsection{Compact Support Reduction}
+\label{sec:compact-support-reduction}
+
+For Gaussian mixtures, atoms outside the convex hull of the observations can
+be projected onto that hull without decreasing the fitted density at any
+observation. This reduction depends only on the Gaussian kernel, not on the
+distribution that generated the data.
+
+\begin{lemma}
+\label{lem:convex-support}
+Let $C_n=\conv\{X_1,\dots,X_n\}\subset\R^d$. For every probability measure $G$ on $\R^d$, there exists a probability measure $\widetilde G$ supported on $C_n$ such that $p_{\widetilde G}(X_i)\ge p_G(X_i)$ for every $1\le i\le n$. Moreover, if $G$ has at most $D$ atoms, then so does $\widetilde G$.
+\end{lemma}
+
+\begin{proof}
+Let $\Pi_{C_n}$ be Euclidean projection onto $C_n$, and let $\widetilde G=(\Pi_{C_n})_\#G$ be the pushforward of $G$. If $a\notin C_n$ and $y=\Pi_{C_n}(a)$, then $(a-y)\cdot(x-y)\le0$ for every $x\in C_n$.
+Therefore
+\begin{align*}
+    \log \phi_d(x-y)-\log \phi_d(x-a)
+    &=
+    (y-a)\cdot x-\frac12(|y|^2-|a|^2) \\
+    &=
+    \frac12|a-y|^2+(a-y)\cdot(y-x)\ge0.
+\end{align*}
+Applying this with $x=X_i$ shows that replacing an atom at $a$ by an atom of the same mass at $y$ does not decrease any fitted density value $p_G(X_i)$. Integrating this pointwise inequality over $a$ gives $p_{\widetilde G}(X_i)\ge p_G(X_i)$ for every $i$.
+\end{proof}
+
+\subsection{Localized Bracketing Bound}
+\label{sec:localized-bracketing}
+
+For every candidate density \(p\), its expected log-likelihood relative to
+the truth is the negative Kullback--Leibler divergence
+\(-\mathrm{KL}(p_0,p)\). Candidates far from \(p_0\) therefore have a
+larger negative mean and need not be covered as
+finely as candidates near \(p_0\). Local bracketing formalizes this idea by
+bounding the entropy separately on each Hellinger ball. We use the following
+localized form of Wong--Shen
+\cite[Theorem~1, the remark following it, and Lemma~7]{wong1995probability};
+see also van de Geer \cite[Chapter~7]{vandegeer2000empirical}. The theorem
+controls the likelihood outside a Hellinger ball, while the truncated-log
+estimate in their Lemma~7 controls the innermost ball.
+
+\begin{lemma}
+\label{lem:wong-shen-local}
+Let $X_1,\dots,X_n$ be i.i.d.\ with density $p_0$ with respect to a common dominating measure \(\nu\), and set \(P_0(dx)=p_0(x)\nu(dx)\). Let $\mathcal P_n$ be a class of densities \(p\) with respect to \(\nu\) such that \(p\,d\nu\ll P_0\); ratios \(p/p_0\) are understood \(P_0\)-a.e. Assume the suprema below are measurable; without this assumption, interpret all probabilities as outer probabilities. For $0<\delta\le\sqrt2$, define
+\[
+    \mathcal F_n(\delta)
+    =
+    \Bigl\{
+        \sqrt{p/p_0}-1:
+        p\in\mathcal P_n,\
+        \|\sqrt{p/p_0}-1\|_{L^2(p_0)}\le\delta
+    \Bigr\}.
+\]
+Assume \(A_n\to\infty\) and \(A_n=o(n)\). Fix \(C<\infty\), choose
+\(K_{\mathrm{WS}}=K_{\mathrm{WS}}(C)\) sufficiently large, and set
+\(\delta_n=(K_{\mathrm{WS}}A_n/n)^{1/2}\). If
+\[
+    J_{[],n}(\delta)
+    :=
+    \int_0^\delta
+    \sqrt{
+        1+\log N_{[]}\bigl(
+            \eta,\mathcal F_n(\delta),L^2(p_0)
+        \bigr)
+    }
+    \,d\eta
+    \le C\delta\sqrt{A_n},
+\]
+for every $\delta_n\le\delta\le\sqrt2$, then there is a constant $C_1<\infty$, depending only on $C$, such that
+\[
+    \mathbb P\left\{
+    \sup_{p\in\mathcal P_n}
+    \sum_{i=1}^n\log\frac{p(X_i)}{p_0(X_i)}
+    \le C_1A_n
+    \right\}\to1.
+\]
+\end{lemma}
+
+\begin{proof}
+This is the standard localization of Wong--Shen's inequalities. Peel the
+region outside the ball of radius \(\delta_n\) into dyadic Hellinger shells.
+On the shell with outer radius \(\delta\), apply
+\cite[Theorem~1]{wong1995probability} to the Hellinger ball of radius
+\(2\delta\). The assumed entropy integral is at most
+\(2C\delta\sqrt{A_n}\). Once \(K_{\mathrm{WS}}(C)\) is large enough, the
+theorem's critical-radius condition holds, and the probability that any
+density in this shell has log-likelihood ratio larger than
+\(-c n\delta^2\) is at most \(C'e^{-c'n\delta^2}\). Summing over the shells
+costs \(O(e^{-cA_n})\).
+
+It remains to control the ball of radius \(\delta_n\). Apply the
+truncated-log estimate in \cite[Lemma~7]{wong1995probability}, with the
+truncation level chosen as in the remark following their Theorem~1. The same
+entropy integral bounds the centered truncated empirical process by
+\(C_1A_n\), while the truncation remainder has probability
+\(O(e^{-cA_n})\). Since \(A_n\to\infty\) and \(A_n=o(n)\), both applications
+are in their stated range. Combining the inner ball with the dyadic shells
+proves the lemma.
+\end{proof}
+
+In the Gaussian application, \(A_n\) is proportional to the atomic budget
+times \((d+1)\log\log n\); in the Poisson application, it is proportional to
+the atomic budget times \(\log\log n\). In both cases, the factor
+\(\log\log n\) comes from the logarithm of the sample-dependent parameter
+radius.
+
+Both entropy proofs decompose a candidate mixture into a baseline submixture
+near the true atoms and several additional components. The next lemma controls
+how their square-root density increments combine. Recording this algebra once
+leaves only model-specific tail estimates in the Gaussian and Poisson
+sections.
+
+\begin{lemma}
+\label{lem:contaminant-calculus}
+On a measure space with dominating measure \(\nu\), let \(p_0\) be a
+positive density, let \(a\) be a positive subdensity, and let \(q\) be a
+density, all with respect to \(\nu\). For \(w>0\), set
+\[
+ h_{a,w,q}=\frac{\sqrt{a+wq}-\sqrt a}{\sqrt{p_0}},
+ \qquad e_{a,w,q}=\|h_{a,w,q}\|_{L^2(p_0)},
+ \qquad J_{a,w,q}=\int\frac{w^2q^2}{a+wq}\,d\nu.
+\]
+In this lemma, \(L^2(p_0)\) abbreviates \(L^2(p_0\,d\nu)\).
+Then \(J_{a,w,q}/4\le e_{a,w,q}^2\le J_{a,w,q}\), and, pointwise,
+\[
+ \frac12h_{a,w,q}
+ \le\partial_{\log w}h_{a,w,q}\le h_{a,w,q},
+ \qquad
+ \frac12\le\partial_{\log w}\log e_{a,w,q}\le1.
+\]
+If \(s=\sqrt{a/p_0}\), then replacing \(s\) by any nonnegative measurable
+function \(s_0\) changes
+\(h_{a,w,q}\) by at most \(|s-s_0|\) pointwise.
+
+More generally, if
+\(p=a+\sum_{j=1}^Jw_jq_j\) and \(h_j=h_{a,w_j,q_j}\), then
+\[
+ \sqrt{p/p_0}=\Phi(s,h_1,\ldots,h_J),
+ \qquad
+ \Phi(s,h_1,\ldots,h_J)
+ =\left\{s^2+\sum_{j=1}^J(h_j^2+2sh_j)\right\}^{1/2}.
+\]
+On the nonnegative orthant, \(\Phi\) is coordinatewise increasing and
+\(\partial_{h_j}\Phi\le1\), \(\partial_s\Phi\le\sqrt{J+1}\).
+\end{lemma}
+
+\begin{proof}
+The identity
+\[
+ \sqrt{a+wq}-\sqrt a
+ =\frac{wq}{\sqrt{a+wq}+\sqrt a}
+\]
+gives the comparison with \(J_{a,w,q}\). Differentiating in \(\log w\)
+shows that the ratio of \(\partial_{\log w}h_{a,w,q}\) to
+\(h_{a,w,q}\) is
+\((\sqrt{a+wq}+\sqrt a)/(2\sqrt{a+wq})\in[1/2,1]\); integrating against
+\(h_{a,w,q}^2p_0\) gives the bound for \(\partial_{\log w}\log e_{a,w,q}\).
+The map \(x\mapsto\sqrt{x^2+c}-x\) is one-Lipschitz on
+\([0,\infty)\), which proves the baseline comparison.
+
+Finally, \(w_jq_j/p_0=h_j^2+2sh_j\), proving the composition identity.
+Its derivatives are
+\[
+ \partial_{h_j}\Phi=(s+h_j)/\Phi\le1,
+ \qquad
+ \partial_s\Phi=(s+\sum_jh_j)/\Phi\le\sqrt{J+1},
+\]
+the last inequality following from Cauchy--Schwarz.
+\end{proof}
+
+
+\section{Gaussian Support Divergence}
+\label{sec:gaussian-support}
+
+This section proves Theorem~\ref{thm:gaussian-finite-main}. The proof compares
+the two likelihood levels established in
+Propositions~\ref{prop:gaussian-finite-constructive} and
+\ref{prop:gaussian-finite-upper}: the first constructs an unrestricted gain of
+order \((\log n)^{d/2}\), while the second bounds the gain of every
+\(D\)-atomic mixture by \(O(D\log\log n)\). Their comparison forces the
+support of the NPMLE to diverge at the stated rate.
+
+Fix a finite mixing distribution
+\[
+    G_0=\sum_{m=1}^K\pi_m\delta_{\mu_m},
+    \qquad \pi_m>0,
+\]
+on \(\R^d\), after merging duplicate atoms.  Let \(p_0=p_{G_0}\), and write likelihoods relative to \(p_0\):
+\[
+    L_n(G;G_0)=\sum_{i=1}^n\log\frac{p_G(X_i)}{p_0(X_i)}.
+\]
+The perturbation moves a small amount of mass from one true atom \(\mu_*\) to
+many points \(\mu_*+a\). We choose \(\mu_*\) to be a vertex of the convex
+hull of the true support and restrict \(a\) to a cone pointing away from the
+other atoms. In the Gaussian integrals that determine the score moments, this
+geometry makes the \(\mu_*\)-component dominate the mixture density. The
+scores are then comparable to those of a single Gaussian component and become
+nearly uncorrelated when their displacement vectors are separated.
+
+\subsection{Scores From an Exposed Component}
+\label{sec:gaussian-exposed-scores}
+
+The constructive half of the proof requires many nearly orthogonal score
+directions. We obtain them by perturbing an exposed atom of the true mixing
+distribution outward from the convex hull of the remaining atoms; the lemmas
+in this subsection provide the normalization, correlation decay, and moment
+bounds used in Proposition~\ref{prop:gaussian-finite-constructive}.
+
+Suppose first that \(K>1\). Choose an index \(m_*\) for which
+\(\mu_{m_*}\) is a vertex of
+\(\conv\{\mu_1,\dots,\mu_K\}\), and write
+\(\mu_*=\mu_{m_*}\) and \(\pi_*=\pi_{m_*}\). A sufficiently narrow cone
+inside the outward normal cone at \(\mu_*\) has nonempty interior and satisfies
+\begin{equation}
+\label{eq:exposed-cone}
+    (\mu_*-\mu_m)\cdot a\ge \eta_0 |a|,
+    \qquad a\in\mathcal C,
+    \quad m:\mu_m\ne\mu_* ,
+\end{equation}
+for some \(\eta_0>0\). We take the cone narrow enough that, for all
+\(a,b\in\mathcal C\),
+\[
+    |a+b|\ge c_{\mathcal C}(|a|+|b|),
+    \qquad a\cdot b\ge0.
+\]
+If \(K=1\), there are no competing true atoms. We set \(m_*=1\),
+\(\mu_*=\mu_1\), \(\pi_*=1\), and choose any closed cone with nonempty
+interior on which \(|a+b|\ge c_{\mathcal C}(|a|+|b|)\) and
+\(a\cdot b\ge0\).
+
+For \(a\in\mathcal C\), define
+\[
+    \Delta_a(x)=\phi_d(x-\mu_*-a)-\phi_d(x-\mu_*),
+    \qquad
+    g_a(x)=\frac{\Delta_a(x)}{p_0(x)},
+\]
+\[
+    \sigma_a^2=\E_{p_0}g_a(X)^2
+    =\int \frac{\Delta_a(x)^2}{p_0(x)}\,dx,
+    \qquad
+    h_a=\frac{g_a}{\sigma_a}.
+\]
+Then \(\E_{p_0}h_a(X)=0\) and \(\E_{p_0}h_a(X)^2=1\).
+
+The next lemma supplies the three estimates needed for the likelihood
+construction. The first identifies the normalization of each score, the
+second shows that separated displacement vectors have weakly correlated
+scores, and the third provides the moments needed for concentration. All
+three estimates match the corresponding one-component formulas up to
+constants depending on \(G_0\).
+
+\begin{lemma}
+\label{lem:gaussian-exposed-scores}
+There are constants \(R_0<\infty\) and \(0<c<C<\infty\), depending only on \(G_0,d\) and \(\mathcal C\), such that, uniformly for \(a,b\in\mathcal C\) with \(|a|,|b|\ge R_0\),
+\[
+    c e^{|a|^2}\le \sigma_a^2\le C e^{|a|^2},
+\]
+\[
+    \bigl|\E_{p_0}h_a(X)h_b(X)\bigr|
+    \le
+    C e^{-|a-b|^2/2},
+    \qquad a\ne b,
+\]
+and, for each fixed integer \(m\ge3\),
+\[
+    \E_{p_0}|h_a(X)|^m
+    \le
+    C_m e^{m(m-2)|a|^2/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Translate so that \(\mu_*=0\). Then
+\[
+    p_0(y)=\phi_d(y)
+    \left[
+        \pi_*+
+        \sum_{m\ne m_*}\pi_m
+        \exp\{\mu_m\cdot y-|\mu_m|^2/2\}
+    \right]
+    =\phi_d(y)W(y).
+\]
+By \eqref{eq:exposed-cone}, \(\mu_m\cdot a\le-\eta_0|a|\) for \(a\in\mathcal C\) and \(m\ne m_*\). Under the tilted density proportional to \(\phi_d(y-a)^2/\phi_d(y)\), the variable \(Y\) has law \(\cN(2a,\Id_d)\) and
+\[
+    \frac{\phi_d(Y-a)^2}{\phi_d(Y)}=e^{|a|^2}\phi_d(Y-2a).
+\]
+On the event \(|Y-2a|\le c|a|\), every competing component in \(W(Y)\) is \(O(e^{-c|a|})\), while the complement has probability \(e^{-c|a|^2}\). Hence
+\[
+    \int \frac{\phi_d(y-a)^2}{p_0(y)}\,dy
+    =
+    \pi_*^{-1}e^{|a|^2}\{1+O(e^{-c|a|})\}.
+\]
+The unshifted-square and cross terms in \(\Delta_a^2\) are both \(O(1)\),
+whereas the displayed integral has order \(e^{|a|^2}\). This proves
+\(\sigma_a^2\asymp e^{|a|^2}\).
+
+For covariance, the leading integral is
+\[
+    \int\frac{\phi_d(y-a)\phi_d(y-b)}{p_0(y)}\,dy
+    =
+    e^{a\cdot b}\,\E\frac1{W(Y_{a,b})},
+    \qquad
+    Y_{a,b}\sim\cN(a+b,\Id_d).
+\]
+Since \(a+b\in\mathcal C\) and
+\(|a+b|\ge c_{\mathcal C}(|a|+|b|)\), the exposed-component domination
+used for the variance also gives
+\[
+    \E\frac1{W(Y_{a,b})}
+    =
+    \pi_*^{-1}\{1+O(e^{-c(|a|+|b|)})\}.
+\]
+Dividing by \(\sigma_a\sigma_b\asymp e^{(|a|^2+|b|^2)/2}\) gives the displayed \(e^{-|a-b|^2/2}\) term, with a smaller domination error. The remaining three terms in \(\Delta_a\Delta_b\) contain at least one unshifted factor \(\phi_d(y)\). After normalization they are bounded by \(C e^{-(|a|^2+|b|^2)/2}\), which is at most \(C e^{-|a-b|^2/2}\) because \(a\cdot b\ge0\) on the cone.
+
+For moments, use \(p_0\ge\pi_*\phi_d(\cdot-\mu_*)\) and \(|\Delta_a|^m\le2^{m-1}\{\phi_d(\cdot-\mu_*-a)^m+\phi_d(\cdot-\mu_*)^m\}\). The Gaussian identity
+\[
+    \int \phi_d(y-a)^m\phi_d(y)^{1-m}\,dy
+    =
+    \exp\{m(m-1)|a|^2/2\}
+\]
+combined with \(\sigma_a^m\ge c_m e^{m|a|^2/2}\) proves the moment bound.
+\end{proof}
+
+\subsection{Constructive Likelihood Gain}
+\label{sec:gaussian-constructive-gain}
+
+We now use the exposed scores to prove the constructive half of
+Theorem~\ref{thm:gaussian-finite-main}. A separated grid of perturbations
+supplies order \((\log n)^{d/2}\) nearly orthogonal directions, and optimizing
+their small mixing weights yields the gain stated in
+Proposition~\ref{prop:gaussian-finite-constructive}.
+
+Let \(L=\log n\), and fix a small constant \(A_*=A_*(G_0,d)>0\). Set
+\[
+    K_{n,d}^{G_0}
+    =
+    \{a\in\mathcal C:R_0\le |a|\le A_*\sqrt L\}.
+\]
+Choose \(L_d\) large, and let \(\mathcal A_{n,d}\) be a maximal \(L_d\)-separated subset of \(K_{n,d}^{G_0}\). Since \(\mathcal C\) has positive solid angle,
+\[
+    J_{n,d}:=|\mathcal A_{n,d}|\asymp_{G_0,d}(\log n)^{d/2}.
+\]
+
+The following proposition gives the unrestricted half of the likelihood
+comparison. Its sample-dependent mixing distribution removes a small amount
+of mass from \(\mu_*\) and redistributes it over
+\(\mu_*+\mathcal A_{n,d}\). We use this distribution only as a feasible
+competitor; it is not asserted to be the NPMLE.
+
+\begin{proposition}
+\label{prop:gaussian-finite-constructive}
+For suitable constants \(R_0,L_d,A_*\), there is a random mixing distribution \(G_n\) such that
+\[
+    \mathbb P\left\{
+        L_n(G_n;G_0)
+        \ge c_{G_0,d}J_{n,d}
+    \right\}\to1.
+\]
+\end{proposition}
+
+\begin{proof}
+For \(a\in\mathcal A_{n,d}\), let
+\[
+    d_a=\frac1{\sqrt n}\sum_{i=1}^n h_a(X_i),
+    \qquad
+    \wh H_{ab}=\frac1n\sum_{i=1}^n h_a(X_i)h_b(X_i),
+    \qquad
+    H_{ab}=\E_{p_0}h_a(X)h_b(X).
+\]
+Thus \(d_a\) is the empirical score in direction \(a\), while \(\wh H\)
+and \(H\) are its empirical and population Gram matrices.
+By Lemma~\ref{lem:gaussian-exposed-scores}, choosing \(L_d\) large makes \(\sup_a\sum_{b\ne a}|H_{ab}|<1/5\). Gershgorin's theorem gives \(\lambda_{\max}(H)\le1.2\). The moment estimate in Lemma~\ref{lem:gaussian-exposed-scores}, with \(A_*\) small enough, gives
+\[
+    \E |h_a(X)|^3\le C n^{3A_*^2/2},
+    \qquad
+    \E |h_a(X)|^4\le C n^{4A_*^2}.
+\]
+Since \(J_{n,d}\) is polylogarithmic, Chebyshev's inequality and a union
+bound over the \(J_{n,d}^2\) entries, followed by
+\(\|A\|_{\op}\le J_{n,d}\max_{a,b}|A_{ab}|\), give
+\[
+    \|\wh H-H\|_{\op}=o_{\mathbb P}(1).
+\]
+We fix \(A_*\) small enough that the resulting powers of \(n\) are
+negligible in the concentration estimates that follow; any sufficiently small
+constant satisfying \(A_*^2<1/8\) suffices.
+
+Let \(S=\sum_{a\in\mathcal A_{n,d}}(d_a^+)^2\). We next show that a positive
+fraction of the score coordinates contribute. Fix a large constant \(B\) and
+write \(\psi_B(x)=(x^+)^2\wedge B\). The one- and two-dimensional
+Berry--Esseen bounds for bounded Lipschitz test functions, together with the
+third-moment estimate in Lemma~\ref{lem:gaussian-exposed-scores}, hold
+uniformly over all coordinates and pairs;
+their error is \(n^{-c}\) for some \(c>0\). Consequently,
+\[
+    \E\psi_B(d_a)=\E\psi_B(Z)+o(1)
+\]
+uniformly in \(a\), where \(Z\sim\mathcal N(0,1)\). For a centered bivariate
+normal pair \((Z_a,Z_b)\) with correlation \(H_{ab}\), the Gaussian maximal
+correlation inequality gives
+\[
+    |\Cov(\psi_B(Z_a),\psi_B(Z_b))|
+    \le C_B|H_{ab}|.
+\]
+The uniform bivariate approximation and the row-sum bound for \(H\) therefore
+imply
+\[
+    \Var\left(\sum_a\psi_B(d_a)\right)
+    =O_B(J_{n,d})+o(J_{n,d}^2).
+\]
+Choose \(B\) so that \(\E\psi_B(Z)>1/3\). Chebyshev's inequality and
+\(\psi_B(d_a)\le(d_a^+)^2\) then show that \(S\) is at least a constant
+multiple of \(J_{n,d}\) with high probability. The identity
+\(\E\sum_a d_a^2=J_{n,d}\) gives the matching stochastic upper bound:
+\[
+    \mathbb P\{S\ge cJ_{n,d}\}\to1,
+    \qquad
+    S=O_{\mathbb P}(J_{n,d}).
+\]
+
+Fix \(\eta=1/5\), put \(r_a=d_a^+/(1+\eta)\), and set
+\[
+    t_a=\frac{r_a}{\sqrt n\,\sigma_a}.
+\]
+Since \(\inf_a\sigma_a>0\) and \(\sum_a r_a\le\sqrt{J_{n,d}S}=O_{\mathbb P}(J_{n,d})=o_{\mathbb P}(\sqrt n)\), we have \(\sum_a t_a=o_{\mathbb P}(1)\). Hence \(\sum_a t_a\le\pi_*\) with probability tending to one. On this event define
+\[
+    G_n=
+    G_0-
+    \Bigl(\sum_{a\in\mathcal A_{n,d}}t_a\Bigr)\delta_{\mu_*}
+    +
+    \sum_{a\in\mathcal A_{n,d}}t_a\delta_{\mu_*+a},
+\]
+and set \(G_n=G_0\) otherwise.
+
+On the event \(\max_i|X_i|\le C_{G_0}\sqrt L\), which has probability tending to one, the bound \(p_0\ge\pi_*\phi_d(\cdot-\mu_*)\) gives
+\[
+    |h_a(X_i)|
+    \le
+    C\exp\{a\cdot(X_i-\mu_*)-|a|^2\}+C
+    \le n^\rho
+\]
+for all \(i\) and \(a\in\mathcal A_{n,d}\), where \(\rho<1/2\) after choosing \(A_*\) small enough. Therefore, with
+\[
+    u_i=\frac1{\sqrt n}\sum_{a\in\mathcal A_{n,d}}r_a h_a(X_i),
+\]
+we have \(\max_i|u_i|=o_{\mathbb P}(1)\), and
+\[
+    \frac{p_{G_n}(X_i)}{p_0(X_i)}=1+u_i.
+\]
+Moreover, \(\sum_i u_i^2=r^\top\wh H r=O_{\mathbb P}(J_{n,d})\).
+The remainder in \(\log(1+u)=u-u^2/2+O(|u|^3)\) is therefore at most
+\(O(\max_i|u_i|\sum_i u_i^2)=o_{\mathbb P}(J_{n,d})\), and hence
+\[
+    L_n(G_n;G_0)
+    =
+    r^\top d-\frac12 r^\top\wh H r+o_{\mathbb P}(J_{n,d}).
+\]
+Since \(r^\top d=S/(1+\eta)\) and
+\(r^\top\wh H r\le(1.2+o_{\mathbb P}(1))S/(1+\eta)^2\), the resulting
+coefficient of \(S\) is positive for \(\eta=1/5\). The high-probability
+lower bound on \(S\) proves the proposition.
+\end{proof}
+
+\subsection{Localized Upper Bound}
+\label{sec:gaussian-localized-upper}
+
+We now bound the likelihood of every \(D\)-atomic competitor. Lemma
+~\ref{lem:convex-support} restricts its atoms to a ball whose radius grows
+like \(\sqrt{\log n}\). To retain the desired \(D\log\log n\) likelihood
+scale, the entropy must therefore depend on this radius only through its
+logarithm.
+
+For \(D\ge1\), \(M\ge2\), and \(0<\delta\le\sqrt2\), let \(\mathcal P_{d,D}(M)\) be the class of Gaussian location mixtures with at most \(D\) atoms supported in \(B(0,M)\), and define
+\[
+    \mathcal F_{d,D}^{G_0}(M,\delta)
+    =
+    \left\{
+        \sqrt{p_G/p_0}-1:
+        p_G\in\mathcal P_{d,D}(M),
+        \ \|\sqrt{p_G/p_0}-1\|_{L^2(p_0)}\le\delta
+    \right\}.
+\]
+
+The next lemma provides this dependence. The factor \(\log M\), rather than
+a power of \(M\), is what becomes \(\log\log n\) when
+\(M\asymp\sqrt{\log n}\).
+
+\begin{lemma}
+\label{lem:gaussian-finite-local-bracket}
+For fixed \(G_0\), fixed \(d\), and fixed \(C_0<\infty\), there exists
+\(C_{G_0,d,C_0}<\infty\) such that, for every \(M\ge2\),
+\(1\le D\le M^{C_0}\), and \(0<\eta\le\delta\le\sqrt2\),
+\[
+    \log N_{[]}
+    \bigl(
+        \eta,
+        \mathcal F_{d,D}^{G_0}(M,\delta),
+        L^2(p_0)
+    \bigr)
+    \le
+    C_{G_0,d,C_0}D(d+1)\bigl(\log M+\log(\delta/\eta)\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Write \(\rho_G=\|\sqrt{p_G/p_0}-1\|_2\). We first work in a fixed
+neighborhood \(0<\rho_G\le\rho_0\). Choose disjoint bounded neighborhoods
+\(A_1,\ldots,A_K\) of the atoms of \(G_0\), and let \(A_0\) be their
+complement. The local-geometry theorem of Gassiat--van Handel
+\cite[Theorem~3.10]{gassiatVanHandel2014} controls both the mass outside
+these neighborhoods and the perturbation formed by the remaining atoms,
+uniformly in the number of candidate atoms. In particular,
+\begin{equation}
+\label{eq:gaussian-local-geometry}
+ W:=G(A_0)\le C\rho_G,
+ \qquad
+ \left\|\sqrt{p_{G|_{A_0^c}}/p_0}-1\right\|_2\le C\rho_G.
+\end{equation}
+The theorem directly bounds \(W\). Its coefficient lower bound, followed by
+second-order Taylor expansion of the kernels on the fixed sets \(A_i\), also
+gives the second inequality. The same coefficient and Taylor bounds give the
+pointwise envelope needed below for the innermost Hellinger ball: the
+normalized inner density perturbation is bounded by a fixed \(L^2(p_0)\)
+function formed from the Gaussian kernel and its first two location
+derivatives on \(\bigcup_iA_i\).
+
+Fix the contribution \(a\) of the atoms in \(\bigcup_iA_i\). We first
+construct brackets after adding one atom outside these neighborhoods; the
+full mixture will follow by composing at most \(D\) such brackets.
+Write \(q_\theta=\phi_d(\cdot-\theta)\), and use the notation
+\(h_{a,w,q_\theta}\), \(e_{a,w,q_\theta}\) from Lemma
+~\ref{lem:contaminant-calculus}. Differentiation gives
+\[
+ \nabla_\theta h_{a,w,q_\theta}
+ =\frac{wq_\theta(x-\theta)}
+ {2\sqrt{p_0}\sqrt{a+wq_\theta}}.
+\]
+Because \(a\) contains a fixed positive amount of Gaussian mass with
+centers in a fixed ball, the measure governing the derivative norm has a
+uniform exponential radial moment. More precisely, if
+\(d\mu=w^2q_\theta^2(a+wq_\theta)^{-1}dx\), comparison along rays gives
+\begin{equation}
+\label{eq:gaussian-harmonic-moment}
+ \int e^{c|x|/(1+M)}
+ \left(1+\frac{|x|}{1+M}\right)^2d\mu
+ \le C\int d\mu,
+ \qquad |\theta|\le M.
+\end{equation}
+To prove \eqref{eq:gaussian-harmonic-moment}, put
+\(\widetilde q=wq_\theta\),
+\(v=\widetilde q^2/a\), and
+\(\mu=\widetilde qv/(\widetilde q+v)\); this last expression equals the
+density in \eqref{eq:gaussian-harmonic-moment}. If \(x=t\omega\), with
+\(|\omega|=1\), then for \(r\ge0\),
+\[
+ \widetilde q((t+r)\omega)
+ \le e^{-r(t-M)-r^2/2}\widetilde q(t\omega),
+ \qquad
+ a((t+r)\omega)
+ \ge e^{-r(t+B_0)-r^2/2}a(t\omega),
+\]
+where \(B_0\) bounds the inner centers. Hence
+\(v((t+r)\omega)\le
+e^{-r(t-2M-B_0)-r^2/2}v(t\omega)\). The harmonic-mean map
+\((x,y)\mapsto xy/(x+y)\) is increasing and homogeneous, so the same
+bound holds for \(\mu\). After polar integration, if
+\(F(t)=t^{d-1}\int_{\mathbb S^{d-1}}\mu(t\omega)\,d\omega\), then
+\[
+ F(t+1)\le e^{-t/3}F(t),
+ \qquad t\ge C(1+M+d).
+\]
+Iterating this inequality on unit shells proves
+\eqref{eq:gaussian-harmonic-moment}. Lemma
+~\ref{lem:contaminant-calculus} now yields
+\[
+ \|\nabla_\theta h_{a,w,q_\theta}\|_2
+ \le C(1+M)e_{a,w,q_\theta}.
+\]
+
+We use these derivative bounds to construct ordered pointwise brackets,
+which is stronger than constructing an \(L^2\)-cover. Partition the location
+ball into boxes of diameter \(c/(1+M)\), and partition the positive weights
+on the \(\log w\) scale. Within one location box, the ratio of any kernel to
+the kernel at its center is at most
+\(\exp\{c_1(1+|x|/(1+M))\}\), where \(c_1\) can be made smaller than the
+constant in \eqref{eq:gaussian-harmonic-moment}. After squaring, that estimate
+and \eqref{eq:gaussian-harmonic-moment} bound the \(L^2(p_0)\) norms of the
+pointwise suprema of the weight and location derivatives by
+\(Ce\) and \(C(1+M)e\), respectively.
+
+Counting the weight and location cells gives, uniformly over the admissible
+inner subdensities,
+\begin{equation}
+\label{eq:gaussian-one-contaminant-bracket}
+ \log N_{[]}\left(
+ \epsilon,
+ \{h_{a,w,q_\theta}:|\theta|\le M,\ e_{a,w,q_\theta}\le r\},
+ L^2(p_0)\right)
+ \le Cd\{\log M+\log_+(r/\epsilon)\}.
+\end{equation}
+To see the endpoint \(w=0\), fix a preliminary location box and a point
+\(\theta_0\) in it. By Lemma~\ref{lem:contaminant-calculus}, the logarithmic
+derivative of \(e_{a,w,q_{\theta_0}}\) lies in \([1/2,1]\). All weights for
+which this norm is at most \(c\epsilon\) therefore fit into one bracket
+\([0,\sup_{\theta\text{ in the same box}}h_{a,w_*,q_\theta}]\) of width
+\(C\epsilon\); above that
+threshold, the relevant \(\log w\)-interval has length
+\(O(1+\log(r/\epsilon))\). Meshes of size \(c\epsilon/r\) in \(\log w\)
+and \(c\epsilon/[r(1+M)]\) in location complete the count. Adjusting the
+mesh constants gives width \(\epsilon\).
+
+We now bracket a Hellinger shell \(r/2<\rho_G\le r\). Decompose
+\[
+ p_G=a+\sum_{j=1}^Jw_jq_{\theta_j},\qquad J\le D,
+\]
+where \(a=p_{G|_{A_0^c}}\). By \eqref{eq:gaussian-local-geometry}, with
+\(s=\sqrt{a/p_0}\),
+\(\|s-1\|_2\le Cr\). Positivity also gives
+\[
+ \|h_{a,w_j,q_{\theta_j}}\|_2
+ \le\|\sqrt{p_G}-\sqrt a\|_2\le Cr.
+\]
+Let \(\mathcal S_D^{\rm in}(r)\) denote the class of these inner functions:
+\[
+ \begin{split}
+ \mathcal S_D^{\rm in}(r)=\bigl\{\sqrt{p_H/p_0}:{}&
+ H\text{ is a subprobability measure},\quad |\supp(H)|\le D,\\
+ &\supp(H)\subset\textstyle\bigcup_iA_i,\quad
+ \|\sqrt{p_H/p_0}-1\|_2\le Cr\bigr\}.
+ \end{split}
+\]
+For \(a=p_H\), write \(a=m\bar a\), where \(m=H(\R^d)\) and
+\(\bar a\) is a probability-mixture density. The reverse triangle
+inequality gives \(|\sqrt m-1|\le Cr\), and hence
+\[
+ \|\sqrt{\bar a/p_0}-1\|_2
+ \le m^{-1/2}\|\sqrt{a/p_0}-1\|_2+|m^{-1/2}-1|
+ \le Cr.
+\]
+Apply Gassiat--van Handel's fixed-compact local bracketing theorem to
+\(\bar a\), with order \(D\vee K\), and bracket the scalar \(\sqrt m\)
+separately. Multiplying the nonnegative scalar and density endpoints gives
+\[
+ \log N_{[]}\bigl(\epsilon,
+ \mathcal S_D^{\rm in}(r),L^2(p_0)\bigr)
+ \le CD(d+1)\log(CDr/\epsilon).
+\]
+
+Put \(\zeta=c\min\{\eta,r\}\). Bracket \(s\) at width
+\(\zeta/(CD)\), choose an actual representative \(s_0\) from each nonempty
+bracket, and apply \eqref{eq:gaussian-one-contaminant-bracket} with baseline
+\(a_0=s_0^2p_0\) to each outer component at the same width. If the inner
+bracket is \([L,U]\), replace \(L\) by \(L_+=\max\{L,0\}\), put
+\(b=U-L_+\), and widen each component bracket \([\ell_j,u_j]\) to
+\([(\ell_j-b)_+,u_j+b]\). Lemma~\ref{lem:contaminant-calculus} then gives
+genuine composed endpoints through \(\Phi\), of total width at most \(\zeta\).
+The logarithm of the shell bracket count is therefore at most
+\begin{equation}
+\label{eq:gaussian-shell-entropy}
+ CD(d+1)\{\log M+\log D+\log_+(r/\eta)\}.
+\end{equation}
+
+The shell construction leading to
+\eqref{eq:gaussian-shell-entropy} covers every positive Hellinger radius. To
+cover the innermost Hellinger ball by a single bracket, apply the coefficient
+bound and the fixed Taylor envelope just described. These two bounds give a fixed
+\(H_0\in L^2(p_0)\) such that the inner ratio \(A=a/p_0\) satisfies
+\(|A-1|\le C\rho_GH_0\). The outer part \(B=(p_G-a)/p_0\) satisfies
+\[
+ B/\rho_G\le C\sup_{|\theta|\le M}q_\theta/p_0.
+\]
+Completing the square shows that the supremum on the right has
+\(L^2(p_0)\)-norm at most \(e^{C(1+M^2)}\). Since
+\(|\sqrt{A+B}-1|\le|A+B-1|\), there is a common envelope \(F_M\) such that
+\[
+ |\sqrt{p_G/p_0}-1|\le\rho_GF_M,
+ \qquad \|F_M\|_2\le e^{C(1+M^2)}.
+\]
+Thus the ball \(\rho_G\le\eta/(2\|F_M\|_2)\) lies in one bracket of width
+\(\eta\). There are only
+\(O\{1+M^2+\log_+(\delta/\eta)\}\) dyadic shells above it. Taking the union
+of their bracket collections adds at most
+\[
+ C\{\log M+\log_+(\delta/\eta)\}
+\]
+to \eqref{eq:gaussian-shell-entropy}. Because \(D\le M^{C_0}\), the term
+\(D\log D\) is absorbed by \(CD\log M\), and the shell-union term is
+absorbed by the asserted entropy bound.
+
+For the remaining region \(\rho_G\ge\rho_0\), no localization is needed.
+Pointwise derivative brackets for Gaussian kernels, combined with a simplex
+grid for the weights, give
+\[
+ \log N_{[]}\bigl(\eta^2,
+ \{p_G:|\supp(G)|\le D,\ \supp(G)\subset B(0,M)\},L^1\bigr)
+ \le CD(d+1)\{\log M+\log(1/\eta)\}.
+\]
+Here is the construction. A location cell \(I\), centered at \(\theta_I\),
+is bracketed by
+\([(q_{\theta_I}-\operatorname{diam}(I)E_I)_+,
+q_{\theta_I}+\operatorname{diam}(I)E_I]\), where
+\(E_I=\sup_{\theta\in I}|\nabla q_\theta|\) has uniformly bounded
+\(L^1\)-norm. Quantizing weights at mesh \(h=c\eta^2/D\), and writing
+\(k_j=\lfloor w_j/h\rfloor\), gives mixture endpoints
+\(\sum_jk_jh\ell_j\) and \(\sum_j(k_j+1)hu_j\). Their \(L^1\)-distance is
+at most \(C\eta^2\), and the number of feasible integer weight vectors is
+at most \((C/\eta^2)^D\).
+Taking square roots turns these into Hellinger brackets of width \(\eta\).
+On the present region, \(\delta\ge\rho_0\), so
+\(\log(1/\eta)\le C+\log(\delta/\eta)\). Combining the local and global
+regions proves the lemma.
+\end{proof}
+
+We now insert the entropy estimate into the localized likelihood inequality.
+The resulting bound applies simultaneously to all sparse competitors and
+will be compared with Proposition~\ref{prop:gaussian-finite-constructive}.
+
+\begin{proposition}
+\label{prop:gaussian-finite-upper}
+Fix \(C_0<\infty\). Let \(D_n\) be positive integers satisfying
+\(D_n\le(\log n)^{C_0}\) and
+\(D_n(d+1)\log\log n=o(n)\). Then
+\[
+    \mathbb P\left\{
+    \sup_{|\supp(G)|\le D_n}L_n(G;G_0)
+    \le C_{G_0,d,C_0}D_n(d+1)\log\log n
+    \right\}\to1.
+\]
+\end{proposition}
+
+\begin{proof}
+Since \(G_0\) is fixed and finite, \(\mathbb P\{\max_i|X_i|\le C_{G_0}\sqrt{\log n}\}\to1\). On this event, Lemma~\ref{lem:convex-support} restricts all \(D_n\)-atomic competitors to \(B(0,C_{G_0}\sqrt{\log n})\). Apply Lemma~\ref{lem:gaussian-finite-local-bracket} with \(M=C_{G_0}\sqrt{\log n}\) and growth exponent \(2C_0+1\). The bracketing integral is bounded by \(C\delta\sqrt{A_n}\) for \(A_n=C_{G_0,d,C_0}D_n(d+1)\log\log n\), because \(\int_0^1\sqrt{1+\log(1/t)}\,dt<\infty\). Lemma~\ref{lem:wong-shen-local} gives the desired upper bound.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:gaussian-finite-main}]
+By Proposition~\ref{prop:gaussian-finite-constructive}, the unrestricted likelihood is at least \(cJ_{n,d}\) with probability tending to one, where \(J_{n,d}\asymp_{G_0,d}(\log n)^{d/2}\). Proposition~\ref{prop:gaussian-finite-upper} gives the upper bound \(C D_n(d+1)\log\log n\) for all \(D_n\)-atomic competitors. Taking
+\[
+    D_n=
+    \left\lfloor
+        c_{G_0,d}\frac{(\log n)^{d/2}}{\log\log n}
+    \right\rfloor
+\]
+with \(c_{G_0,d}\) small enough, no \(D_n\)-atomic mixing distribution can
+maximize the likelihood on the intersection of the two high-probability
+events. This proves the theorem.
+\end{proof}
+
+\subsection{Small Variance Misspecification}
+\label{sec:gaussian-small-variance-mismatch}
+
+The one-dimensional phase-transition analysis in
+\cite{varianceD1Companion}
+shows that, for \(\eps_n=n^{-r}\), the one-atom probability is nontrivial
+when \(0<r<1/4\) and vanishes when \(r\ge1/4\). The following proposition
+quantifies the support on the smaller-mismatch side: if \(\eps_n\) is below
+\(n^{-1/4}\) by a fixed polynomial factor, then the lower bound has the same
+order as under correct specification.
+
+\begin{proposition}
+\label{prop:gaussian-small-variance-mismatch}
+Fix \(\delta>0\). Let \(X_1,\dots,X_n\) be i.i.d.\
+\(\cN(0,1-\eps_n)\), where
+\(0\le\eps_n\le n^{-1/4-\delta}\), and fit unit-variance Gaussian
+location mixtures. There is a constant \(c_\delta>0\) such that every
+NPMLE \(\wh G_n\) satisfies
+\[
+    \mathbb P\left\{
+        |\supp(\wh G_n)|
+        \ge
+        c_\delta\frac{\sqrt{\log n}}{\log\log n}
+    \right\}\to1.
+\]
+\end{proposition}
+
+\begin{proof}
+The proof is the one-dimensional construction from
+Sections~\ref{sec:gaussian-constructive-gain} and
+\ref{sec:gaussian-localized-upper}, with two changes: the score array is
+controlled by truncation rather than raw fourth moments, and the variance
+mismatch introduces a small deterministic damping term. We give the estimates
+that justify both changes.
+
+If the proposition holds for one value of \(\delta\), it also holds for every
+larger value. We may therefore assume \(0<\delta<1/4\). Write
+\(X_i=\sigma_nZ_i\), where \(\sigma_n^2=1-\eps_n\) and
+\(Z_1,\ldots,Z_n\) are i.i.d.\ standard normal. Put
+\(\gamma=\delta/2\), choose
+\[
+    \theta_0=\frac12-\frac\gamma2,
+    \qquad
+    \theta_1=\frac12-\frac\gamma4,
+\]
+and let \(u_n\) satisfy \(n\mathbb P\{Z>u_n\}=1\) for
+\(Z\sim\cN(0,1)\). A constant-spaced grid
+\(\mathcal A_n=\{a_1,\dots,a_J\}\) in
+\([\theta_0u_n,\theta_1u_n]\) has
+\(J\asymp_\delta\sqrt{\log n}\). For
+\[
+    q_a(z)=e^{az-a^2/2},
+    \qquad
+    h_a(z)=\frac{q_a(z)-1}{(e^{a^2}-1)^{1/2}},
+\]
+direct Gaussian integration gives
+\[
+    \mathbb E h_a(Z)h_b(Z)
+    =
+    \frac{e^{ab}-1}{\sqrt{(e^{a^2}-1)(e^{b^2}-1)}}
+    \le 2e^{-(a-b)^2/2}
+    \qquad(a\ne b).
+\]
+Choosing the grid spacing large makes the off-diagonal Gram row sums smaller
+than \(1/10\).
+
+The earlier construction used a smaller score radius and controlled the
+empirical Gram matrix by raw fourth moments. Here the grid approaches
+\(a=u_n/2\), where those moments are too large, so we replace that step by
+the following truncation estimates.
+The strict inequality \(\theta_1<1/2\) gives \(c>0\) and
+\(\rho_n=n^{-c}\) such that, uniformly over \(a,b\) in the grid,
+\begin{align*}
+    \mathbb E\!\left[h_a(Z)^2
+        \mathbf 1_{\{|h_a(Z)|>\rho_n\sqrt n\}}\right]
+    +n\mathbb P\{|h_a(Z)|>\rho_n\sqrt n\}
+    &\le \rho_n,\\
+    \mathbb E\!\left[|h_a(Z)h_b(Z)|
+        \mathbf 1_{\{|h_a(Z)h_b(Z)|>n\rho_n\}}\right]
+    &\le \rho_n,\\
+    \mathbb E\!\left[(h_a(Z)h_b(Z))^2
+        \mathbf 1_{\{|h_a(Z)h_b(Z)|\le n\rho_n\}}\right]
+    &\le n\rho_n.
+\end{align*}
+To verify these estimates, note that
+\((e^{a^2}-1)^{1/2}\asymp e^{a^2/2}\). If \(a=\theta u_n\), the first
+tail event forces
+\[
+    Z\ge
+    \left(\theta+\frac1{4\theta}-\frac{c}{2\theta}+o(1)\right)u_n.
+\]
+At \(c=0\), the coefficient is uniformly larger than both \(1\) and
+\(2\theta\) on \([\theta_0,\theta_1]\). Mills' bound controls the ordinary
+tail, while
+\[
+    h_a(z)^2\phi_1(z)
+    \le C\phi_1(z-2a)+Ce^{-a^2}\phi_1(z)
+\]
+controls its second moment under the tilted normal law. The product estimates
+then follow from Cauchy--Schwarz, after reducing \(c\). More explicitly,
+repeating this tilted-tail calculation at the larger threshold
+\(\sqrt{n\rho_n}\) first gives, for
+some \(c_0>0\),
+\[
+ \sup_a\mathbb E\!\left[h_a(Z)^2
+   \mathbf 1_{\{|h_a(Z)|>\sqrt{n\rho_n}\}}\right]
+ \le n^{-c_0}.
+\]
+Choose \(c<c_0/2\). Since
+\(\{|h_ah_b|>n\rho_n\}\) is contained in the union of the two events
+\(\{|h_a|>\sqrt{n\rho_n}\}\) and
+\(\{|h_b|>\sqrt{n\rho_n}\}\), Cauchy--Schwarz gives the product-tail
+bound above. The final truncated second-moment bound follows from
+\((h_ah_b)^2\mathbf 1_{\{|h_ah_b|\le n\rho_n\}}
+\le n\rho_n|h_ah_b|\).
+
+Now set
+\[
+    d_j=\frac1{\sqrt n}\sum_{i=1}^nh_{a_j}(Z_i),
+    \qquad
+    \wh H_{jk}=\frac1n\sum_{i=1}^nh_{a_j}(Z_i)h_{a_k}(Z_i),
+    \qquad
+    S=\sum_{j=1}^J(d_j^+)^2.
+\]
+Truncating the products at \(n\rho_n\), applying Chebyshev's inequality to
+each entry, and taking a union bound gives
+\(\|\wh H-H\|_{\op}=o_{\mathbb P}(1)\). Truncating the individual scores at
+\(\rho_n\sqrt n\), and repeating the bounded positive-score argument from
+Proposition~\ref{prop:gaussian-finite-constructive}, gives
+\[
+    S=O_{\mathbb P}(J),
+    \qquad
+    \mathbb P\{S\ge cJ\}\to1.
+\]
+Indeed, \(J\) is polylogarithmic whereas \(\rho_n\) is a negative power of
+\(n\), so the entrywise union bounds, the operator-norm conversion, and the
+one- and two-coordinate Berry--Esseen errors all vanish. More explicitly,
+with \(T_n=\rho_n\sqrt n\),
+\[
+ \left|\mathbb E h_a(Z)\mathbf 1_{\{|h_a(Z)|>T_n\}}\right|
+ \le
+ \sqrt{\mathbb P\{|h_a(Z)|>T_n\}
+       \mathbb E[h_a(Z)^2\mathbf 1_{\{|h_a(Z)|>T_n\}}]}
+ \le \frac{\rho_n}{\sqrt n}.
+\]
+Thus recentering moves a normalized score by at most \(\rho_n\), and
+variance normalization changes it by \(O(\rho_n)\). The probability that
+any of the \(nJ\) summands is truncated is at most \(J\rho_n=o(1)\), so the
+Gaussian approximation transfers back to the original scores \(d_j\).
+Finally, choose \(\zeta>0\) so that
+\(2\theta_1(1+\zeta-\theta_1)<1/2\). With probability tending to one,
+\(\max_i|Z_i|\le(1+\zeta)u_n\), and the explicit score formula then gives,
+for some \(c_1>0\),
+\[
+    \max_{i,j}|h_{a_j}(Z_i)|\le n^{1/2-c_1}
+\]
+with probability tending to one. Thus both ingredients used in the correctly
+specified construction remain valid: the empirical score vector has the same
+Gaussian approximation, and every observed score is uniformly small enough
+for the likelihood Taylor expansion.
+
+We now transfer the correctly specified construction from the standardized
+sample \(Z_1,\ldots,Z_n\) to the observed sample. Put
+\(\kappa_n=\eps_n/\{2(1-\eps_n)\}\). A fitted atom
+\(b_j=a_j/\sigma_n\) has density ratio
+\[
+    \frac{\phi_1(X_i-b_j)}{\phi_1(X_i)}
+    =e^{-\kappa_na_j^2}q_{a_j}(Z_i).
+\]
+Thus \(e^{-\kappa_na_j^2}=1+O(\eps_n\log n)=1+o(1)\) uniformly on the
+grid. As in Proposition~\ref{prop:gaussian-finite-constructive}, fix
+\(\eta=1/5\), set
+\[
+    r_j=\frac{d_j^+}{1+\eta},
+    \qquad
+    t_j=\frac{r_j}{\sqrt n\,(e^{a_j^2}-1)^{1/2}},
+\]
+and move mass \(t_j\) from zero to \(b_j\). Since
+\(\sum_jr_j=O_{\mathbb P}(J)\), the total moved mass is
+\(o_{\mathbb P}(1)\).
+
+Relative to the correctly specified calculation, the only additional
+constant in each fitted density ratio is
+\[
+    c_n=\frac1{\sqrt n}\sum_{j=1}^J
+        \frac{r_j\{e^{-\kappa_na_j^2}-1\}}
+             {(e^{a_j^2}-1)^{1/2}}.
+\]
+Its contribution to the linear likelihood term satisfies
+\[
+    n|c_n|
+    \le O_{\mathbb P}(J)(\log n)
+        n^{1/2-(1/4+\delta)-\theta_0^2+o(1)}
+    =o_{\mathbb P}(J),
+\]
+because \(\theta_0^2>1/4-\delta\). The damping factors also change the
+linear and quadratic score terms by only \(o_{\mathbb P}(J)\). The constant
+\(c_n\) creates the additional terms
+\(2c_n\sum_i v_i\) and \(nc_n^2\) in the quadratic expansion, where
+\[
+ v_i=\frac1{\sqrt n}\sum_j
+ r_je^{-\kappa_na_j^2}h_{a_j}(Z_i),
+ \qquad
+ \sum_i v_i=O_{\mathbb P}(J).
+\]
+They are \(o_{\mathbb P}(J)\) because
+\(n|c_n|=o_{\mathbb P}(J)\) and \(J=o(n)\). The bound
+\(\max_{i,j}|h_{a_j}(Z_i)|\le n^{1/2-c_1}\) makes the Taylor remainder
+\(o_{\mathbb P}(J)\), exactly
+as in Proposition~\ref{prop:gaussian-finite-constructive}. The quadratic
+likelihood expansion from that proposition now applies with the damping,
+centering, and Taylor errors just bounded. It gives a feasible mixing
+distribution with
+likelihood gain at least \(cJ\asymp_\delta\sqrt{\log n}\) with probability
+tending to one.
+
+The sparse upper bound transfers without any new entropy calculation. For any
+fitted atom \(b\), put \(t=\sigma_nb\). Then
+\[
+    \frac{\phi_1(X_i-b)}{\phi_1(X_i)}
+    =e^{-\kappa_nt^2}q_t(Z_i)\le q_t(Z_i).
+\]
+After mixing, every \(D\)-atomic likelihood for \(X_1,\dots,X_n\) is therefore
+bounded by a \(D\)-atomic correctly specified likelihood for
+\(Z_1,\dots,Z_n\). Proposition~\ref{prop:gaussian-finite-upper} bounds the
+correctly specified likelihood by \(CD\log\log n\) with probability tending
+to one. Comparing the two
+likelihood scales and taking
+\(D=c_\delta\sqrt{\log n}/\log\log n\), with \(c_\delta\) small enough,
+proves the proposition.
+\end{proof}
+
+The one-dimensional restriction reflects the mismatch scale on which the
+bound is informative, not a limitation of the score construction. The same
+construction gives the following higher-dimensional statement.
+
+\begin{remark}
+For every fixed \(d\ge2\), replacing the one-dimensional grid
+\(\mathcal A_n\) by a
+constant-separated grid in the annulus
+\[
+    \{a\in\R^d:\theta_0u_n\le |a|\le\theta_1u_n\}
+\]
+gives \(J\asymp_{\delta,d}(\log n)^{d/2}\) score locations. For the
+multivariate Gaussian scores, the exact covariance formula implies
+\[
+ |\mathbb E h_a(Z)h_b(Z)|
+ \le C\left\{e^{-|a-b|^2/2}
+       +e^{-(|a|^2+|b|^2)/2}\right\}.
+\]
+Choosing the separation constant large makes the off-diagonal row sums of
+the first term arbitrarily small; the second has row sum at most
+\(J e^{-\theta_0^2u_n^2}=o(1)\). Thus the truncation, damping, and
+sparse-likelihood arguments are otherwise unchanged.
+Repeating the score and likelihood calculations on this annular grid gives
+\[
+    |\supp(\wh G_n)|
+    \ge
+    c_{\delta,d}\frac{(\log n)^{d/2}}{\log\log n}
+\]
+with probability tending to one whenever
+\(\eps_n\le n^{-1/4-\delta}\).
+
+We state Proposition~\ref{prop:gaussian-small-variance-mismatch} only in one
+dimension because this polynomial condition is tied to the correct
+one-dimensional boundary. In higher dimensions it is far below the actual
+transition scale: the companion paper finds
+\(\eps_n\asymp1/\log n\) for \(d=2\) and
+\(\eps_n\asymp(\log\log n)/\log n\) for \(d\ge3\)
+\cite{varianceMultivariateCompanion}. Proving quantitative support growth
+near those scales would require uniform control over the continuum of angular
+directions near the radial extremes, not merely the sub-edge Lindeberg
+argument used here.
+\end{remark}
+
+
+\section{Poisson Mixture Analogue}
+\label{sec:poisson-analogue}
+
+This section proves Theorem~\ref{thm:poisson-finite-main}. As in the Gaussian
+case, Proposition~\ref{prop:poisson-finite-constructive} constructs a large
+unrestricted likelihood gain and Proposition~\ref{prop:poisson-finite-upper}
+bounds every \(D\)-atomic competitor. The Poisson proof differs in its score
+analysis: truncation at the observed sample scale replaces the Gaussian
+moment estimates and permits perturbations across the full exposed tail
+window.
+
+For the Poisson theorem, write
+\[
+    G_0=\sum_{m=1}^K\pi_m\delta_{\lambda_m},
+    \qquad
+    0\le \lambda_1<\cdots<\lambda_K=\lambda_*,
+    \qquad \lambda_*>0,
+\]
+and write \(p_0=p_{G_0}\). The relative log-likelihood is
+\[
+    L_n^{\mathrm{Pois}}(G;G_0)
+    =
+    \sum_{i=1}^n\log\frac{p_G(X_i)}{p_0(X_i)}.
+\]
+Write \(\pi_*=\pi_K\). The construction perturbs the component at
+\(\lambda_*\). This component is identifiable from the upper tail because,
+among the finitely many true Poisson laws, it dominates the probability of
+large counts.
+
+As in the Gaussian case, a sample-dependent compactness reduction controls sparse competitors. For Poisson mixtures, the compact set is the interval up to the sample maximum.
+
+\begin{lemma}
+\label{lem:poisson-support}
+Let \(M_n=\max_{1\le i\le n}X_i\). For every probability measure \(G\) on \([0,\infty)\), there exists a probability measure \(\widetilde G\) supported on \([0,M_n]\) such that \(p_{\widetilde G}(X_i)\ge p_G(X_i)\) for every \(1\le i\le n\). Moreover, if \(G\) has at most \(D\) atoms, then so does \(\widetilde G\).
+\end{lemma}
+
+\begin{proof}
+Let \(T(\theta)=\min(\theta,M_n)\) and set \(\widetilde G=T_\#G\). Fix an observed value \(k\le M_n\). If \(M_n=0\), then \(k=0\) and \(p_\theta(0)=e^{-\theta}\le1=p_{\theta=0}(0)\). Otherwise, \(d\log p_\theta(k)/d\theta=k/\theta-1\), so \(\theta\mapsto p_\theta(k)\) is decreasing on \([M_n,\infty)\). Hence \(p_{T(\theta)}(k)\ge p_\theta(k)\) for every \(\theta\ge0\), and integration over \(G\) proves the lemma.
+\end{proof}
+
+\subsection{Scores Near the Largest Mean}
+\label{sec:poisson-largest-mean-scores}
+
+The upper tail exposes the largest true mean \(\lambda_*\). The score estimates
+below show that separated outward perturbations of this component are nearly
+orthogonal after truncation; these are the inputs to
+Proposition~\ref{prop:poisson-finite-constructive}.
+
+For \(a\ge0\), set \(\theta_a=\lambda_*+a\sqrt{\lambda_*}\) and
+\[
+    \Delta_a(k)=p_{\theta_a}(k)-p_{\lambda_*}(k),
+    \qquad
+    g_a(k)=\frac{\Delta_a(k)}{p_0(k)},
+\]
+\[
+    \sigma_a^2=\sum_{k=0}^\infty\frac{\Delta_a(k)^2}{p_0(k)},
+    \qquad
+    h_a(k)=\frac{g_a(k)}{\sigma_a}.
+\]
+Then \(\E_{p_0}h_a(X)=0\) and \(\E_{p_0}h_a(X)^2=1\). Also
+\begin{equation}
+\label{eq:poisson-ratio-comparison}
+    \pi_*
+    \le
+    \frac{p_0(k)}{p_{\lambda_*}(k)}
+    =
+    \pi_*+
+    \sum_{m<K}\pi_m e^{\lambda_* -\lambda_m}
+    \left(\frac{\lambda_m}{\lambda_*}\right)^k
+    \le C_{G_0},
+    \qquad k\ge0.
+\end{equation}
+In \eqref{eq:poisson-ratio-comparison}, the term corresponding to
+\(\lambda_m=0\) at \(k=0\) is interpreted using \(0^0=1\).
+Thus replacing the full denominator \(p_0\) by the single-component
+denominator \(p_{\lambda_*}\) changes a score by at most constant factors.
+
+The next lemma gives the covariance and concentration estimates needed to
+combine many such scores. A direct moment bound would be governed by counts
+far beyond the observed sample range. The truncated estimates discard that
+irrelevant part of the likelihood ratio and remain uniform up to
+\(a^2\asymp\log n/\log\log n\).
+
+\begin{lemma}
+\label{lem:poisson-finite-score-truncation}
+Fix \(\gamma\in(0,1)\), and put \(R_n=\sqrt{\gamma\log n/\log\log n}\). There are constants \(A_0=A_0(G_0)\), \(c=c(G_0,\gamma)>0\), and \(C=C(G_0)<\infty\) such that, uniformly for \(A_0\le a,b\le R_n\),
+\[
+    C^{-1}e^{a^2}\le \sigma_a^2\le C e^{a^2},
+    \qquad
+    |\E_{p_0}h_a(X)h_b(X)|\le C e^{-(a-b)^2/2}.
+\]
+Moreover, with \(\rho_n=e^{-c\log n/\log\log n}\), uniformly for \(A_0\le a,b\le R_n\),
+\[
+    \E\bigl[h_a(X)^2\mathbf 1_{\{|h_a(X)|>\rho_n\sqrt n\}}\bigr]
+    \le \rho_n,
+    \qquad
+    n\mathbb P\{|h_a(X)|>\rho_n\sqrt n\}
+    \le \rho_n,
+\]
+\[
+    \E\bigl[
+        |h_a(X)h_b(X)|
+        \mathbf 1_{\{|h_a(X)h_b(X)|>n\rho_n\}}
+    \bigr]
+    \le \rho_n,
+\]
+and
+\[
+    \E\bigl[
+        (h_a(X)h_b(X))^2
+        \mathbf 1_{\{|h_a(X)h_b(X)|\le n\rho_n\}}
+    \bigr]
+    \le n\rho_n.
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(\tau_a=(e^{a^2}-1)^{1/2}\) and let
+\[
+    h_{a,*}(k)=
+    \frac{p_{\theta_a}(k)/p_{\lambda_*}(k)-1}{\tau_a}
+\]
+be the one-component score at \(\lambda_*\). By
+\eqref{eq:poisson-ratio-comparison}, \(\sigma_a\asymp\tau_a\) and
+\(|h_a(k)|\asymp |h_{a,*}(k)|\), uniformly for \(a\ge A_0\) and
+\(k\ge0\), after taking \(A_0\) fixed and large enough. Under the pure
+\(p_{\lambda_*}\) law, the unnormalized score covariance is exactly
+\(e^{ab}-1\). To compare this formula with the covariance under the full
+mixture, write
+\[
+    W(k)=\frac{p_0(k)}{p_{\lambda_*}(k)}
+    =\pi_*+\sum_{m<K}c_m r_m^k,
+    \qquad 0\le r_m<1.
+\]
+Thus \(W(k)^{-1}=\pi_*^{-1}+O(r^k)\) for some fixed \(r<1\). If
+\(q_a=p_{\theta_a}/p_{\lambda_*}\), then
+\[
+    \E_{\lambda_*}[q_aq_b]=e^{ab},
+\]
+whereas
+\[
+    \E_{\lambda_*}[r^Xq_aq_b]
+    =
+    \exp\!\left\{
+        rab-(1-r)\bigl((a+b)\sqrt{\lambda_*}+\lambda_*\bigr)
+    \right\}.
+\]
+The analogous formulas with \(q_aq_b\) replaced by \(q_a\), \(q_b\), or
+\(1\) show that
+\[
+    \sum_k\frac{\Delta_a(k)\Delta_b(k)}{p_0(k)}
+    =
+    \pi_*^{-1}(e^{ab}-1)
+    +O\!\left(
+        e^{rab-c(a+b)}+e^{-ca}+e^{-cb}+1
+    \right).
+\]
+For \(a=b\), this proves \(\sigma_a^2\asymp e^{a^2}\). For arbitrary
+\(a,b\ge A_0\), division by
+\(\sigma_a\sigma_b\asymp e^{(a^2+b^2)/2}\) gives
+\[
+    |\E h_a(X)h_b(X)|
+    \le C e^{-(a-b)^2/2};
+\]
+the error term is smaller by the additional factor
+\(e^{-(1-r)ab-c(a+b)}\).
+
+We next locate the counts at which the score exceeds the truncation level.
+Fix \(C_0\) so that \(|h_a(k)|\le C_0|h_{a,*}(k)|\) throughout the stated
+range, and put \(T_n=C_0^{-1}\rho_n\sqrt n\). Since
+\[
+ \frac{p_{\theta_a}(k)}{p_{\lambda_*}(k)}
+ =e^{-a\sqrt{\lambda_*}}
+  \left(1+\frac a{\sqrt{\lambda_*}}\right)^k,
+\]
+the event \(|h_a(X)|>\rho_n\sqrt n\) forces \(X\ge k_a\), where
+\[
+    k_a
+    =
+    \left\lceil
+    \frac{
+        a\sqrt{\lambda_*}+\log(1+T_n\tau_a)
+    }
+    {\log(1+a/\sqrt{\lambda_*})}
+    \right\rceil .
+\]
+Equivalently,
+\[
+ k_a=
+ \frac{
+        \frac12\log n+\frac12a^2-c\log n/\log\log n+O_{G_0}(a+1)
+      }
+      {\log(1+a/\sqrt{\lambda_*})}
+ +O(1).
+\]
+The final \(O(1)\) is the rounding error. After multiplication by
+\(\log(1+a/\sqrt{\lambda_*})=O(\log\log n)\), it is negligible compared
+with the margins of order \(\log n/\log\log n\) below.
+Uniformly for \(A_0\le a\le R_n\), and with \(c>0\) small enough, there are constants \(\delta_0,c_1,c_2>0\), depending only on \(G_0\) and \(\gamma\), such that this threshold satisfies
+\[
+    k_a\ge(1+\delta_0)(\sqrt{\lambda_*}+a)^2,
+    \qquad
+    k_a\log\frac{k_a}{e\lambda_*}
+    \ge
+    \log n+c_1\frac{\log n}{\log\log n},
+\]
+and
+\[
+    k_a\log\frac{k_a}{e(\sqrt{\lambda_*}+a)^2}
+    +(\sqrt{\lambda_*}+a)^2
+    \ge
+    c_2\frac{\log n}{\log\log n}.
+\]
+To verify these inequalities uniformly in \(a\), write
+\(L=\log n\), \(\ell=\log L\), and
+\(y=a^2\ell/L\). On every fixed interval \(y\in[\delta,\gamma]\),
+\[
+    k_a
+    =
+    \frac{L}{\ell}
+    \left[
+        1+
+        \frac{\log\ell-\log y+\log\lambda_*+y-2c+o(1)}{\ell}
+    \right].
+\]
+Consequently, if \(I_\mu(k)=k\log(k/\mu)-k+\mu\) denotes the Poisson
+Chernoff exponent, then, uniformly on this interval,
+\[
+    I_{\lambda_*}(k_a)
+    =
+    L+
+    \{y-\log y-1-2c+o(1)\}\frac{L}{\ell},
+\]
+and, for \(\mu_a=(\sqrt{\lambda_*}+a)^2\),
+\[
+    I_{\mu_a}(k_a)
+    =
+    \{y-\log y-1+o(1)\}\frac{L}{\ell}.
+\]
+The function \(y-\log y-1\) is decreasing on \((0,1)\), so the two rate
+functions have a fixed positive margin on \([\delta,\gamma]\). Also
+\(k_a/\mu_a=1/y+o(1)\) there, uniformly, and is therefore bounded away
+from one.
+
+The expansion is not uniform when \(y\) approaches zero. For that range, fix
+\(\delta\in(0,\min\{\gamma,e^{-3}\})\), and write
+\[
+ w_a=2\log(1+a/\sqrt{\lambda_*})
+     =\log(\mu_a/\lambda_*).
+\]
+Since \(a\le R_n\), the \(O(a+1)\) term in the definition of \(k_a\) is
+\(o(L/\ell)\), uniformly. Hence
+\begin{equation}
+\label{eq:poisson-threshold-product}
+ k_aw_a\ge L+\mu_a-3cL/\ell
+\end{equation}
+for all sufficiently large \(n\). If \(w_a\le\ell/2\), then
+\(\mu_a=\lambda_*e^{w_a}\le\lambda_*\sqrt L\), while
+\(k_a\ge(2-o(1))L/\ell\). Thus \(k_a/\mu_a\to\infty\) uniformly in this
+range and, eventually,
+\[
+ I_{\mu_a}(k_a)\ge k_a\ge L/\ell.
+\]
+
+Suppose instead that \(w_a>\ell/2\), and put
+\(z=\mu_a\ell/L\). The assumption \(y\le\delta\) gives
+\(z\le2\delta\) for large \(n\), while
+\(w_a=\ell-\log\ell+\log(z/\lambda_*)\le\ell\). If
+\(r_a=k_a/\mu_a\), then \eqref{eq:poisson-threshold-product} yields,
+uniformly in this range,
+\[
+ r_a\ge\frac{\ell+z-3c}{zw_a}
+     \ge\frac{1-o(1)}{z}.
+\]
+Choose a fixed \(\varepsilon\in(0,1/4)\). For large \(n\), the right side
+is at least \((1-\varepsilon)/z\). Since
+\(f(r)=r\log r-r+1\) is increasing for \(r>1\),
+\[
+ \frac{\ell}{L}I_{\mu_a}(k_a)
+ =z f(r_a)
+ \ge (1-\varepsilon)\log\frac{1-\varepsilon}{z}
+      -(1-\varepsilon)+z.
+\]
+The expression on the right is decreasing for
+\(0<z<1-\varepsilon\); at \(z=2\delta\) it is a positive constant
+\(m_\delta\). Consequently
+\(I_{\mu_a}(k_a)\ge m_\delta L/\ell\), and
+\(k_a/\mu_a\) is uniformly bounded away from one, throughout
+this second range. Put \(\bar m_\delta=\min\{1,m_\delta\}\). The two
+\(w_a\)-ranges therefore give
+\(I_{\mu_a}(k_a)\ge\bar m_\delta L/\ell\) throughout
+\(y\le\delta\). Finally, the exact identity
+\[
+ I_{\lambda_*}(k_a)-I_{\mu_a}(k_a)
+ =k_aw_a+\lambda_*-\mu_a
+\]
+and \eqref{eq:poisson-threshold-product} give
+\[
+ k_a\log\frac{k_a}{e\lambda_*}
+ =I_{\lambda_*}(k_a)-\lambda_*
+ \ge L+(\bar m_\delta-3c)L/\ell.
+\]
+Choose \(c>0\) smaller than one quarter of
+\(\gamma-\log\gamma-1\) and smaller than \(\bar m_\delta/6\).
+The compact and small-\(y\) ranges together prove all three threshold
+inequalities, after decreasing \(\delta_0,c_1,c_2\).
+
+The first rate function controls the threshold probability under
+\(p_{\lambda_*}\), and the second controls the truncated second moment after
+exponential tilting. The identity
+\[
+    \left(\frac{p_{\theta_a}(k)}{p_{\lambda_*}(k)}\right)^2p_{\lambda_*}(k)
+    =
+    e^{a^2}p_{(\sqrt{\lambda_*}+a)^2}(k)
+\]
+therefore gives, by Chernoff's bound,
+\[
+    \E_{p_{\lambda_*}}
+    \bigl[h_{a,*}(X)^2\mathbf 1_{\{|h_{a,*}(X)|>\rho_n\sqrt n\}}\bigr]
+    \le e^{-c\log n/\log\log n}
+\]
+and
+\[
+    n\mathbb P_{p_{\lambda_*}}
+    \{|h_{a,*}(X)|>\rho_n\sqrt n\}
+    \le e^{-c\log n/\log\log n}.
+\]
+For the product tail, use
+\(
+\{|h_a h_b|>n\rho_n\}
+\subset
+\{|h_a|>\sqrt{n\rho_n}\}\cup\{|h_b|>\sqrt{n\rho_n}\}
+\).
+Repeating the one-coordinate calculation at the larger threshold
+\(\sqrt{n\rho_n}\) gives, for some \(c_3>0\), a uniform second-moment
+tail bound \(\exp\{-c_3\log n/\log\log n\}\). Cauchy--Schwarz on the two
+events therefore bounds the product tail by
+\(2\exp\{-c_3\log n/(2\log\log n)\}\). Decreasing the constant \(c\) in
+the definition of \(\rho_n\) makes this at most \(\rho_n\). Finally,
+\[
+    (h_a h_b)^2\mathbf 1_{\{|h_a h_b|\le n\rho_n\}}
+    \le n\rho_n |h_a h_b|,
+\]
+and \(\E|h_a h_b|\le1\).
+\end{proof}
+
+\subsection{Constructive Likelihood Gain}
+\label{sec:poisson-constructive-gain}
+
+The following proposition constructs the unrestricted likelihood gain. It
+moves a small amount of mass from \(\lambda_*\) to a separated grid of larger
+means \(\lambda_*+a_j\sqrt{\lambda_*}\).
+
+\begin{proposition}
+\label{prop:poisson-finite-constructive}
+Fix \(\gamma\in(0,1)\), and put \(R_n=\sqrt{\gamma\log n/\log\log n}\). Choose \(\Delta\) large enough, let \(a_j=A_0+\Delta(j-1)\le R_n\), and let \(J\) be the number of such points. Then \(J\asymp_{G_0,\gamma,\Delta}\sqrt{\log n/\log\log n}\), and there is a random mixing distribution \(G_n\) such that
+\[
+    \mathbb P\left\{
+        L_n^{\mathrm{Pois}}(G_n;G_0)
+        \ge c_{G_0,\gamma,\Delta}J
+    \right\}\to1.
+\]
+\end{proposition}
+
+\begin{proof}
+For \(1\le j\le J\), write \(h_j=h_{a_j}\),
+\[
+    d_j=\frac1{\sqrt n}\sum_{i=1}^n h_j(X_i),
+    \qquad
+    H_{jl}=\E h_j(X)h_l(X),
+    \qquad
+    \wh H_{jl}=\frac1n\sum_{i=1}^n h_j(X_i)h_l(X_i).
+\]
+Thus \(d_j\) is the empirical score in direction \(a_j\), while \(H\) and
+\(\wh H\) are the population and empirical Gram matrices of these scores.
+Choose \(\Delta\) so large that the off-diagonal row sums of \(H\) are at most \(1/10\); this is possible by Lemma~\ref{lem:poisson-finite-score-truncation}. The truncation bounds in Lemma~\ref{lem:poisson-finite-score-truncation}, followed by Chebyshev's inequality and a union bound over \(j,l\), give
+\[
+    \|\wh H-H\|_{\op}=o_{\mathbb P}(1).
+\]
+Here are the details. Put
+\[
+    Y_i^{jl}
+    =
+    h_j(X_i)h_l(X_i)
+    \mathbf 1_{\{|h_j(X_i)h_l(X_i)|\le n\rho_n\}}.
+\]
+The truncation lemma gives
+\[
+    |\E Y_i^{jl}-H_{jl}|\le\rho_n,
+    \qquad
+    \Var\left(\frac1n\sum_{i=1}^nY_i^{jl}\right)\le\rho_n.
+\]
+Moreover, with probability tending to one,
+\(\max_{i,j}|h_j(X_i)|\le\rho_n\sqrt n\), because
+\(nJ\max_j\mathbb P\{|h_j(X)|>\rho_n\sqrt n\}\le J\rho_n\to0\).
+On this event no product is truncated. Chebyshev's inequality, followed by a
+union bound over the \(J^2\) pairs, therefore yields
+\[
+    \max_{j,l}|\wh H_{jl}-H_{jl}|
+    =O_{\mathbb P}(\rho_n^{1/4}).
+\]
+Since \(J\rho_n^{1/4}\to0\), the operator-norm claim follows.
+
+Let \(S=\sum_{j=1}^J(d_j^+)^2\). We claim that a positive fraction of
+the score coordinates contribute to \(S\). Fix a large constant \(B\) and
+let \(\psi_B(x)=(x^+)^2\wedge B\). To obtain a uniform Gaussian
+approximation, truncate each \(h_j\) at \(\rho_n\sqrt n\), then recenter and
+renormalize it. If
+\[
+ A_{jl}=\{|h_j|>\rho_n\sqrt n\}\cup
+        \{|h_l|>\rho_n\sqrt n\},
+\]
+then the product-tail estimate gives
+\[
+ \mathbb E|h_jh_l|\mathbf 1_{A_{jl}}
+ \le \rho_n+n\rho_n\,\mathbb P(A_{jl})
+ \le \rho_n+2\rho_n^2.
+\]
+Also \(n\mathbb P(A_{jl})\le2\rho_n\), so the original pair of normalized
+sums agrees with its truncated version with probability at least
+\(1-2\rho_n\).
+Thus truncation changes each one- or two-coordinate covariance matrix by
+\(O(\rho_n)\), and the matrices remain uniformly nonsingular. The truncated
+third absolute moment is at most
+\(\rho_n\sqrt n\,\mathbb E h_j(X)^2\). The fixed-dimensional
+Berry--Esseen bound in Wasserstein distance therefore gives error
+\(O(\rho_n)\) for every bounded Lipschitz function of one or two normalized
+coordinates. This applies to \(\psi_B\) and to the product test function
+\[
+ (x,y)\longmapsto\psi_B(x)\psi_B(y).
+\]
+Because \(\rho_n\) decays faster than any power of \(J\), the total
+approximation error over all \(J^2\) pairs is \(o(1)\). Cauchy--Schwarz also
+gives
+\[
+ \left|\mathbb E h_j(X)\mathbf 1_{\{|h_j(X)|>\rho_n\sqrt n\}}\right|
+ \le \frac{\rho_n}{\sqrt n}.
+\]
+Thus recentering shifts a normalized sum by at most \(\rho_n\), and variance
+normalization changes it by \(O(\rho_n)\). This completes the transfer from
+the truncated array back to the original coordinates \(d_j\).
+
+For a centered Gaussian pair
+\((Z_j,Z_l)\) with correlation \(H_{jl}\), the Gaussian maximal
+correlation inequality gives
+\[
+    |\Cov(\psi_B(Z_j),\psi_B(Z_l))|
+    \le C_B|H_{jl}|.
+\]
+The uniform Gaussian approximation and the row-sum bound for \(H\) imply
+that \(\sum_j\psi_B(d_j)\) has variance
+\(O_B(J)+o(J^2)\). Choose \(B\) so that
+\(\E\psi_B(Z)>1/3\) for \(Z\sim\mathcal N(0,1)\). Its mean is then at
+least \(J/3+o(J)\). Since \(\sum_j\psi_B(d_j)\le S\), Chebyshev's
+inequality shows that \(S\ge cJ\) with high probability. The upper bound
+follows from \(\E\sum_jd_j^2=J\). Thus
+\[
+    \mathbb P\{S\ge cJ\}\to1,
+    \qquad
+    S=O_{\mathbb P}(J).
+\]
+
+Fix \(\eta=1/5\), let \(r_j=d_j^+/(1+\eta)\), and set
+\(t_j=r_j/(\sqrt n\,\sigma_{a_j})\). Since
+\(\inf_j\sigma_{a_j}>0\) and
+\(\sum_jr_j\le\sqrt{JS}=O_{\mathbb P}(J)=o_{\mathbb P}(\sqrt n)\),
+we have \(\sum_jt_j=o_{\mathbb P}(1)\). Hence
+\(\sum_jt_j\le\pi_*\) with probability tending to one. On this event define
+\[
+    G_n=
+    G_0-
+    \Bigl(\sum_{j=1}^Jt_j\Bigr)\delta_{\lambda_*}
+    +
+    \sum_{j=1}^Jt_j\delta_{\lambda_*+a_j\sqrt{\lambda_*}},
+\]
+and set \(G_n=G_0\) otherwise.
+
+On the event \(\sum_jt_j\le\pi_*\), for each observation,
+\[
+    \frac{p_{G_n}(X_i)}{p_0(X_i)}
+    =
+    1+u_i,
+    \qquad
+    u_i=\frac1{\sqrt n}\sum_{j=1}^Jr_jh_j(X_i).
+\]
+This feasibility event has probability tending to one. Intersect it with the
+event, also of probability tending to one, on which
+\(\max_{i,j}|h_j(X_i)|\le\rho_n\sqrt n\), supplied by
+Lemma~\ref{lem:poisson-finite-score-truncation} and a union bound. On their
+intersection, \(\max_i|u_i|\le\rho_n\sum_jr_j=o_{\mathbb P}(1)\), and Taylor
+expansion gives
+\[
+    L_n^{\mathrm{Pois}}(G_n;G_0)
+    =
+    r^\top d-\frac12 r^\top\wh H r+o_{\mathbb P}(J).
+\]
+Indeed, \(\sum_i u_i^2=r^\top\wh H r=O_{\mathbb P}(J)\), so the sum of
+the cubic remainders is bounded by
+\(O(\max_i|u_i|\sum_i u_i^2)=o_{\mathbb P}(J)\).
+Since \(r^\top d=S/(1+\eta)\) and
+\(r^\top\wh H r\le(1.2+o_{\mathbb P}(1))S/(1+\eta)^2\), the coefficient
+of \(S\) is positive. The lower bound on \(S\) completes the proof.
+\end{proof}
+
+\subsection{Localized Upper Bound}
+\label{sec:poisson-localized-upper}
+
+We now bound every \(D\)-atomic Poisson competitor. Lemma
+~\ref{lem:poisson-support} restricts its means to the interval ending at the
+sample maximum, which is of order \(\log n/\log\log n\). As in the Gaussian
+case, the required entropy estimate must depend on this parameter radius only
+through its logarithm.
+
+For \(D\ge1\), \(M\ge2\), and \(0<\delta\le\sqrt2\), define
+\[
+    \mathcal F_D^{\mathrm{Pois},G_0}(M,\delta)
+    =
+    \left\{
+        \sqrt{p_G/p_0}-1:
+        |\supp(G)|\le D,
+        \ \supp(G)\subset[0,M],
+        \ \|\sqrt{p_G/p_0}-1\|_{L^2(p_0)}\le\delta
+    \right\}.
+\]
+
+The coordinate \(u=\sqrt\theta\) makes this logarithmic dependence
+available: square-root Poisson kernels have Gaussian affinity
+\(\sum_k\sqrt{p_{u^2}(k)p_{v^2}(k)}=e^{-(u-v)^2/2}\). The next lemma
+combines this geometry with local identifiability around the true finite
+mixture.
+
+\begin{lemma}
+\label{lem:poisson-finite-local}
+For fixed \(G_0\) and fixed \(C_0<\infty\), there exists
+\(C_{G_0,C_0}<\infty\) such that, for every \(M\ge2\),
+\(1\le D\le M^{C_0}\), and \(0<\eta\le\delta\le\sqrt2\),
+\[
+    \log N_{[]}
+    \bigl(
+        \eta,
+        \mathcal F_D^{\mathrm{Pois},G_0}(M,\delta),
+        L^2(p_0)
+    \bigr)
+    \le
+        C_{G_0,C_0}D\bigl(\log M+\log(\delta/\eta)\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Put \(\rho_G=\|\sqrt{p_G/p_0}-1\|_2\). We first record the local geometry
+needed when \(\rho_G\le\rho_0\). Choose relatively open, bounded intervals
+\(A_i\) around the true means \(\lambda_i\), with disjoint closures, and let
+\(A_0\) be their complement.
+We need the following local identifiability bound. Hellinger distance
+controls the mass outside the true-atom neighborhoods, as well as the first
+two local moments of the perturbation inside each neighborhood. For
+\[
+ m_i=G(A_i),\qquad
+ b_i=\int_{A_i}(\theta-\lambda_i)\,dG(\theta),\qquad
+ s_i=\int_{A_i}(\theta-\lambda_i)^2\,dG(\theta),
+\]
+the Poisson analogue of the finite-mixture local-geometry bound is
+\begin{equation}
+\label{eq:poisson-local-geometry}
+ G(A_0)+\sum_i\{|m_i-\pi_i|+|b_i|+s_i\}\le C\rho_G.
+\end{equation}
+We first prove the corresponding linear statement. Let \(\mu\) be a finite
+nonnegative measure supported on \(A_0\), and let
+\(\eta_i,\beta_i\in\mathbb R\) and \(\sigma_i\ge0\). The linearized density
+perturbation is
+\[
+ p_\mu+\sum_i\{\eta_i p_{\lambda_i}
+ +\beta_i\partial_\lambda p_{\lambda_i}
+ +\tfrac12\sigma_i\partial_\lambda^2p_{\lambda_i}\},
+\]
+Its \(\ell^1\)-norm is bounded below by a fixed multiple of
+\[
+ \mu(A_0)+\sum_i(|\eta_i|+|\beta_i|+\sigma_i).
+\]
+Suppose this lower bound fails. Normalize
+\(\mu(A_0)+\sum_i(|\eta_i|+|\beta_i|+\sigma_i)\) to one, and choose a
+sequence whose linearized expression
+tends to zero in \(\ell^1\). The coefficient vectors have a convergent
+subsequence. The corresponding outer measures \(\mu_n\) are also tight.
+Indeed, if \(v_n\)
+denotes the finite linear combination of the fixed kernel derivatives, then
+for every integer \(K\),
+\[
+ \sum_{k>K}p_{\mu_n}(k)
+ \le \|p_{\mu_n}+v_n\|_1+\sum_{k>K}|v_n(k)|.
+\]
+The second term tends to zero uniformly in \(n\) as \(K\to\infty\).
+Moreover,
+\[
+ \mu_n([R,\infty))\inf_{\theta\ge R}
+       \mathbb P_\theta\{X>K\}
+ \le \sum_{k>K}p_{\mu_n}(k),
+\]
+and the infimum tends to one as \(R\to\infty\), for fixed \(K\).
+Thus a further subsequence satisfies \(\mu_n\Rightarrow\mu\) for a finite
+measure \(\mu\) on \(A_0\). Passing to probability generating functions
+gives the Laplace transform of
+\[
+ \mu+\sum_i\{\eta_i\delta_{\lambda_i}
+ -\beta_i\delta'_{\lambda_i}
+ +\tfrac12\sigma_i\delta''_{\lambda_i}\}
+\]
+identically zero. Uniqueness of Laplace transforms first eliminates \(\mu\)
+away from the \(\lambda_i\)'s, and linear independence of the remaining
+point masses and their derivatives eliminates every coefficient. This
+contradicts the normalization.
+
+To pass from linear identifiability to the nonlinear mixture bound, we use
+the uniform Taylor remainder
+\[
+ \|p_\theta-p_{\lambda_i}-(\theta-\lambda_i)p'_{\lambda_i}
+       -\tfrac12(\theta-\lambda_i)^2p''_{\lambda_i}\|_1
+ \le C\,\operatorname{diam}(A_i)(\theta-\lambda_i)^2.
+\]
+This follows from
+\(\partial_\theta^jp_\theta(k)=\sum_{r=0}^j(-1)^{j-r}
+\binom jr p_\theta(k-r)\), with \(p_\theta(m)=0\) for \(m<0\), which
+also gives a uniform \(\ell^1\)-bound on the third derivative. Shrinking
+the fixed intervals \(A_i\) therefore proves the lower bound in total
+variation.
+Since total variation is at most twice Hellinger distance,
+\eqref{eq:poisson-local-geometry} follows.
+
+Let \(a=p_{G|_{A_0^c}}\) and \(s=\sqrt{a/p_0}\). Taylor expansion in the
+fixed intervals and \eqref{eq:poisson-local-geometry} give
+\begin{equation}
+\label{eq:poisson-inner-outer-size}
+ \|s-1\|_2\le C\rho_G,
+ \qquad W:=G(A_0)\le C\rho_G.
+\end{equation}
+Fix this inner subdensity \(a\). We next bracket the increment
+created by adding one outer component. Write \(q_u=p_{u^2}\), where
+\(0\le u\le\sqrt M\), put \(b=wq_u\), and set
+\(\nu(k)=b(k)^2/\{a(k)+b(k)\}\). After decreasing \(\rho_0\), the
+local-geometry bound and \(\lambda_*>0\) ensure that the inner submixture
+assigns a fixed positive mass to an interval
+\([\ell,U]\subset(0,\infty)\). The ratios of consecutive moments of the
+finite measure \(e^{-\theta}G|_{A_0^c}(d\theta)\) are nondecreasing, and
+hence, using
+\(a(k)=k!^{-1}\int e^{-\theta}\theta^k\,dG|_{A_0^c}(\theta)\),
+\[
+ \frac{a(k+1)}{a(k)}\ge\frac{c}{k+1},
+ \qquad
+ \frac{q_u(k+1)}{q_u(k)}=\frac{u^2}{k+1}\quad(u>0).
+\]
+It follows, by cross-multiplication, that, for \(u>0\),
+\[
+ (k+1)\nu(k+1)\le C(1+M)^2\nu(k).
+\]
+Put \(A=C(1+M)^2\). The recursion implies, for every \(t\ge0\),
+\[
+ \frac{\sum_ke^{tk}\nu(k)}{\sum_k\nu(k)}
+ \le \exp\{A(e^t-1)\}.
+\]
+Indeed, the logarithmic derivative of the numerator is at most \(Ae^t\).
+Taking \(t=c/A\) gives uniform exponential moments on count scale
+\((1+M)^2\). For \(u\ge1/2\), differentiation of
+\(p_{u^2}\) and Lemma~\ref{lem:contaminant-calculus} give
+\[
+ \|\partial_u h_{a,w,q_u}\|_2
+ \le C(1+M)^2e_{a,w,q_u}.
+\]
+The interval \(0\le u\le1\) is handled directly. Indeed,
+\(a(k)\ge c\ell^k/k!\), while termwise differentiation of
+\(p_{u^2}(k)=e^{-u^2}u^{2k}/k!\) gives
+\[
+ \sup_{0\le u\le1}|\partial_u^jp_{u^2}(k)|
+ \le C(k+1)/k!,\qquad j=0,1.
+\]
+These envelopes are square summable after division by \(a(k)\), and, for
+the mixture weights \(0<w\le1\) considered here, the zeroth count
+coordinate gives \(e_{a,w,q_u}\ge cw\). Hence the same
+derivative bound holds on \([0,1]\), with a fixed constant.
+
+On intervals of length \(c(1+M)^{-2}\) in \([1/2,\sqrt M]\), the exact
+ratio
+\[
+ \frac{p_{(u+v)^2}(k)}{p_{u^2}(k)}
+ =e^{-2uv-v^2}(1+v/u)^{2k}
+ \le e^{C+Ck/(1+M)^2}
+\]
+and the exponential-moment bound for the count variable obtained above
+control the pointwise suprema of the parameter derivatives. On \([0,1]\),
+the power-series envelopes do the
+same. The weight coordinate is model-free: Lemma
+~\ref{lem:contaminant-calculus} shows that the logarithmic derivative of
+the increment norm lies in \([1/2,1]\). Repeating the parameter-box and
+weight-level construction in \eqref{eq:gaussian-one-contaminant-bracket}
+therefore gives, uniformly in the inner subdensity,
+\begin{equation}
+\label{eq:poisson-one-contaminant-bracket}
+ \log N_{[]}\left(
+ \epsilon,
+ \{h_{a,w,q_u}:0\le u\le\sqrt M,\ 0<w\le1,\
+       e_{a,w,q_u}\le r\},
+ L^2(p_0)\right)
+ \le C\{\log M+\log_+(r/\epsilon)\}.
+\end{equation}
+
+The one-contaminant bound treats the inner subdensity as fixed. To count the
+full mixture class, we must also bracket the inner atoms, all of which lie in
+the fixed neighborhoods \(A_i\). We verify the needed entropy bound because
+the Poisson family is not a translation family. Let
+\(\mathcal D_D^{\rm in}\) be the normalized
+nonzero Hellinger secants
+\[
+ \mathcal D_D^{\rm in}
+ =\left\{
+   \frac{\sqrt{p_H/p_0}-1}
+        {\|\sqrt{p_H/p_0}-1\|_2}:
+   0<\|\sqrt{p_H/p_0}-1\|_2\le\rho_0,
+   \ |\supp(H)|\le D,\quad
+   \supp(H)\subset\bigcup_iA_i
+ \right\}.
+\]
+The proof of \cite[Theorem~3.1]{gassiatVanHandel2014} approximates precisely
+such normalized secants in the Banach lattice \(L^2(p_0)\). As explained in
+their Remark~3.6, translation structure is needed for their local-geometry
+theorem, while the entropy argument itself applies to smooth parametric
+kernels. Equation~\eqref{eq:poisson-local-geometry} supplies the required
+local geometry. To verify smoothness, use the mean parameter and define, on
+the fixed union of the \(A_i\)'s,
+\[
+ H_j(k)=\sup_\theta
+       \frac{|\partial_\theta^jp_\theta(k)|}{p_0(k)},
+ \qquad 0\le j\le3.
+\]
+The finite-difference formula for \(\partial_\theta^jp_\theta\), valid also
+at \(\theta=0\), reduces each numerator to finitely many shifted Poisson
+masses. If the inner intervals lie in \([0,B]\), then, outside a fixed
+finite set of counts, their pointwise suprema are bounded by a polynomial
+in \(k\) times \(p_B(k)\). Since
+\(p_0\ge\pi_*p_{\lambda_*}\) for some \(\lambda_*>0\), the identity
+\[
+ \sum_{k\ge0}(1+k)^m
+ \frac{p_B(k)^s}{p_{\lambda_*}(k)^{s-1}}<\infty,
+ \qquad m<\infty,\quad s\in\{2,4\},
+\]
+yields
+\[
+ H_0,H_1,H_2\in\ell^4(p_0),
+ \qquad H_3\in\ell^2(p_0).
+\]
+The pointwise Taylor bound and \eqref{eq:poisson-local-geometry} give the
+analogue of \cite[Lemma~3.13]{gassiatVanHandel2014}. Specifically, the
+density ratios normalized by their \(\ell^1\)-distance from \(p_0\) have
+the \(\ell^4(p_0)\) envelope
+\[
+ \frac{|p_H/p_0-1|}{\|p_H-p_0\|_1}
+ \le C(H_0+H_1+H_2).
+\]
+The algebraic comparison between normalized Hellinger and chi-square
+secants in their Lemma~3.15 is measure-free. Their Lemma~3.16 treats atoms
+close to a true mean by a second-order Taylor expansion and retains atoms of
+small weight as individual kernel terms; the displayed \(H_j\) bounds
+control the resulting remainder in \(\ell^2(p_0)\). Finally, pad the
+candidate to \(D\vee K\) atoms and apply the coefficient and location grids
+in the proof of their Theorem~3.1. The envelopes
+\(H_0,H_1,H_2\in\ell^4(p_0)\), together with
+\(H_3\in\ell^2(p_0)\), justify each Taylor remainder in counting measure,
+and taking the pointwise
+minimum and maximum over every parameter cell produces ordered brackets
+exactly as in their proof. Those grids have at most \((CD/\xi)^{CD}\)
+elements, and hence
+\[
+ \log N_{[]}\bigl(\xi,\mathcal D_D^{\rm in},L^2(p_0)\bigr)
+ \le CD\log(CD/\xi).
+\]
+The general slicing argument in
+\cite[Theorem~2.2]{gassiatVanHandel2014} converts this normalized-secant
+bound into brackets of width \(\epsilon\) for the inner Hellinger ball of
+radius \(r\), at entropy \(CD\log(CDr/\epsilon)\). Finally, write an inner
+subdensity as \(a=m\bar a\). Then
+\(|\sqrt m-1|\le\|\sqrt{a/p_0}-1\|_2\) and
+\(\|\sqrt{\bar a/p_0}-1\|_2\le Cr\); bracketing \(\sqrt m\) separately
+adds one scalar coordinate. This supplies the inner-submixture brackets
+needed for the shell construction.
+
+We now combine an inner bracket with at most \(D\) outer-component brackets,
+using the composition map from Lemma~\ref{lem:contaminant-calculus}. On a shell
+\(r/2<\rho_G\le r\), positivity and
+\eqref{eq:poisson-inner-outer-size} give
+\(\|h_{a,w_j,q_{u_j}}\|_2\le Cr\). Put
+\(\zeta=c\min\{\eta,r\}\), bracket the inner square root and each outer
+increment at width \(\zeta/(CD)\), and choose an actual baseline
+representative from each nonempty inner bracket. Widen every component bracket
+by the inner bracket width and compose through \(\Phi\). Since
+\(\partial_s\Phi\le\sqrt{D+1}\) and
+\(\partial_{h_j}\Phi\le1\), the resulting width is at most
+\[
+ \sqrt{D+1}\frac{\zeta}{CD}
+ +D\left(\frac{\zeta}{CD}+2\frac{\zeta}{CD}\right)
+ \le\zeta
+\]
+after increasing \(C\). Equations
+\eqref{eq:poisson-one-contaminant-bracket} and the inner entropy bound give,
+for the number \(N_r\) of brackets covering this shell,
+\begin{equation}
+\label{eq:poisson-shell-entropy}
+ \log N_r\le CD\{\log M+\log D+\log_+(r/\eta)\}.
+\end{equation}
+For the innermost ball, Taylor expansion and
+\eqref{eq:poisson-local-geometry} give a fixed \(F_0\in\ell^2(p_0)\) such
+that the inner density ratio differs from one by at most \(C\rho_GF_0\).
+The outer ratio is bounded by
+\(C\rho_G\sup_{0\le\theta\le M}p_\theta/p_0\). Since
+\(p_0\ge\pi_*p_{\lambda_*}\) and
+\(\sup_{\theta\le M}p_\theta(k)=p_{k\wedge M}(k)\), Stirling's formula for
+\(k\le M\) and the tilted-Poisson identity for \(k>M\) give a common
+envelope of \(\ell^2(p_0)\)-norm at most \(e^{C(1+M^2)}\). Thus the ball
+\(\rho_G\le\eta e^{-C(1+M^2)}\) fits in one bracket. Summing the dyadic shell
+collections adds only \(C\{\log M+\log_+(\delta/\eta)\}\) to
+\eqref{eq:poisson-shell-entropy}; \(D\le M^{C_0}\) absorbs \(D\log D\).
+
+For \(\rho_G\ge\rho_0\), global \(L^1\) density brackets suffice. Use the
+coordinate \(u=\sqrt\theta\), for which
+\(\|\partial_up_{u^2}\|_1\le2\). For every interval
+\(I\subset[0,\sqrt M]\), the pointwise endpoints
+\[
+ \ell_I(k)=\inf_{u\in I}p_{u^2}(k),
+ \qquad u_I(k)=\sup_{u\in I}p_{u^2}(k)
+\]
+form a nonnegative order bracket. The fundamental theorem of calculus gives
+\[
+ \sum_k\{u_I(k)-\ell_I(k)\}
+ \le\int_I\|\partial_up_{u^2}\|_1\,du\le2|I|.
+\]
+Partitioning \([0,\sqrt M]\) at mesh \(c\eta^2\) and quantizing the
+weights at mesh \(c\eta^2/D\) produces mixture brackets of \(L^1\)-width
+at most \(C\eta^2\). The number of location and weight choices is bounded
+by \(\exp\{CD(\log M+\log(1/\eta))\}\). Thus
+\[
+ \log N_{[]}\bigl(\eta^2,
+ \{p_G:|\supp(G)|\le D,\ \supp(G)\subset[0,M]\},L^1\bigr)
+ \le CD\{\log M+\log(1/\eta)\}.
+\]
+Taking square roots and using \(\delta\ge\rho_0\) completes the proof.
+\end{proof}
+
+We now apply the localized likelihood inequality to the entropy bound. The
+result controls all sparse Poisson competitors simultaneously and will be
+compared with Proposition~\ref{prop:poisson-finite-constructive}.
+
+\begin{proposition}
+\label{prop:poisson-finite-upper}
+Fix \(C_0<\infty\). Let \(D_n\) be positive integers satisfying
+\(D_n\le(\log n)^{C_0}\) and \(D_n\log\log n=o(n)\). Then
+\[
+    \mathbb P\left\{
+        \sup_{|\supp(G)|\le D_n}L_n^{\mathrm{Pois}}(G;G_0)
+        \le C_{G_0,C_0}D_n\log\log n
+    \right\}\to1.
+\]
+\end{proposition}
+
+\begin{proof}
+Let \(M_n=\max_iX_i\), and set \(m_n=\lfloor2\log n/\log\log n\rfloor\). Since \(G_0\) is fixed and finite, a Chernoff bound gives \(\mathbb P\{M_n\le m_n\}\to1\). By Lemma~\ref{lem:poisson-support}, on this event all \(D_n\)-atomic competitors may be restricted to \([0,m_n]\).
+
+Let \(A_n=C_{G_0,C_0}D_n\log\log n\). Since
+\(D_n\le m_n^{C_0+1}\) eventually and
+\(\log m_n\le\log\log n+O(1)\), Lemma
+~\ref{lem:poisson-finite-local}, with exponent \(C_0+1\), gives
+\[
+    \log N_{[]}
+    \bigl(
+        \eta,
+        \mathcal F_{D_n}^{\mathrm{Pois},G_0}(m_n,\delta),
+        L^2(p_0)
+    \bigr)
+    \le
+    A_n(1+\log(\delta/\eta)).
+\]
+The localized bracketing integral is therefore \(O(\delta\sqrt{A_n})\), and Lemma~\ref{lem:wong-shen-local} proves the proposition.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:poisson-finite-main}]
+Apply Proposition~\ref{prop:poisson-finite-constructive} with any fixed \(\gamma\in(0,1)\). Since \(J\asymp\sqrt{\log n/\log\log n}\), the unrestricted likelihood is at least \(c\sqrt{\log n/\log\log n}\) with probability tending to one. Proposition~\ref{prop:poisson-finite-upper} bounds every \(D_n\)-atomic competitor by \(C D_n\log\log n\) with high probability. Taking
+\[
+    D_n=
+    \left\lfloor
+        c_{G_0}\frac{\sqrt{\log n}}{(\log\log n)^{3/2}}
+    \right\rfloor
+\]
+with \(c_{G_0}\) small enough, no \(D_n\)-atomic mixing distribution can maximize on the intersection of the two high-probability events. This proves the theorem.
+\end{proof}
+
+\small
+\bibliographystyle{alpha}
+\bibliography{writing_examples/bib,references}
+
+\end{document}

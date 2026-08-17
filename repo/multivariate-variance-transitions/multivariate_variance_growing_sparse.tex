@@ -1,0 +1,976 @@
+\subsection{Sparse edges in growing dimension}
+\label{sec:proof-program}
+
+This subsection extends the spatial exclusion required by
+Theorem~\ref{thm:main-support-law} from fixed to growing dimension below the
+simplex regime. We split the sample into a sparse upper radial cloud and a
+truncated lower cloud. Angular separation controls the upper cloud, while
+dimension-uniform concentration controls the lower cloud.
+
+Fix a sequence \(A_n\to\infty\) and define the upper radial cloud
+\begin{equation}
+\label{eq:upper-cloud}
+  \mathcal I_n(A_n)
+  =
+  \{i:\xi_{n,i}\ge-A_n\}.
+\end{equation}
+The expected size of this set is \(e^{A_n+o(A_n)}\) whenever
+\(A_n=o(L_n)\). Write \(B_n=B_n^{\rm hi}+B_n^{\rm lo}\) for the two sums
+in \eqref{eq:bump-representation}, split according to
+\(\mathcal I_n(A_n)\).
+
+\subsubsection{Separation of the upper radial cloud}
+
+Conditional on their radii, the uncentered Gaussian directions are
+independent and uniform on \(S^{d_n-1}\). If
+\(\#\mathcal I_n(A_n)=\exp\{O_{\Pbb}(A_n)\}\) and \(A_n=o(d_n)\), spherical
+concentration gives
+\begin{equation}
+\label{eq:direction-separation}
+  \max_{i\ne j\in\mathcal I_n(A_n)}
+  \left|
+    \frac{q_i}{|q_i|}\cdot\frac{q_j}{|q_j|}
+  \right|
+  =o_{\Pbb}(1).
+\end{equation}
+Since the upper centers have radius
+\(\sqrt{2L_n}\{1+o_{\Pbb}(1)\}\),
+\eqref{eq:direction-separation} implies
+\[
+  \min_{i\ne j\in\mathcal I_n(A_n)}|q_i-q_j|^2
+  =
+  4L_n\{1+o_{\Pbb}(1)\}.
+\]
+Thus no location \(w\) can lie within \(o(\sqrt{L_n})\) of two upper
+centers. The contribution of all nonnearest upper bumps is exponentially
+small in \(L_n\).
+
+Centering by \(\bar Z_n\) perturbs every direction by
+\(O_{\Pbb}(\sqrt{d_n/n})\) in Euclidean norm. Under
+\eqref{eq:centering-condition} and the rate ranges considered below, this
+does not affect \eqref{eq:direction-separation}.
+
+\subsubsection{The lower cloud and the inner field}
+
+At the critical normalization, every low bump has height at most
+\begin{equation}
+\label{eq:low-jump}
+  \max_{i\notin\mathcal I_n(A_n)}h_i
+  \le
+  \exp\{-\delta_n(A_n+s_n)\}.
+\end{equation}
+Before empirical centering, let
+\[
+  B_n^\circ(w)
+  =
+  \frac1n\sum_{i=1}^n
+  \exp\left\{
+    w\cdot\frac{Z_i}{\sqrt{\gamma_n}}-\frac{|w|^2}{2}
+  \right\}.
+\]
+For a fixed \(w\), its population mean is
+\begin{equation}
+\label{eq:population-field}
+  \E B_n^\circ(w)
+  =
+  \exp\left\{-\frac{\eps_n|w|^2}{2}\right\}.
+\end{equation}
+Thus the deterministic background is already negligible near
+\(|w|=\sqrt{2L_n}\) whenever \(d_n\to\infty\), because then
+\(\eps_nL_n\to\infty\) at the critical scale.
+
+The proof below establishes the following low-cloud estimate.  Its precision
+\(o_{\Pbb}(\delta_n)\) is essential in superlogarithmic dimension: for a
+deterministic radius \(r_n=o(\sqrt{L_n})\),
+\begin{equation}
+\label{eq:outer-low-target}
+  \sup_{|w|\ge r_n}B_n^{\rm lo}(w)
+  =o_{\Pbb}(\delta_n),
+\end{equation}
+provided \(A_n\) is chosen so that
+\begin{equation}
+\label{eq:A-conditions}
+  A_n=o(L_n\wedge d_n),
+  \qquad
+  \delta_nA_n-\log(d_nL_n)\longrightarrow\infty.
+\end{equation}
+
+For fixed \(w\), \eqref{eq:low-jump}, \eqref{eq:population-field}, and
+Bernstein's inequality give much more than \eqref{eq:outer-low-target}. The
+work is to transfer that bound over \(w\). A direct Euclidean net of the
+relevant ball has logarithmic size \(O(d_n\log L_n)\); the second condition
+in \eqref{eq:A-conditions} is designed to make the bounded-jump exponent
+dominate this entropy. Radial peeling avoids an unnecessarily fine net
+near the origin.
+
+The inner region contains the deterministic equality \(B_n(0)=1\), so it
+cannot satisfy \eqref{eq:outer-low-target}.  The corresponding target is
+strict concavity away from zero:
+\begin{equation}
+\label{eq:inner-target}
+  \Pbb\left\{
+    \sup_{0<|w|\le r_n}B_n(w)<1
+  \right\}
+  \longrightarrow1.
+\end{equation}
+
+At the origin,
+\[
+  \nabla B_n(0)=0,
+  \qquad
+  \nabla^2B_n(0)
+  =
+  \frac1n\sum_i
+  \frac{\widetilde Z_i\widetilde Z_i^\top}{\gamma_n}
+  -I_{d_n}.
+\]
+Its expectation is \(-\eps_nI_{d_n}+o(1)\). Standard covariance concentration
+therefore gives a negative Hessian whenever
+\(\sqrt{d_n/n}=o(\eps_n)\). The remaining task is to propagate this local
+curvature through the interval up to \(r_n\) using a clipped exponential
+process. This is easier than the outer-edge estimate because the population
+gap in \eqref{eq:population-field} grows monotonically with \(|w|\).
+
+Equations~\eqref{eq:outer-low-target} and \eqref{eq:inner-target} give the
+field exclusion used later in
+Proposition~\ref{prop:buffered-support-below-simplex}. On the event
+\(\max_i\xi_{n,i}\le s_n-\eta\), every upper bump has height at most
+\[
+  e^{-\delta_n\eta},
+\]
+and hence lies below one by at least \(c_\eta\delta_n\) whenever
+\(0<\delta_n\le1\).
+At the center of any upper bump, the separation estimate makes all other
+upper bumps \(o_{\Pbb}(\delta_n)\), and \eqref{eq:outer-low-target} makes the
+low-cloud contribution \(o_{\Pbb}(\delta_n)\). Hence the outer field is below one, while
+\eqref{eq:inner-target} handles the inner field.
+
+\subsubsection{The direct truncation range}
+
+The truncation and angular-separation conditions can be imposed
+simultaneously in the range
+\begin{equation}
+\label{eq:direct-truncation-range}
+  \log\log n\ll d_n,
+  \qquad
+  d_n\{\log d_n\}^2=o\{(\log n)^3\},
+  \qquad
+  d_n\log n=o(n).
+\end{equation}
+Indeed, in the worst part of this range,
+\(\delta_n\asymp\sqrt{L_n/d_n}\). Conditions
+\eqref{eq:A-conditions} admit a choice of \(A_n\) precisely when
+\[
+  \delta_n^{-1}\log(d_nL_n)=o(L_n\wedge d_n),
+\]
+which is implied by \eqref{eq:direct-truncation-range}. The lower bound
+\(d_n\gg\log\log n\) ensures \(A_n=o(d_n)\), so the upper radial points are
+uniformly separated. Smaller dimensions are handled below by constant-mesh
+estimates. At the upper end, where \(\delta_n\) is too small for
+\eqref{eq:A-conditions}, Section~\ref{sec:explicit-regime} replaces spatial
+truncation by the entropy dual.
+
+\subsubsection{Slowly growing dimension}
+\label{sec:slow-dimension}
+
+We first treat growing dimensions below \((\log L_n)^2\). A constant-mesh
+argument is enough; its key input is an exact semiconvexity property of every
+Gaussian-bump field. Fixed dimensions use the moving-shell estimates in
+Section~\ref{sec:fixed-d-patches}.
+
+\begin{lemma}
+\label{lem:slow-truncated-shell}
+Let
+\[
+ F(w)=\sum_{j=1}^m c_j
+ \exp\left\{w\cdot q_j-\frac{|w|^2}{2}\right\},
+ \qquad c_j>0.
+\]
+Then
+\begin{equation}
+\label{eq:semiconvex-log-field}
+ \nabla^2\log F(w)=\operatorname{Cov}_{p_w}(q_j)-I\succeq-I,
+\end{equation}
+where \(p_w\) is proportional to
+\(c_j e^{w\cdot q_j-|w|^2/2}\).  Every global maximizer \(w_*\) belongs
+to the convex hull of \(q_1,\ldots,q_m\), and
+\begin{equation}
+\label{eq:semiconvex-net-transfer}
+ F(w)\ge F(w_*)e^{-|w-w_*|^2/2}
+ \qquad(w\in\R^d).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Differentiating \(\log F\) gives \eqref{eq:semiconvex-log-field}.  At a
+maximizer, \(0=\nabla\log F(w_*)=\sum_jp_{w_*}(j)q_j-w_*\), which proves
+the convex-hull assertion.  Integrating the lower Hessian bound along the
+segment from \(w_*\) to \(w\) proves
+\eqref{eq:semiconvex-net-transfer}.
+\end{proof}
+
+Fix \(\alpha>0\), put
+\[
+ Q_i=\frac{Z_i}{\sqrt{\gamma_n}},\qquad
+ R_{n,\alpha}=\sqrt{2(L_n-\alpha)},
+\]
+and define the independent truncated field
+\[
+ S_{n,\alpha}(w)
+ =\frac1n\sum_{i=1}^n
+ e^{w\cdot Q_i-|w|^2/2}
+ \mathbf1_{\{|Q_i|\le R_{n,\alpha}\}}.
+\]
+The next lemma gives the only outer-field estimate needed below.  It uses
+only bounded summands, their population mean, and a constant Euclidean net.
+
+\begin{lemma}
+\label{lem:slow-outside-shell}
+Suppose
+\[
+ d_n\longrightarrow\infty,\qquad
+ d_n\le(\log L_n)^2,\qquad s_n=O(1).
+\]
+For every fixed \(\alpha>0\), choose a fixed \(\zeta>0\) with
+\(\zeta^2/2<\alpha\), let \(\mathcal G_n\) be a \(\zeta\)-net of
+\(B(0,R_{n,\alpha})\), and fix
+\[
+ 0<\rho<e^{-\zeta^2/2}-e^{-\alpha}.
+\]
+Then
+\begin{equation}
+\label{eq:slow-outside-shell}
+ \Pbb\left\{
+  \max_{\substack{w\in\mathcal G_n\\
+       |w|\ge R_{n,\alpha}/2-\zeta}}
+  S_{n,\alpha}(w)
+  \ge e^{-\zeta^2/2}-\rho
+ \right\}\longrightarrow0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For fixed \(w\), every summand of \(S_{n,\alpha}(w)\) is at most
+\begin{equation}
+\label{eq:slow-jump-simple}
+ M_n(w)=\exp\left\{-\alpha
+ -\frac{(R_{n,\alpha}-|w|)^2}{2}\right\},
+\end{equation}
+while
+\begin{equation}
+\label{eq:slow-mean-simple}
+ \E S_{n,\alpha}(w)\le e^{-\eps_n|w|^2/2}.
+\end{equation}
+If independent nonnegative summands have sum of means \(\mu\), are bounded
+by \(M\), and \(t>\mu\), the exponential-Chernoff bound is
+\begin{equation}
+\label{eq:bounded-poisson-chernoff}
+ \Pbb\left\{\sum_jX_j\ge t\right\}
+ \le
+ \exp\left[-\frac1M
+ \left\{t\log\frac t\mu-t+\mu\right\}\right].
+\end{equation}
+Apply this with \(t=e^{-\zeta^2/2}-\rho\).  Uniformly for
+\(R_{n,\alpha}/2-\zeta\le|w|\le R_{n,\alpha}\),
+\[
+ -\log\Pbb\{S_{n,\alpha}(w)\ge t\}
+ \ge(1-o(1))e^\alpha t\,\eps_nL_n.
+\]
+Indeed, the infimum of
+\(e^{(R_{n,\alpha}-r)^2/2}r^2\) over this interval is
+\((1-o(1))R_{n,\alpha}^2\).
+
+In the present range, \(k_n=d_n/2\to\infty\) and
+\begin{equation}
+\label{eq:slow-entropy-match}
+ \eps_nL_n
+ =(1+o(1))k_n\log\frac{L_n}{k_n}
+ =(1-o(1))k_n\log L_n.
+\end{equation}
+On the other hand,
+\[
+ \log|\mathcal G_n|
+ \le d_n\log\frac{CR_{n,\alpha}}\zeta
+ =k_n\log L_n+O(d_n).
+\]
+Since \(e^\alpha t>1\), the union bound proves
+\eqref{eq:slow-outside-shell}.
+\end{proof}
+
+The population gap in \eqref{eq:population-field} controls the entire inner
+half-ball once the
+microscopic curvature estimate is combined with a relative empirical-process
+bound.
+\begin{lemma}
+\label{lem:slow-bulk}
+Suppose \(3\le d_n\le(\log L_n)^2\) and \(s_n=O(1)\).  Then
+\begin{equation}
+\label{eq:slow-bulk}
+ \Pbb\left\{
+  \sup_{0<|w|\le R_{n,\alpha}/2}B_n(w)>1
+ \right\}\longrightarrow0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+At the origin, \(B_n(0)=1\), \(\nabla B_n(0)=0\), and Gaussian
+sample-covariance concentration gives
+\[
+ \nabla^2B_n(0)
+ =\frac1n\sum_i\frac{\widetilde Z_i\widetilde Z_i^\top}{\gamma_n}-I
+ \preceq-\frac{\eps_n}{2}I
+\]
+with probability tending to one.  Since
+\(\max_i|\widetilde Z_i|=O_{\Pbb}(\sqrt{L_n})\), Taylor's theorem makes
+the inequality strict on
+\(0<|w|\le r_{0,n}:=\eps_n/(16L_n^{3/2})\).
+
+For completeness, we give the empirical-process estimate used beyond this
+microscopic ball.  Before centering, put
+\[
+ H_n(w)=\frac1n\sum_i
+ \exp\left\{w\cdot Q_i-\frac{|w|^2}{2\gamma_n}\right\},
+ \qquad \E H_n(w)=1,
+\]
+and \(g_n(r)=1-e^{-\eps_nr^2/2}\).  On
+\(r_{0,n}\le|w|\le R_{n,\alpha}/2\),
+\begin{equation}
+\label{eq:slow-bulk-process}
+ \sup_w\frac{|H_n(w)-1|}{g_n(|w|)}\longrightarrow_{\Pbb}0.
+\end{equation}
+To verify this, split the range into squared-radius annuli
+\(\mathcal A_j=\{r_j\le |w|\le R_j\}\) with \(R_j^2\le2r_j^2\), and put
+\(g_j=g_n(r_j)\).  There are \(O(\log L_n)\) annuli.  On an annulus with
+outer radius \(R=R_j\), clip the lognormal summands at
+\[
+ B_R=\exp\{R^2/(2\gamma_n)+RT_n\},
+ \qquad
+ T_n^2=C\{d_n\log L_n+\log g_n(r_{0,n})^{-1}\}.
+\]
+We first control both discarded tails.  For a fixed \(w\), exponential
+tilting gives
+\[
+ \sup_{|w|\le R}
+ \E\!\left[
+  e^{w\cdot Q-|w|^2/(2\gamma_n)}
+  \mathbf1_{\{e^{w\cdot Q-|w|^2/(2\gamma_n)}>B_R\}}
+ \right]
+ \le e^{-cT_n^2}.
+\]
+Indeed, tilt \(Q\) from
+\(\mathcal N(0,\gamma_n^{-1}I)\) to
+\(\mathcal N(w/\gamma_n,\gamma_n^{-1}I)\); the threshold is then at least
+\(\sqrt{\gamma_n}T_n\) standard deviations in the \(w\)-direction.  For the
+empirical envelope, use
+\[
+ \sup_{|w|\le R}
+ e^{w\cdot q-|w|^2/(2\gamma_n)}
+ =
+ \begin{cases}
+  e^{\gamma_n|q|^2/2},&\gamma_n|q|\le R,\\
+  e^{R|q|-R^2/(2\gamma_n)},&\gamma_n|q|>R.
+ \end{cases}
+\]
+Thus exceeding \(B_R\) forces \(|q|>R/\gamma_n+T_n\).  Completing the
+square against the \(\mathcal N(0,\gamma_n^{-1}I)\) density gives
+\[
+ \E\left[
+  \sup_{|w|\le R}
+  e^{w\cdot Q-|w|^2/(2\gamma_n)}
+  \mathbf1_{\{\sup_{|v|\le R}
+    e^{v\cdot Q-|v|^2/(2\gamma_n)}>B_R\}}
+ \right]
+ \le
+ C e^{C d_n\log L_n}
+ \int_{T_n}^{\infty}e^{-cu^2}\,du.
+\]
+Taking the constant in \(T_n^2\) sufficiently large makes this
+\(o(g_j/\log L_n)\).  Markov's inequality and a union bound over the
+annuli control the empirical discarded tails at the same order.
+
+It remains to control the clipped fields.  Fix \(\rho>0\).  On the event
+\(\max_i|Q_i|\le C\sqrt{L_n}\), each is
+\(C\sqrt{L_n}B_R\)-Lipschitz.  Use a net on \(\mathcal A_j\) of mesh
+\[
+ \frac{\rho g_j}{C\sqrt{L_n}B_R}.
+\]
+Its logarithmic cardinality is \(O(d_nL_n)\).  Because
+\(R^2\le L_n/2+O(1)\), one has \(B_R\le n^{1/4+o(1)}\), while Bernstein's
+inequality at deviation \(\rho g_j/4\) has exponent at least
+\[
+ \frac{c n g_n(r)^2}{e^{R^2/\gamma_n}+B_Rg_n(r)}
+ \ge n^{1/2-o(1)}g_n(r_{0,n})^2.
+\]
+This dominates \(d_nL_n\).  The union bound over all net points and all
+annuli shows that the probability that the left side of
+\eqref{eq:slow-bulk-process} exceeds \(\rho\) tends to zero.  Since
+\(\rho>0\) was arbitrary, \eqref{eq:slow-bulk-process} follows.
+
+Now
+\[
+ B_n(w)
+ =e^{-w\cdot\bar Z_n/\sqrt{\gamma_n}}
+   e^{-\eps_n|w|^2/2}H_n(w).
+\]
+Moreover,
+\[
+ \sup_{r_{0,n}\le r\le R_{n,\alpha}/2}
+ \frac{r|\bar Z_n|/\sqrt{\gamma_n}}{g_n(r)}
+ \le
+ C\frac{|\bar Z_n|}{\eps_nr_{0,n}}
+ =o_{\Pbb}(1),
+\]
+because \(d_n\le(\log L_n)^2\),
+\(|\bar Z_n|=O_{\Pbb}(\sqrt{d_n/n})\), and
+\(\eps_n\ge c\log L_n/L_n\).  Thus
+\eqref{eq:slow-bulk-process} preserves a fixed fraction of the population
+gap \(g_n(|w|)\), proving \eqref{eq:slow-bulk}.
+\end{proof}
+
+
+\subsubsection{Moderately growing dimension}
+\label{sec:moderate-dimensional-theorem}
+
+We now prove \eqref{eq:outer-low-target} and \eqref{eq:inner-target} under
+\eqref{eq:direct-truncation-range}. The
+argument deliberately uses a deeper truncation than
+\eqref{eq:A-conditions}: this makes every remaining low-cloud summand so
+small that elementary Bernstein bounds survive a Euclidean net.
+
+Put
+\[
+  \mathfrak h_n=\log\frac{d_nL_n}{\delta_n\eps_n}.
+\]
+The expansions in Section~\ref{sec:regime-map} and
+\eqref{eq:direct-truncation-range} imply
+\begin{equation}
+\label{eq:moderate-scale-relations}
+  \mathfrak h_n\asymp\log L_n,
+  \qquad
+  \frac{\eps_nL_n}{\mathfrak h_n}\longrightarrow\infty,
+  \qquad
+  \log\frac{L_n^3}{\eps_n^3}=O(\log L_n).
+\end{equation}
+For \(d_n=o(L_n)\), these statements follow from
+\(\delta_n=1+o(1)\) and
+\(\eps_nL_n\sim(d_n/2)\log(2L_n/d_n)\); in particular,
+\[
+ \mathfrak h_n=2\log L_n-\log\log(2L_n/d_n)+O(1).
+\]
+When \(d_n\asymp L_n\), both \(\eps_n\) and \(\delta_n\) stay bounded away
+from zero and infinity.  When \(d_n/L_n\to\infty\),
+\(\eps_n\to1\) and \(\delta_n\asymp\sqrt{L_n/d_n}\).  The last two
+conditions in \eqref{eq:direct-truncation-range} then give all three relations in
+\eqref{eq:moderate-scale-relations}.
+They also permit deterministic sequences \(\omega_n\to\infty\) and
+\begin{equation}
+\label{eq:moderate-cutoff}
+  A_n=\frac{\omega_n\mathfrak h_n}{\delta_n}
+  =o(L_n\wedge d_n).
+\end{equation}
+Indeed, this is immediate when \(d_n=O(L_n)\); when \(d_n/L_n\to\infty\),
+it is equivalent, up to logarithmic factors, to
+\(d_n(\log d_n)^2=o(L_n^3)\). Finally set
+\begin{equation}
+\label{eq:moderate-inner-radius}
+  r_n^2=\frac{40\mathfrak h_n}{\eps_n}=o(L_n).
+\end{equation}
+
+We shall also use a uniform count for the upper radial cloud.  It is a
+moderate-deviation extension of Lemma~\ref{lem:gamma-hazard}.
+
+\begin{lemma}
+\label{lem:moderate-upper-count}
+Under \eqref{eq:direct-truncation-range}, if \(A_n\to\infty\) and
+\(A_n=o(L_n\wedge d_n)\), then
+\[
+ n\Pbb\{Y_n\ge b_n-a_nA_n\}
+ =\exp\{(1+o(1))A_n\}.
+\]
+Consequently, the number of indices with
+\((|Z_i|^2/2-b_n)/a_n\ge-A_n\) is at most \(e^{2A_n}\) with probability
+tending to one.
+\end{lemma}
+
+\begin{proof}
+On \([b_n-a_nA_n,b_n]\), the reciprocal Gamma hazard equals
+\(a_n\{1+o(1)\}\) uniformly.  Indeed,
+\eqref{eq:tail-density-ratio} gives this once
+\(a_nA_n=o(b_n-k_n+1)\).  For \(k_n=O(L_n)\), that relation follows from
+\(A_n=o(d_n\wedge L_n)\); for \(k_n/L_n\to\infty\), it follows from
+\(a_n\asymp\sqrt{k_n/L_n}\) and \(A_n=o(L_n)\).  Integrating the
+hazard gives the displayed tail ratio.  The count is binomial with mean
+\(e^{(1+o(1))A_n}\), so Markov's inequality proves the second claim.
+\end{proof}
+
+The next proposition proves the low-cloud estimate with more precision than
+is needed for the Gumbel law. The stronger factor \(L_n^{-10}\) leaves enough
+slack to differentiate the field up to three times in the support-count
+argument.
+
+\begin{proposition}
+\label{prop:moderate-low-cloud}
+Suppose \eqref{eq:direct-truncation-range} holds and \(s_n=O(1)\). Choose \(A_n,r_n\)
+as in \eqref{eq:moderate-cutoff}--\eqref{eq:moderate-inner-radius}. Then
+\begin{equation}
+\label{eq:moderate-low-cloud}
+  \sup_{|w|\ge r_n}B_n^{\rm lo}(w)
+  =O_{\Pbb}(\delta_nL_n^{-10}).
+\end{equation}
+The same conclusion holds after differentiating the bump field up to three
+times, with the right side replaced by \(o_{\Pbb}(\delta_nL_n^{-7})\).
+\end{proposition}
+
+\begin{proof}
+We first work before empirical centering. Put
+\(\xi_{n,i}^{\circ}=(|Z_i|^2/2-b_n)/a_n\) and define
+\[
+ S_n^{\rm lo}(w)
+ =\frac1n\sum_{i=1}^n
+   \exp\left\{w\cdot\frac{Z_i}{\sqrt{\gamma_n}}-\frac{|w|^2}{2}\right\}
+   \mathbf1_{\{\xi_{n,i}^{\circ}<-A_n+1\}}.
+\]
+Completing the square and using
+\(\gamma_nL_n=b_n+a_ns_n\) show that every summand is bounded by
+\begin{equation}
+\label{eq:moderate-jump-bound}
+  \mathfrak j_n
+  =\exp\{-\delta_n(A_n-1+s_n)\}
+  =\exp\{-(1+o(1))\omega_n\mathfrak h_n\}.
+\end{equation}
+For fixed \(w\),
+\begin{equation}
+\label{eq:moderate-low-mean}
+  \E S_n^{\rm lo}(w)
+  \le \exp\{-\eps_n|w|^2/2\}.
+\end{equation}
+Since a nonnegative summand bounded by \(\mathfrak j_n\) has variance at most
+\(\mathfrak j_n\) times its mean, Bernstein's inequality gives
+\begin{equation}
+\label{eq:moderate-bernstein}
+ \Pbb\{S_n^{\rm lo}(w)-\E S_n^{\rm lo}(w)>t\}
+ \le
+ \exp\left\{-c\frac{t^2}
+   {\mathfrak j_n(\E S_n^{\rm lo}(w)+t)}\right\}.
+\end{equation}
+
+With probability tending to one, all score centers have norm at most
+\(C\sqrt{L_n}\). Every local maximum of the low bump field lies in their
+convex hull, so it is enough to consider \(|w|\le C\sqrt{L_n}\). On this
+ball the field is multiplicatively \(C\sqrt{L_n}\)-Lipschitz:
+\begin{equation}
+\label{eq:multiplicative-lipschitz}
+  S_n^{\rm lo}(w')
+  \ge e^{-C\sqrt{L_n}|w-w'|}S_n^{\rm lo}(w).
+\end{equation}
+Take a net of mesh \(c/\sqrt{L_n}\); its logarithmic cardinality is at most
+\(C d_n\log L_n\). For \(|w|\ge r_n\),
+\eqref{eq:moderate-low-mean} is at most \(e^{-20\mathfrak h_n}\). Apply
+\eqref{eq:moderate-bernstein} with
+\(t=\delta_nL_n^{-10}\). Equations
+\eqref{eq:moderate-scale-relations} and \eqref{eq:moderate-jump-bound} give
+\[
+  \frac{t}{\mathfrak j_n}\gg d_n\log L_n,
+  \qquad
+  \frac{t^2}{\mathfrak j_ne^{-20\mathfrak h_n}}\gg d_n\log L_n.
+\]
+The union bound and \eqref{eq:multiplicative-lipschitz} prove the uncentered
+version of \eqref{eq:moderate-low-cloud}.
+
+The proof of Lemma~\ref{lem:centered-radial-max} gives
+\[
+ \max_i|\xi_{n,i}-\xi_{n,i}^{\circ}|=o_{\Pbb}(1).
+\]
+Moreover,
+\[
+ B_n(w)
+ =\exp\left\{-w\cdot\frac{\bar Z_n}{\sqrt{\gamma_n}}\right\}
+   B_n^{\circ}(w),
+ \qquad
+ \sup_{|w|\le C\sqrt{L_n}}
+ \left|w\cdot\frac{\bar Z_n}{\sqrt{\gamma_n}}\right|
+ =O_{\Pbb}(L_n/\sqrt n)=o_{\Pbb}(\delta_n).
+\]
+Replacing \(A_n-1\) by \(A_n\) therefore proves the centered statement.
+For a multi-index \(\beta\) of order \(j\le3\), differentiation gives
+\[
+  \left|\partial_w^\beta e^{-|w-q_i|^2/2}\right|
+  \le C_j(1+|w-q_i|^j)e^{-|w-q_i|^2/2}.
+\]
+On a fixed enlargement of the convex hull, both \(|w|\) and
+\(\max_i|q_i|\) are \(O_{\Pbb}(\sqrt{L_n})\). Repeating the net-and-Bernstein
+argument used for the order-zero field with this polynomial envelope costs at most
+\(L_n^{j/2}\); the base estimate
+\(O_{\Pbb}(\delta_nL_n^{-10})\) is therefore
+\(o_{\Pbb}(\delta_nL_n^{-7})\) for every \(j\le3\). Outside that enlargement,
+the polynomially weighted Gaussian envelope is radially decreasing toward the convex hull
+once the enlargement radius exceeds \(\sqrt3\). Its supremum is consequently
+attained on the controlled boundary, proving the derivative estimate globally.
+\end{proof}
+
+The inner field requires a different argument because it equals one at the
+origin. Sample-covariance curvature handles a microscopic ball, and the
+bounded-jump estimate \eqref{eq:moderate-bernstein} handles the remaining
+annuli.
+
+\begin{proposition}
+\label{prop:moderate-inner-field}
+Under the assumptions of Proposition~\ref{prop:moderate-low-cloud},
+\begin{equation}
+\label{eq:moderate-inner-field}
+  \Pbb\left\{\sup_{0<|w|\le r_n}B_n(w)<1\right\}
+  \longrightarrow1.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+At the origin,
+\[
+  \nabla B_n(0)=0,
+  \qquad
+  \nabla^2B_n(0)=\frac1n\sum_iq_iq_i^\top-I.
+\]
+The Gaussian sample-covariance bound and
+\eqref{eq:direct-truncation-range} imply
+\begin{equation}
+\label{eq:moderate-origin-curvature}
+  \left\|\frac1n\sum_iq_iq_i^\top-\frac1{\gamma_n}I\right\|_{\rm op}
+  =o_{\Pbb}(\eps_n),
+  \qquad
+  \nabla^2B_n(0)\preceq-\frac{\eps_n}{2}I
+\end{equation}
+with probability tending to one. On the same event
+\(\max_i|q_i|=O(\sqrt{L_n})\), so the Hessian is
+\(O(L_n^{3/2})\)-Lipschitz near zero. It follows that
+\begin{equation}
+\label{eq:moderate-microscopic-ball}
+  B_n(w)<1
+  \quad\text{for}\quad
+  0<|w|\le r_{0,n}:=\frac{\eps_n}{16L_n^{3/2}}.
+\end{equation}
+
+It remains to consider \(r_{0,n}\le|w|\le r_n\). Put
+\(g(r)=1-e^{-\eps_nr^2/2}\). In this range
+\[
+  g(r)\ge c\eps_nr_{0,n}^2
+  \ge c\frac{\eps_n^3}{L_n^3}=:g_{0,n}.
+\]
+The scale relations above give
+\(\log g_{0,n}^{-1}=O(\log L_n)\). Cover each dyadic radial annulus by a
+net of mesh \(c g(r)/\sqrt{L_n}\). The total logarithmic cardinality is
+\(O(d_n\log L_n)\), and
+\eqref{eq:multiplicative-lipschitz} shows that a crossing of level one would
+produce a net point at level at least \(1-g(r)/8\).
+
+For the low cloud, apply \eqref{eq:moderate-bernstein} with
+\(t=g(r)/4\). Uniformly over all annuli, its exponent is bounded below by
+\[
+  c\frac{g_{0,n}^2}{\mathfrak j_n}\gg d_n\log L_n.
+\]
+Its mean is at most \(1-g(r)\) by
+\eqref{eq:moderate-low-mean}. Lemma~\ref{lem:moderate-upper-count}, with a
+one-unit buffer, shows that the upper cloud contains at most
+\(e^{3A_n}\) points with probability tending to one. On
+\(|w|\le r_n=o(\sqrt{L_n})\), each corresponding bump is at most
+\(e^{-L_n+o(L_n)}\), so their total contribution is
+\(e^{-L_n+o(L_n)}=o(g_{0,n})\). Finally, empirical centering changes the
+logarithm of the field by at most
+\[
+  |w|\frac{|\bar Z_n|}{\sqrt{\gamma_n}},
+  \qquad
+  \sup_{r\ge r_{0,n}}
+  \frac{|\bar Z_n|/\sqrt{\gamma_n}}{\eps_nr}
+  =o_{\Pbb}(1),
+\]
+where the last relation follows from
+\(|\bar Z_n|/\sqrt{\gamma_n}=O_{\Pbb}(\sqrt{L_n/n})\) and
+\[
+ \frac{L_n^2}{\sqrt n\,\eps_n^2}=o(1),
+\]
+which follows from \eqref{eq:direct-truncation-range}. The union bound now excludes every crossing outside
+the microscopic ball. Together with
+\eqref{eq:moderate-microscopic-ball}, this proves
+\eqref{eq:moderate-inner-field}.
+\end{proof}
+
+Together with the upper-cloud separation established at the start of this
+subsection, Propositions~\ref{prop:moderate-low-cloud} and
+\ref{prop:moderate-inner-field} exclude all subthreshold contacts in the
+direct-truncation range.
+
+\subsubsection{The logarithmic crossover}
+\label{sec:constant-crossover}
+
+The slowly growing and direct-truncation arguments cover the sparse-edge
+regimes except the crossover scale
+\(d_n\asymp L_n^3/(\log L_n)^2\); the larger entropy regime is handled
+in Section~\ref{sec:simplex}. Here a direct entropy comparison is
+unnecessarily delicate.  A spatial argument is more effective: distinct
+sample centers are separated by order \(\sqrt{L_n}\), whereas a neighborhood
+of radius \(\sqrt{\log L_n}\) already makes every nonnearest Gaussian bump
+negligible.
+
+\begin{lemma}
+\label{lem:crossover-geometry}
+Fix \(0<c_-<c_+<\infty\), put \(\ell_n=\log L_n\), and suppose
+\[
+ c_-\frac{L_n^3}{\ell_n^2}
+ \le d_n\le
+ c_+\frac{L_n^3}{\ell_n^2},
+ \qquad s_n=O(1).
+\]
+Then
+\begin{equation}
+\label{eq:crossover-scales}
+ \gamma_n\asymp\frac{L_n^2}{\ell_n^2},
+ \qquad
+ \delta_n:=\frac{a_n}{\gamma_n}\asymp\frac{\ell_n}{L_n},
+ \qquad
+ \eps_n\longrightarrow1.
+\end{equation}
+Moreover, with probability tending to one,
+\begin{equation}
+\label{eq:crossover-separation}
+ \max_i\frac{|Z_i|}{\sqrt{\gamma_n}}\le C\sqrt{L_n},
+ \qquad
+ \min_{i\ne j}|q_i-q_j|^2\ge3L_n,
+ \qquad
+ \frac{|\bar Z_n|}{\sqrt{\gamma_n}}
+ =O_{\Pbb}\!\left(\sqrt{\frac{L_n}{n}}\right).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The scale relations follow from \eqref{eq:superlog-regime} and
+\eqref{eq:epsilon-superlog}.  Also
+\(|\bar Z_n|=O_{\Pbb}(\sqrt{d_n/n})\), which gives the last estimate in
+\eqref{eq:crossover-separation}.  A Gamma Chernoff bound and a union bound
+over \(i\) give the first estimate there.  Finally,
+\[
+ q_i-q_j=\frac{Z_i-Z_j}{\sqrt{\gamma_n}},
+ \qquad
+ \frac{|Z_i-Z_j|^2}{2}\sim\chi^2_{d_n}.
+\]
+Since \(d_n/\gamma_n\sim2L_n\), the lower-tail Chernoff bound for
+\(\chi^2_{d_n}\) is at most \(e^{-c d_n}\) at the threshold
+\(|q_i-q_j|^2=3L_n\).  This remains summable over the fewer than \(n^2\)
+pairs because \(d_n/L_n\to\infty\).
+\end{proof}
+
+We next use this separation together with truncation of the independent,
+uncentered field.  The truncation is only needed away from the sample
+centers, where each individual bump is already small.
+
+\begin{proposition}
+\label{prop:crossover-exclusion}
+Under the assumptions of Lemma~\ref{lem:crossover-geometry}, for
+every fixed \(\eta>0\),
+\[
+ \Pbb\left\{
+  \max_i\xi_{n,i}\le s_n-\eta,\quad
+  \sup_{w\in\mathbb R^{d_n}}B_n(w)>1
+ \right\}\longrightarrow0.
+\]
+\end{proposition}
+
+\begin{proof}
+Work on the high-probability events in Lemma~\ref{lem:crossover-geometry}
+and on
+\(\{\max_i\xi_{n,i}\le s_n-\eta\}\).  Then
+\[
+ \max_i\frac{|q_i|^2}{2}\le L_n-g_n,
+ \qquad
+ g_n=\eta\frac{a_n}{\gamma_n}\asymp_\eta\frac{\ell_n}{L_n}.
+\]
+ Put
+ \[
+  Q_i=\frac{Z_i}{\sqrt{\gamma_n}},
+  \qquad c_n=\frac{\bar Z_n}{\sqrt{\gamma_n}},
+  \qquad
+  S_n(w)=\frac1n\sum_i e^{w\cdot Q_i-|w|^2/2}.
+ \]
+ Then \(q_i=Q_i-c_n\) and, exactly,
+ \begin{equation}
+ \label{eq:crossover-centering-identity}
+  B_n(w)=e^{-w\cdot c_n}S_n(w),
+  \qquad
+  \E S_n(w)=e^{-\eps_n|w|^2/2}.
+ \end{equation}
+ Lemma~\ref{lem:crossover-geometry} gives
+ \begin{equation}
+ \label{eq:crossover-centering-small}
+  \sup_{|w|\le\sqrt{2L_n}}|w\cdot c_n|
+ =O_{\Pbb}(L_n/\sqrt n)=o_{\Pbb}(g_n).
+\end{equation}
+In particular,
+\[
+ |c_n|=O_{\Pbb}\!\left(\sqrt{L_n/n}\right)
+ =o_{\Pbb}(L_n^{-3/2}),
+\]
+which will make centering negligible even in the smallest annulus below.
+
+ We first exclude neighborhoods of the sample centers.  Write
+ \(R_n=\sqrt{8\ell_n}\).  The bump representation and the radial buffer
+ give
+ \[
+  h_i=\frac1n e^{|q_i|^2/2}\le e^{-g_n}\le1-\frac{g_n}{2}
+ \]
+ for all large \(n\).  If \(|w-q_i|\le R_n\), pairwise separation gives
+ \[
+  B_n(w)
+  \le e^{-g_n}
+  +n\exp\left\{-\frac12(\sqrt{3L_n}-R_n)^2\right\}
+  =1-\frac{g_n}{2}+e^{-L_n/2+o(L_n)}<1.
+ \]
+ Thus a crossing cannot occur within distance \(R_n\) of any \(q_i\).
+
+We next exclude a fixed ball around the origin.  Standard Gaussian
+sample-covariance concentration and \(d_n/n\to0\) imply
+\[
+ \frac1n\sum_iq_iq_i^\top\preceq\frac14I_{d_n}
+\]
+with probability tending to one.  Hence
+\(\nabla^2B_n(0)\preceq-3I_{d_n}/4\).  On the radial-buffer event,
+\(\max_i|q_i|\le\sqrt{2L_n}\), so the operator norm of the third derivative
+of \(B_n\) is at most \(CL_n^{3/2}\) throughout a ball of radius
+\(c_0L_n^{-3/2}\), where \(c_0>0\) is a sufficiently small universal
+constant.  Taylor's theorem therefore gives
+\begin{equation}
+\label{eq:crossover-microscopic}
+ B_n(w)\le1-\frac{|w|^2}{4},
+ \qquad 0<|w|\le r_{0,n}:=c_0L_n^{-3/2}.
+\end{equation}
+
+It remains to pass from this microscopic ball to a fixed radius.  On the
+event \(\max_i|Q_i|\le C\sqrt{L_n}\),
+\begin{equation}
+\label{eq:crossover-log-lipschitz}
+ \sup_{|w|\le3}|\nabla\log S_n(w)|\le C\sqrt{L_n}.
+\end{equation}
+Partition \(\{r_{0,n}\le|w|\le3\}\) into the \(O(\ell_n)\) annuli
+\(\mathcal A_j=\{r_j\le|w|\le2r_j\}\), where \(r_j=2^jr_{0,n}\),
+truncating the last annulus at radius \(3\).  For each \(j\), take a
+deterministic net of \(\mathcal A_j\) with mesh
+\[
+ \rho_j=c_1\frac{r_j^2}{\sqrt{L_n}},
+\]
+where \(c_1>0\) is a sufficiently small constant.  The logarithm of the
+total number of net points is \(O(d_n\ell_n)=O(L_n^3/\ell_n)\).
+
+For a fixed net point \(v\), define the independent variables
+\[
+ Y_i(v)=\min\left\{
+  \frac1n e^{v\cdot Q_i-|v|^2/2},
+  U_n
+ \right\},
+ \qquad
+ U_n=n^{-1}e^{C_1\sqrt{L_n}},
+\]
+with \(C_1\) chosen so that truncation is inactive on
+\(\{\max_i|Q_i|\le C\sqrt{L_n}\}\) for \(|v|\le3\).  Since
+\(\eps_n\ge1/2\) for all large \(n\),
+\[
+ \sum_i\E Y_i(v)
+ \le e^{-\eps_n|v|^2/2}
+ \le1-c_2|v|^2,
+ \qquad |v|\le3,
+\]
+for a numerical \(c_2>0\), while
+\(\sum_i\operatorname{Var}Y_i(v)\le U_n\).  Bernstein's inequality gives
+\[
+ \Pbb\left\{\sum_iY_i(v)>
+  e^{-\eps_n|v|^2/2}+c_3r_j^2\right\}
+ \le\exp\{-c r_j^4/U_n\}.
+\]
+The exponent is at least \(n^{1-o(1)}L_n^{-6}\), uniformly in \(j\), and
+therefore dominates the total net entropy.  Thus, with probability tending
+to one, \(S_n(v)\le1-c_4r_j^2\) at every such net point.
+
+If \(B_n(w)\ge1\) at some \(w\in\mathcal A_j\), then
+\eqref{eq:crossover-centering-identity} and
+\(|c_n|=o_{\Pbb}(r_{0,n})\) give \(S_n(w)\ge1-o(r_j^2)\).
+At the nearest net point \(v\), \eqref{eq:crossover-log-lipschitz} and the
+choice of \(c_1\) then give \(S_n(v)>1-c_4r_j^2\), a contradiction.  In
+combination with \eqref{eq:crossover-microscopic}, this proves
+\begin{equation}
+\label{eq:crossover-inner}
+ \sup_{0<|w|\le3}B_n(w)<1
+\end{equation}
+with probability tending to one on the radial-buffer event.
+
+We finally exclude the part of the field outside the fixed ball and the
+center neighborhoods.  Let \(\mathcal G_n\) be a deterministic
+\(1/4\)-net of \(B(0,\sqrt{2L_n})\).  Then
+\[
+ \log|\mathcal G_n|
+ \le d_n\log(C\sqrt{L_n})
+ =O(L_n^3/\ell_n).
+\]
+For \(v\in\mathcal G_n\) with \(|v|\ge11/4\), set
+\[
+ \widetilde Y_i(v)
+ =
+ \min\left\{
+  \frac1n e^{v\cdot Q_i-|v|^2/2},
+  \mathfrak b_n
+ \right\},
+ \qquad \mathfrak b_n=2L_n^{-15/4}.
+\]
+These variables are independent, and
+\[
+ \sum_i\E\widetilde Y_i(v)
+ \le e^{-\eps_n|v|^2/2}<0.05
+\]
+for all large \(n\).  Since
+\(\sum_i\operatorname{Var}\widetilde Y_i(v)\le0.05\mathfrak b_n\), Bernstein's
+inequality and a union bound give
+\begin{equation}
+\label{eq:crossover-outer-net}
+ \Pbb\left\{
+  \max_{\substack{v\in\mathcal G_n\\|v|\ge11/4}}
+  \sum_i\widetilde Y_i(v)>0.9
+ \right\}
+ \le
+ \exp\{O(L_n^3/\ell_n)-cL_n^{15/4}\}
+ =o(1).
+\end{equation}
+
+Suppose now that \(\sup_wB_n(w)>1\), and let \(w_*\) be a global
+maximizer.  Lemma~\ref{lem:slow-truncated-shell} places \(w_*\) in the
+convex hull of the \(q_i\)'s, hence in \(B(0,\sqrt{2L_n})\).  The preceding
+two parts of the proof imply
+\[
+ |w_*|>3,\qquad \min_i|w_*-q_i|>R_n.
+\]
+Let \(v\in\mathcal G_n\) satisfy \(|v-w_*|\le1/4\).  The semiconvex
+estimate \eqref{eq:semiconvex-net-transfer} gives
+\[
+ B_n(v)\ge e^{-1/32}B_n(w_*)>e^{-1/32}.
+\]
+Moreover, \(|v|\ge11/4\) and
+\(\min_i|v-q_i|\ge R_n-1/4\).  The exact identity
+\[
+ \frac1n e^{v\cdot Q_i-|v|^2/2}
+ =e^{v\cdot c_n}h_i e^{-|v-q_i|^2/2},
+\]
+together with the radial-buffer bound on \(h_i\) and
+\eqref{eq:crossover-centering-small}, shows that every uncentered summand
+at \(v\) is at most
+\[
+ e^{|v\cdot c_n|}e^{-(R_n-1/4)^2/2}
+ \le \mathfrak b_n.
+\]
+Thus truncation is inactive and, by
+\eqref{eq:crossover-centering-identity},
+\[
+ \sum_i\widetilde Y_i(v)=S_n(v)
+ =e^{v\cdot c_n}B_n(v)>0.9
+\]
+for all large \(n\), contradicting \eqref{eq:crossover-outer-net}.
+\end{proof}
+
+The exclusion propositions in this section cover, respectively, slowly
+growing dimensions, the direct truncation range, and the remaining
+crossover band. They are combined with the entropy estimate in
+Proposition~\ref{prop:buffered-support-below-simplex}; no separate
+regime-by-regime limit theorem is needed.

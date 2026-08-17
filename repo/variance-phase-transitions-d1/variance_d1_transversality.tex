@@ -1,0 +1,146 @@
+This appendix proves Proposition~\ref{prop:atom-morse}, the transversality
+input used to transfer limiting active sets in
+Theorem~\ref{thm:atom-count-limit}. The argument shows that every active KKT
+contact of the limiting Poisson likelihood is nondegenerate and that no inactive contact
+occurs. We condition on finitely many negative Poisson points and apply
+parametric transversality; the elementary zero bound below supplies the
+required Jacobian rank.
+
+\begin{lemma}
+\label{lem:atom-exp-polynomial}
+Let \(\alpha_1,\ldots,\alpha_m\) be distinct real numbers, and let \(p_j\)
+be real polynomials of degrees at most \(d_j\). Unless
+\[
+    A(x)=\sum_{j=1}^mp_j(x)e^{\alpha_jx}
+\]
+vanishes identically, it has at most
+\(\sum_j(d_j+1)-1\) real zeros, counted with multiplicity.
+\end{lemma}
+
+\begin{proof}
+The functions
+\[
+    e^{\alpha_jx},xe^{\alpha_jx},\ldots,x^{d_j}e^{\alpha_jx},
+    \qquad 1\le j\le m,
+\]
+form an extended complete Chebyshev system on \(\mathbb R\). After their
+common exponential factors are removed, the successive Wronskians are
+nonzero confluent Vandermonde determinants. The repeated-Rolle argument for
+such systems gives the stated zero bound; see
+\cite[Chapter~I]{karlin1966tchebycheff}.
+\end{proof}
+
+We now prove the contact statement used in the main text. The continuously
+distributed Poisson locations supply more perturbation parameters than any
+bad-contact stratum has equations.
+\begin{proof}[Proof of Proposition~\ref{prop:atom-morse}]
+We show that each bad-contact event is null. Suppose first that the optimizer
+has \(k\) distinct interior atoms with positive masses. Its parameters range
+over the open stratum
+\[
+    s_j>0,
+    \qquad b<\theta_1<\cdots<\theta_k<1.
+\]
+Choose \(q=6(k+1)^2\) negative Poisson points and isolate them in disjoint
+intervals with rational endpoints, each containing exactly one point.
+Conditional on the process outside these intervals and on the count events,
+their locations \(x_1,\ldots,x_q\) have a joint density positive on the
+product of the intervals. The rest of the process contributes a fixed
+real-analytic background. The selected points contribute
+\[
+    \sum_{\ell=1}^q\log\{1+F_\nu(x_\ell)\}
+\]
+to the objective: inserting a point at \(x\) adds \(F_\nu(x)\) to the
+linear field and \(h\{F_\nu(x)\}\) to the nonlinear term.
+
+We work first on rational compact substrata on which masses are bounded away
+from zero, atom locations are separated, and all free locations remain away
+from their interval endpoints. These substrata countably cover every finite
+atomic measure with distinct positive atoms.
+
+The active parameters obey the \(2k\) analytic stationarity equations
+\[
+    \Gamma_\nu(\theta_j)=0,
+    \qquad
+    \Gamma_\nu'(\theta_j)=0,
+    \qquad 1\le j\le k.
+\]
+An inactive interior contact \(\theta_0\) adds the two equations
+\(\Gamma_\nu(\theta_0)=\Gamma_\nu'(\theta_0)=0\) and the one variable
+\(\theta_0\). A flat active contact adds
+\(\Gamma_\nu''(\theta_j)=0\) and no variable. Let \(\Phi\) collect the
+active equations and the appropriate bad-contact equations.
+
+We claim that \(\Phi\), viewed as a function of the atomic parameters, the
+possible location \(\theta_0\), and \(x_1,\ldots,x_q\), is a submersion.
+Every row of \(\Phi\) is a first variation in one of the generalized
+directions
+\[
+    \delta_{\theta_j},\quad
+    \delta_{\theta_j}',\quad
+    \delta_{\theta_0},\quad
+    \delta_{\theta_0}',\quad
+    \delta_{\theta_j}''.
+\]
+Take a linear combination of these rows and denote the corresponding
+generalized signed measure by \(\eta\). The contribution of a selected point
+at \(x\) to this row combination is
+\[
+    \frac{F_\eta(x)}{1+F_\nu(x)}.
+\]
+If the combination annihilates every Jacobian column corresponding to a
+selected location, then
+\begin{equation}
+\label{eq:atom-transversality-zeros}
+    \frac d{dx}\left\{\frac{F_\eta(x)}{1+F_\nu(x)}\right\}=0
+    \qquad\text{at }x=x_1,\ldots,x_q.
+\end{equation}
+After multiplication by \(\{1+F_\nu(x)\}^2\), the numerator is the
+exponential polynomial
+\[
+    A_\eta(x)
+    =F_\eta'(x)\{1+F_\nu(x)\}-F_\eta(x)F_\nu'(x).
+\]
+It uses at most \((k+1)^2\) distinct exponents, with polynomial
+coefficients of degree at most two. Lemma~\ref{lem:atom-exp-polynomial}
+bounds the number of zeros of a nonzero \(A_\eta\) by less than
+\(3(k+1)^2\). Equation \eqref{eq:atom-transversality-zeros} supplies twice
+that many, so \(A_\eta\equiv0\).
+
+It follows that \(F_\eta/(1+F_\nu)\) is constant. Both numerator and
+denominator tend respectively to zero and one as \(x\to-\infty\), so the
+constant is zero and \(F_\eta\equiv0\). Linear independence of the
+generalized exponentials gives \(\eta=0\). The generalized point masses
+listed above are linearly independent because the active locations are
+distinct and an inactive location is not active. Hence the Jacobian columns
+in \(x_1,\ldots,x_q\) already have full row rank.
+
+The parametric transversality theorem
+\cite[Chapter~2]{guillemin2010differential} now applies. For almost every
+selected-point configuration, the map obtained by fixing those locations is
+transverse to zero. For an inactive interior contact, the domain has
+dimension \(2k+1\) and the target has dimension \(2k+2\); for a flat active
+contact, the corresponding dimensions are \(2k\) and \(2k+1\). In either
+case the zero set is empty.
+
+The boundary strata are analogous. If \(b\) is inactive, the bad equation
+\(\Gamma_\nu(b)=0\) adds one equation and no variable. If \(b\) is active,
+its location is fixed, so the active stratum has \(2k-1\) parameters, and
+the bad equality \(\Gamma_\nu'(b)=0\) adds one equation. The same
+generalized-direction argument, now using \(\delta_b\) or \(\delta_b'\),
+makes both systems submersions with targets larger than their domains.
+
+Finally remove the conditioning. Every locally finite simple Poisson
+configuration contains arbitrarily many negative points that can be isolated
+in disjoint rational intervals. There are only countably many choices of
+\(k\), compact parameter substrata, contact windows, and rational interval
+tuples, and every conditional bad event above has probability zero.
+Colliding locations and zero masses require no extra stratum because the
+optimizer is represented by its distinct support points with positive
+masses.
+
+Since \(\Gamma_\nu\le0\), an active interior zero has
+\(\Gamma_\nu''\le0\), and an active boundary zero has
+\(\Gamma_\nu'(b)\le0\). The null events just excluded are exactly the
+equality cases. This proves all three assertions.
+\end{proof}

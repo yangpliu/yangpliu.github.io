@@ -1,0 +1,555 @@
+
+\subsection{Lower endpoint and continuity}
+
+This subsection proves the \(r\downarrow0\) assertion of
+Proposition~\ref{prop:phase-curve-properties}. A single large positive Poisson
+point governs the one-sided crossing probability.
+\begin{lemma}
+\label{lem:endpoint-one-large-jump}
+For one copy of the limiting Poisson field,
+\[
+    R_{1-\eps}
+    :=
+    \mathbb P\Bigl\{
+        \sup_{1-\eps\le\theta<1}S(\theta)>0
+    \Bigr\}
+    \sim \eps
+    \qquad(\eps\downarrow0).
+\]
+\end{lemma}
+
+\begin{proof}
+Write $h=1-\theta$. Split $S(1-h)=A_h+B_h$, where
+\[
+    A_h
+    =
+    \int_0^\infty e^{(1-h)x}\{N-\mu\}(dx),
+    \qquad
+    B_h
+    =
+    \int_{-\infty}^0 e^{(1-h)x}\{N-\mu\}(dx).
+\]
+Enumerate the points of \(N\cap[0,\infty)\) as \(X_j\), and put
+\(W_j=e^{X_j}\). Then the \(W_j\) form a Poisson point process on
+\([1,\infty)\) with intensity \(w^{-2}\,dw\), and hence
+\[
+    A_h=\sum_j W_j^{1-h}-\frac1h .
+\]
+The negative half-line is negligible at the scale \(1/h\). Indeed, for every
+fixed \(q\ge2\), the compensated Poisson integrals defining \(B_h\) and
+\(\partial_hB_h\) have uniformly bounded \(q\)th moments for
+\(0\le h\le1/4\). The fundamental theorem of calculus therefore gives
+\(\mathbb E\sup_{0\le h\le1/4}|B_h|^q<\infty\).
+Consequently, with \(K_\eps=\eps^{-1/3}\) and any \(q>3\),
+\[
+    \mathbb P\Bigl\{
+        \sup_{0<h\le\eps}|B_h|>K_\eps
+    \Bigr\}
+    =
+    o(\eps).
+\]
+It therefore suffices to estimate the positive-half-line crossing probability
+with a perturbation of size \(K_\eps\). For each fixed sign
+$\sigma\in\{-1,1\}$, consider
+\[
+    \mathbb P\Bigl\{
+        \sup_{0<h\le\eps}
+        \Bigl(\sum_j W_j^{1-h}-\frac1h\Bigr)
+        >\sigma K_\eps
+    \Bigr\}.
+\]
+The sign does not affect the first-order answer, since $K_\eps=o(\eps^{-1})$.
+
+For fixed $h$, put $Y_j=W_j^{1-h}$. Then the $Y_j$ form a Poisson cloud on $[1,\infty)$ with tail intensity
+\[
+    \nu_h(y,\infty)=y^{-1/(1-h)}.
+\]
+This regularly varying tail is subexponential; we need its one-large-jump
+estimate uniformly over \(0<h\le\eps\)
+\cite[Chapter~4]{foss2013introduction}. Write
+\[
+ \beta=(1-h)^{-1},\qquad
+ x=x_h=h^{-1}+\sigma K_\eps,\qquad
+ \delta=1/\log x.
+\]
+The total number
+of points is \(\operatorname{Pois}(1)\), and
+\[
+    \nu_h(y,\infty)=y^{-\beta},
+    \qquad
+    \int_1^{\delta x}y\,\nu_h(dy)
+    =
+    \beta\int_1^{\delta x}y^{-\beta}\,dy
+    \le C\log x
+\]
+uniformly for \(0<h\le\eps\), once \(\eps<1/3\). If
+\(\sum_jY_j>x\) but \(\max_jY_j\le x\), then at least one of the following
+events occurs:
+\begin{enumerate}
+\item there is a point in \(((1-\delta)x,x]\);
+\item there are at least two points above \(\delta x\);
+\item every point is at most \(\delta x\), and the total number of points
+      exceeds \(\delta^{-1}\);
+\item there is exactly one point in \((\delta x,(1-\delta)x]\), and the sum
+      of the points below \(\delta x\) exceeds \(\delta x\).
+\end{enumerate}
+The Poisson formula, followed by Markov's inequality in the last case, bounds
+the four probabilities by
+\[
+    C\delta x^{-\beta},\qquad
+    C(\delta x)^{-2\beta},\qquad
+    \mathbb P\{\operatorname{Pois}(1)>\delta^{-1}\},\qquad
+    C(\delta x)^{-\beta}\frac{\log x}{\delta x},
+\]
+respectively. Since \(1/2\le hx\le2\), their sum is \(a_\eps h\) for a
+deterministic modulus \(a_\eps\downarrow0\), uniformly over
+\(0<h\le\eps\). Thus
+\[
+    \mathbb P\left\{
+        \sum_jY_j>x_h,\
+        \max_jY_j\le x_h
+    \right\}
+    \le a_\eps h.
+\]
+
+To pass from fixed \(h\) to the supremum, choose
+\(\delta_\eps\downarrow0\) so slowly that
+\(a_\eps/\delta_\eps\to0\) and \(K_\eps\eps=o(\delta_\eps)\), and use the mesh
+\(h_k=\eps(1+\delta_\eps)^{-k}\). Fix a large numerical constant \(C\) and
+define the enlarged one-large-jump event
+\[
+ \mathcal J_\eps^{\rm enl}
+ =
+ \left\{\max_jW_j>
+ \inf_{0<h\le\eps}
+ \bigl[(1-C\delta_\eps)x_h\bigr]^{1/(1-h)}
+ \right\}.
+\]
+The infimum is attained at \(h=\eps\) for all small \(\eps\). Indeed, the
+derivative of
+\(\log\{[(1-C\delta_\eps)x_h]^{1/(1-h)}\}\) has the sign of
+\[
+ \log\{(1-C\delta_\eps)x_h\}
+ -\frac{1-h}{h(1+\sigma K_\eps h)},
+\]
+which is negative uniformly on \(0<h\le\eps\), because
+\(K_\eps\eps=o(\delta_\eps)\) and
+\(h^{-1}\gg\log(1/h)\). The intensity of the enlarged event is therefore
+\[
+ \bigl[(1-C\delta_\eps)x_\eps\bigr]^{-1/(1-\eps)}
+ =(1+O(\delta_\eps)+o(1))\eps.
+\]
+Thus the enlarged event differs from the exact one-large-jump event by probability
+\(o(\eps)\).
+
+On the complement of \(\mathcal J_\eps^{\rm enl}\), every atom lies below
+the enlarged threshold. If \(h_{k+1}<h\le h_k\), then
+\(W^{1-h_{k+1}}\ge W^{1-h}\) for every \(W\ge1\), while
+\(x_{h_{k+1}}/x_h=1+O(\delta_\eps)\) uniformly in \(k\). Thus a crossing
+somewhere in the \(k\)th cell gives, at \(h_{k+1}\), a subcritical-sum event
+at threshold \((1-C\delta_\eps)x_{h_{k+1}}\), after increasing \(C\) if
+necessary. The
+fixed-\(h\) calculation above applies uniformly to this threshold as well,
+because \(h_{k+1}(1-C\delta_\eps)x_{h_{k+1}}\) stays between two fixed positive
+constants; enlarge the modulus \(a_\eps\downarrow0\) if necessary to cover
+both thresholds. On the complement of \(\mathcal J_\eps^{\rm enl}\), its largest
+atom is below this same threshold. The probability of the mesh event is
+therefore at most \(Ca_\eps h_k\). Since
+\(\sum_kh_k=O(\eps/\delta_\eps)\), the total contribution is \(o(\eps)\).
+
+Thus, to first order, a crossing is caused by one atom. For either sign
+\(\sigma\), differentiation shows
+that the required atom threshold is decreasing on \(0<h\le\eps\), for all
+small \(\eps\), and is therefore minimized at \(h=\eps\):
+\[
+    \inf_{0<h\le\eps}
+    (h^{-1}+\sigma K_\eps)^{1/(1-h)}
+    =
+    (\eps^{-1}+\sigma K_\eps)^{1/(1-\eps)}
+    =
+    \eps^{-1/(1-\eps)}(1+o(1)).
+\]
+The intensity of atoms above this threshold is
+\[
+    \int_{(\eps^{-1}+\sigma K_\eps)^{1/(1-\eps)}}^\infty
+    w^{-2}\,dw
+    =
+    (\eps^{-1}+\sigma K_\eps)^{-1/(1-\eps)}
+    \sim\eps.
+\]
+Since this intensity tends to zero, the probability of at least one such atom is also asymptotic to $\eps$. Combining this with the $o(\eps)$ contribution of the negative half-line and of the subcritical positive cloud proves $R_{1-\eps}\sim\eps$.
+\end{proof}
+
+Taking \(\eps=\sqrt r\) in Lemma~\ref{lem:endpoint-one-large-jump} and using
+the independence of \(S_+\) and \(S_-\) gives
+\[
+    p(r)=\bigl(1-R_{1-\sqrt r}\bigr)^2,
+    \qquad
+    1-p(r)\sim2\sqrt r
+    \quad(r\downarrow0).
+\]
+In particular, \(p(r)\to1=p(0)\) at the lower endpoint.
+
+\subsection{Upper-endpoint persistence exponent}
+
+This subsection proves the \(r\uparrow1/4\) assertion of
+Proposition~\ref{prop:phase-curve-properties}. Lemma
+~\ref{lem:poisson-left-endpoint} gives convergence to zero but not its rate;
+the sharper estimate comes from the persistence exponent of a stationary
+Gaussian process with sech covariance.
+
+\begin{lemma}
+\label{lem:sech-persistence}
+Let $G=(G(t))_{t\in\R}$ be the centered stationary Gaussian process with covariance
+\[
+    \E G(s)G(t)
+    =
+    \operatorname{sech}\!\left(\frac{t-s}{2}\right).
+\]
+For every deterministic $a_T\to0$,
+\begin{equation}
+\label{eq:sech-persistence}
+    \mathbb P\{G(t)\le a_T\text{ for all }0\le t\le T\}
+    =
+    \exp\!\left\{-\frac{3}{16}T+o(T)\right\}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+To keep track of the normalization, we derive the stated exponent directly
+from the cited results. Dembo--Poonen--Shao--Zeitouni introduce, in
+\cite[equation~(1.3)]{DemboPoonenShaoZeitouni2002}, the constant
+\[
+    b
+    =
+    -4\lim_{T\to\infty}
+    \frac1T
+    \log
+    \mathbb P\{G(t)\le0\text{ for all }0\le t\le T\}.
+\]
+Here their process \(Y\) is exactly the centered stationary Gaussian process
+with correlation \(\operatorname{sech}(t/2)\); see
+\cite[equation~(1.4) and the sentence following it]{DemboPoonenShaoZeitouni2002}.
+Their Theorem~1.1 is the no-real-zero statement, and Theorems~1.3 and 1.4
+identify the same constant \(b\) as the persistence exponent obtained after
+the standard reduction from the polynomial near \(\pm1\) to the stationary sech
+process.
+
+FitzGerald--Tribe--Zaboronski rigorously compute this constant. In \cite[Proposition~5]{FitzGeraldTribeZaboronski2022} they prove that the Kac-polynomial persistence probability satisfies
+\[
+    \lim_{n\to\infty}
+    \frac{\log p_{2n+1}}{\log n}
+    =
+    -\frac34.
+\]
+Their proof explicitly invokes the Dembo--Poonen--Shao--Zeitouni characterization: see \cite[equations~(19)--(20)]{FitzGeraldTribeZaboronski2022}. Their Pfaffian formula for the sech-kernel gap probability then gives \cite[equation~(21)]{FitzGeraldTribeZaboronski2022}
+\[
+    \log \mathbb P\{G(t)\ne0\text{ for all }0\le t\le T\}
+    =
+    -\frac{3}{16}T+o(T).
+    \tag{*}
+\]
+Because $G$ is symmetric and its zeros are almost surely simple, the no-zero event on $[0,T]$ is the disjoint union of the positive- and negative-persistence events, which have equal probability. Simplicity follows, for example, from Bulinskaya's lemma, since the sech process is smooth and $(G(t),G'(t))$ is nondegenerate for each fixed $t$. Multiplication by the constant factor $2$ does not affect the exponential rate, so $(*)$ gives
+\[
+    \mathbb P\{G(t)\le0\text{ for all }0\le t\le T\}
+    =
+    \exp\!\left\{-\frac{3}{16}T+o(T)\right\}.
+\]
+The same value was identified earlier in the physics literature by Poplavskyi--Schehr \cite{PoplavskyiSchehr2018}.
+
+We also need persistence at a vanishing deterministic level
+\(a_T=o(1)\), rather than exactly at zero.
+Feldheim--Feldheim--Mukherjee prove existence of fixed-level persistence
+exponents in \cite[Theorem~1]{FeldheimFeldheimMukherjee2025} and continuity of
+the exponent in the level in \cite[Theorem~4(II)]{FeldheimFeldheimMukherjee2025}.
+The sech process is covered by their hypotheses: its spectral density is
+proportional to \(\operatorname{sech}(\pi\lambda)\), hence is absolutely
+continuous, positive at the origin, and has exponential tails. Their statements
+use strict inequalities, but continuity in the level lets us squeeze the weak
+event needed here between the two fixed levels \(\pm\delta\). For every fixed
+\(\delta>0\) and all large \(T\),
+\[
+    \{G(t)\le-\delta\text{ for all }0\le t\le T\}
+    \subseteq
+    \{G(t)\le a_T\text{ for all }0\le t\le T\}
+    \subseteq
+    \{G(t)\le\delta\text{ for all }0\le t\le T\}.
+\]
+Taking logarithms, dividing by $T$, and then letting $\delta\downarrow0$ gives \eqref{eq:sech-persistence}.
+\end{proof}
+
+The factor $3/16$ is the persistence exponent in logarithmic time $T$. In Proposition~\ref{prop:upper-endpoint-persistence}, $T$ will be comparable to $\log(1/\beta)$, so the one-sided no-crossing probability is $\beta^{3/16+o(1)}$; the two-sided one-atom probability is its square, hence has exponent $3/8$. This endpoint refinement is not needed for the phase diagram in Theorem~\ref{thm:exponent-phase-diagram}, but it identifies the rate at which the phase curve reaches zero.
+
+\begin{proposition}
+\label{prop:upper-endpoint-persistence}
+As \(\alpha\uparrow1/4\),
+\[
+    p(\alpha)
+    =
+    \left(\frac14-\alpha\right)^{3/8+o(1)}
+    .
+\]
+Equivalently, if
+\[
+    q(\alpha)
+    :=
+    \mathbb P\left\{
+        \sup_{\theta_\alpha\le\theta<1}S(\theta)\le0
+    \right\},
+    \qquad
+    \theta_\alpha=1-\sqrt\alpha,
+\]
+then $q(\alpha)=(1/4-\alpha)^{3/16+o(1)}$.
+\end{proposition}
+
+\begin{proof}
+The proof has two main inputs. Near \(\theta=1/2\), the contribution of the
+negative half-line has a Gaussian tangent process, and in logarithmic distance
+from the endpoint this tangent process has the sech covariance of
+Lemma~\ref{lem:sech-persistence}. Away from \(\theta=1/2\), the remaining
+interval has only a subexponential persistence cost.
+
+Put $\beta=\theta_\alpha-1/2=1/2-\sqrt\alpha$. Then $\beta=(1/4-\alpha)/(1/2+\sqrt\alpha)\sim1/4-\alpha$ as $\alpha\uparrow1/4$. Define the one-sided no-crossing probability
+\[
+    F(\beta)
+    =
+    \mathbb P\left\{
+        S\left(\frac12+h\right)\le0
+        \text{ for every }\beta\le h<\frac12
+    \right\}.
+\]
+By definition, $q(\alpha)=F(\beta)$ and $p(\alpha)=F(\beta)^2$. It is therefore enough to prove
+\begin{equation}
+\label{eq:F-beta-persistence}
+    F(\beta)=\beta^{3/16+o(1)}
+    \qquad(\beta\downarrow0).
+\end{equation}
+
+Split the Poisson field as $S(1/2+h)=T_h+U_h$, where
+\[
+    T_h=\int_{-\infty}^0 e^{(1/2+h)x}\{N-\mu\}(dx),
+    \qquad
+    U_h=\int_0^\infty e^{(1/2+h)x}\{N-\mu\}(dx).
+\]
+The negative half-line is the singular part as $h\downarrow0$: its variance is
+of order $1/h$. The positive half-line stays tight on the short window
+$0<h\le h_0$ and will only move the persistence threshold by $o(1)$ after
+normalization by $\sqrt h$.
+
+After the change of variables $r=e^{-x}$ on $x<0$,
+\[
+    T_h
+    =
+    \int_1^\infty r^{-1/2-h}\{\Pi(dr)-dr\},
+\]
+where $\Pi$ is a unit-rate Poisson process on $[1,\infty)$. Let $M(r)=\Pi([1,r])-(r-1)$. Integration by parts gives
+\[
+    T_h
+    =
+    \left(\frac12+h\right)
+    \int_1^\infty r^{-3/2-h}M(r)\,dr.
+\]
+
+We use the KMT approximation for a Poisson counting process. Corollary~5.3
+of Chapter~7 in Ethier--Kurtz
+\cite[pp.~358--359]{ethier1986markov} gives a coupling of \(M\) to a Brownian
+motion \(B\) on \([1,\infty)\), with \(B(1)=0\) and covariance
+\(\E B(r)B(s)=(r\wedge s)-1\), for which
+\[
+    \Gamma
+    :=
+    \sup_{r\ge1}
+    \frac{|M(r)-B(r)|}{C_0(1+\log r)}
+\]
+has a finite exponential moment. Consequently, for constants \(C,c>0\) and
+every \(y\ge1\),
+\begin{equation}
+\label{eq:poisson-kmt}
+    \mathbb P\left\{
+        \sup_{r\ge1}
+        \frac{|M(r)-B(r)|}{C_0(1+\log r)}>y
+    \right\}
+    \le
+    Ce^{-cy}.
+\end{equation}
+This is the Poisson-process form of the Komlós--Major--Tusnády strong
+approximation \cite{komlos1975approximation,komlos1976approximation}.
+For completeness, the weighted infinite-horizon form also follows from the
+finite-horizon estimate by applying it at horizons \(e^{m+1}\): on the block
+\(e^m\le r\le e^{m+1}\), a violation at level \(y\) requires an error of
+order \(y(m+1)\), and summing the resulting
+\(Ce^{-cy(m+1)}\) bounds over \(m\ge0\) gives \eqref{eq:poisson-kmt}.
+Define the Gaussian comparison field
+\[
+    \widetilde T_h
+    =
+    \int_1^\infty r^{-1/2-h}\,dB(r)
+    =
+    \left(\frac12+h\right)
+    \int_1^\infty r^{-3/2-h}B(r)\,dr.
+\]
+On the complement of the event in \eqref{eq:poisson-kmt},
+\[
+    \sqrt{2h}\,|T_h-\widetilde T_h|
+    \le
+    C y\sqrt h
+    \int_1^\infty (1+\log r)r^{-3/2-h}\,dr
+    \le
+    C y\sqrt h.
+\]
+Let $h_0=(\log(1/\beta))^{-4}$ and $T_\beta=\log(h_0/\beta)$. Taking $y=AT_\beta$ with $A$ fixed and large gives, outside an event of probability $O(e^{-cAT_\beta})$,
+\begin{equation}
+\label{eq:poisson-brownian-window}
+    \sup_{\beta\le h\le h_0}
+    \sqrt{2h}\,|T_h-\widetilde T_h|
+    \le
+    \Delta_\beta,
+\end{equation}
+where $\Delta_\beta=C_A T_\beta\sqrt{h_0}=o(1)$.
+
+Now parametrize $h=\beta e^t$, $0\le t\le T_\beta$, and set $G_\beta(t)=\sqrt{2\beta e^t}\,\widetilde T_{\beta e^t}$.
+This process has exactly the law of $G$ restricted to $[0,T_\beta]$, since
+\[
+    \E G_\beta(s)G_\beta(t)
+    =
+    2\sqrt{\beta e^s\,\beta e^t}
+    \int_1^\infty r^{-1-\beta e^s-\beta e^t}\,dr
+    =
+    \frac{2e^{(s+t)/2}}{e^s+e^t}
+    =
+    \operatorname{sech}\!\left(\frac{t-s}{2}\right).
+\]
+Thus the logarithmic distance from the endpoint, rather than the original
+parameter $h$, is the natural time variable. The covariance computation is
+exact; the only approximation in the finite window is the KMT replacement of
+the Poisson counting process by Brownian motion.
+
+We first estimate the finite window
+\[
+    E_\beta(h_0)
+    =
+    \left\{
+        S\left(\frac12+h\right)\le0
+        \text{ for every }\beta\le h\le h_0
+    \right\}.
+\]
+For $0<h\le h_0<1/4$,
+\[
+    U_h
+    =
+    \sum_{x_j>0}e^{(1/2+h)x_j}
+    -
+    \frac{1}{1/2-h}
+    \ge
+    -4.
+\]
+Thus $E_\beta(h_0)$ implies $T_h\le4$ for every $\beta\le h\le h_0$, hence $\sqrt{2h}T_h\le4\sqrt{2h_0}$ on the same window. Combining this implication with \eqref{eq:poisson-brownian-window}, and choosing $A$ in \eqref{eq:poisson-kmt} large enough that the coupling error is negligible on the $\exp\{-(3/16)T_\beta\}$ scale, gives
+\[
+    \mathbb P(E_\beta(h_0))
+    \le
+    \mathbb P\{G(t)\le4\sqrt{2h_0}+\Delta_\beta\text{ for all }0\le t\le T_\beta\}
+    +o\!\left(e^{-3T_\beta/16}\right).
+\]
+By \eqref{eq:sech-persistence}, this upper bound is $\exp\{-(3/16)T_\beta+o(T_\beta)\}$.
+
+For the lower bound, let
+\[
+    V=\sum_{x_j>0} e^{3x_j/4}.
+\]
+Since $\E V=\int_0^\infty e^{-x/4}\,dx=4$, choose $K<\infty$ such that $c_K:=\mathbb P\{V\le K\}>0$. For all small $\beta$, $h_0<1/4$, so $U_h\le V$ for every $0<h\le h_0$. On $\{V\le K\}$, the event $\{T_h\le -K\text{ for all }\beta\le h\le h_0\}$ implies $E_\beta(h_0)$. The positive and negative half-line Poisson processes are independent, so
+\[
+    \mathbb P(E_\beta(h_0))
+    \ge
+    c_K\,
+    \mathbb P\{T_h\le -K\text{ for all }\beta\le h\le h_0\}.
+\]
+On the coupling event \eqref{eq:poisson-brownian-window}, the condition
+\[
+    G_\beta(t)\le -K\sqrt{2h_0}-\Delta_\beta
+    \qquad(0\le t\le T_\beta)
+\]
+implies $T_h\le -K$ throughout $\beta\le h\le h_0$. The same choice of $A$ makes the complement of the coupling event negligible on this scale. Another application of \eqref{eq:sech-persistence}, with the fixed factor $c_K$ absorbed into the $o(T_\beta)$ term, therefore gives
+\[
+    \mathbb P(E_\beta(h_0))
+    \ge
+    \exp\!\left\{-\frac{3}{16}T_\beta+o(T_\beta)\right\}.
+\]
+Together with the upper bound,
+\begin{equation}
+\label{eq:finite-window-persistence}
+    \mathbb P(E_\beta(h_0))
+    =
+    \exp\!\left\{-\frac{3}{16}T_\beta+o(T_\beta)\right\}
+    =
+    \beta^{3/16+o(1)},
+\end{equation}
+because $T_\beta=\log(1/\beta)+o(\log(1/\beta))$.
+
+The upper bound in \eqref{eq:F-beta-persistence} follows immediately from $F(\beta)\le\mathbb P(E_\beta(h_0))$. For the lower bound, use the Harris--FKG inequality for Poisson processes: two decreasing events of a Poisson configuration are positively correlated; see, for example, \cite[Theorem~20.4]{kallenberg2017random}. For an interval $I\subset(0,1/2)$, the event
+\[
+    \left\{
+        S\left(\frac12+h\right)\le0
+        \text{ for every }h\in I
+    \right\}
+\]
+is decreasing in the Poisson configuration, because adding a point increases $S(\theta)$ for every $\theta$. Hence
+\[
+    F(\beta)
+    \ge
+    \mathbb P(E_\beta(h_0))\,
+    \mathbb P\left\{
+        S\left(\frac12+h\right)\le0
+        \text{ for every }h_0\le h<\frac12
+    \right\}.
+\]
+We now show that the second factor is subexponential on the
+$\log(1/\beta)$ scale.
+
+The interval \([h_0,1/2)\), which lies away from the singular endpoint
+\(h=0\), contributes only a subexponential factor. We cover its
+initial portion by a slowly expanding sequence of windows. Each window has
+the same sech-persistence estimate with a new left endpoint, and the sum of
+their logarithmic costs is only $O(\log(1/h_0))$.
+
+Choose \(h_*>0\) so small that
+\((\log(1/h))^{-4}>h\) for \(0<h\le h_*\). Starting from the present \(h_0\),
+define \(h_{j+1}=(\log(1/h_j))^{-4}\) and stop when \(h_j\) first exceeds
+\(h_*\). The finite-window lower bound just proved applies uniformly with
+\(\beta\) replaced by any sufficiently small left endpoint \(a\) and \(h_0\)
+replaced by \(b=(\log(1/a))^{-4}\): the KMT error is still \(o(1)\) after
+normalization, the positive-half-line event \(\{V\le K\}\) has the same fixed
+probability, and the level shift in
+Lemma~\ref{lem:sech-persistence} remains \(o(1)\). Thus
+\[
+    \mathbb P\left\{
+        S\left(\frac12+h\right)\le0
+        \text{ for every }a\le h\le b
+    \right\}
+    \ge
+    \exp\!\left\{-O\!\left(1+\log\frac ba\right)\right\},
+    \qquad b=(\log(1/a))^{-4},
+\]
+successively on the intervals $[h_j,h_{j+1}]$. Using FKG again gives
+\[
+    \mathbb P\left\{
+        S\left(\frac12+h\right)\le0
+        \text{ for every }h_0\le h\le h_*
+    \right\}
+    \ge
+    \exp\{-O(\log(1/h_0))\}.
+\]
+Since $\log(1/h_0)=O(\log\log(1/\beta))=o(\log(1/\beta))$, this factor is $\exp\{-o(\log(1/\beta))\}$.
+
+Finally,
+$\mathbb P\{S(1/2+h)\le0\text{ for every }h_*\le h<1/2\}>0$ by the
+positive-probability construction used for $p_-(\alpha,\eta)>0$ in
+Theorem~\ref{thm:polynomial-stable-regime}, with $b=1/2+h_*$. Multiplying
+the three lower bounds gives $F(\beta)\ge\beta^{3/16+o(1)}$. Together with
+the matching upper bound, this proves \eqref{eq:F-beta-persistence}; the
+identities $q(\alpha)=F(\beta)$ and $p(\alpha)=F(\beta)^2$ finish the proof.
+\end{proof}
+
+Proposition~\ref{prop:upper-endpoint-persistence} implies
+\(p(r)\to0=p(1/4)\) as \(r\uparrow1/4\). Together with the interior
+continuity proved in Section~\ref{sec:phase-diagram}, this completes the proof
+of Proposition~\ref{prop:phase-curve-properties}.

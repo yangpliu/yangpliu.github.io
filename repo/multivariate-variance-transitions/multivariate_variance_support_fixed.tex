@@ -1,0 +1,1240 @@
+\subsection{Fixed-dimensional support recovery}
+\label{sec:higher-dimensional-support-counts}
+
+This subsection proves the fixed-dimensional support identity used in both
+parts of Theorem~\ref{thm:main-support-law}. Exposed radial points are
+separated by much more than the \(1/\rho_n\) width of a likelihood patch, so
+their local optimizations decouple: a superthreshold patch contains one fitted
+atom and a subthreshold patch contains none. Here
+\(\rho_n=\sqrt{2\log n}\) for \(d=2\) and
+\(\rho_n=\sqrt{2b_{n,d}}\) for fixed \(d\ge3\), while \(\tau\) denotes the
+central score location from Lemma~\ref{lem:support-fixed-core-collapse}. Put
+\(\Delta_n^{\rm anc}=\gamma_n\tau-\bar Z_n\). The exact anchor identity is
+\begin{equation}
+\label{eq:support-high-d-anchor-translation}
+ D_{n,\tau}(a)
+ =\frac1n\sum_iq_{n,\tau,a}(i)
+ =e^{-a\cdot\Delta_n^{\rm anc}}D_{n,*}(a),
+ \qquad
+ D_{n,*}(a)=\frac1n\sum_i
+ e^{a\cdot(Z_i-\bar Z_n)-\gamma_n|a|^2/2}.
+\end{equation}
+The central location is tied to the sample mean by an exact barycenter
+identity. For a score-coordinate NPMLE \(G\), let
+\[
+ \Pi_i(dt)=
+ \frac{\exp\{t\cdot Z_i-\gamma_n|t|^2/2\}\,G(dt)}{m_G(Z_i)}
+\]
+be the posterior mixing distribution for observation \(i\). KKT equality
+\(G\)-almost everywhere gives
+\[
+ \frac1n\sum_{i=1}^n\Pi_i(dt)=G(dt).
+\]
+On the other hand, differentiating the likelihood when every score location is
+translated by the same vector gives
+\[
+ 0=\frac1n\sum_{i=1}^n
+ \left\{Z_i-\gamma_n\int t\,\Pi_i(dt)\right\}.
+\]
+Consequently,
+\begin{equation}
+\label{eq:support-npmle-barycenter}
+    \bar Z_n=\gamma_n\int t\,G(dt).
+\end{equation}
+For the decomposition in Lemma~\ref{lem:support-fixed-core-collapse}, this
+implies
+\[
+ \Delta_n^{\rm anc}
+ =\gamma_n\int(\tau-t)\,G_n^{\rm out}(dt).
+\]
+Support reduction places \(G\) in
+\(\operatorname{conv}\{Z_1/\gamma_n,\ldots,Z_n/\gamma_n\}\). Since
+\(\max_i|Z_i|=O_{\Pbb}(\rho_n)\) in fixed dimension, the rate in
+Lemma~\ref{lem:support-fixed-core-collapse} therefore gives
+\begin{equation}
+\label{eq:support-high-d-anchor-error}
+    \rho_n|\Delta_n^{\rm anc}|
+    =O_{\Pbb}(W_n\rho_n^2)
+    =o_{\Pbb}(\kappa_n)
+\end{equation}
+in both fixed-dimensional critical windows. For the last equality, use
+\[
+ \rho_n^2=O(\log n),\qquad
+ W_n=O_{\Pbb}\left(\frac{(\log n)^{C_d}}{n\kappa_n}\right),
+ \qquad \kappa_n\gtrsim\frac1{\log n}.
+\]
+
+We use one symbol for the dimension-specific radial excess:
+\begin{equation}
+\label{eq:fixed-support-radial-excess}
+ x_{n,i}=
+ \begin{cases}
+   |Z_i|^2/2-\log n,&d=2,\\[2mm]
+   |Z_i-\bar Z_n|^2/2-b_{n,d},&d\ge3.
+ \end{cases}
+\end{equation}
+In fixed dimension, replacing the centered radius in the second line by
+\(|Z_i|\) changes all excesses by \(o_{\Pbb}(1)\), uniformly in \(i\).
+
+We now fix the local coordinate maps used below. In \(d=2\), write
+\(U_j=Z_j/|Z_j|\), let \(\mathsf R_\theta\) denote planar rotation through
+angle \(\theta\), and set
+\begin{equation}
+\label{eq:support-d2-patch-map}
+ a_{n,j}^{(2)}(r,z)
+ = (\rho_n+r)\mathsf R_{z/\rho_n}U_j,
+ \qquad (r,z)\in\mathbb R^2.
+\end{equation}
+For fixed \(d\ge3\), set
+\begin{equation}
+\label{eq:support-dge3-patch-map}
+ a_{n,j}^{(\ge3)}(h)
+ =a_{n,j}^*+h,
+ \qquad
+ a_{n,j}^*=\frac{Z_j-\gamma_n\tau}{\gamma_n},
+ \qquad h\in\mathbb R^d.
+\end{equation}
+If \(\nu_j\) is a measure in the corresponding local coordinates, its
+pushforward under \(a_{n,j}^{(d)}\) is a measure on score displacements. Below
+we write
+\begin{equation}
+\label{eq:support-patch-pushforward}
+    \nu=\sum_j(a_{n,j}^{(d)})_\#\nu_j
+\end{equation}
+for the combined displacement measure.
+
+For a finite positive measure \(\nu\) on displacement space, with
+\(m=\nu(\mathbb R^d)\le n\), consider the anchored mixture
+\[
+    G_{n,\tau,\nu}
+    =\left(1-\frac mn\right)\delta_\tau
+      +\frac1n(\tau+\cdot)_\#\nu .
+\]
+Its exact likelihood gain over \(\delta_\tau\) is
+\begin{equation}
+\label{eq:support-anchored-likelihood}
+    \mathcal L_{n,\tau}(\nu)
+    =\sum_{i=1}^n
+      \log\left\{1+F_{n,i}(\nu)-\frac mn\right\},
+    \qquad
+    F_{n,i}(\nu)=\frac1n\int q_{n,\tau,a}(i)\,\nu(da).
+\end{equation}
+Thus \(m=nW\) is the natural rescaled edge mass.
+
+\subsubsection{Local likelihood programs}
+
+The field limits in Sections~\ref{sec:d2} and
+\ref{sec:fixed-d-patches} determine the likelihood program associated with one
+radial extreme. Optimizing this program shows that an active patch contains one
+atom rather than a split mixing measure.
+
+Suppose first that \(d\ge3\), along a sequence on which \(s_n\to s\). For an
+observation of centered radial excess \(x\), completing the square at the
+displacement \(a=a_{n,i}^{(\ge3)}(h)\) gives
+\[
+    \frac1nq_{n,\tau,a}(i)\longrightarrow
+    A_x(h):=e^{x-s-|h|^2/2}.
+\]
+If a finite positive measure \(\nu\) of rescaled mass is placed in this
+patch, its limiting gain is
+\begin{equation}
+\label{eq:support-dge3-local-program}
+    \mathcal J_x^{(\ge3)}(\nu)
+    =\log\left\{1+\int A_x(h)\,\nu(dh)\right\}
+      -\nu(\mathbb R^d).
+\end{equation}
+For fixed total mass, the integral is uniquely maximized by putting all mass
+at \(h=0\). The remaining scalar problem is
+\[
+    \max_{y\ge0}\{\log(1+e^{x-s}y)-y\},
+\]
+whose optimizer is \(y_x^*=(1-e^{-(x-s)})_+\). Hence the patch is active
+exactly when \(x>s\), and every nonzero limiting optimizer is the one-atom
+measure \(y_x^*\delta_0\).
+
+In dimension two, use radial score offset \(r\) and blown-up angular
+displacement \(z\), and write
+\[
+    B_\lambda(r)=e^{-\lambda}\Phi(-r),
+    \qquad
+    C_{\lambda,x}(r,z)=e^{-\lambda}e^{x-r^2/2-z^2/2}.
+\]
+The corresponding local program is
+\begin{equation}
+\label{eq:support-d2-local-program}
+    \mathcal J_x^{(2)}(\nu)
+    =\log\left\{1+\int C_{\lambda,x}\,d\nu\right\}
+      -\int\{1-B_\lambda(r)\}\,d\nu(r,z).
+\end{equation}
+Put
+\[
+    R_x(r,z)=\frac{C_{\lambda,x}(r,z)}{1-B_\lambda(r)}.
+\]
+If \(u=\int C_{\lambda,x}\,d\nu\), then
+\[
+    \int(1-B_\lambda)\,d\nu\ge
+    \frac{u}{\sup_{r,z}R_x(r,z)},
+\]
+with equality only when \(\nu\) is supported on the maximizers of \(R_x\).
+The angular maximizer is uniquely \(z=0\). The radial maximizer is uniquely
+\(r=-a_\lambda\), where
+\[
+    e^\lambda=\Phi(a_\lambda)+\frac{\phi(a_\lambda)}{a_\lambda},
+\]
+and the calculation in Section~\ref{sec:d-two-sharp-window} gives
+\(\sup R_x=e^{x-x_\lambda}\). Thus the patch is active exactly when
+\(x>x_\lambda\), and every nonzero limiting optimizer is a single atom at
+\((-a_\lambda,0)\). Its rescaled mass is
+\[
+    q_x^*=
+    \frac{1-e^{-(x-x_\lambda)}}
+         {1-e^{-\lambda}\Phi(a_\lambda)}.
+\]
+
+For fixed \(d\ge3\), the contact argument requires differentiated control near
+a random radial extreme.  The next lemma supplies that control without
+conditioning on a sample-centered exceedance event.  It first fixes the raw
+extreme, so the punctured sample remains independent, and then sums over the
+possible distinguished observations by the Palm formula.
+\begin{lemma}
+\label{lem:support-dge3-palm-c2}
+Fix \(d\ge3\) and suppose \(s_n=O(1)\).  Put
+\[
+ \widetilde x_{n,i}=\frac{|Z_i|^2}{2}-b_{n,d},
+ \qquad
+ \mathcal E_n(C)=\{j:|\widetilde x_{n,j}|\le C\}.
+\]
+For fixed \(A,C,R<\infty\), define, for \(j\in\mathcal E_n(C)\),
+\[
+ \mathcal R_{n,j,A}(h)
+ =\frac1n\sum_{i\ne j}
+   \exp\left\{
+      \left(\frac{Z_j}{\gamma_n}+h\right)\!\cdot Z_i
+      -\frac{\gamma_n}{2}
+       \left|\frac{Z_j}{\gamma_n}+h\right|^2
+   \right\}
+   \mathbf 1_{\{\widetilde x_{n,i}\le-A\}},
+ \qquad h\in B_R.
+\]
+Then
+\begin{equation}
+\label{eq:support-dge3-palm-c2}
+ \max_{j\in\mathcal E_n(C)}
+ \|\mathcal R_{n,j,A}\|_{C^2(B_R)}\xrightarrow{\Pbb}0.
+\end{equation}
+Moreover, if \(K_{n,j,i}(h)\) denotes the exponential summand in the
+definition of \(\mathcal R_{n,j,A}\), then
+\begin{equation}
+\label{eq:support-dge3-palm-absolute}
+ \max_{j\in\mathcal E_n(C)}\max_{|\beta|\le2}\sup_{h\in B_R}
+ \frac1n\sum_{i\ne j}
+ |\partial_h^\beta K_{n,j,i}(h)|
+ \mathbf1_{\{\widetilde x_{n,i}\le-A\}}
+ \xrightarrow{\Pbb}0.
+\end{equation}
+The same conclusions hold with the candidate condition
+\(|x_{n,j}|\le C\) and lower-cloud cutoff \(x_{n,i}\le-A\), where \(x_{n,i}\)
+is the sample-centered excess in \eqref{eq:fixed-support-radial-excess}.
+\end{lemma}
+
+\begin{proof}
+Let \(R_{n,A}^2/2=b_{n,d}-A\), choose \(p>d\), and fix a deterministic
+\(z\) with \(\bigl||z|^2/2-b_{n,d}\bigr|\le C\).  For
+\(t_z(h)=z/\gamma_n+h\), set
+\[
+ V_{n,z,i}(h)=\frac1n
+ e^{t_z(h)\cdot Z_i-\gamma_n|t_z(h)|^2/2}
+ \mathbf 1_{\{|Z_i|\le R_{n,A}\}}.
+\]
+We first establish, uniformly over these \(z\), \(h\in B_R\),
+\(q\in\{2,p\}\), and \(|\beta|\le3\),
+\begin{equation}
+\label{eq:support-palm-derivative-moments}
+ \sum_{i=2}^n
+ \E|\partial_h^\beta V_{n,z,i}(h)|^q
+ \le C_{A,C,R,p,d}\rho_n^{-1}e^{-\lambda_n}.
+\end{equation}
+Indeed, differentiation inserts a polynomial of degree at most \(|\beta|\)
+in \(Z_i-\gamma_nt_z(h)\).  Exponential tilting therefore gives
+\begin{align*}
+ &\sum_{i=2}^n
+ \E|\partial_h^\beta V_{n,z,i}(h)|^q\\
+ &\quad\le
+ C n^{1-q}e^{-q\kappa_n|t_z(h)|^2+(q^2-q)|t_z(h)|^2/2}
+ \E\left[
+  \{1+|G+(q-\gamma_n)t_z(h)|\}^{q|\beta|}
+  \mathbf1_{\{|G+qt_z(h)|\le R_{n,A}\}}
+ \right].
+\end{align*}
+Aligning \(t_z(h)=re_1\), conditioning on \(G_\perp\), and applying Mills'
+bound to \(G_1\) show that the last expectation is at most
+\[
+ C_{A,C,R,p,d}\rho_n^{-1}
+   \exp\{-(qr-R_{n,A})^2/2\}.
+\]
+Here the polynomial causes only a constant loss: on the truncation event its
+longitudinal argument is
+\(R_{n,A}-\gamma_nr+O(1/\rho_n)\), which is bounded for
+\(|r-|z|/\gamma_n|\le R\), while the transverse Gaussian moments are fixed.
+Equivalently, this weighted Mills estimate follows by integrating
+\((1+|u|)^m e^{-u^2/2}\) beyond the same one-dimensional boundary.
+
+The exponent outside \(\rho_n^{-1}\) equals
+\begin{align*}
+ &(1-q)\log n-q\kappa_nr^2
+   +\frac{q^2-q}{2}r^2-\frac12(qr-R_{n,A})^2\\
+ &\qquad=(q-1)\{b_{n,d}-\log n-A\}
+   -q\kappa_nr^2-\frac q2(r-R_{n,A})^2.
+\end{align*}
+Since \(b_{n,d}-\log n=\lambda_n-s_n\),
+\(\kappa_nr^2=\lambda_n+o(1)\), and \(s_n=O(1)\), it is at most
+\(-\lambda_n+O_{A,C,R,p,d}(1)\).  This proves
+\eqref{eq:support-palm-derivative-moments}.  The same tilting calculation with
+\(q=1\) gives
+\begin{equation}
+\label{eq:support-palm-derivative-means}
+ \sup_{z,h,|\beta|\le3}
+ \left|\sum_{i=2}^n\E\partial_h^\beta V_{n,z,i}(h)\right|
+ \le C_{A,C,R,d}e^{-\lambda_n}=o(1).
+\end{equation}
+The same \(q=1\) calculation applies to the absolute values of the
+derivatives.  Using the derivatives of order three and the fundamental theorem
+of calculus on a fixed mesh of \(B_R\) gives
+\[
+ \sup_z\E\left[
+  \max_{|\beta|\le2}\sup_{h\in B_R}
+  \frac1n\sum_{i=2}^n
+  |\partial_h^\beta K_{n,z,i}(h)|
+  \mathbf1_{\{|Z_i|\le R_{n,A}\}}
+ \right]
+ \le C_{A,C,R,d}e^{-\lambda_n}=o(1).
+\]
+The Palm union bound below and Markov's inequality therefore also prove
+\eqref{eq:support-dge3-palm-absolute}.
+
+Apply Rosenthal's inequality to the centered derivatives and integrate over
+\(B_R\).  Equations \eqref{eq:support-palm-derivative-moments} and
+\eqref{eq:support-palm-derivative-means} yield, uniformly in \(z\),
+\[
+ \E\left\|
+   \sum_{i=2}^nV_{n,z,i}
+ \right\|_{W^{3,p}(B_R)}^p=o(1).
+\]
+Because \(p>d\), the embedding \(W^{3,p}(B_R)\hookrightarrow C^2(B_R)\)
+and Markov's inequality imply
+\[
+ \sup_{z:\,\lvert |z|^2/2-b_{n,d}\rvert\le C}
+ \Pbb\left\{
+  \left\|\sum_{i=2}^nV_{n,z,i}\right\|_{C^2(B_R)}>\delta
+ \right\}=o(1)
+\]
+for every \(\delta>0\).  Independence now gives the Palm union bound
+\begin{align*}
+ &\Pbb\left\{
+   \max_{j\in\mathcal E_n(C)}
+   \|\mathcal R_{n,j,A}\|_{C^2(B_R)}>\delta
+ \right\}\\
+ &\quad\le n\int_{\{\lvert |z|^2/2-b_{n,d}\rvert\le C\}}
+  \Pbb\left\{
+   \left\|\sum_{i=2}^nV_{n,z,i}\right\|_{C^2(B_R)}>\delta
+  \right\}\,P(dz)=o(1),
+\end{align*}
+because the Gamma tail estimate gives
+\(nP\{\lvert |Z|^2/2-b_{n,d}\rvert\le C\}=O_C(1)\).
+
+Finally,
+\[
+ \max_i\left|
+  \frac{|Z_i-\bar Z_n|^2-|Z_i|^2}{2}
+ \right|=o_{\Pbb}(1).
+\]
+Fix \(\delta>0\).  Apart from an event of probability tending to zero,
+\(|x_{n,j}|\le C\) implies \(|\widetilde x_{n,j}|\le C+\delta\), while
+\(x_{n,i}\le-A\) implies
+\(\widetilde x_{n,i}\le-(A-\delta)\).  Applying the raw result with
+candidate bound \(C+\delta\) and lower cutoff \(A-\delta\) proves the
+sample-centered assertion directly.
+\end{proof}
+
+\subsubsection{Uniform patch stability}
+
+We need the local approximations uniformly over the random edge patches and
+all candidate mixing measures. As in
+Sections~\ref{sec:sharp-high-dimensional-estimates} and
+\ref{sec:d-two-sharp-window}, the lower radial cutoff is removed after the
+finite-sample limit.
+
+The candidate patches and the observational cutoff play different roles.  The
+candidate set is fixed by the activation threshold and remains unchanged as
+the cutoff is removed.  The cutoff is used only to divide the data into a
+finite exposed cloud and a lower cloud.  The following estimate controls the
+lower cloud uniformly over every mixing measure on the candidate patches.
+\begin{lemma}
+\label{lem:support-uniform-lower-cloud}
+Fix \(C,R,M,J<\infty\).  Let \(\mathcal I_n\) be any set of at most \(J\)
+candidate observations with \(|x_{n,j}|\le C\), and let \(\nu_j\) be supported
+in \(B_R\) for \(d\ge3\), or in \([-R,R]^2\) for \(d=2\), with
+\(m=\sum_{j\in\mathcal I_n}\nu_j(\mathbb R^d)\le M\).  Form \(\nu\) by
+\eqref{eq:support-patch-pushforward} and write
+\(F_{n,i}=F_{n,i}(\nu)\).  Suppose \(s_n=O(1)\) for fixed \(d\ge3\), or
+\(\lambda_n\to\lambda\in(0,\infty)\) for \(d=2\).
+
+There is \(A_0=A_0(C,R,M)>C+1\) such that, for each fixed
+\(A\ge A_0\), on the event \(\max_i x_{n,i}\le C\) and the usual
+edge-separation event,
+\begin{equation}
+\label{eq:support-lower-cloud-max-square}
+ \max_{i:x_{n,i}\le-A}F_{n,i}\le C_{C,R}Me^{-A},
+ \qquad
+ \sum_{i:x_{n,i}\le-A}F_{n,i}^2
+ \le C_{C,R}M^2e^{-A}+o_{\Pbb,A}(1),
+\end{equation}
+apart from an event of probability tending to zero.  For every candidate
+patch, one also has the derivative-envelope bound
+\begin{equation}
+\label{eq:support-lower-cloud-derivative-envelope}
+ \max_{|\beta|\le2}\sup_u
+ \frac1n\sum_{i:x_{n,i}\le-A}
+ \left|\partial_u^\beta
+ q_{n,\tau,a_{n,j}(u)}(i)\right|
+ =O_{\Pbb,A_0,C,R}(1),
+\end{equation}
+uniformly for \(A\ge A_0\).
+Uniformly over the same measures,
+\begin{equation}
+\label{eq:support-lower-cloud-linear}
+ \sum_{i:x_{n,i}\le-A}F_{n,i}
+ =
+ \begin{cases}
+   o_{\Pbb,A}(1),&d\ge3,\\[1mm]
+   \displaystyle
+   \sum_{j\in\mathcal I_n}\int B_{\lambda_n}(r)\,\nu_j(dr,dz)
+      +O_{\Pbb,C,R,J}(Me^{-A})+o_{\Pbb,A}(1),&d=2,
+ \end{cases}
+\end{equation}
+where
+\[
+ B_{\lambda_n}(r)=e^{-\lambda_n}\Phi(-r).
+\]
+The observations with \(-A<x_{n,i}\le C\) that do not belong to
+\(\mathcal I_n\) contribute \(o_{\Pbb,A}(1)\), uniformly over the candidate
+patches and measures.
+\end{lemma}
+
+\begin{proof}
+Completing the square gives, for every score displacement \(a\),
+\begin{equation}
+\label{eq:support-lower-cloud-square-completion}
+ \frac1nq_{n,\tau,a}(i)
+ =\exp\left\{
+   \frac{|Z_i-\gamma_n\tau|^2}{2\gamma_n}-\log n
+   -\frac{\gamma_n}{2}
+      \left|a-\frac{Z_i-\gamma_n\tau}{\gamma_n}\right|^2
+ \right\}.
+\end{equation}
+For \(d\ge3\), the anchor estimate
+\eqref{eq:support-high-d-anchor-error} and
+\(b_{n,d}-\log n=\lambda_n-s_n\) make the first exponent at most
+\(-A-s_n+o_{\Pbb}(1)\) when \(x_{n,i}\le-A\).  For \(d=2\), the radial
+identity in Lemma~\ref{lem:support-d2-c2-absorption} bounds the exponent by
+\(-A+O_{C,R}(1)\). Integrating
+\eqref{eq:support-lower-cloud-square-completion} over a measure of mass at most
+\(M\) proves the first inequality in
+\eqref{eq:support-lower-cloud-max-square}.
+
+For fixed \(d\ge3\), Lemma~\ref{lem:support-dge3-palm-c2}, followed by the
+translation from \(Z_j/\gamma_n\) to
+\((Z_j-\gamma_n\tau)/\gamma_n\), gives
+\[
+ \max_{j\in\mathcal I_n}\sup_{u}
+ \frac1n\sum_{i:x_{n,i}\le-A}
+ q_{n,\tau,a_{n,j}^{(\ge3)}(u)}(i)=o_{\Pbb,A}(1).
+\]
+The translation is legitimate in \(C^2\) because
+\(|\tau|=o_{\Pbb}(1)\) and the Palm lemma controls a slightly larger compact
+set.  The translated Palm field is multiplied by
+\(e^{-\gamma_na\cdot\tau}\); uniformly on these patches its logarithm is
+\(O_{\Pbb}(\rho_n|\tau|)=o_{\Pbb}(1)\) by
+Lemma~\ref{lem:support-fixed-core-collapse}.  Positivity and Fubini now give the first line of
+\eqref{eq:support-lower-cloud-linear}.
+Equation \eqref{eq:support-dge3-palm-absolute} gives
+\eqref{eq:support-lower-cloud-derivative-envelope} in this case.  The bound is
+uniform for \(A\ge A_0\), because the absolute derivative sum is nonincreasing
+as the lower cutoff \(-A\) is moved inward.
+
+For \(d=2\), use the fixed-cutoff decomposition
+Lemma~\ref{lem:d2-fixed-cutoff-decomposition}, the quantitative absorption
+bound in the proof of Lemma~\ref{lem:d2-low-atom-absorption}, and the anchor
+multiplier
+\[
+ e^{-a\cdot\Delta_n^{\rm anc}-a\cdot\bar Z_n}
+ =e^{-\gamma_na\cdot\tau}=1+o_{\Pbb}(1)
+\]
+uniformly on the candidate patches. Together, these three estimates show that the lower field in a patch
+with radial coordinate \(r\) is
+\(B_{\lambda_n}(r)+O_{\Pbb,C,R}(e^{-A})+o_{\Pbb,A}(1)\), uniformly in its
+direction.  Integrating over \(\nu\) proves the second line of
+\eqref{eq:support-lower-cloud-linear}.
+The radial identity bounds the absolute value of each derivative by a fixed
+polynomial times the Gaussian angular kernel in
+Lemma~\ref{lem:support-d2-c2-absorption}. For the deep part
+\(\xi_i<-\ell_n^{\rm edge}\), repeat the boxwise Rosenthal--Morrey argument in
+Lemma~\ref{lem:support-d2-c2-absorption} with a polynomial majorant for the
+absolute derivatives; its mean is uniformly bounded by exponential tilting.
+For the strip
+\(-\ell_n^{\rm edge}\le\xi_i\le-A_0\), the slab-and-arc estimate in that
+lemma, with the summable weight \((1+q^4)e^{-cq^2}\), is
+\(O_{\Pbb,C,R}(e^{-A_0})\).  Their sum proves
+\eqref{eq:support-lower-cloud-derivative-envelope} for \(d=2\).  Since the
+absolute sum over \(\{x_{n,i}\le-A\}\) decreases with \(A\), the
+\(O_{\Pbb,C,R}(e^{-A_0})\) bound holds simultaneously for all \(A\ge A_0\).
+
+The linear bound is \(O_{\Pbb}(M)\) in either dimension.  Therefore
+positivity and the first inequality in
+\eqref{eq:support-lower-cloud-max-square} give
+\[
+ \sum_{i:x_{n,i}\le-A}F_{n,i}^2
+ \le
+ \left(\max_{i:x_{n,i}\le-A}F_{n,i}\right)
+ \sum_{i:x_{n,i}\le-A}F_{n,i}
+ \le C_{C,R}M^2e^{-A}+o_{\Pbb,A}(1),
+\]
+which is the second inequality in
+\eqref{eq:support-lower-cloud-max-square}.
+
+Finally, for fixed \(A,C\), the exposed cloud
+\(\{-A<x_{n,i}\le C\}\) has tight cardinality.  Its distinct directions are
+separated by \(\ell_n^{\rm sep}/\rho_n\), with
+\(\ell_n^{\rm sep}\to\infty\), apart from an event of probability tending to
+zero.  Completing the square and differentiating on fixed patches then show
+that the response of every nonassociated exposed observation is
+\(O(e^{-c(\ell_n^{\rm sep})^2})\).  Summing over the tight exposed cloud proves
+the last assertion.
+\end{proof}
+
+Lemma~\ref{lem:support-uniform-lower-cloud} makes the lower-cloud contribution
+uniform over all mixing measures on finitely many candidate patches. The next
+proposition uses its linear, quadratic, and derivative bounds to reduce the
+exact likelihood to a finite collection of local programs.
+\begin{proposition}
+\label{prop:support-finite-patch-expansion}
+Fix \(C,R,M,J<\infty\), and let \(\mathcal I_n\) be any set of at most \(J\)
+candidate observations with \(|x_{n,j}|\le C\).  Work on the event
+\(\max_i x_{n,i}\le C\) and the edge-separation event.  For \(d\ge3\), let
+\(\nu_j\) be supported in \(B_R\subset\mathbb R^d\); for \(d=2\), let it be
+supported in \([-R,R]^2\).  Form the displacement measure using only
+\(j\in\mathcal I_n\), assume \(\sum_{j\in\mathcal I_n}\nu_j(\mathbb R^d)\le M\),
+and suppose the anchor satisfies \eqref{eq:support-high-d-anchor-error}.  Assume
+that \(s_n=O(1)\) for fixed \(d\ge3\), or that
+\(\lambda_n\to\lambda\in(0,\infty)\) for \(d=2\), and define
+\[
+\begin{aligned}
+ \mathcal J_n^{(\ge3)}(\nu)
+ &=\sum_{j\in\mathcal I_n}\log\left\{1+\int
+ e^{x_{n,j}-s_n-|h|^2/2}\,\nu_j(dh)\right\}
+ -\sum_{j\in\mathcal I_n}\nu_j(\mathbb R^d),\\
+ B_{\lambda_n}(r)&=e^{-\lambda_n}\Phi(-r),\qquad
+ C_{n,x}(r,z)=e^{-\lambda_n}e^{x-r^2/2-z^2/2},\\
+ \mathcal J_n^{(2)}(\nu)
+ &=\sum_{j\in\mathcal I_n}\log\left\{1+\int C_{n,x_{n,j}}\,d\nu_j\right\}
+ -\sum_{j\in\mathcal I_n}\int\{1-B_{\lambda_n}(r)\}\,d\nu_j.
+\end{aligned}
+\]
+There is \(A_0=A_0(C,R,M)<\infty\) such that, for every fixed
+\(A\ge A_0\), uniformly over these measures,
+\begin{equation}
+\label{eq:support-finite-patch-error}
+ \sup_\nu|\mathcal L_{n,\tau}(\nu)-\mathcal J_n^{(d)}(\nu)|
+ =O_{\Pbb,C,R,J}\{(M+M^2)e^{-A}\}+o_{\Pbb,A}(1),
+\end{equation}
+where the random coefficient in \(O_{\Pbb,C,R,J}(1)\) is tight uniformly for
+\(A\ge A_0\).  In particular, for every \(\delta>0\),
+\begin{equation}
+\label{eq:support-finite-patch-iterated}
+ \lim_{A\to\infty}\limsup_{n\to\infty}
+ \Pbb\left\{
+  \sup_\nu|\mathcal L_{n,\tau}(\nu)-\mathcal J_n^{(d)}(\nu)|>\delta
+ \right\}=0.
+\end{equation}
+The candidate space and \(\mathcal J_n^{(d)}\) do not depend on \(A\).  After
+\(n\to\infty\) and then \(A\to\infty\), the limiting functional is the sum
+of the independent local programs
+\eqref{eq:support-dge3-local-program} or
+\eqref{eq:support-d2-local-program} over the candidate patches.
+\end{proposition}
+
+\begin{proof}
+Put \(m=\nu(\mathbb R^d)\), \(v_i=F_{n,i}(\nu)-m/n\), and split the data into
+the candidate observations, the noncandidate exposed cloud
+\(\{-A<x_{n,i}\le C\}\setminus\mathcal I_n\), and the lower cloud
+\(\{x_{n,i}\le-A\}\).  For a candidate observation \(j\), completing the
+square gives, uniformly on its associated patch,
+\[
+ \frac1nq_{n,\tau,a_{n,j}^{(\ge3)}(h)}(j)
+ =e^{x_{n,j}-s_n-|h|^2/2+o(1)}
+\]
+in \(d\ge3\), and gives \(C_{n,x_{n,j}}(r,z)+o(1)\) in \(d=2\).
+The separation event makes every cross-patch response \(o(1)\).  Hence the
+candidate observations contribute the logarithmic terms in
+\(\mathcal J_n^{(\ge3)}\) or \(\mathcal J_n^{(2)}\), uniformly over \(\nu\),
+up to \(o_{\Pbb,A}(1)\).  The final assertion of
+Lemma~\ref{lem:support-uniform-lower-cloud} shows that the noncandidate exposed
+cloud contributes \(o_{\Pbb,A}(1)\).
+
+Choose \(A_0\) so that \(C_{C,R}Me^{-A_0}\le1/4\), and then take
+\(n\ge4M\).  On the lower cloud, the elementary inequality
+\[
+ |\log(1+v)-v|\le2v^2,
+ \qquad v\ge-M/n,\quad |v|\le1/2,
+\]
+and Lemma~\ref{lem:support-uniform-lower-cloud} give
+\[
+ \sum_{i:x_{n,i}\le-A}\{\log(1+v_i)-v_i\}
+ =O_{\Pbb,C,R,J}(M^2e^{-A})+o_{\Pbb,A}(1).
+\]
+Since the exposed cloud has \(O_{\Pbb,A}(1)\) observations,
+\[
+ \sum_{i:x_{n,i}\le-A}v_i
+ =\sum_{i:x_{n,i}\le-A}F_{n,i}-m+o_{\Pbb,A}(1).
+\]
+Equation \eqref{eq:support-lower-cloud-linear} therefore supplies the penalty
+\(-m\) in \(d\ge3\), and the penalty
+\(-\sum_j\int\{1-B_{\lambda_n}(r)\}\,d\nu_j\) in \(d=2\).
+Lemma~\ref{lem:support-uniform-lower-cloud} already includes the anchor error.
+Combining the candidate observations, the noncandidate exposed cloud, and the
+lower cloud proves \eqref{eq:support-finite-patch-error}.
+\end{proof}
+
+An elementary coercivity estimate bounds the edge mass without assuming a
+fixed number of fitted atoms; it depends only on the candidate data points,
+not on the mixing complexity within their patches.
+\begin{proposition}
+\label{prop:support-patch-coercivity}
+Restrict \eqref{eq:support-anchored-likelihood} to \(J\) edge patches, and let
+\(\mathcal I_n\) be their associated observations. Suppose throughout the
+patches that
+\[
+ \frac1n\sum_{i\notin\mathcal I_n}q_{n,\tau,a}(i)\le b<1,
+ \qquad
+ \max_{i\in\mathcal I_n}\frac1nq_{n,\tau,a}(i)\le C_0.
+\]
+If \(m=nW\) is the total rescaled edge mass, then, for all large \(n\),
+\[
+    \mathcal L_{n,\tau}(\nu)
+    \le-c_bm+J\log(1+C_0m),
+    \qquad c_b=(1-b)/3.
+\]
+Consequently, every maximizer satisfies
+\(m\le4C_0J^2/c_b^2\).
+\end{proposition}
+
+\begin{proof}
+Fubini's theorem gives
+\(\sum_{i\notin\mathcal I_n}F_{n,i}(\nu)\le bm\). Jensen's inequality then
+implies
+\[
+ \sum_{i\notin\mathcal I_n}
+ \log\{1-m/n+F_{n,i}(\nu)\}
+ \le(n-J)\log\left\{1-\frac mn+\frac{bm}{n-J}\right\}
+ \le-c_bm.
+\]
+At each retained observation the likelihood ratio is at most \(1+C_0m\),
+which proves the displayed bound. A maximizer has nonnegative gain, and
+\(\log(1+x)\le2\sqrt x\) then yields
+\(m\le4C_0J^2/c_b^2\).
+\end{proof}
+
+The two-dimensional contact argument requires differentiated, rather than only
+uniform, control of the inward-edge background. The next lemma upgrades the
+fixed-cutoff decomposition to the \(C^2\) form needed below.
+\begin{lemma}
+\label{lem:support-d2-c2-absorption}
+Assume \(d=2\) and \(\lambda_n\to\lambda\in(0,\infty)\), and put
+\(\ell_n^{\rm edge}=4\log\rho_n\). For \(v\in S^1\), define
+\[
+ a_{n,v}(r,z)=(\rho_n+r)\mathsf R_{z/\rho_n}v
+\]
+and, for fixed \(R<\infty\), let
+\begin{align*}
+ \mathcal B_{n,v}(r,z)
+ &=\frac1n e^{-\kappa_n|a_{n,v}(r,z)|^2}
+   \sum_{i:\,\xi_i<-\ell_n^{\rm edge}}
+   e^{a_{n,v}(r,z)\cdot Z_i-|a_{n,v}(r,z)|^2/2},\\
+ \mathcal A_{n,v,A}(r,z)
+ &=\frac1n e^{-\kappa_n|a_{n,v}(r,z)|^2}
+   \sum_{i:\,-\ell_n^{\rm edge}\le\xi_i\le-A}
+   e^{a_{n,v}(r,z)\cdot Z_i-|a_{n,v}(r,z)|^2/2}.
+\end{align*}
+Then
+\begin{equation}
+\label{eq:support-d2-diffuse-c2}
+ \sup_{v\in S^1}
+ \|\mathcal B_{n,v}-e^{-\lambda}\Phi(-r)\|_{C^2([-R,R]^2)}
+ \xrightarrow{\Pbb}0,
+\end{equation}
+and, for every \(\delta>0\),
+\begin{equation}
+\label{eq:support-d2-strip-c2}
+ \lim_{A\to\infty}\limsup_{n\to\infty}
+ \Pbb\left\{
+   \sup_{v\in S^1}\|\mathcal A_{n,v,A}\|_{C^2([-R,R]^2)}
+       >\delta
+ \right\}=0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write \(a=a_{n,v}(r,z)\). The radial identity gives
+\[
+ \frac1n e^{-\kappa_n|a|^2}e^{a\cdot Z_i-|a|^2/2}
+ =e^{\xi_i-\kappa_n|a|^2-|Z_i-a|^2/2}.
+\]
+Cover \(S^1\) by \(O(\rho_n)\) arcs of angular length \(O(1/\rho_n)\), and on
+an arc centered at \(v_\alpha\) write
+\(v=\mathsf R_{y/\rho_n}v_\alpha\), with \(y\) in a fixed interval. On the
+resulting fixed boxes in \((y,r,z)\), differentiation inserts a polynomial of
+bounded degree in \(Z_i-\gamma_na\), with coefficients bounded uniformly in
+\(n\). Consequently, for every multi-index \(|\beta|\le3\), a summand of the
+corresponding derivative of \(\mathcal B_{n,v}\) is bounded by
+\(C_Re^{-\ell_n^{\rm edge}}\). Exponential tilting, as in the proof of
+Proposition~\ref{prop:two-d-compact-decomposition}, also gives
+\[
+ \sup_{\alpha,y,r,z}\sum_i
+ \E\left|\partial^\beta
+   \left[\frac1n e^{-\kappa_n|a|^2}
+   e^{a\cdot Z_i-|a|^2/2}
+   \mathbf1_{\{\xi_i<-\ell_n^{\rm edge}\}}\right]\right|^2
+ \le \frac{C_R}{\rho_n}.
+\]
+Here \(\partial^\beta\) denotes derivatives in the scaled local variables
+\((y,r,z)\), and the supremum ranges over their fixed coordinate boxes.
+The corresponding sum of \(p\)th moments is at most
+\(C_Re^{-(p-2)\ell_n^{\rm edge}}/\rho_n\). For any fixed \(p>3\),
+Rosenthal's inequality therefore bounds the expected \(p\)th power of the
+\(W^{3,p}\) norm on one box by
+\(C_R\rho_n^{-p/2}+o(\rho_n^{-p/2})\). Summing over the
+\(O(\rho_n)\) boxes still gives \(o(1)\). The Sobolev--Morrey embedding
+\(W^{3,p}\hookrightarrow C^2\) on each fixed box, followed by Markov's
+inequality, proves uniform \(C^2\) concentration over all \(v\in S^1\).
+
+The mean is rotation invariant and exponential tilting gives
+\[
+ \E\mathcal B_{n,v}(r,z)
+ =e^{-\kappa_n(\rho_n+r)^2}
+   \Pbb\{|G+(\rho_n+r)e_1|^2
+              \le\rho_n^2-2\ell_n^{\rm edge}\},
+ \qquad G\sim\mathcal N(0,I_2).
+\]
+The boundary expansion in the proof of
+Proposition~\ref{prop:two-d-compact-decomposition} is uniform after two
+derivatives in \(r\); the mean has no \(z\)-dependence. Since
+\(\ell_n^{\rm edge}/\rho_n\to0\) and
+\(\kappa_n\rho_n^2\to\lambda\), the last display converges in \(C^2\) to
+\(e^{-\lambda}\Phi(-r)\). This proves
+\eqref{eq:support-d2-diffuse-c2}.
+
+For the strip, let \(Y_i(v)=\rho_n\operatorname{ang}(U_i,v)\). Uniformly on
+the same compact set and for \(|\beta|\le2\), the radial identity and the
+elementary bound of a polynomial times a Gaussian give
+\[
+ |\partial_{r,z}^\beta \mathcal A_{n,v,A}(r,z)|
+ \le C_R\sum_{i:\,-\ell_n^{\rm edge}\le\xi_i\le-A}
+ e^{\xi_i}\{1+|Y_i(v)-z|^4\}e^{-c|Y_i(v)-z|^2}.
+\]
+Taking the supremum over \(z\in[-R,R]\) only changes the constants and the
+Gaussian exponent. The slab-and-arc occupancy proof of
+Lemma~\ref{lem:d2-low-atom-absorption} applies with the summable weight
+\((1+q^4)e^{-cq^2}\) in place of \(e^{-q^2/2}\). It bounds the last display
+by \(C_Re^{-A}+o_{\Pbb}(1)\), simultaneously for \(|\beta|\le2\), and proves
+\eqref{eq:support-d2-strip-c2}.
+\end{proof}
+
+To convert each local maximizer into an exact contact count, we need
+two-derivative convergence of the fitted KKT certificate; convergence of
+likelihood values alone would not exclude nearby split atoms.
+\begin{proposition}
+\label{prop:support-one-contact-per-patch}
+Suppose an NPMLE is localized to finitely many compact patches,
+its rescaled edge mass is bounded, and every associated radial excess is at
+least \(\eta>0\) from the relevant threshold. After the radial cutoffs are
+removed, an inactive patch contains no support point and an active patch
+contains exactly one, apart from an event of probability tending to zero.
+Here active means \(x_{n,j}>s_n\) for \(d\ge3\) and
+\(x_{n,j}>x_{\lambda_n}\) for \(d=2\).
+\end{proposition}
+
+\begin{proof}
+It is enough to argue along subsequences. The radial cutoffs and threshold
+buffer allow a further subsequence on which the number of candidate patches is
+constant and all marks \(x_{n,j}\) converge, say to \(x_j\). Write
+\(a_{n,j}(u)=a_{n,j}^{(\ge3)}(u)\) in \(d\ge3\), and
+\(a_{n,j}(u)=a_{n,j}^{(2)}(r,z)\) for \(u=(r,z)\) in \(d=2\).
+The candidate index set is fixed throughout this subsequence; only the lower
+observational cutoff \(A\) will later vary.  For a localized measure
+\(\nu=(\nu_1,\ldots,\nu_J)\), let
+\[
+ M_{n,i}(\nu)=1+\frac1n\sum_j
+   \int\{q_{n,\tau,a_{n,j}(u)}(i)-1\}\,\nu_j(du).
+\]
+Moving mass from the central atom into patch \(j\) has derivative
+\begin{equation}
+\label{eq:support-finite-patch-certificate}
+ \Gamma_{n,j,\nu}(u)
+ =\frac1n\sum_{i=1}^n
+   \frac{q_{n,\tau,a_{n,j}(u)}(i)-1}{M_{n,i}(\nu)}.
+\end{equation}
+It is nonpositive throughout the patch and vanishes at every support point.
+
+The limiting certificate in an active \(d\ge3\) patch is
+\[
+    \Gamma_j^*(h)=e^{-|h|^2/2}-1;
+\]
+it has a unique zero at zero and Hessian \(-I_d\). In an active
+two-dimensional patch it is
+\[
+ \Gamma_j^*(r,z)
+ =(1-B_\lambda(r))
+ \left\{\frac{R_{x_j}(r,z)}{\sup_{u,y}R_{x_j}(u,y)}-1\right\},
+\]
+whose unique zero is \((-a_\lambda,0)\) and whose Hessian there is
+\(-\{1-e^{-\lambda}\Phi(a_\lambda)\}I_2\). A threshold buffer \(\eta\)
+also gives a fixed negative certificate gap in every inactive patch.
+
+We next verify that \eqref{eq:support-finite-patch-certificate} converges to
+these limits in \(C^2\) on a smaller patch, uniformly over measures in a fixed
+compact mass ball.  Fix the observational cutoff \(A\).  At the candidate
+observations, completing the square and differentiating three times gives
+uniform \(C^3\) convergence of the associated response.  Every response from
+a different exposed observation carries the factor
+\(e^{-c(\ell_n^{\rm sep})^2}\), and the exposed cloud has tight cardinality.
+
+For the lower observations in fixed \(d\ge3\),
+Lemma~\ref{lem:support-dge3-palm-c2} gives, simultaneously in all candidate
+patches, \(C^2\) convergence of the punctured lower field to zero.  The lemma
+is centered at \(Z_j/\gamma_n\), whereas the score-displacement patch is
+centered at \(Z_j/\gamma_n-\tau\). Taking the Palm estimate on a slightly
+larger compact set and using \(|\tau|=o_{\Pbb}(1)\) transfers the bound to the
+score-displacement patch. The accompanying multiplier
+\(e^{-\gamma_na\cdot\tau}\) is \(1+o_{\Pbb}(1)\) in \(C^2\), because
+\(\rho_n|\tau|=o_{\Pbb}(1)\).  Thus this is a deterministic translation of an
+already uniform \(C^2\) estimate and requires no conditioning on a
+sample-centered exceedance set.
+
+In \(d=2\), Lemma~\ref{lem:support-d2-c2-absorption} gives \(C^2\)
+convergence of the diffuse background to \(e^{-\lambda}\Phi(-r)\) and removes
+the strip between the receding and fixed radial cutoffs in the \(C^2\)
+topology.
+The estimate is uniform over the patch direction, so it remains valid for the
+random directions \(U_j\). The KKT field differs from the field in
+Lemma~\ref{lem:support-d2-c2-absorption}
+by the anchor multiplier
+\[
+ e^{-a\cdot\Delta_n^{\rm anc}-a\cdot\bar Z_n}
+ =e^{-\gamma_na\cdot\tau}.
+\]
+Lemma~\ref{lem:support-fixed-core-collapse} gives
+\[
+ \rho_n^2|\tau|^2
+ =O_{\Pbb}\left\{\frac{(\log n)^{C_d+1}}{n\kappa_n}\right\}
+ =o_{\Pbb}(1),
+\]
+and differentiation of the multiplier in the local coordinates only
+introduces further factors \(O_{\Pbb}(|\tau|)\).
+It is therefore \(1+o_{\Pbb}(1)\) in \(C^2\) on every fixed patch.
+
+It remains to pass from the unfitted fields to the fitted certificate.  Take
+\(A\ge A_0(C,R,M)\) from
+Lemma~\ref{lem:support-uniform-lower-cloud}.  For every lower observation,
+\[
+ |M_{n,i}(\nu)-1|
+ \le F_{n,i}(\nu)+M/n
+ \le C_{C,R}Me^{-A}+o(1)\le\frac12,
+\]
+uniformly over measures of mass at most \(M\).  Hence
+\(|M_{n,i}^{-1}-1|\le2|M_{n,i}-1|\).  Applying
+Lemma~\ref{lem:support-uniform-lower-cloud} after each of
+the at most two local differentiations gives
+\begin{equation}
+\label{eq:support-weighted-lower-c2}
+ \sup_{\nu:\,\nu(\mathbb R^d)\le M}
+ \left\|
+  \frac1n\sum_{i:x_{n,i}\le-A}
+ \{q_{n,\tau,a_{n,j}(\cdot)}(i)-1\}
+ \{M_{n,i}(\nu)^{-1}-1\}
+ \right\|_{C^2}
+ =O_{\Pbb,C,R,J}(Me^{-A})+o_{\Pbb,A}(1),
+\end{equation}
+with a tight \(O_{\Pbb}(1)\) coefficient uniform for \(A\ge A_0\).
+To see this directly, note that \(M_{n,i}(\nu)\) is fixed when the prospective
+contact location \(u\) is varied.  Thus all derivatives fall on the numerator,
+and \eqref{eq:support-lower-cloud-derivative-envelope}, together with
+\(\max_i|M_{n,i}^{-1}-1|\le CMe^{-A}+o(1)\), gives the displayed bound.  The
+constant \(-1\) at derivative order zero is controlled by the same maximum.
+At a candidate observation, the denominator converges to its local-program
+denominator.  At a noncandidate exposed observation, every candidate response
+is \(o_{\Pbb,A}(1)\), uniformly in \(C^2\); the constant \(-1\) in the
+numerator contributes only \(O_{\Pbb,A}(1/n)\) after summing over the tight
+exposed cloud.  Thus the complete fitted certificate
+converges sequentially, first as \(n\to\infty\) and then as \(A\to\infty\),
+to the displayed limiting certificates.
+
+We now make the order of the cutoff and argmax limits explicit. Proposition
+\ref{prop:support-patch-coercivity} confines the total rescaled mass to a
+deterministic compact interval on events of arbitrarily high probability.
+Together with the fixed compact candidate-patch union, this gives a weakly
+compact space \(\mathcal M_{M,R}\) of candidate measures. Let
+\(\mathcal J^\star_{\boldsymbol x}\) be the sum of the limiting local programs
+for a vector \(\boldsymbol x=(x_1,\ldots,x_J)\) of candidate marks, and let
+\(\nu^\star_{\boldsymbol x}\) be its optimizer. The scalar optimizations above
+show that this optimizer is unique and depends continuously on
+\(\boldsymbol x\) as long as the marks remain outside the threshold buffer.
+
+Choose the patch radius \(R\) so that every such optimizer is in the interior.
+For a fixed small \(\delta>0\), let
+\(\mathcal U_{\boldsymbol x}\) be its radius-\(\delta\) weak neighborhood in
+\(\mathcal M_{M,R}\).  The mark vectors with \(|x_j|\le C\) and distance at
+least \(\eta\) from the threshold form a compact set.  Joint continuity of
+the local programs and uniqueness of their optimizers therefore give the
+uniform separation
+\begin{equation}
+\label{eq:support-argmax-gap}
+ c_{\delta,\eta,C,M,R,J}
+ :=\inf_{\boldsymbol x}
+ \left[
+  \mathcal J^\star_{\boldsymbol x}(\nu^\star_{\boldsymbol x})
+  -\sup_{\nu\in\mathcal M_{M,R}\setminus\mathcal U_{\boldsymbol x}}
+      \mathcal J^\star_{\boldsymbol x}(\nu)
+ \right]>0.
+\end{equation}
+Decrease \(\delta\), if necessary, so that every active patch has mass bounded
+away from zero throughout \(\mathcal U_{\boldsymbol x}\).  All the objects in
+\eqref{eq:support-argmax-gap} depend only on the threshold-buffered candidate
+patches, not on the observational cutoff.  Choose the deterministic cutoff
+\(A\ge A_0(C,R,M)\) so large that, by
+\eqref{eq:support-finite-patch-iterated}, the finite-patch approximation error
+exceeds one quarter of the gap in \eqref{eq:support-argmax-gap} with
+arbitrarily small limiting probability.  Then take \(n\) large.  Uniform
+convergence of the local kernels shows on the complementary event that every
+finite-sample maximizer belongs to \(\mathcal U_{\boldsymbol x}\): otherwise
+comparison with the pushforward of \(\nu^\star_{\boldsymbol x}\) would lose at
+least half that gap.  In particular, every active finite-sample patch carries
+positive mass and hence contains a KKT contact.
+
+Increase this same deterministic \(A\), if necessary, so that
+\eqref{eq:support-weighted-lower-c2} exceeds one quarter of either the
+inactive-patch certificate gap or the absolute value of the largest active
+limiting Hessian eigenvalue with arbitrarily small limiting probability.
+These constants are uniform over the threshold-buffered compact mark set,
+while the candidate space does not change.  An inactive patch then has no
+contact.  In an active patch,
+\(C^0\) convergence confines all contacts to a small convex neighborhood of
+the unique limiting zero, and \(C^2\) convergence makes the finite-sample
+certificate strictly concave there.  Since the certificate is nonpositive,
+strict concavity rules out two distinct zeros.  Sending the two exceptional
+probabilities to zero proves the claim along every subsequence.
+\end{proof}
+
+\subsubsection{Threshold pruning and the support law}
+
+Only observations within a fixed radial distance of the activation threshold
+can support atoms. The needed deleted-field estimate is a further consequence
+of the Bennett--Morrey argument in
+Section~\ref{sec:sharp-high-dimensional-estimates}.
+\begin{lemma}
+\label{lem:support-dge3-deleted-field}
+Assume \(d\ge3\) and \(s_n=O(1)\). For fixed \(a>0\), define
+\[
+ S_t^{(a)}=\frac1n e^{-\kappa_n|t|^2}
+ \sum_{i=1}^ne^{t\cdot Z_i-|t|^2/2}
+ \mathbf1_{\{|Z_i|^2/2\le\log n+\lambda_n-a\}}.
+\]
+If \(\zeta\in(0,1)\) and \(e^a\zeta>1\), then
+\[
+    \Pbb\left\{\sup_{|t|\ge\rho_n/2}S_t^{(a)}\ge\zeta\right\}\to0.
+\]
+\end{lemma}
+
+\begin{proof}
+Put \(R_a^2/2=\log n+\lambda_n-a\) and
+\(h=R_a-|t|\). On each fixed physical annulus \(|h|\le H\),
+Lemma~\ref{lem:physical-offset-fixed-t} gives
+\[
+ \Pbb\{S_t^{(a)}\ge\zeta\}
+ \le\left(\rho_n^{-1}e^{-\lambda_n}\right)^{
+     e^{a+h^2/2}\zeta-o(1)}.
+\]
+Lemma~\ref{lem:scaled-derivative-morrey} reduces the annulus to a net of
+cardinality \(\rho_n^{d-1+o(1)}\), with \(o(1)\) oscillation. Since
+\(\rho_n^{-1}e^{-\lambda_n}=\rho_n^{-(d-1)+o(1)}\) and
+\(e^a\zeta>1\), the union bound tends to zero.
+
+For \(h\ge H\), Lemma~\ref{lem:growing-offset-fixed-t} gives
+\[
+ \Pbb\{S_t^{(a)}\ge\zeta/2\}
+ \le\exp\{-c_de^{a+h^2/4}\log\rho_n\}.
+\]
+A polynomial-size Euclidean net and the same derivative control make the
+union bound vanish after \(H\) is large. When \(|t|\ge R_a+H\), every
+truncated summand decreases along its radial ray, so the outward region reduces
+to the controlled boundary. These ranges cover \(|t|\ge\rho_n/2\).
+\end{proof}
+
+The two-dimensional analogue of the deleted-field estimate has an explicit
+profile gap.  It is useful to record both the global residual bound and the
+stronger bound on the candidate patches, where the associated extreme
+observation has itself been deleted.
+\begin{lemma}
+\label{lem:support-d2-residual-gap}
+Assume \(d=2\) and \(\lambda_n\to\lambda\in(0,\infty)\).  Fix \(\eta>0\),
+put
+\[
+ \mathcal I_n(\eta)=\{i:\xi_i>x_{\lambda_n}-\eta\},
+ \qquad
+ \mathcal R_{n,\eta}(a)
+ =\frac1n\sum_{i\notin\mathcal I_n(\eta)}q_{n,\tau,a}(i),
+\]
+and let \(\mathcal P_n(\eta,R)\) be the union of the radius-\(R\) local
+patches associated with \(\mathcal I_n(\eta)\).  Then
+\begin{align}
+\label{eq:support-d2-global-residual-gap}
+ \sup_{|a|\ge\rho_n/2}\mathcal R_{n,\eta}(a)
+ &\le1-\frac12(1-e^{-\eta})(1-e^{-\lambda})+o_{\Pbb}(1),\\
+\label{eq:support-d2-candidate-residual-gap}
+ \sup_{a\in\mathcal P_n(\eta,R)}\mathcal R_{n,\eta}(a)
+ &\le e^{-\lambda}+o_{\Pbb,R}(1)
+\end{align}
+for each fixed \(R\).
+\end{lemma}
+
+\begin{proof}
+Fix \(C,K,A<\infty\) and work first on
+\(\max_i\xi_i\le C\) and \(|\,|a|-\rho_n|\le K\).  Write
+\(a=(\rho_n+r)v\), \(|r|\le K\).  Lemma
+\ref{lem:d2-fixed-cutoff-decomposition}, its quantitative absorption bound,
+and the anchor estimate give, uniformly in \(r\) and \(v\),
+\begin{equation}
+\label{eq:support-d2-residual-decomposition}
+ \mathcal R_{n,\eta}((\rho_n+r)v)
+ =B_{\lambda_n}(r)
+  +\sum_{\substack{-A<\xi_i\le x_{\lambda_n}-\eta}}
+    C_{\lambda_n,\xi_i}(r,Y_i(v))
+  +O_{\Pbb,K}(e^{-A})+o_{\Pbb,A,K}(1).
+\end{equation}
+For fixed \(A,C\), the exposed points have tight cardinality and, with
+probability tending to one, their pairwise scaled angular distances exceed a
+deterministic \(\ell_n\to\infty\).  If there are at most \(J\) exposed points,
+then for any \(v\) all but at most one have \(|Y_i(v)|\ge\ell_n/2\); uniformly
+for \(|r|\le K\), their total contribution is at most
+\(J e^{C+K^2/2}e^{-\ell_n^2/8}\).  Tightness of \(J\) therefore makes this
+remainder \(o_{\Pbb,A,C,K}(1)\), uniformly in \(v\).  Since every retained
+residual mark is at most
+\(x_{\lambda_n}-\eta\),
+\begin{align*}
+ B_{\lambda_n}(r)
+ +C_{\lambda_n,x_{\lambda_n}-\eta}(r,z)
+ &=e^{-\eta}
+   \{B_{\lambda_n}(r)+C_{\lambda_n,x_{\lambda_n}}(r,z)\}
+   +(1-e^{-\eta})B_{\lambda_n}(r)\\
+ &\le e^{-\eta}+(1-e^{-\eta})e^{-\lambda_n}\\
+ &=1-(1-e^{-\eta})(1-e^{-\lambda_n}).
+\end{align*}
+Choose \(A\) so that the absorption error is less than one quarter of the
+limiting gap and then take \(n\to\infty\).  This proves the first bound on
+every fixed radial window, on \(\{\max_i\xi_i\le C\}\).  As \(|r|\to\infty\),
+the spike term is bounded by \(e^{C-r^2/2+o(1)}\), while
+\(B_{\lambda_n}(r)\) tends to \(e^{-\lambda}\) inward and to zero outward.
+The diffuse- and tail-field estimates in the proof of
+Proposition~\ref{prop:d-two-radial-compactness} make these bounds uniform as
+\(K\to\infty\).  Finally,
+\[
+ \limsup_{n\to\infty}\Pbb\{\max_i\xi_i>C\}
+ =1-\exp\{-e^{-C}\}\longrightarrow0
+ \qquad(C\to\infty),
+\]
+which removes the upper cutoff and proves
+\eqref{eq:support-d2-global-residual-gap}.
+
+If \(a\in\mathcal P_n(\eta,R)\), its associated observation belongs to
+\(\mathcal I_n(\eta)\) and is absent from the residual sum.  Every exposed
+residual direction is then at scaled angular distance at least
+\(\ell_n-R\), so the entire exposed sum in
+\eqref{eq:support-d2-residual-decomposition} is \(o_{\Pbb,A,C,R}(1)\).
+The remaining profile is at most
+\(\sup_rB_{\lambda_n}(r)=e^{-\lambda_n}\).  Taking first \(n\to\infty\),
+then \(A,C\to\infty\), proves
+\eqref{eq:support-d2-candidate-residual-gap}.
+\end{proof}
+
+Combining the edge and bulk gaps prunes subthreshold points before the
+mass-coercivity bound is used. Thus the number of candidate patches is tight
+independently of the lower radial cutoff.
+\begin{proposition}
+\label{prop:support-threshold-pruning}
+Fix \(\eta>0\), and set
+\[
+    \vartheta_n=
+    \begin{cases}
+       s_n,&d\ge3,\\
+       x_{\lambda_n},&d=2.
+    \end{cases}
+\]
+In the corresponding critical window, every noncentral support point of an
+NPMLE lies, with probability tending to one after the radial
+cutoffs are removed, in a patch of some deterministic radius
+\(R=R(\eta)<\infty\) associated with an observation whose radial excess
+satisfies \(x_{n,i}>\vartheta_n-\eta\). The number of these patches is
+\(O_{\Pbb}(1)\). More precisely, put
+\[
+ \mathcal I_n(\eta)=\{i:x_{n,i}>\vartheta_n-\eta\},
+\]
+and let \(\mathcal P_n(\eta)\) denote the union of their radius-\(R\) patches.
+There are a deterministic \(b<1\) and
+random variables \(C_{0,n}=O_{\Pbb}(1)\) such that
+\[
+ \sup_{a\in\mathcal P_n(\eta)}
+ \frac1n\sum_{i:x_{n,i}\le\vartheta_n-\eta}
+ q_{n,\tau,a}(i)\le b,
+ \qquad
+ \sup_{a\in\mathcal P_n(\eta)}
+ \max_{i:x_{n,i}>\vartheta_n-\eta}
+ \frac1nq_{n,\tau,a}(i)\le C_{0,n}.
+\]
+\end{proposition}
+
+\begin{proof}
+Call the sum over \(i\notin\mathcal I_n(\eta)\) the residual field. For
+\(d\ge3\), every residual
+observation satisfies
+\[
+    |Z_i-\bar Z_n|^2/2\le b_{n,d}+s_n-\eta
+       =\log n+\lambda_n-\eta.
+\]
+Uniformly in \(i\),
+\[
+ \frac{|Z_i|^2}{2}
+ \le\frac{|Z_i-\bar Z_n|^2}{2}
+    +\max_i|Z_i-\bar Z_n|\,|\bar Z_n|
+    +\frac{|\bar Z_n|^2}{2}
+ =\frac{|Z_i-\bar Z_n|^2}{2}+o_{\Pbb}(1).
+\]
+Thus, with probability tending to one, every residual observation lies below
+\(\log n+\lambda_n-\eta/2\). Put
+\[
+    a_\eta=\eta/2,
+    \qquad
+    \zeta_\eta=\frac{1+e^{-a_\eta}}2.
+\]
+Since \(e^{a_\eta}\zeta_\eta>1\), Lemma
+\ref{lem:support-dge3-deleted-field} applied with \(a=a_\eta\) gives a gap of
+\((1-\zeta_\eta)/2\) below one throughout
+\(|a|\ge\rho_n/2\), with probability tending to one. To pass from the raw
+field in Lemma~\ref{lem:support-dge3-deleted-field} to the residual field, note that
+ \[
+ \frac1n\sum_{\rm residual}q_{n,\tau,a}(i)
+ \le e^{-a\cdot\Delta_n^{\rm anc}-a\cdot\bar Z_n}S_a^{(a_\eta)}.
+ \]
+An NPMLE may be supported in the convex hull of the rescaled observations, so
+\(|a|=O_{\Pbb}(\rho_n)\); on this range
+\eqref{eq:support-high-d-anchor-error} and
+\(\rho_n|\bar Z_n|=o_{\Pbb}(1)\) make the prefactor \(1+o_{\Pbb}(1)\).
+Thus the residual field is at most
+\((1+\zeta_\eta)/2<1\) throughout the \(d\ge3\) edge region.
+
+In \(d=2\), Lemma~\ref{lem:support-d2-residual-gap} gives the explicit global
+edge gap
+\[
+ g_{2,\eta}=\frac12(1-e^{-\eta})(1-e^{-\lambda})>0.
+\]
+On the candidate patches themselves it gives the stronger residual bound
+\(e^{-\lambda}+o_{\Pbb}(1)\). Thus, in the first displayed inequality of the
+proposition, one may take any fixed \(b\in(e^{-\lambda},1)\) for all
+sufficiently large \(n\).
+
+The bulk estimates in Proposition~\ref{prop:bulk-mgf-exclusion} for
+\(d\ge3\), and Lemma~\ref{lem:d2-bulk-exclusion} for \(d=2\), retain a gap
+of order \(\kappa_n\) on the region between the fixed core and
+\(\rho_n/2\). The candidate set has tight cardinality by radial Poisson
+convergence, and its maximum radial excess is tight. On an event of arbitrarily
+high probability, both its cardinality and its normalized peak heights are
+bounded by deterministic constants. The exact square completion
+\eqref{eq:support-lower-cloud-square-completion} then bounds the total
+candidate contribution outside radius \(R\) of the patch centers by
+\(Ce^{-cR^2}\). Choose \(R\) so this is smaller than one quarter of the
+relevant residual edge gap: \((1-\zeta_\eta)/2\) for \(d\ge3\), and
+\(g_{2,\eta}\) for \(d=2\). The full central field consequently has a fixed
+gap outside \(\mathcal P_n(\eta)\) throughout the edge region. Equation
+\eqref{eq:support-high-d-anchor-error} transfers both gaps to the central
+anchor. Finally, Lemma
+\ref{lem:support-no-percolation} preserves the edge gap because
+\(W_n=o_{\Pbb}(1)\) and the bulk gap because
+\(W_n=o_{\Pbb}(\kappa_n)\). KKT equality therefore excludes every
+support point outside the candidate patches.
+
+On the fixed candidate patches,
+Lemma~\ref{lem:support-dge3-deleted-field} for \(d\ge3\) and
+Lemma~\ref{lem:support-d2-residual-gap} for \(d=2\) give the first displayed
+inequality with deterministic \(b<1\). The tight upper radial cutoff,
+square completion, and angular separation give the second with
+\(C_{0,n}=O_{\Pbb}(1)\).
+\end{proof}
+
+We can now count the patches. The following buffered sandwich is the
+fixed-dimensional input to the common edge-count reduction.
+\begin{proposition}
+\label{prop:fixed-dimensional-edge-sandwich}
+Assume \(\lambda_n\to\lambda\in(0,\infty)\) when \(d=2\), or
+\(s_n^\star\to s\in\mathbb R\) when \(d\ge3\) is fixed. With
+\(x_{n,i}\) defined in \eqref{eq:fixed-support-radial-excess} and
+\(\vartheta_n\) as in Proposition~\ref{prop:support-threshold-pruning}, for
+every fixed \(\eta>0\),
+\begin{equation}
+\label{eq:support-count-sandwich}
+ \#\{i:x_{n,i}>\vartheta_n+\eta\}
+ \le\widehat K_n-1
+ \le\#\{i:x_{n,i}>\vartheta_n-\eta\},
+\end{equation}
+apart from an event whose limiting probability is \(O(\eta)\).
+Under either critical-window assumption, the NPMLE is unique with probability
+tending to one.
+\end{proposition}
+
+\begin{proof}
+First assume \(\lambda_n\to\lambda\in(0,\infty)\) when \(d=2\), or
+\(s_n^\star\to s\in\mathbb R\) when \(d\ge3\). Fix \(\eta>0\). Proposition
+\ref{prop:support-threshold-pruning} confines every noncentral support point
+to the \(O_{\Pbb}(1)\) patches associated with
+\(x_{n,i}>\vartheta_n-\eta\), and supplies the two hypotheses of Proposition
+\ref{prop:support-patch-coercivity}. Hence the rescaled edge mass is
+\(O_{\Pbb}(1)\). After choosing an upper radial cutoff and a deterministic
+bound on the number of patches, Proposition
+\ref{prop:support-finite-patch-expansion} and Proposition
+\ref{prop:support-one-contact-per-patch} show that every active patch contains
+exactly one fitted atom and every inactive candidate patch contains none.
+These are precisely the inequalities in \eqref{eq:support-count-sandwich}. Removing
+the radial cutoffs costs \(o(1)\); the only remaining exceptional event is a
+radial point in the threshold buffer, whose probability is \(O(\eta)\).
+
+On the event where Propositions~\ref{prop:support-threshold-pruning} and
+\ref{prop:support-one-contact-per-patch} give the stated patch localization,
+the NPMLE is also unique. If \(G\) and \(H\) are two NPMLEs, then
+\((G+H)/2\) is also an NPMLE.  Lemma~\ref{lem:support-fixed-core-collapse},
+applied to all three measures, forces their central atoms to coincide:
+otherwise the central part of \((G+H)/2\) would have positive covariance.
+Propositions~\ref{prop:support-threshold-pruning} and
+\ref{prop:support-one-contact-per-patch}, applied to \((G+H)/2\), likewise
+force the edge contact in every active patch to coincide.  Thus all NPMLEs
+are supported on the same finite contact set.
+
+The likelihood vectors at these contacts are linearly independent.  Indeed,
+on the rows indexed by the active observations, the edge-contact block has
+diagonal entries of order \(n\), bounded away from zero after division by
+\(n\), and off-diagonal entries \(o(n)\).  The finite-patch estimates also
+give an \(O_{\Pbb}(1)\) empirical average for each of the finitely many edge
+columns.  Hence there is a noncandidate row on which every edge entry is
+\(o(n)\); adjoining this row and the central column produces, after scaling
+the edge columns by \(n^{-1}\), an asymptotically invertible triangular
+minor.  Strict concavity of the log likelihood makes the fitted likelihood
+vector common to all maximizers, and linear independence then makes its
+representing weights unique.  The probability of the exceptional event is
+\(O(\eta)+o(1)\); letting \(\eta\downarrow0\) proves the uniqueness claim.
+\end{proof}

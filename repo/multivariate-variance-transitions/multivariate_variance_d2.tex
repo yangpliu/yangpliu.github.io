@@ -1,0 +1,929 @@
+Throughout this section let \(Z_1,\dots,Z_n\) be i.i.d.\ \(\cN(0,I_2)\), let
+\(\rho_n=\sqrt{2\log n}\), set \(\bar Z_n=n^{-1}\sum_iZ_i\), and put
+\[
+    H_n(t)=\frac1n\sum_{i=1}^n\exp\{t\cdot Z_i-|t|^2/2\},
+    \qquad
+    D_n(t)=e^{-t\cdot\bar Z_n}e^{-\kappa_n|t|^2}H_n(t),
+    \qquad
+    \lambda_n=\kappa_n\rho_n^2 .
+\]
+The one-atom event is \(E_n^{(1)}=\{\sup_tD_n(t)\le1\}\).
+We write \(\Phi\) and \(\phi\) for the standard normal distribution
+function and density.
+
+\subsection{The limiting profile}
+
+The KKT supremum chooses its direction after seeing the sample. A fixed
+angular interval of width \(1/\rho_n\) contains a point with bounded radial
+excess with probability \(O(1/\rho_n)\), but the maximizing interval can be
+centered on such a point after the sample is observed. This selected extreme
+creates one random spike. The many observations whose radial energies lie
+just below \(\log n\) produce the deterministic background.
+
+Write
+\[
+    Z_i=R_iU_i,\qquad U_i=e^{i\Theta_i}\in S^1,\qquad
+    \xi_i=\frac{R_i^2}{2}-\log n ,
+\]
+and let \(\operatorname{ang}(\phi-\psi)\in(-\pi,\pi]\) denote the principal
+signed angular displacement from direction \(\psi\) to direction \(\phi\). We
+also write \(\operatorname{ang}(u,v)\) for the same displacement from \(v\) to
+\(u\), and set \(Y_i(v)=\rho_n\operatorname{ang}(U_i,v)\). The global radial edge process
+\[
+    \Xi_n=\sum_{i=1}^n\delta_{(\xi_i,\Theta_i)}
+\]
+converges to a Poisson point process \(\Xi=\sum_j\delta_{(\xi_j,\Theta_j)}\)
+on \(\R\times\mathbb T\), where \(\mathbb T=\R/2\pi\mathbb Z\), with intensity
+\[
+    e^{-x}\,dx\,\frac{d\phi}{2\pi}.
+\]
+For a fixed deterministic direction \(\psi\), however, the locally rescaled
+process
+\[
+    \sum_i
+    \delta_{\left(\xi_i,\ \rho_n\operatorname{ang}(\Theta_i-\psi)\right)}
+\]
+has intensity
+\[
+    \frac{1+o(1)}{2\pi\rho_n}\,e^{-x}\,dx\,dy
+\]
+on compact \(x,y\)-sets, and hence converges to the empty process. The
+nontrivial local limit is obtained only after conditioning on, and recentering
+around, a radial edge point.
+
+For \(t=(\rho_n+s)e^{i\psi}\), one observation contributes
+\[
+    W_{n,i}(\psi,s)
+    =
+    \frac1n
+    \exp\left\{(\rho_n+s)e^{i\psi}\cdot Z_i
+        -\frac{(\rho_n+s)^2}{2}\right\}.
+\]
+If \(\xi_i\), \(s\), and
+\[
+    y_i=\rho_n\operatorname{ang}(\Theta_i-\psi)
+\]
+are bounded, then
+\[
+    W_{n,i}(\psi,s)
+    =
+    \exp\{\xi_i-s^2/2-y_i^2/2+o(1)\}.
+\]
+Thus a radial edge point \((\xi_j,\Theta_j)\), viewed in the angular coordinate
+\(\psi=\Theta_j+y/\rho_n\), creates the local spike
+\[
+    e^{\xi_j-s^2/2-y^2/2}.
+\]
+The spike has \(O(1)\) width in blown-up coordinates, hence
+\(O(1/\rho_n)\) width on the original circle.
+
+For fixed \(A,C<\infty\), the \(O(1)\)-radial edge spikes are separated:
+\[
+    \Pbb\left\{
+    \exists i\ne j:\ \xi_i,\xi_j\ge-A,\
+    \rho_n|\operatorname{ang}(\Theta_i-\Theta_j)|\le C
+    \right\}\to0 ,
+\]
+because the expected number of such pairs is
+\[
+    O\left\{
+        \left(\int_{-A}^{\infty}e^{-x}\,dx\right)^2
+        \frac C{\rho_n}
+    \right\}=o(1).
+\]
+Consequently, after the uniform compactness estimates are proved, at most one
+radial extreme contributes at order one near any maximizing
+direction. All other observations form the deterministic background. The
+limiting event is therefore determined by the largest radial excess rather
+than by a nontrivial random process on the entire circle.
+
+The following calculation identifies the background. Let
+\(t=(\rho_n+s)v\), \(v\in S^1\), and truncate observations at the
+one-dimensional projection edge in direction \(v\):
+\[
+    H_n^{\mathrm{diff}}(v,s)
+    =
+    \frac1n\sum_{i=1}^n
+    \exp\left\{(\rho_n+s)v\cdot Z_i-\frac{(\rho_n+s)^2}{2}\right\}
+    \mathbf 1_{\{v\cdot Z_i\le\rho_n\}}
+\]
+satisfies
+\[
+    \E H_n^{\mathrm{diff}}(v,s)=\Phi(-s),
+    \qquad
+    \operatorname{Var}H_n^{\mathrm{diff}}(v,s)
+    \le
+    \frac1n e^{(\rho_n+s)^2}\Phi(-\rho_n-2s)
+    \sim
+    \frac{e^{-s^2}}{\sqrt{2\pi}\rho_n}
+\]
+uniformly for \(s\) in compact sets.  Thus the non-extreme cloud contributes \(\Phi(-s)\) to \(H_n\), or \(e^{-\lambda}\Phi(-s)\) after the damping factor in \(D_n\).
+
+A radial edge point with
+\[
+    \xi_i=\frac{|Z_i|^2}{2}-\log n
+\]
+and direction \(U_i\) contributes, at \(t=(\rho_n+s)U_i\),
+\[
+    e^{-\lambda}\exp\{\xi_i-s^2/2+o(1)\}.
+\]
+Combining the two contributions, a radial excess \(x\) can produce a crossing
+precisely when
+\[
+    g(x):=\sup_{s\in\R}\{\Phi(-s)+e^{x-s^2/2}\}
+\]
+exceeds the damped threshold \(e^\lambda\). This gives the one-atom limit
+\[
+    Q_2(\lambda)=\exp\{-e^{-x_\lambda}\},
+\]
+where \(x_\lambda\) is uniquely determined by
+\[
+    \sup_{s\in\R}\{\Phi(-s)+e^{x_\lambda-s^2/2}\}=e^\lambda .
+\]
+Equivalently, if \(a_\lambda>0\) solves
+\[
+    \Phi(a_\lambda)+\frac{\phi(a_\lambda)}{a_\lambda}=e^\lambda,
+\]
+then
+\[
+    x_\lambda=-\log(\sqrt{2\pi}a_\lambda),
+    \qquad
+    Q_2(\lambda)=\exp\{-\sqrt{2\pi}a_\lambda\}.
+\]
+The optimizer is \(s=-a_\lambda\), obtained from
+\[
+    -\phi(s)-s e^{x-s^2/2}=0.
+\]
+The map \(a\mapsto \Phi(a)+\phi(a)/a\) is strictly decreasing, since its derivative is \(-\phi(a)/a^2\), so \(a_\lambda\) is unique.
+
+The optimized profile crosses every level above one exactly once. Its strict
+monotonicity later converts a fixed radial gap into a fixed KKT gap.
+\begin{lemma}
+\label{lem:q-two-curve}
+Let
+\[
+    g(x)=\sup_{s\in\R}\{\Phi(-s)+e^{x-s^2/2}\}.
+\]
+Then \(g\) is finite, continuous, and strictly increasing, with
+\(\lim_{x\to-\infty}g(x)=1\) and \(\lim_{x\to\infty}g(x)=\infty\).  Hence,
+for every \(\lambda>0\), there is a unique \(x_\lambda\) such that
+\(g(x_\lambda)=e^\lambda\), and for every \(\eta>0\),
+\[
+    g(x_\lambda-\eta)<e^\lambda<g(x_\lambda+\eta).
+\]
+\end{lemma}
+
+\begin{proof}
+For every finite \(x\), the objective exceeds \(1\) at some finite negative
+\(s\). Indeed, with \(s=-a\), Mills' ratio gives
+\(1-\Phi(a)\sim\phi(a)/a\), whereas
+\(e^{x-a^2/2}=\sqrt{2\pi}e^x\phi(a)\); the second term dominates the first
+for sufficiently large \(a\). On a compact \(x\)-interval, the objective
+converges uniformly to \(1\) as \(s\to-\infty\) and to \(0\) as
+\(s\to+\infty\). Its supremum is therefore attained in a common compact
+\(s\)-interval. Continuity follows from compact maximization, and strict
+monotonicity follows because \(e^{x-s^2/2}\) is strictly increasing in \(x\)
+at every finite maximizer. Finally,
+\(1\le g(x)\le1+e^x\) implies \(g(x)\to1\) as \(x\to-\infty\), while
+\(g(x)\ge e^x\to\infty\) as \(x\to\infty\).
+\end{proof}
+
+The explicit parametrization also gives the endpoint behavior
+\[
+    1-Q_2(\lambda)\sim e^{-\lambda}\quad(\lambda\to\infty),
+    \qquad
+    \log Q_2(\lambda)
+    =
+    -2\sqrt{\pi\log(1/\lambda)}\{1+o(1)\}
+    \quad(\lambda\downarrow0).
+\]
+Indeed, as \(\lambda\to\infty\), the defining equation gives
+\(a_\lambda\sim\phi(0)e^{-\lambda}\). Since
+\(e^{-x_\lambda}=\sqrt{2\pi}a_\lambda\), this proves the first relation.
+As \(\lambda\downarrow0\), the two-term Mills expansion gives
+\[
+ e^\lambda-1
+ =\frac{\phi(a_\lambda)}{a_\lambda^3}
+   \{1+O(a_\lambda^{-2})\}.
+\]
+Thus \(a_\lambda^2\sim2\log(1/\lambda)\), which proves the second relation.
+For large \(\lambda\), the diffuse background is negligible and the radial
+Gumbel tail determines the limit. By contrast,
+\(Q_2(\lambda)\downarrow0\) as the shrinkage tends to zero.
+
+\subsection{Radial compactness}
+
+Radial compactness reduces all possible crossings to
+\(|t|=\rho_n+O(1)\), without yet identifying the limiting field.
+
+\begin{proposition}
+\label{prop:d-two-radial-compactness}
+Assume \(d=2\) and \(\lambda_n=\kappa_n\rho_n^2\to\lambda\in(0,\infty)\),
+where \(\rho_n=\sqrt{2\log n}\).  Then
+\[
+    \lim_{A\to\infty}\limsup_{n\to\infty}
+    \Pbb\left\{
+        \sup_{\left||t|-\rho_n\right|>A}D_n(t)>1
+    \right\}=0 .
+\]
+Thus, up to a probability which vanishes after \(n\to\infty\) and then
+\(A\to\infty\), every crossing has the form
+\[
+    t=(\rho_n+s)v,\qquad |s|\le A,\quad v\in S^1 .
+\]
+\end{proposition}
+
+Write
+\[
+    H_n^{\mathrm{diff}}(r,v)=\frac1n\sum_i e^{rv\cdot Z_i-r^2/2}
+        \mathbf 1_{\{v\cdot Z_i\le \rho_n\}},
+    \qquad
+    T_n(r,v)=\frac1n\sum_i e^{rv\cdot Z_i-r^2/2}
+        \mathbf 1_{\{v\cdot Z_i> \rho_n\}} .
+\]
+Thus \(H_n(rv)=H_n^{\mathrm{diff}}(r,v)+T_n(r,v)\).  The split is at the
+one-dimensional edge in direction \(v\).
+
+The diffuse part cannot create a crossing below the compact window or at its
+upper boundary.
+\begin{lemma}
+\label{lem:d-two-diffuse-outside}
+For every \(\delta>0\),
+\[
+\begin{aligned}
+    &\lim_{A\to\infty}\limsup_{n\to\infty}
+    \Pbb\left\{
+        \sup_{\rho_n/2\le r\le \rho_n-A,\ v\in S^1}
+        H_n^{\mathrm{diff}}(r,v)>1+\delta
+    \right\}=0,\\
+    &\lim_{A\to\infty}\limsup_{n\to\infty}
+    \Pbb\left\{
+        \sup_{v\in S^1}H_n^{\mathrm{diff}}(\rho_n+A,v)>\delta
+    \right\}=0 .
+\end{aligned}
+\]
+\end{lemma}
+
+\begin{proof}
+Put
+\[
+    \xi_i=\frac{|Z_i|^2}{2}-\log n,\qquad \ell_n^{\mathrm{far}}=8\log\rho_n,
+\]
+and let
+\[
+    \mathcal R_n(A)=\{r:\rho_n/2\le r\le \rho_n-A\}\cup\{\rho_n+A\}.
+\]
+Completing the square gives the radial identity
+\begin{equation}
+\label{eq:d2-diffuse-radial-identity}
+    \frac1n\exp\{rv\cdot z-r^2/2\}
+    =
+    \exp\left\{x(z)-\frac{|z-rv|^2}{2}\right\},
+    \qquad
+    x(z)=\frac{|z|^2}{2}-\log n .
+\end{equation}
+
+First remove the near-edge layer. Let \(H_n^{\mathrm{diff},0}\) be
+\(H_n^{\mathrm{diff}}\) with the additional restriction
+\(\xi_i\le -\ell_n^{\mathrm{far}}\). Every summand retained in
+\(H_n^{\mathrm{diff},0}\) is at most
+\(e^{-\ell_n^{\mathrm{far}}}\) after normalization. Hence the unnormalized summand is bounded
+by \(ne^{-\ell_n^{\mathrm{far}}}\), and its second moment is at most \(ne^{-\ell_n^{\mathrm{far}}}\) times its
+first moment.  Since
+\[
+    \E H_n^{\mathrm{diff},0}(r,v)
+    \le \E H_n^{\mathrm{diff}}(r,v)=\Phi(\rho_n-r)\le1
+    \qquad (r\in\mathcal R_n(A)),
+\]
+Bernstein's inequality gives, at each fixed \((r,v)\),
+\[
+    \Pbb\{|H_n^{\mathrm{diff},0}(r,v)
+                 -\E H_n^{\mathrm{diff},0}(r,v)|>\eta\}
+    \le 2\exp\{-c_\eta e^{\ell_n^{\mathrm{far}}}\}.
+\]
+Let \(\mathcal F_n\) be the class of normalized summands
+\[
+    z\mapsto \frac1n e^{rv\cdot z-r^2/2}
+        \mathbf 1_{\{v\cdot z\le\rho_n\}}
+        \mathbf 1_{\{x(z)\le -\ell_n^{\mathrm{far}}\}},
+    \qquad r\in\mathcal R_n(A),\ v\in S^1,
+\]
+so that \(H_n^{\mathrm{diff},0}(r,v)\) is the sum of \(n\) functions from
+\(\mathcal F_n\). This is a VC-subgraph class of fixed dimension: after taking
+logarithms in the subgraph coordinate, its subgraphs are intersections of a
+fixed ball, a halfspace in \(z\), and a halfspace in \((z,\log y)\).
+Standard closure properties therefore give polynomial covering numbers,
+uniformly in \(n\); see
+\cite[Sections~2.6.2 and~2.14.1]{vanderVaartWellner1996}. In the present
+bounded-envelope setting, the Bernstein maximal inequality from that entropy
+bound has the form
+\[
+ \Pbb\left\{\sup_{f\in\mathcal F_n}
+   \left|\sum_{i=1}^n\{f(Z_i)-\E f(Z_i)\}\right|>\eta\right\}
+ \le C\rho_n^C
+ \exp\left\{-\frac{c\eta^2}
+ {e^{-\ell_n^{\mathrm{far}}}+\eta e^{-\ell_n^{\mathrm{far}}}}\right\}.
+\]
+Moreover, identity~\eqref{eq:d2-diffuse-radial-identity}
+bounds every member of \(\mathcal F_n\) by \(e^{-\ell_n^{\mathrm{far}}}\), and
+the sum of its variances by \(e^{-\ell_n^{\mathrm{far}}}\). The Bernstein maximal inequality for
+VC-subgraph classes now upgrades the pointwise estimate to the whole class.
+Its entropy cost is \(O(\log\rho_n)\), whereas its deviation exponent is of
+order \(e^{\ell_n^{\mathrm{far}}}=\rho_n^8\). Hence
+\[
+    \sup_{r\in\mathcal R_n(A),\,v\in S^1}
+    |H_n^{\mathrm{diff},0}(r,v)-\E H_n^{\mathrm{diff},0}(r,v)|
+    \xrightarrow{\Pbb}0 .
+\]
+
+It remains to control the removed layer.  Write \(Z_i=R_iU_i\) and
+\(Y_i(v)=\rho_n\operatorname{ang}(U_i,v)\).  If \(\xi_i>0\) and \(v\cdot Z_i\le\rho_n\),
+then
+\[
+    |Z_i-rv|^2
+    \ge |Z_i|^2+r^2-2r\rho_n
+    =2\xi_i+(r-\rho_n)^2,
+\]
+so every such positive-edge term is bounded by \(e^{-A^2/2}\), uniformly
+over \(r\in\mathcal R_n(A)\).  Thus their total contribution is at most
+\(e^{-A^2/2}N_n^+\), where \(N_n^+=\#\{i:\xi_i>0\}=O_{\Pbb}(1)\).
+
+For \(-\ell_n^{\mathrm{far}}<\xi_i\le0\), \(R_i=\rho_n+O(\ell_n^{\mathrm{far}}/\rho_n)\).  Uniformly over
+\(r\in\mathcal R_n(A)\), for all large \(n\),
+\[
+    |Z_i-rv|^2
+    \ge cA^2+cY_i(v)^2 .
+\]
+Therefore the negative part of the removed layer is bounded by
+\[
+    e^{-cA^2}
+    \sup_{v\in S^1}
+    \sum_{-\ell_n^{\mathrm{far}}<\xi_i\le0} e^{\xi_i}e^{-cY_i(v)^2}.
+\]
+The last supremum is tight.  Indeed, partition \((-\ell_n^{\mathrm{far}},0]\) into the slabs
+\(-k-1<\xi_i\le-k\), \(0\le k\le\lceil \ell_n^{\mathrm{far}}\rceil\), and cover \(S^1\) by
+\(O(\rho_n)\) arcs of length \(O(\rho_n^{-1})\).  If \(N_{k\ell}\) denotes
+the number of points in the \(k\)-th slab and in the \(\ell\)-th enlarged
+arc, then the Gaussian angular kernel has summable tails and
+\[
+    \sup_v\sum_{-\ell_n^{\mathrm{far}}<\xi_i\le0} e^{\xi_i}e^{-cY_i(v)^2}
+    \le
+    C\sum_{k\le\lceil \ell_n^{\mathrm{far}}\rceil} e^{-k}\max_\ell N_{k\ell}.
+\]
+Here \(\E N_{k\ell}\le C e^k/\rho_n\).  Chernoff's bound and a union bound
+over the \(O(\rho_n)\) arcs give, with probability tending to one,
+\[
+    \max_\ell N_{k\ell}
+    \le C\left(\frac{e^k}{\rho_n}+k+1\right)
+    \qquad\text{for all }k\le\lceil \ell_n^{\mathrm{far}}\rceil .
+\]
+Consequently the displayed shot-noise supremum is \(O_{\Pbb}(1)\).  We have
+proved
+\[
+    \sup_{r\in\mathcal R_n(A),\,v\in S^1}
+    \{H_n^{\mathrm{diff}}(r,v)-H_n^{\mathrm{diff},0}(r,v)\}
+    \le e^{-A^2/2}O_{\Pbb}(1)+e^{-cA^2}O_{\Pbb}(1).
+\]
+
+On the lower side, \(\E H_n^{\mathrm{diff},0}(r,v)\le1\), so the first
+assertion follows
+from the concentration estimate and then \(A\to\infty\).  At the upper
+boundary,
+\(\E H_n^{\mathrm{diff},0}(\rho_n+A,v)
+\le\E H_n^{\mathrm{diff}}(\rho_n+A,v)=\Phi(-A)\), and
+\(\Phi(-A)\to0\). The concentration and removed-layer bounds above therefore
+prove the second assertion as well.
+\end{proof}
+
+The tail part \(T_n\) is likewise negligible away from
+\(|r-\rho_n|=O(1)\).
+\begin{lemma}
+\label{lem:d-two-tail-outside}
+For every \(\delta>0\),
+\[
+    \lim_{A\to\infty}\limsup_{n\to\infty}
+    \Pbb\left\{
+        \sup_{\substack{r\ge\rho_n/2,\ v\in S^1\\ |r-\rho_n|\ge A}}
+        T_n(r,v)>\delta
+    \right\}=0 .
+\]
+\end{lemma}
+
+\begin{proof}
+Put \(\xi_i=|Z_i|^2/2-\log n\) and \(N_n^+=\#\{i:\xi_i>0\}\).  Since
+\(|Z_i|^2/2\) is exponential in dimension two, \(N_n^+\Rightarrow
+\operatorname{Pois}(1)\) and
+\[
+    \Pbb\{\max_i\xi_i>A^2/4\}\to 1-\exp\{-e^{-A^2/4}\}.
+\]
+Hence the event
+\[
+    \max_i\xi_i\le A^2/4,\qquad N_n^+\le e^{A^2/8}
+\]
+has probability tending to one as first \(n\to\infty\) and then
+\(A\to\infty\).  If \(v\cdot Z_i>\rho_n\), then \(\xi_i>0\).  On the
+displayed event, write \(R_i=|Z_i|\).  For \(r\le\rho_n-A\),
+\[
+    r\,v\cdot Z_i-\frac{r^2}{2}-\log n
+    \le
+    (\rho_n-A)R_i-\frac{(\rho_n-A)^2}{2}-\log n
+    \le
+    \xi_i-\frac{A^2}{2}+o(1).
+\]
+For \(r\ge\rho_n+A\), the maximum over \(r\) is attained either at
+\(r=\rho_n+A\) or at \(r=v\cdot Z_i\).  Since \(\xi_i\le A^2/4\) implies
+\(R_i=\rho_n+O(A^2/\rho_n)<\rho_n+A\) for large \(n\), the boundary case
+applies and gives
+\[
+    r\,v\cdot Z_i-\frac{r^2}{2}-\log n
+    \le
+    (\rho_n+A)R_i-\frac{(\rho_n+A)^2}{2}-\log n
+    \le
+    \xi_i-\frac{A^2}{2}+o(1)
+    \le -A^2/4+o(1).
+\]
+Therefore
+\[
+    \sup_{\substack{r\ge\rho_n/2,\ v\in S^1\\ |r-\rho_n|\ge A}}
+    T_n(r,v)
+    \le
+    N_n^+e^{-A^2/4+o(1)}
+    \le e^{-A^2/8+o(1)}
+\]
+on the displayed event, which proves the lemma.
+\end{proof}
+
+An ordinary bulk estimate removes the remaining range
+\(0<|t|\le\rho_n/2\).
+\begin{lemma}
+\label{lem:d2-bulk-exclusion}
+Assume \(d=2\) and \(\lambda_n=\kappa_n\rho_n^2\to\lambda\in(0,\infty)\).
+Then
+\[
+    \Pbb\left\{\sup_{0<|t|\le\rho_n/2}D_n(t)>1\right\}\to0 .
+\]
+\end{lemma}
+
+\begin{proof}
+We repeat the three estimates behind
+Proposition~\ref{prop:bulk-mgf-exclusion}, proved for fixed \(d\ge3\) in
+Section~\ref{sec:sharp-high-dimensional-estimates}, and verify them at the
+two-dimensional scale
+\(\kappa_n\asymp\rho_n^{-2}\asymp1/\log n\).
+
+First consider \(0<|t|\le c_0\kappa_n\). The sample covariance satisfies
+\[
+    \left\|\frac1n\sum_i
+    (Z_i-\bar Z_n)(Z_i-\bar Z_n)^\top-I_2\right\|_{\mathrm{op}}
+    =O_{\Pbb}(n^{-1/2})
+    =o_{\Pbb}(\kappa_n).
+\]
+The Hessian argument in Lemma~\ref{lem:microscopic-bulk} therefore applies
+unchanged: for a sufficiently small fixed \(c_0>0\), with probability tending
+to one,
+\[
+    D_n(t)\le1-c\kappa_n|t|^2<1
+    \qquad(0<|t|\le c_0\kappa_n).
+\]
+
+For \(c_0\kappa_n\le |t|\le1\), use the quadratic empirical-process
+expansion from Lemma~\ref{lem:bulk-exponential-process}. The only scale
+conditions needed there are
+\[
+    \frac{n^{-1/4}}{\kappa_n}\to0,
+    \qquad
+    \frac{|\bar Z_n|}{\kappa_n^2}
+    =
+    O_{\Pbb}(n^{-1/2}\rho_n^4)\to0 .
+\]
+They imply, uniformly on this range,
+\[
+    \frac{|H_n(t)-1|+|t\cdot\bar Z_n|}
+         {1-e^{-\kappa_n|t|^2}}
+    =o_{\Pbb}(1).
+\]
+
+For \(1\le |t|\le\rho_n/2\), repeat the dyadic decomposition and clipping
+argument from Lemma~\ref{lem:bulk-exponential-process}. Explicitly, partition the squared radii into
+dyadic intervals \([x_j,x_{j+1}]\), put
+\[
+ R_j=x_{j+1}^{1/2},\qquad
+ \tau_n^2=20\log(1/\kappa_n)+100\log\rho_n,qquad
+ B_j=\exp\{R_j^2/2+R_j\tau_n\},
+\]
+and clip each likelihood ratio at \(B_j\). Here
+\(|t|^2\le(\log n)/2\), so the variance and envelope bounds are
+\(e^{|t|^2}\le n^{1/2}\) and \(B_j\le n^{1/4+o(1)}\). The net entropy is
+still \(O(\log n)\), while the
+Bernstein exponent is at least
+\[
+    n^{1/2-o(1)}\kappa_n^2
+    \gg \log n .
+\]
+Thus there is a deterministic \(\delta_n\downarrow0\) such that, with
+probability tending to one,
+\[
+    |H_n(t)-1|+|t\cdot\bar Z_n|
+    \le\delta_n g(t),
+    \qquad
+    g(t)=1-e^{-\kappa_n|t|^2},
+\]
+uniformly on \(c_0\kappa_n\le|t|\le\rho_n/2\). (In particular,
+\(\rho_n|\bar Z_n|=o_{\Pbb}(1)\).) The algebra in the proof of
+Proposition~\ref{prop:bulk-mgf-exclusion} then gives
+\[
+    D_n(t)
+    \le e^{\delta_ng(t)}\{1-g(t)\}\{1+\delta_ng(t)\}
+    <1
+\]
+uniformly on that range for all large \(n\). Together with the microscopic
+estimate, this proves the lemma.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:d-two-radial-compactness}]
+Lemma~\ref{lem:d2-bulk-exclusion} controls the bulk range:
+\[
+    \Pbb\left\{\sup_{0<|t|\le\rho_n/2}D_n(t)>1\right\}\to0 .
+\]
+
+For the upper exterior, use the centered representation
+\[
+    D_n(rv)=\frac1n\sum_i
+    \exp\left\{rv\cdot (Z_i-\bar Z_n)-\frac{1+2\kappa_n}{2}r^2\right\}.
+\]
+With probability tending to one, \(\max_i|Z_i-\bar Z_n|<\rho_n+A/2\).
+On this event every summand is decreasing in \(r\) for \(r\ge\rho_n+A\),
+so the upper exterior reduces to the boundary \(r=\rho_n+A\).  Since
+\(\rho_n|\bar Z_n|=o_{\Pbb}(1)\),
+\[
+    \sup_{v}D_n((\rho_n+A)v)
+    \le
+    e^{-\lambda+o_{\Pbb}(1)}
+    \sup_v\{H_n^{\mathrm{diff}}(\rho_n+A,v)+T_n(\rho_n+A,v)\}.
+\]
+The upper-bound parts of Lemmas~\ref{lem:d-two-diffuse-outside} and
+\ref{lem:d-two-tail-outside} make the right side smaller than one with
+probability tending to one after \(A\to\infty\).
+
+It remains to consider \(\rho_n/2\le r\le\rho_n-A\).  On this range
+\[
+    e^{-\kappa_nr^2}\le e^{-\lambda/4+o(1)},
+    \qquad
+    \sup_{r,v}e^{-rv\cdot\bar Z_n}=e^{o_{\Pbb}(1)} .
+\]
+Lemma~\ref{lem:d-two-diffuse-outside} gives
+\(H_n^{\mathrm{diff}}(r,v)\le1+o_{\Pbb}(1)+o_A(1)\) uniformly, and
+Lemma~\ref{lem:d-two-tail-outside} gives
+\(T_n(r,v)=o_{\Pbb}(1)+o_A(1)\) uniformly.  Since \(e^{-\lambda/4}<1\),
+the lower exterior also cannot contain a crossing once \(A\) is large.
+\end{proof}
+
+\subsection{Compact-window decomposition}
+
+We now approximate the full field on the compact radial window. Observations
+below a slowly receding radial cutoff form the
+deterministic background; those above it produce narrow angular kernels.
+\begin{proposition}
+\label{prop:two-d-compact-decomposition}
+Assume \(d=2\), put \(\rho_n=\sqrt{2\log n}\), and let \(K\subset\R\) be compact.  Let \(\operatorname{ang}(u,v)\in(-\pi,\pi]\) denote the principal signed angular displacement from \(v\) to \(u\).  For \(Z_i\ne0\), write \(Z_i=R_iU_i\), and set
+\[
+    \xi_i=\frac{R_i^2}{2}-\log n,
+    \qquad
+    Y_i(v)=\rho_n\,\operatorname{ang}(U_i,v),
+\]
+so that \(Y_i(v)\) is the blown-up signed angular displacement from \(v\) to
+the observation direction \(U_i\). If \(I\subset S^1\) is a closed arc and
+\(\ell_n^{\mathrm{edge}}=4\log\rho_n\), then
+\[
+    \sup_{v\in I,\ s\in K}
+    \left|
+    H_n((\rho_n+s)v)-\Phi(-s)
+    -
+    \sum_{i:\xi_i\ge -\ell_n^{\mathrm{edge}}}
+    \exp\left\{\xi_i-\frac{s^2}{2}-\frac{Y_i(v)^2}{2}\right\}
+    \right|
+    \xrightarrow{\Pbb}0 .
+\]
+\end{proposition}
+
+\begin{proof}
+Write \(r_s=\rho_n+s\).  First separate the diffuse contribution below the
+radial edge.  For \(L>0\), define
+\[
+    H^{\rm diff}_{n,L}(v,s)
+    =
+    \frac1n\sum_{i=1}^n
+    \exp\left\{r_sv\cdot Z_i-\frac{r_s^2}{2}\right\}
+    \mathbf 1_{\{\xi_i<-L\}} .
+\]
+We use \(L=\ell_n^{\mathrm{edge}}\).  If \(\xi_i<-L\), then \(R_i\le R_L=(\rho_n^2-2L)^{1/2}\), and uniformly for \(s\in K\),
+\[
+    \frac1n\exp\left\{r_sv\cdot Z_i-\frac{r_s^2}{2}\right\}
+    \le
+    \exp\left\{-L-\frac{(r_s-R_L)^2}{2}\right\}
+    \le C_K e^{-L}.
+\]
+The sum of the variances is therefore at most \(C_Ke^{-L}\).  Bernstein's inequality gives, for each fixed \((v,s)\),
+\[
+    \Pbb\{|H^{\rm diff}_{n,L}(v,s)-\E H^{\rm diff}_{n,L}(v,s)|>\eta\}
+    \le
+    2\exp\{-c_{K,\eta}e^L\}.
+\]
+The field \(H^{\rm diff}_{n,L}\) is smooth in \((v,s)\). Each summand has
+logarithmic derivatives bounded by \(C_K\rho_n^2\) in the angular coordinate
+and by \(C_K\rho_n\) in \(s\). Fix \(\eta>0\), and choose an angular mesh of
+order \(\rho_n^{-2}\) and an \(s\)-mesh of order \(\rho_n^{-1}\). The mesh
+constants can be chosen so that neighboring values of both
+\(H^{\rm diff}_{n,L}\) and \(\E H^{\rm diff}_{n,L}\) differ by a factor at
+most \(1+\eta\). The grid has polynomial size in \(\rho_n\), so a union bound
+upgrades the pointwise Bernstein estimate to the grid. Because
+\(\E H^{\rm diff}_{n,L}\le1\), interpolation from the grid costs only an
+additive \(O(\eta)\); letting \(\eta\downarrow0\) gives
+\[
+    \sup_{v\in I,\ s\in K}
+    |H^{\rm diff}_{n,\ell_n^{\mathrm{edge}}}(v,s)-\E H^{\rm diff}_{n,\ell_n^{\mathrm{edge}}}(v,s)|
+    \xrightarrow{\Pbb}0,
+\]
+because \(e^{\ell_n^{\mathrm{edge}}}=\rho_n^4\) dominates the grid entropy.
+
+It remains to compute the mean.  By exponential tilting,
+\[
+    \E H^{\rm diff}_{n,L}(v,s)
+    =
+    \Pbb\{|G+r_sv|^2\le \rho_n^2-2L\},
+    \qquad G\sim\cN(0,I_2).
+\]
+After rotating \(v=e_1\), this probability is
+\[
+    \Pbb\left\{(r_s+G_1)^2+G_2^2\le \rho_n^2-2L\right\}.
+\]
+Condition on \(G_2\).  On the event \(|G_2|\le\rho_n^{1/3}\), the boundary for \(G_1\) is
+\[
+    G_1
+    \le
+    -s-\frac{\ell_n^{\mathrm{edge}}+G_2^2/2}{\rho_n}
+    +O_K\left(\frac{(\ell_n^{\mathrm{edge}}+G_2^2+1)^2}{\rho_n^3}\right),
+\]
+uniformly for \(s\in K\). The quadratic inequality also has the lower
+boundary
+\[
+ G_1\ge-r_s-\sqrt{\rho_n^2-2\ell_n^{\mathrm{edge}}-G_2^2}
+       =-2\rho_n+O_K(1)
+\]
+on this event, whose Gaussian probability is uniformly \(o(1)\). The
+complement of \(\{|G_2|\le\rho_n^{1/3}\}\) also has probability \(o(1)\),
+and the displayed upper boundary converges to \(-s\) uniformly on \(K\)
+after conditioning on \(G_2\). Dominated convergence and the Lipschitz
+continuity of the Gaussian distribution function give
+\[
+    \sup_{v\in I,\ s\in K}
+    |\E H^{\rm diff}_{n,\ell_n^{\mathrm{edge}}}(v,s)-\Phi(-s)|\to0 .
+\]
+Thus the contribution from \(\{\xi_i<-\ell_n^{\mathrm{edge}}\}\) is \(\Phi(-s)+o_{\Pbb}(1)\), uniformly on \(I\times K\).
+
+Now consider the edge contribution
+\[
+    A^{\rm ex}_n(v,s)
+    =
+    \sum_{i:\xi_i\ge -\ell_n^{\mathrm{edge}}}
+    \frac1n
+    \exp\left\{r_sv\cdot Z_i-\frac{r_s^2}{2}\right\}.
+\]
+We compare it with the displayed atom sum. Let
+\[
+    C_n=\log\rho_n,
+    \qquad
+    Y_n=(\log\rho_n)^{1/4}.
+\]
+The event \(\max_i\xi_i\le C_n\) has probability tending to one, since
+\(n\Pbb\{\xi_i>C_n\}=e^{-C_n}\). Also
+\[
+    \sum_{i:-\ell_n^{\mathrm{edge}}\le \xi_i\le C_n} e^{\xi_i}
+    =
+    O_{\Pbb}(\ell_n^{\mathrm{edge}}+C_n),
+\]
+because \(\xi_i\) has shifted exponential intensity \(e^{-x}\,dx\) in dimension two.
+
+On the event \(\max_i\xi_i\le C_n\), the exact contribution of an edge observation
+with \(-\ell_n^{\mathrm{edge}}\le \xi_i\le C_n\) satisfies
+\[
+    \frac1n
+    \exp\left\{r_sv\cdot Z_i-\frac{r_s^2}{2}\right\}
+    \le
+    C_K e^{\xi_i}
+    \exp\{-c\min(Y_i(v)^2,\rho_n^2)\}.
+\]
+This follows from
+\[
+    r_sv\cdot Z_i-\frac{r_s^2}{2}-\log n
+    =
+    \xi_i-\frac{(R_i-r_s)^2}{2}-r_sR_i\{1-\cos\operatorname{ang}(U_i,v)\},
+\]
+and \(r_sR_i\asymp\rho_n^2\) in the displayed range.  Hence the total
+contribution of terms with \(|Y_i(v)|>Y_n\), in either \(A^{\rm ex}_n\) or
+the Gaussian atom sum, is
+\[
+    O_{\Pbb}(\ell_n^{\mathrm{edge}}+C_n)e^{-cY_n^2}=o_{\Pbb}(1)
+\]
+uniformly in \(v\in I\) and \(s\in K\), by the definition of \(Y_n\).
+For the remaining terms
+\(-\ell_n^{\mathrm{edge}}\le \xi_i\le C_n\) and \(|Y_i(v)|\le Y_n\), Taylor expansion gives,
+uniformly in \(i,v,s\),
+\[
+\begin{aligned}
+    &\log\left[
+    \frac1n\exp\left\{r_sv\cdot Z_i-\frac{r_s^2}{2}\right\}
+    \right]
+    -\left\{\xi_i-\frac{s^2}{2}-\frac{Y_i(v)^2}{2}\right\} \\
+    &\qquad=
+    O_K\left(\frac{\ell_n^{\mathrm{edge}}+C_n}{\rho_n}
+    +\frac{Y_n^2}{\rho_n}
+    +\frac{Y_n^4}{\rho_n^2}\right)
+    =O_K\left(\frac{\log\rho_n}{\rho_n}\right).
+\end{aligned}
+\]
+The total atom weight is \(O_{\Pbb}(\log\rho_n)\), while the relative error is
+\(O(\log\rho_n/\rho_n)\). Their product is \(o_{\Pbb}(1)\), and hence
+\[
+    \sup_{v\in I,\ s\in K}
+    \left|
+    A^{\rm ex}_n(v,s)
+    -
+    \sum_{i:\xi_i\ge -\ell_n^{\mathrm{edge}}}
+    \exp\left\{\xi_i-\frac{s^2}{2}-\frac{Y_i(v)^2}{2}\right\}
+    \right|
+    \xrightarrow{\Pbb}0 .
+\]
+Combining this with \(H_n=H^{\rm diff}_{n,\ell_n^{\mathrm{edge}}}+A^{\rm ex}_n\) proves the proposition.
+\end{proof}
+
+Proposition~\ref{prop:two-d-compact-decomposition} uses the slowly receding
+cutoff \(\ell_n^{\mathrm{edge}}=4\log\rho_n\), which makes the background concentrate uniformly.
+For the final supremum bound, we replace it by a fixed cutoff. For every fixed
+\(A<\infty\), the
+edge points with \(\xi_i>-A\) are finite in the limit and have no
+\(1/\rho_n\)-scale
+angular collisions:
+\[
+    \Pbb\left\{
+    \exists i\ne j:\ \xi_i,\xi_j>-A,\
+    \rho_n|\operatorname{ang}(U_i,U_j)|\le L
+    \right\}\le C_A L/\rho_n\to0 .
+\]
+
+Edge points in the lower radial strip \(-\ell_n^{\mathrm{edge}}\le \xi_i\le-A\) have negligible
+total contribution after \(A\to\infty\), allowing a fixed cutoff.
+\begin{lemma}
+\label{lem:d2-low-atom-absorption}
+Let \(\ell_n^{\mathrm{edge}}=4\log\rho_n\), and write
+\(Y_i(v)=\rho_n\operatorname{ang}(U_i,v)\) for the principal angular
+displacement between \(U_i\) and \(v\).  For every
+\(\delta>0\),
+\[
+    \lim_{A\to\infty}\limsup_{n\to\infty}
+    \Pbb\left\{
+    \sup_{v\in S^1}
+    \sum_{i:-\ell_n^{\mathrm{edge}}\le \xi_i\le -A}
+    e^{\xi_i-Y_i(v)^2/2}>\delta
+    \right\}=0 .
+\]
+\end{lemma}
+
+\begin{proof}
+Put \(m_n^\star=\lceil \ell_n^{\mathrm{edge}}\rceil\) and, for integers \(m\ge0\),
+\[
+    I_{m,n}=\{i:-m-1<\xi_i\le -m\}.
+\]
+These are unit radial-excess layers; on \(I_{m,n}\), the weight \(e^{\xi_i}\)
+is of order \(e^{-m}\).  Since
+\(|Z_i|^2/2\) is exponential in dimension two,
+\[
+    \Pbb\{i\in I_{m,n}\}\le C e^m/n,
+    \qquad m\le m_n^\star,
+\]
+and the angle \(\Theta_i\) is independent and uniform on the circle.
+
+For \(q=0,1,\ldots,\lfloor\pi\rho_n\rfloor\), let
+\[
+    N_{m,q,n}
+    =
+    \sup_{\phi\in\mathbb T}
+    \#\left\{
+        i\in I_{m,n}:
+        \rho_n|\operatorname{ang}(\Theta_i-\phi)|\le q+1
+    \right\}.
+\]
+Covering the circle by \(O(\rho_n)\) arcs shows that every interval appearing
+in the supremum is contained in one of the covering arcs, with length enlarged
+by only a fixed factor.  For one such enlarged arc the count is binomial with
+mean
+\[
+    \mu_{m,q,n}\le C(q+1)e^m/\rho_n .
+\]
+Set
+\[
+    a_{m,q,n}
+    =
+    1+\frac{(q+1)e^m}{\rho_n}
+    +
+    \frac{\log\rho_n}
+        {1+\log_+\!\left(\rho_n/((q+1)e^m)\right)},
+    \qquad
+    \log_+ x=\max\{\log x,0\}.
+\]
+The binomial Chernoff bound
+\(\Pbb\{\operatorname{Bin}(N,p)\ge r\}\le (eNp/r)^r\) for
+\(r\ge eNp\), together with the multiplicative Chernoff bound when
+\(r\) is a fixed multiple of \(Np\), implies that for a sufficiently large
+numerical constant \(B\),
+\[
+    \Pbb\left\{
+        N_{m,q,n}>B a_{m,q,n}
+        \text{ for some } A\le m\le m_n^\star,\ 0\le q\le \pi\rho_n
+    \right\}\to0
+\]
+for each fixed \(A\).  Indeed, if \(\mu_{m,q,n}<1\), the last term in
+\(a_{m,q,n}\) makes
+\[
+    a_{m,q,n}\log\{a_{m,q,n}/\mu_{m,q,n}\}\ge c\log\rho_n,
+\]
+while if \(\mu_{m,q,n}\ge1\), the term \(\log\rho_n\) gives the same
+union-bound margin unless \(\mu_{m,q,n}\ge\log\rho_n\), in which case the
+linear mean term does.  Choosing \(B\) large makes the tail summable over
+the \(O(\rho_n^2\log\rho_n)\) enlarged arcs, layers, and angular scales.
+
+On this high-probability occupancy event, uniformly in \(v\),
+\[
+\begin{aligned}
+    \sum_{i:-\ell_n^{\mathrm{edge}}\le \xi_i\le-A}e^{\xi_i-Y_i(v)^2/2}
+    &\le
+    C\sum_{m=\lfloor A\rfloor}^{m_n^\star} e^{-m}
+    \sum_{q=0}^{\lfloor\pi\rho_n\rfloor}
+        e^{-q^2/2}N_{m,q,n} \\
+    &\le
+    C\sum_{q=0}^{\lfloor\pi\rho_n\rfloor}e^{-q^2/2}
+    \sum_{m=\lfloor A\rfloor}^{m_n^\star} e^{-m}a_{m,q,n}.
+\end{aligned}
+\]
+The first two terms in \(a_{m,q,n}\) contribute
+\[
+    O(e^{-A})+O(\ell_n^{\mathrm{edge}}/\rho_n).
+\]
+For the logarithmic occupancy term, fix \(A\) and split the \(m\)-sum at
+\(\log\{\rho_n/(q+1)\}\).  This gives the deterministic bound
+\[
+    \sum_{m=\lfloor A\rfloor}^{m_n^\star}
+    e^{-m}
+    \frac{\log\rho_n}
+        {1+\log_+\!\left(\rho_n/((q+1)e^m)\right)}
+    \le
+    C e^{-A}\{1+\log(q+2)\}
+    +C\frac{(q+1)\log\rho_n}{\rho_n}
+\]
+for all \(n\ge n_0(A)\), uniformly in \(q\). This fixed-\(A\) qualification
+is essential; the estimate is not asserted for a simultaneous choice
+\(A=A_n\).
+After summing in \(q\) against \(e^{-q^2/2}\), the right side is
+\[
+    O(e^{-A})+o(1).
+\]
+Thus the displayed supremum is at most \(C e^{-A}+o(1)\) with probability
+tending to one, and the lemma follows by letting \(A\to\infty\).
+\end{proof}
+
+The moving-cutoff decomposition can therefore be replaced by the fixed-cutoff
+form needed for the reverse inequality.
+\begin{lemma}
+\label{lem:d2-fixed-cutoff-decomposition}
+For each compact \(K\subset\R\), each \(C<\infty\), and each \(\delta>0\),
+\[
+\begin{aligned}
+&\lim_{A\to\infty}\limsup_{n\to\infty}
+\Pbb\Biggl\{
+\max_i\xi_i\le C,\
+\sup_{\substack{v\in S^1\\ s\in K}}
+\Biggl|
+H_n((\rho_n+s)v)-\Phi(-s)\\
+&\hspace{35mm}
+-\sum_{i:-A<\xi_i\le C}
+e^{\xi_i-s^2/2-Y_i(v)^2/2}
+\Biggr|>\delta
+\Biggr\}=0 .
+\end{aligned}
+\]
+\end{lemma}
+
+\begin{proof}
+Apply Proposition~\ref{prop:two-d-compact-decomposition} on a finite closed-arc
+cover of \(S^1\). On \(\{\max_i\xi_i\le C\}\), its fixed-cutoff sum omits only
+the observations with
+\(-\ell_n^{\mathrm{edge}}\le \xi_i\le-A\). Their
+absolute contribution is bounded uniformly in \(s\in K\) by
+\[
+    \sup_{v\in S^1}
+    \sum_{i:-\ell_n^{\mathrm{edge}}\le \xi_i\le-A} e^{\xi_i-Y_i(v)^2/2},
+\]
+because \(e^{-s^2/2}\le1\).  Lemma~\ref{lem:d2-low-atom-absorption} makes
+this term vanish after first taking \(n\to\infty\) and then \(A\to\infty\),
+proving the fixed-cutoff form.
+\end{proof}

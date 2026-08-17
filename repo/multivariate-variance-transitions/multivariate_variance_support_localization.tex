@@ -1,0 +1,265 @@
+\subsection{Fixed-dimensional likelihood localization}
+\label{sec:support-likelihood-localization}
+
+Fixed-dimensional likelihood localization is the first step in converting
+the field estimates into the exact support identity of
+Theorem~\ref{thm:main-support-law}. We apply the one-atom
+geometry around a fit that already carries a small amount of mass away from
+its central atom. The resulting comparison shows that edge mass cannot create
+new KKT contacts where the central directional field has a quantitative gap
+below one.
+
+It is convenient to work in score coordinates. Replace a component location
+\(u\) by \(t=\sqrt{1-\eps_n}\,u\); this bijection preserves support size.
+We reuse \(G\) for the transformed mixing measure. Recall that
+\(\gamma_n=(1-\eps_n)^{-1}=1+2\kappa_n\). If the central atom is at
+\(\tau\), the likelihood ratio of the atom at \(\tau+a\) to the atom at
+\(\tau\), evaluated at \(Z_i\), is
+\[
+    q_{n,\tau,a}(i)
+    =\exp\left\{a\cdot(Z_i-\gamma_n\tau)
+                    -\frac{\gamma_n|a|^2}{2}\right\}.
+\]
+For a perturbation \(G=(1-W)\delta_\tau+G^{\rm out}\), write
+\[
+    m_G(i)
+    =1-W+\int q_{n,\tau,u-\tau}(i)\,G^{\rm out}(du)
+\]
+for its likelihood ratio to \(\delta_\tau\), and define
+\[
+    D_{n,\tau}(a)=\frac1n\sum_{i=1}^nq_{n,\tau,a}(i),
+    \qquad
+    \Psi_G(\tau+a)=\frac1n\sum_{i=1}^n
+        \frac{q_{n,\tau,a}(i)}{m_G(i)}.
+\]
+The KKT conditions are \(\Psi_G\le1\), with equality at every support point.
+
+The deterministic no-propagation estimate below separates the total mass of
+the edge atoms from the geometry of their locations.
+\begin{lemma}
+\label{lem:support-no-percolation}
+For every measure \(G=(1-W)\delta_\tau+G^{\rm out}\) defined above,
+\[
+    \Psi_G(\tau+a)\le \frac{D_{n,\tau}(a)}{1-W},
+    \qquad a\in\mathbb R^d.
+\]
+Consequently, if \(D_{n,\tau}\le1-\eta\) on a set \(A\) and
+\(W\le\eta/2\), then \(G\) has no support point in \(\tau+A\).
+\end{lemma}
+
+\begin{proof}
+Every likelihood ratio is nonnegative, so \(m_G(i)\ge1-W\). Substitution in
+the definition of \(\Psi_G\) gives the first inequality, and
+\((1-\eta)/(1-\eta/2)<1\) gives the second. \qedhere
+\end{proof}
+
+An NPMLE places almost all its mass near the true score origin. The following
+coarse estimate isolates a central component before the dimension-specific
+edge analysis. For a mixing measure \(G\) in score coordinates, put
+\[
+    m_G(z)=\int
+       \exp\left\{t\cdot z-\frac{\gamma_n|t|^2}{2}\right\}G(dt),
+    \qquad
+    \mathfrak D_n(G)=\int\{1-e^{-\kappa_n|t|^2}\}\,G(dt).
+\]
+If \(P\) is standard Gaussian measure, then
+\(Pm_G=1-\mathfrak D_n(G)\), and hence
+\begin{equation}
+\label{eq:support-population-defect}
+    P\log m_G\le\log Pm_G
+       =\log\{1-\mathfrak D_n(G)\}\le-\mathfrak D_n(G).
+\end{equation}
+
+The population loss yields a uniform empirical bound whose coarse
+polylogarithmic precision is already sharper than the critical KKT gaps used
+in the fixed-dimensional support argument.
+\begin{lemma}
+\label{lem:support-coarse-defect}
+For each fixed \(d\), there is \(C_d<\infty\) such that, uniformly over
+\(0\le\eps_n<1\),
+\[
+    \mathfrak D_n(\widehat G_n)
+    =O_{\Pbb}\left\{\frac{(\log n)^{C_d}}{n}\right\}
+\]
+for every NPMLE \(\widehat G_n\).
+\end{lemma}
+
+\begin{proof}
+It suffices to optimize over mixing measures supported in
+\(\operatorname{conv}\{Z_1/\gamma_n,\ldots,Z_n/\gamma_n\}\). Indeed, if
+\(p\) is the Euclidean projection of \(t\) onto this convex hull, then
+\[
+ (t-p)\cdot Z_i-\frac{\gamma_n}{2}(|t|^2-|p|^2)
+ =(t-p)\cdot(Z_i-\gamma_np)-\frac{\gamma_n}{2}|t-p|^2\le0,
+\]
+so moving \(t\) to \(p\) weakly increases every fitted density. With
+probability tending to one this hull lies in
+\(B(0,C\sqrt{\log n})\).
+
+For \(\mathcal M(R)=\{m_G:\supp(G)\subset B(0,R)\}\), let
+\(N_{[]}(\eta,\mathcal M(R),L^1(P))\) be the least number of brackets
+\([l,u]=\{f:l\le f\le u\}\), with \(P(u-l)\le\eta\), needed to cover
+\(\mathcal M(R)\). We use the compact Gaussian-mixture entropy bound from
+\cite[Section~2]{supportDivergenceCompanion}; see also
+\cite[Section~3]{ghosal2001entropies}:
+\begin{equation}
+\label{eq:support-coarse-entropy}
+ \log N_{[]}\{\eta,\mathcal M(R),L^1(P)\}
+ \le C_d(1+R)^d\{1+\log(1/\eta)\}^{d+1}.
+\end{equation}
+The constant is uniform in \(\kappa_n\), since
+\[
+    m_G(z)\phi_d(z)
+    =\int e^{-\kappa_n|t|^2}\phi_d(z-t)\,G(dt),
+\]
+and an \(L^1(P)\) bracket for \(m_G\) is an ordinary \(L^1\) bracket for
+a Gaussian location mixture of total mass at most one.
+
+Write \(\mathbb P_nf=n^{-1}\sum_{i=1}^nf(Z_i)\). Fix a dyadic shell
+\(\delta<\mathfrak D_n(G)\le2\delta\), and cover it by upper
+brackets \(u\) of \(L^1(P)\)-width \(\delta/4\). If \(m_G\le u\), then
+\(Pu\le1-3\delta/4\), and Markov's inequality gives
+\[
+ \Pbb\{\mathbb P_n\log m_G\ge-\delta/4,\ m_G\le u\}
+ \le e^{n\delta/4}(Pu)^n\le e^{-n\delta/2}.
+\]
+For \(R=O(\{\log n\}^{1/2})\), the logarithm of the number of brackets is
+at most \((\log n)^{C_d}\) whenever \(\delta\ge n^{-2}\). A union bound over
+brackets and dyadic shells therefore shows that every measure with
+\(\mathfrak D_n(G)>C(\log n)^{C_d}/n\) has negative likelihood gain relative to
+\(\delta_0\), with probability tending to one. Such a measure cannot be an
+NPMLE, proving the claim.
+\end{proof}
+
+The defect bound does not rule out several nearby atoms. The local collapse
+lemma shows that every maximizer carries all central mass on one atom, with
+the remaining edge mass smaller than the KKT gaps used later.
+\begin{lemma}
+\label{lem:support-fixed-core-collapse}
+Assume either \(d=2\) and \(\lambda_n\to\lambda\in(0,\infty)\), or fixed
+\(d\ge3\) with \(s_n^\star\) converging in \(\R\). For a
+sufficiently small fixed $r_0>0$, every NPMLE can, with
+probability tending to one, be written
+\begin{equation}
+\label{eq:support-central-decomposition}
+    \widehat G_n=(1-W_n)\delta_{\tau_n}+G_n^{\rm out},
+    \qquad
+    \supp(G_n^{\rm out})\subset B(0,r_0)^c,
+\end{equation}
+where
+\[
+    W_n+|\tau_n|^2
+    =O_{\Pbb}\left\{\frac{(\log n)^{C_d}}{n\kappa_n}\right\}.
+\]
+In all these regimes, \(W_n=o_{\Pbb}(\kappa_n)\).
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:support-coarse-defect} and
+\(1-e^{-\kappa_n|t|^2}\ge c\kappa_n\min\{|t|^2,1\}\) imply the displayed
+bounds for the mass outside \(B(0,r_0)\) and for the second moment of the
+restriction to that ball. Normalize the central restriction to a probability
+measure \(G^{\rm cen}\), and let \(\tau\) and \(V\) be its mean and
+covariance. Cauchy--Schwarz gives the asserted bound for \(|\tau|^2\).
+
+We show that replacing \(G^{\rm cen}\) by \(\delta_\tau\) strictly increases
+the likelihood unless \(V=0\). Keep the outside part fixed and interpolate
+\[
+ G_u=(1-W)\{(1-u)\delta_\tau+uG^{\rm cen}\}+G^{\rm out},
+ \qquad 0\le u\le1.
+\]
+By concavity it is enough to show that the derivative at \(u=0\) is negative.
+With \(h=t-\tau\), put
+\[
+ g_i(h)=\exp\left\{h\cdot(Z_i-\gamma_n\tau)
+                  -\frac{\gamma_n|h|^2}{2}\right\},
+ \qquad
+ Q_i^{\rm out}=\int q_{n,\tau,t-\tau}(i)\,G^{\rm out}(dt).
+\]
+The likelihood ratio under \(G_0\) is
+\(m_i^0=1-W+Q_i^{\rm out}\). Define
+\(\omega_i=(1-W)/m_i^0\). The derivative is
+\begin{equation}
+\label{eq:support-collapse-derivative}
+ \sum_{i=1}^n\omega_i
+ \int\{g_i(h)-1\}\,G^{\rm cen}(dt).
+\end{equation}
+
+First replace \(\omega_i\) by one. Let
+\(\widehat F_\tau(h)=n^{-1}\sum_i g_i(h)\). Uniformly for
+\(|\tau|=o_{\Pbb}(\sqrt{\kappa_n})\) and \(|h|\le2r_0\), a compact
+finite-dimensional empirical-process bound after two differentiations gives
+\[
+ \sup_{|h|\le2r_0}
+ \|\nabla^2\widehat F_\tau(h)-\nabla^2F_\tau(h)\|_{\rm op}
+ =O_{\Pbb}(n^{-1/2})=o_{\Pbb}(\kappa_n).
+\]
+Here the differentiated class has an integrable envelope of the form
+\(C(1+|Z|^2)e^{2r_0|Z|}\), and the population average is
+\[
+    F_\tau(h)=\exp\{-\kappa_n|h|^2-\gamma_n\tau\cdot h\}.
+\]
+Indeed,
+\[
+ \nabla^2F_\tau(h)
+ =F_\tau(h)\left[
+   (2\kappa_nh+\gamma_n\tau)(2\kappa_nh+\gamma_n\tau)^\top
+   -2\kappa_n I_d\right].
+\]
+The bound on \(|\tau|^2\), together with
+\(\kappa_n\gtrsim1/\log n\), gives
+\(|\tau|^2=o_{\Pbb}(\kappa_n)\). Thus, after decreasing the fixed \(r_0\) if
+needed, \(\nabla^2\widehat F_\tau(h)\preceq-c\kappa_nI_d\) throughout the
+ball, with probability tending to one. Taylor's theorem and
+\(\int h\,G^{\rm cen}(dt)=0\) now show that the unweighted version of
+\eqref{eq:support-collapse-derivative} is at most
+\(-cn\kappa_n\operatorname{tr}V\).
+
+It remains to restore the weights. Let \(m_i^1\) be the likelihood ratio
+under the original NPMLE \(G_1\), and let
+\[
+ r_i^1=\frac{\int q_{n,\tau,t-\tau}(i)\,G^{\rm out}(dt)}{m_i^1}
+\]
+be its posterior responsibility for the outside component. Integrating the
+componentwise KKT equality over \(G^{\rm out}\) gives
+\(\sum_i r_i^1=nW\).
+
+We next compare the two sets of weights explicitly. Put
+\(\bar g_i=\int g_i(h)\,G^{\rm cen}(dt)\), so that
+\(m_i^1=(1-W)\bar g_i+Q_i^{\rm out}\). On the event
+\(R_n:=\max_i|Z_i|\le C\sqrt{\log n}\),
+\[
+ e^{-K_n}\le \bar g_i\le e^{K_n},
+ \qquad K_n=C_{r_0}(1+R_n),
+\]
+uniformly in \(i\). Consequently \(m_i^1/m_i^0\le e^{K_n}\), and hence
+\[
+ 1-\omega_i=\frac{Q_i^{\rm out}}{m_i^0}
+ \le e^{K_n}r_i^1,
+ \qquad
+ \sum_i(1-\omega_i)\le e^{K_n}nW.
+\]
+For each \(i\), another second-order expansion, again using
+\(\int h\,G^{\rm cen}(dt)=0\), gives
+\[
+ \left|\int\{g_i(h)-1\}\,G^{\rm cen}(dt)\right|
+ \le C_{r_0}(1+|Z_i|^2)e^{C_{r_0}|Z_i|}\operatorname{tr}V.
+\]
+It follows that restoring the weights changes
+\eqref{eq:support-collapse-derivative} by at most
+\[
+ C_{r_0}nW(1+\log n)e^{C_{r_0}\sqrt{\log n}}\operatorname{tr}V.
+\]
+Relative to \(n\kappa_n\operatorname{tr}V\), the last expression is
+\[
+ O_{\Pbb}\left\{
+   \frac{(\log n)^{C_d+1}e^{C_{r_0}\sqrt{\log n}}}
+        {n\kappa_n^2}
+ \right\}=o_{\Pbb}(1),
+\]
+since \(\kappa_n\gtrsim1/\log n\) in both stated critical windows. The
+derivative is therefore negative whenever \(V\ne0\), contradicting the
+maximality of \(G_1\). Hence \(V=0\), which proves
+\eqref{eq:support-central-decomposition}. The same rate and
+\(\kappa_n\gtrsim1/\log n\) give \(W=o_{\Pbb}(\kappa_n)\).
+\end{proof}

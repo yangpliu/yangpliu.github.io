@@ -1,0 +1,667 @@
+\subsection{The limiting Poisson optimizer}
+\label{sec:atom-count-law}
+
+To prove Theorem~\ref{thm:atom-count-limit}, we must identify a canonical
+limit for the compact likelihoods used above. Replacing the moving variance
+penalty by its hard wall produces the optimizer \(\nu_b^*\) from
+\eqref{eq:atom-limit-functional}; its uniqueness turns support tightness into
+convergence to a law depending only on \(r\).
+
+The functional \(\cJ_{N,b}\) agrees with \(\mathcal J_N^K\) in
+\eqref{eq:support-one-d-limit-functional} whenever \(\nu\) is supported on
+the compact interval \(K\subset[b,1)\). Its first variation is
+\begin{equation}
+\label{eq:atom-limit-kkt}
+    \Gamma_\nu(\theta)
+    =S(\theta)-\int_{\mathbb R}
+       e^{\theta x}\frac{F_\nu(x)}{1+F_\nu(x)}\,N(dx).
+\end{equation}
+Thus a maximizing measure satisfies \(\Gamma_\nu\le0\) on \([b,1)\),
+with equality on its support.
+
+The negative Poisson points form a uniqueness set for the Laplace transforms
+appearing in \eqref{eq:atom-limit-functional}. This is much stronger than
+uniqueness on any fixed finite set of observations.
+\begin{lemma}
+\label{lem:atom-uniqueness-set}
+Write the negative points of \(N\) as \(-T_j\). Almost surely, if a finite
+signed measure \(\delta\) is supported on a compact interval
+\([b,c]\subset(0,\infty)\) and
+\[
+    \int_b^c e^{-T_j\theta}\,\delta(d\theta)=0
+    \qquad\text{for every }j,
+\]
+then \(\delta=0\).
+\end{lemma}
+
+\begin{proof}
+For \(\operatorname{Re}z>0\), set
+\[
+    H(z)=e^{bz}\int_b^c e^{-z\theta}\,\delta(d\theta).
+\]
+This is a bounded analytic function on the right half-plane. Unless it
+vanishes identically, its zeros satisfy the half-plane Blaschke condition
+\cite[Chapter~II]{garnett2007bounded},
+\[
+    \sum_{H(z)=0}\frac{\operatorname{Re}z}{1+|z|^2}<\infty,
+\]
+with multiplicity.
+
+The points \(T_j\) form a Poisson process on \((0,\infty)\) with intensity
+\(e^t\,dt\). If \(Q_m\) counts its points in \([m,m+1]\), then the
+\(Q_m\)'s are independent Poisson variables with means \((e-1)e^m\).
+A Chernoff bound and Borel--Cantelli give
+\(Q_m\ge(e-1)e^m/2\) for all sufficiently large \(m\), almost surely.
+Consequently,
+\[
+    \sum_j\frac{T_j}{1+T_j^2}
+    \ge\sum_{m\ \mathrm{large}}
+       \frac{mQ_m}{1+(m+1)^2}=\infty.
+\]
+Thus \(H(T_j)=0\) for every \(j\) forces \(H\equiv0\). Uniqueness of the
+Laplace transform then gives \(\delta=0\).
+\end{proof}
+
+
+We can now attach a canonical optimizer to each hard-wall location. Its
+support size will be the one-sided contribution to the limiting atom count.
+\begin{proposition}
+\label{prop:atom-limit-unique}
+For every fixed \(b\in(1/2,1)\), the functional \(\cJ_{N,b}\) has an almost
+surely unique maximizer \(\nu_b^*\). This measure has finite support in a
+random compact subinterval of \([b,1)\).
+\end{proposition}
+
+\begin{proof}
+Since \(S(\theta)\to-\infty\) as \(\theta\uparrow1\), there is a random
+\(c_N\in(b,1)\) such that \(S(\theta)<0\) on \([c_N,1)\). The second term in
+\eqref{eq:atom-limit-kkt} is nonnegative, so deleting any mass in this
+interval strictly increases the objective. Proposition
+\ref{prop:support-one-d-analytic-active-set}, applied on a compact interval
+containing \([b,c_N]\), gives existence and finite support.
+
+The first term in \eqref{eq:atom-limit-functional} is linear, while \(h\) is
+strictly concave. If two measures \(\nu_0,\nu_1\) were maximizers, equality
+in the concavity inequality for their midpoint would require
+\(F_{\nu_0}(X)=F_{\nu_1}(X)\) at every point \(X\) of \(N\). In particular,
+the two transforms agree at every negative point. Lemma
+\ref{lem:atom-uniqueness-set}, applied to \(\nu_1-\nu_0\), gives
+\(\nu_0=\nu_1\).
+\end{proof}
+
+For later use, write
+\[
+    K_b=|\supp(\nu_b^*)|.
+\]
+The value zero is allowed: \(K_b=0\) exactly when the one-sided Poisson field
+does not cross zero on \([b,1)\).
+
+\subsection{The moving penalty and the hard wall}
+
+The next step in Theorem~\ref{thm:atom-count-limit} shows why no
+subpolynomial feature of \(\eps_n=n^{-r_n}\) survives in the limiting
+optimizer. The deterministic penalty changes abruptly at
+\(b_r=1-\sqrt r\), but its value exactly at that point need not converge.
+A variational argument moves any boundary mass an asymptotically negligible
+distance to the vanishing-penalty side.
+
+Recall \(\lambda_n=\eps_nu_n^2/\{2(1-\eps_n)\}\), the scale
+\(c_n(\theta)\) from Section~\ref{sec:one-dimensional-edge-field}, and the
+penalty
+\[
+    \cP_n(\theta)
+    =\frac{1-e^{-\lambda_n\theta^2}}{c_n(\theta)}
+\]
+from \eqref{eq:support-deterministic-penalty}. Assume
+\(r_n\to r\in(0,1/4)\). Since
+\(u_n^2/2=\log n+O(\log\log n)\) and \(\lambda_n\to0\), a direct expansion
+gives, uniformly on compact subintervals of \((1/2,1)\),
+\begin{equation}
+\label{eq:atom-penalty-exponent}
+    \log\cP_n(\theta)
+    =\{(1-\theta)^2-r_n\}\log n+O(\log\log n).
+\end{equation}
+Consequently, for every fixed \(\eta>0\),
+\begin{equation}
+\label{eq:atom-hard-wall}
+    \sup_{\theta\ge b_r+\eta}\cP_n(\theta)\longrightarrow0,
+    \qquad
+    \inf_{\theta\le b_r-\eta}\cP_n(\theta)\longrightarrow\infty.
+\end{equation}
+
+The following deterministic lemma records the variational consequence. It is
+stated on a compact interval because all random likelihoods have already been
+localized there.
+\begin{lemma}
+\label{lem:atom-hard-wall}
+Let \(K=[a,c]\Subset(1/2,1)\), with \(a<b_r<c\), and suppose concave
+functionals \(\widetilde L_n\) converge locally uniformly on every
+bounded-mass set of finite positive measures on \(K\) to
+\(\mathcal J_N^K\). Define
+\[
+    L_n(\nu)=\widetilde L_n(\nu)-\int_K\cP_n(\theta)\,\nu(d\theta).
+\]
+If the masses of the maximizing measures are tight, every weak limit of
+maximizers of \(L_n\) is supported on \([b_r,c]\) and maximizes
+\(\mathcal J_N^K\) there. Conversely, every measure on \([b_r,c]\) has a
+recovery sequence with the same limiting value.
+\end{lemma}
+
+\begin{proof}
+The two bounds in \eqref{eq:atom-hard-wall} make the penalty vanish uniformly
+on compact subsets of \((b_r,c]\) and force every bounded-objective sequence
+to put asymptotically no mass on \([a,b_r-\eta]\), for each \(\eta>0\).
+Tightness of the masses gives the asserted support and the usual limsup
+inequality.
+
+For recovery, put
+\[
+    \delta_n=|r_n-r|^{1/2}
+       +\left(\frac{\log\log n}{\log n}\right)^{1/2}.
+\]
+Then \(\delta_n\downarrow0\) and
+\(\cP_n(b_r+\delta_n)\to0\) by
+\eqref{eq:atom-penalty-exponent}. Leave mass above
+\(b_r+\delta_n\) fixed and move all mass in
+\([b_r,b_r+\delta_n]\) to \(b_r+\delta_n\). The penalty is decreasing on
+a fixed neighborhood of \(b_r\) for all large \(n\), as follows by
+differentiating its definition, so the recovery penalties vanish. Local
+uniform convergence of \(\widetilde L_n\) completes the proof.
+\end{proof}
+
+
+The compact expansion already used for support tightness becomes uniform
+across the moving wall after the deterministic penalty is added back. We
+record the strengthened form needed to identify the optimizer itself.
+\begin{lemma}
+\label{lem:atom-wall-functional-convergence}
+Let \(K=[a,c]\Subset(1/2,1)\) contain \(b_r\), and assume
+\[
+    \frac r2+(1-a)^2<\frac12.
+\]
+On every set of edge-measure pairs with total mass at most \(M\), the
+functionals
+\[
+    \mathcal L_{n,K}(\nu_+,\nu_-)
+    +\int_K\cP_n\,d\nu_++\int_K\cP_n\,d\nu_-
+\]
+converge uniformly to
+\(\mathcal J_{N_+}^K(\nu_+)+\mathcal J_{N_-}^K(\nu_-)\). The first
+variations converge jointly and locally uniformly, together with their first
+two derivatives, on every smaller complex neighborhood. Here \(N_+\) and
+\(N_-\) are independent copies of \(N\).
+\end{lemma}
+
+\begin{proof}
+Truncate the two Gaussian edge processes to a bounded edge window. On this
+window the kernel and its first two parameter derivatives are uniformly
+bounded and equicontinuous over measures of mass at most \(M\), so compact
+point-process convergence gives the assertion. On the negative tail, the
+nonlinear likelihood remainder has envelope \(C_Me^{2ax}\); its
+differentiated first variations are bounded by a polynomial in \(|x|\) times
+\(C_Me^{(a+\operatorname{Re}\theta)x}\). These envelopes are integrable
+because \(2a>1\). The positive tail contains only finitely many limiting
+points. A finite weak net of the compact measure set makes the truncation
+uniform.
+
+The deterministic part of the normalized first variation is exactly
+\(-\cP_n\). Once it is added back,
+\(e^{-\lambda_n\theta^2}=1+o(1)\) uniformly with two derivatives on \(K\),
+so the nonlinear limit is unchanged. Translation by the central atom is
+negligible with two derivatives under the displayed condition on \(a\).
+Finally, integrate the uniform first-variation convergence along
+\(s\mapsto(s\nu_+,s\nu_-)\), \(0\le s\le1\), to obtain convergence of the
+functionals. Joint convergence of the two extreme point processes gives
+independent \(N_+\) and \(N_-\).
+\end{proof}
+
+An atom of physical mass \(w\) at signed score displacement
+\(\theta u_n\) from the central atom receives scaled mass
+\(nc_n(\theta)w\). The next proposition identifies the weak limit of these
+two scaled edge measures before addressing their exact support sizes.
+\begin{proposition}
+\label{prop:atom-measure-limit}
+Assume \(r_n\to r\in(0,1/4)\). If \(\nu_{n,+}\) and \(\nu_{n,-}\) are the
+scaled edge measures of the NPMLE, then
+\[
+    (\nu_{n,+},\nu_{n,-})
+    \Rightarrow
+    (\nu_{b_r}^{*,+},\nu_{b_r}^{*,-}),
+\]
+where the two limits are independent copies of the optimizer in
+Proposition~\ref{prop:atom-limit-unique}. In particular, their joint law
+depends on the variance sequence only through \(r\).
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:support-fixed-core-collapse} isolates one central atom and
+shows that the total physical edge mass tends to zero. The subthreshold
+margin confines all remaining support from below. For every \(\delta>0\),
+Lemma~\ref{lem:support-one-d-exclusion-margins} supplies a deterministic
+\(c<1\) such that, except on an event of probability at most
+\(\delta+o(1)\), both edge measures are supported on a fixed interval
+\([a,c]\) containing \(b_r\). Proposition
+\ref{prop:support-one-d-compact-likelihood} makes their total scaled masses
+tight.
+
+On a Skorokhod coupling, apply Lemmas
+\ref{lem:atom-wall-functional-convergence} and
+\ref{lem:atom-hard-wall}. Every subsequential limit maximizes the two
+hard-wall functionals. Proposition~\ref{prop:atom-limit-unique} identifies
+these maximizers uniquely. Letting first \(n\to\infty\) and then
+\(\delta\downarrow0\) proves the joint convergence. The wall is \(b_r\) by
+\eqref{eq:atom-penalty-exponent}.
+\end{proof}
+
+Weak convergence alone does not preserve an exact atom count: atoms with
+vanishing mass could disappear, and several atoms could merge. The missing
+input is nondegeneracy of every limiting KKT contact.
+\begin{proposition}
+\label{prop:atom-morse}
+For every fixed \(b\in(1/2,1)\), the following statements hold almost surely
+for the optimizer \(\nu_b^*\) and its KKT field \(\Gamma_{\nu_b^*}\).
+\begin{enumerate}
+\item The zero set of \(\Gamma_{\nu_b^*}\) on \([b,1)\) is exactly
+      \(\supp(\nu_b^*)\).
+\item Every interior contact \(\theta\) is quadratic:
+      \(\Gamma_{\nu_b^*}''(\theta)<0\).
+\item At the lower boundary, either \(\Gamma_{\nu_b^*}(b)<0\), or
+      \(b\in\supp(\nu_b^*)\) and
+      \(\Gamma_{\nu_b^*}'(b)<0\).
+\end{enumerate}
+\end{proposition}
+
+The strict inequalities have the natural constrained interpretation. An
+interior contact is a local maximum of a nonpositive function, while a
+contact at the left endpoint has a nonpositive inward derivative.
+Appendix~\ref{app:poisson-transversality} uses the continuously distributed
+negative Poisson points to rule out equality and inactive contacts.
+
+\subsection{Convergence of the atom count}
+
+This subsection completes the proof of Theorem~\ref{thm:atom-count-limit} by
+passing from weak convergence of the edge measures to convergence of their
+active sets. Recall from \eqref{eq:atom-count-intro} that
+\(\mathsf K_r=1+K_{b_r}^++K_{b_r}^-\), where \(b_r=1-\sqrt r\). The central
+one is the atom isolated by Lemma~\ref{lem:support-fixed-core-collapse}.
+
+The nondegenerate contacts of Proposition~\ref{prop:atom-morse} persist
+one-for-one under the finite-sample approximation, including a possible
+contact at the moving hard wall.
+\begin{proposition}
+\label{prop:atom-count-convergence}
+If \(r_n\to r\in(0,1/4)\), then
+\[
+    |\supp(\widehat G_n)|\Rightarrow\mathsf K_r.
+\]
+Moreover, \(\Pbb\{\mathsf K_r=1\}=p(r)\).
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:atom-measure-limit} and positivity of every limiting
+mass force at least one finite-sample atom into each small, disjoint
+neighborhood of a limiting atom. Lemma
+\ref{lem:fixed-exponent-support-tightness} gives the compactness needed to
+extract the corresponding KKT fields. For the reverse bound, work on the
+event from Proposition~\ref{prop:atom-measure-limit} on which both signed
+edge measures are supported in a fixed compact interval and have bounded
+scaled mass. Its probability is at least \(1-\delta-o(1)\).
+
+Away from the finite limiting contact set, Proposition
+\ref{prop:atom-morse} gives a strict negative KKT margin and excludes support
+points. Near an interior active contact, the limiting second derivative is
+strictly negative. Two-derivative convergence therefore makes the
+finite-sample KKT field strictly concave there. A strictly concave,
+nonpositive function has at most one zero, while weak convergence of the
+positive limiting mass supplies at least one support point. Hence exactly one
+finite-sample atom lies near each interior limiting atom.
+
+It remains to treat the hard wall. If the boundary is inactive, its strict
+KKT margin and the nonnegative penalty exclude a crossover contact. Suppose
+instead that \(\nu_{b_r}^*\) has an atom at \(b_r\). On a fixed two-sided
+neighborhood of \(b_r\), write the normalized finite-sample KKT field as
+\[
+    \Gamma_n(\theta)=R_n(\theta)-\cP_n(\theta).
+\]
+The penalty-free remainder satisfies \(R_n'<-a<0\), while direct
+differentiation gives
+\[
+    \frac{\cP_n'}{\cP_n}=-(1-\theta)u_n^2+O(1),
+    \qquad
+    \frac{\cP_n''}{\cP_n}
+       =(1-\theta)^2u_n^4+O(u_n^2).
+\]
+Wherever \(\Gamma_n'\ge0\), the positive term \(-\cP_n'\) is at least
+\(a\); the first display then gives \(\cP_n\gtrsim u_n^{-2}\), and the
+second gives \(\cP_n''\gtrsim u_n^2\). Since \(R_n''=O_{\Pbb}(1)\), we have
+\(\Gamma_n''<0\) there. Thus \(\Gamma_n'\) cannot cross from negative to
+positive. Two distinct zeros of the nonpositive function \(\Gamma_n\) would
+force such a crossing, so there is at most one crossover contact. Weak
+convergence of the boundary mass supplies at least one.
+
+The argument applies independently at the two sample edges. Letting
+\(\delta\downarrow0\) proves count convergence. Finally,
+\(\nu_b^*=0\) exactly when \(\sup_{b\le\theta<1}S(\theta)\le0\). The two
+edges are independent, so \eqref{eq:p-intro} gives
+\(\Pbb\{\mathsf K_r=1\}=p(r)\).
+\end{proof}
+
+Proposition~\ref{prop:atom-morse} and the implicit-function theorem also
+control changes in the hard-wall location. Under a common Poisson
+realization, the atom count is locally constant at each fixed \(b\), almost
+surely; this yields total-variation rather than only weak continuity.
+\begin{proposition}
+\label{prop:atom-count-continuity}
+The map \(b\mapsto\mathcal L(K_b)\) is continuous in total variation on
+\((1/2,1)\). Consequently,
+\(r\mapsto\mathcal L(\mathsf K_r)\) is continuous in total variation on
+\([0,1/4)\).
+\end{proposition}
+
+\begin{proof}
+Couple all optimizers with the same Poisson process and fix deterministic
+\(b\). If \(b\notin\supp(\nu_b^*)\), Proposition
+\ref{prop:atom-morse} gives a strict boundary inequality. The support lies a
+positive distance to the right of \(b\), and the KKT field is strictly
+negative on a neighborhood of \(b\). For every \(b'\) sufficiently close to
+\(b\), the same measure is feasible and satisfies the KKT conditions on
+\([b',1)\). Uniqueness gives \(\nu_{b'}^*=\nu_b^*\).
+
+Suppose instead that
+\[
+    \nu_b^*=s_1\delta_b+\sum_{j=2}^ks_j\delta_{\theta_j},
+    \qquad b<\theta_2<\cdots<\theta_k.
+\]
+Parameterize this boundary stratum by its \(k\) masses and \(k-1\) interior
+locations. The objective is analytic in these variables and in \(b\). Its
+Hessian in the atomic variables is negative definite. Indeed, for a tangent
+vector \(v\), put
+\[
+    g_v(x)=\sum_{j=1}^ke^{\theta_jx}
+       \{\dot s_j+s_jx\dot\theta_j\},
+    \qquad \dot\theta_1=0.
+\]
+At the critical point,
+\[
+ v^{\mathsf T}Hv
+ =-\int_{\mathbb R}
+       \frac{g_v(x)^2}{\{1+F_{\nu_b^*}(x)\}^2}\,N(dx)
+   +\sum_{j=2}^ks_j
+       \Gamma_{\nu_b^*}''(\theta_j)\dot\theta_j^2.
+\]
+The second term is nonpositive. If the first vanishes, \(g_v\) vanishes at
+every negative Poisson point. Lemma~\ref{lem:atom-exp-polynomial} and linear
+independence of the confluent exponentials give \(v=0\). Thus the Hessian is
+nonsingular.
+
+The implicit-function theorem supplies a nearby critical \(k\)-atomic
+measure on the corresponding boundary stratum, with positive masses.
+Proposition~\ref{prop:atom-morse} gives a strict negative KKT margin away
+from the contacts, strict quadratic maxima at the interior contacts, and a
+strictly negative inward derivative at the boundary contact. These
+inequalities persist as \(b\) varies, so the critical branch satisfies the
+global KKT conditions and is the unique optimizer. Hence \(K_{b'}=K_b\) for
+all sufficiently close \(b'\).
+
+We have shown that if \(b_m\to b\), then
+\(\mathbf1_{\{K_{b_m}\ne K_b\}}\to0\) almost surely. Dominated convergence
+therefore gives
+\[
+ d_{\mathrm{TV}}\{\mathcal L(K_{b_m}),\mathcal L(K_b)\}
+ \le\Pbb\{K_{b_m}\ne K_b\}\longrightarrow0.
+\]
+The same coupling handles the sum of two independent copies, and
+\(r\mapsto b_r\) is continuous on \((0,1/4)\). At zero,
+\(\Pbb\{\mathsf K_r\ne1\}=1-p(r)\to0\) by Proposition
+\ref{prop:phase-curve-properties}, which proves total-variation continuity on
+\([0,1/4)\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:atom-count-limit}]
+For \(r\in(0,1/4)\), the theorem is Proposition
+\ref{prop:atom-count-convergence} together with Proposition
+\ref{prop:atom-count-continuity}. If \(r_n\to0\), Theorem
+\ref{thm:exponent-phase-diagram} gives
+\(\Pbb\{|\supp(\widehat G_n)|=1\}\to1\), so the count converges to
+\(\mathsf K_0=1\).
+\end{proof}
+
+\subsection{Divergence at the critical endpoint}
+
+This subsection proves
+Proposition~\ref{prop:atom-count-endpoint-divergence}. In one-sided
+coordinates, write
+\(b=1/2+\beta\). The logarithmic distance from the wall to the endpoint
+\(1/2\) then grows like \(\log(1/\beta)\). A positive density of separated
+score locations can each contribute order-one likelihood gain, whereas a
+single atom can exploit only the largest score on this interval.
+
+For \(h>0\), define the normalized endpoint score and its negative-tail
+quadratic variation by
+\[
+    X(h)=\sqrt{2h}\,S(1/2+h),
+    \qquad
+    Q_h=\int_{-\infty}^0e^{(1+2h)x}\,N(dx).
+\]
+The KMT construction in the proof of Proposition
+\ref{prop:upper-endpoint-persistence} supplies all the uniform information
+needed below. We collect those consequences together with the Poisson strong
+law.
+\begin{lemma}
+\label{lem:atom-endpoint-control}
+On an extension of the probability space, for every \(0<h_0<1/4\) there is
+a centered stationary Gaussian process \(G_{h_0}\) with covariance
+\[
+    \E G_{h_0}(s)G_{h_0}(t)
+    =\operatorname{sech}\left(\frac{t-s}{2}\right)
+\]
+such that
+\[
+    \sup_{t\ge0}|X(h_0e^{-t})-G_{h_0}(t)|
+    \le R\sqrt{h_0},
+\]
+where \(R<\infty\) almost surely and can be chosen simultaneously for all
+\(h_0<1/4\). Moreover,
+\[
+    \sup_{0\le t\le L}G_{h_0}(t)
+       =O_{\Pbb}\{\sqrt{\log(L+2)}\}
+\]
+uniformly in \(h_0\), and each fixed-spacing sequence
+\((G_{h_0}(j\Delta))_{j\ge0}\) is stationary and ergodic. Finally,
+\[
+    2hQ_h\longrightarrow1\quad\text{almost surely as }h\downarrow0,
+    \qquad
+    \sup_{0<h\le h_0}\sqrt h\,X(h)^+\longrightarrow0
+       \quad\text{in probability as }h_0\downarrow0.
+\]
+\end{lemma}
+
+\begin{proof}
+Under \(t=e^{-x}\), the negative Poisson process becomes a unit-rate Poisson
+process \(\Pi\) on \([1,\infty)\), and
+\[
+    \int_{-\infty}^0e^{(1/2+h)x}\{N-\mu\}(dx)
+    =\int_1^\infty t^{-1/2-h}\{\Pi(dt)-dt\}.
+\]
+The infinite-horizon KMT coupling in
+\eqref{eq:poisson-kmt} replaces the centered counting process by Brownian
+motion with an error bounded by an almost surely finite random multiple of
+\(1+\log t\). Integration by parts makes the normalized error
+\(O(R\sqrt{h_0})\), uniformly for \(0<h\le h_0\). The positive half-line
+contains only finitely many Poisson points almost surely, and its contribution
+to the normalized process is another almost surely finite random multiple of
+\(\sqrt{h_0}\). The normalized Brownian integrals have covariance
+\[
+    \frac{2\sqrt{hk}}{h+k};
+\]
+putting \(h=h_0e^{-t}\) gives the stated sech covariance.
+
+A unit-interval Gaussian maximal inequality and a union bound give the
+maximum estimate. Since the covariance tends to zero at infinity, every
+fixed-spacing sampled sequence is ergodic. The same maximum estimate and
+Borel--Cantelli show that
+\(\sup_{t\ge0}e^{-t/2}G_{h_0}(t)^+<\infty\) almost surely, with a law
+independent of \(h_0\); the coupling then gives the second limiting display.
+
+Finally, if \(A(t)=\Pi([1,t])\), integration by parts gives
+\[
+    Q_h=(1+2h)\int_1^\infty A(t)t^{-2-2h}\,dt.
+\]
+The Poisson strong law \(A(t)/t\to1\), followed by the usual Abelian
+splitting at a fixed large cutoff, yields \(2hQ_h\to1\).
+\end{proof}
+
+Let
+\[
+    V_b=\cJ_{N,b}(\nu_b^*)
+\]
+be the unrestricted one-sided optimum. A logarithmically spaced collection
+of small atoms obtains likelihood proportional to the length of the endpoint
+window.
+\begin{proposition}
+\label{prop:atom-many-gain}
+There is a deterministic \(c>0\) such that
+\[
+    \Pbb\left\{V_{1/2+\beta}\ge c\log(1/\beta)\right\}
+    \longrightarrow1
+    \qquad(\beta\downarrow0).
+\]
+\end{proposition}
+
+\begin{proof}
+Put \(L_0=\log(1/\beta)\), \(H_\beta=L_0^{-4}\), and
+\(L_\beta=\log(H_\beta/\beta)\sim L_0\). Fix \(\Delta>0\), and take
+\[
+    h_j=H_\beta e^{-j\Delta},
+    \qquad 0\le j<J_\beta,
+    \qquad J_\beta=\lfloor L_\beta/\Delta\rfloor.
+\]
+By Lemma~\ref{lem:atom-endpoint-control}, this score vector is uniformly
+\(o_{\Pbb}(1)\) from a sampled stationary sech process. Choose \(q>0\).
+Ergodicity gives constants \(p,q>0\) such that, with probability tending to
+one, at least \(pJ_\beta\) indices satisfy \(X(h_j)\ge q\).
+
+For a small constant \(a>0\), place mass \(a\sqrt{2h_j}\) at
+\(1/2+h_j\) for each favorable index. The linear gain is at least
+\(apqJ_\beta\). Since \(h(y)\ge-y^2/2\), its nonlinear cost is at most one
+half of \(\int F^2\,dN\). Dominate this integral by the competitor using all
+grid points. On the negative half-line its expectation is
+\[
+ a^2\sum_{j,l<J_\beta}\frac{2\sqrt{h_jh_l}}{h_j+h_l}
+ =a^2\sum_{j,l<J_\beta}
+    \operatorname{sech}\left(\frac{(j-l)\Delta}{2}\right)
+ \le C_\Delta a^2J_\beta.
+\]
+Because the full-grid transform at zero is \(O(a\sqrt{H_\beta})\), the
+variance of this Poisson integral is at most
+\(C_\Delta a^4H_\beta J_\beta\). Its positive-half-line contribution is
+\(o_{\Pbb}(1)\), since that half-line contains finitely many points.
+Consequently,
+\[
+    \cJ_{N,1/2+\beta}(\nu_\beta)
+    \ge\{apq-C_\Delta a^2+o_{\Pbb}(1)\}J_\beta.
+\]
+Choose \(a\) so that the deterministic coefficient is positive.
+\end{proof}
+
+The sparse upper bound rests on an exact subadditivity identity. It avoids
+having to cover the class of all sparse measures.
+\begin{lemma}
+\label{lem:atom-gain-subadditivity}
+If \(\nu=\sum_{j=1}^Ds_j\delta_{\theta_j}\), then
+\[
+    \cJ_{N,b}(\nu)
+    \le\sum_{j=1}^D\cJ_{N,b}(s_j\delta_{\theta_j}).
+\]
+\end{lemma}
+
+\begin{proof}
+For \(y,z\ge0\),
+\[
+ h(y+z)-h(y)-h(z)
+ =\log\frac{1+y+z}{(1+y)(1+z)}\le0.
+\]
+Induction proves subadditivity of the nonlinear term, and the score term is
+linear. \qedhere
+\end{proof}
+
+Optimizing a single atom costs only the square of the largest normalized
+score. The Gaussian maximum over logarithmic time therefore contributes the
+smaller factor \(\log\log(1/\beta)\).
+\begin{proposition}
+\label{prop:atom-one-gain}
+Let
+\[
+    M_\beta=
+    \sup_{\beta\le h<1/2}\sup_{s\ge0}
+       \{\cJ_{N,1/2+\beta}(s\delta_{1/2+h})\}_+.
+\]
+Then
+\[
+    M_\beta=O_{\Pbb}\{\log\log(1/\beta)\}.
+\]
+\end{proposition}
+
+\begin{proof}
+For \(x<0\), the inequality
+\(h(y)\le-y^2/\{2(1+y)\}\) gives
+\begin{equation}
+\label{eq:atom-one-gain}
+ \cJ_{N,1/2+\beta}(s\delta_{1/2+h})
+ \le sS(1/2+h)-\frac{s^2Q_h}{2(1+s)}.
+\end{equation}
+Fix \(\delta>0\). Lemma~\ref{lem:atom-endpoint-control} allows us to choose
+deterministic \(h_0>0\) such that, with probability at least \(1-\delta\),
+\[
+    Q_h\ge\frac1{4h},
+    \qquad \sqrt h\,X(h)^+\le\frac1{16}
+    \qquad(0<h\le h_0).
+\]
+On this event \(S(1/2+h)\le Q_h/4\). The right side of
+\eqref{eq:atom-one-gain} is nonpositive for \(s\ge1\); for \(0\le s\le1\),
+quadratic optimization gives
+\[
+    \cJ_{N,1/2+\beta}(s\delta_{1/2+h})
+    \le\frac{S(1/2+h)_+^2}{Q_h}\le2X(h)_+^2.
+\]
+Lemma~\ref{lem:atom-endpoint-control} bounds the Gaussian maximum over this
+\(O\{\log(1/\beta)\}\)-length interval by
+\(O_{\Pbb}(\sqrt{\log\log(1/\beta)})\).
+
+On \(h_0\le h<1/2\), the best one-atom gain is almost surely finite and
+independent of \(\beta\). Indeed, \(S(\theta)\to-\infty\) as
+\(\theta\uparrow1\), so only a random compact interval matters. Uniform
+coercivity in \(s\) follows from the negative-point block argument in the
+proof of Proposition~\ref{prop:support-one-d-analytic-active-set}. Since
+\(\delta\) was arbitrary, the result follows.
+\end{proof}
+
+We now compare the unrestricted logarithmic gain with the best gain available
+to a sparse optimizer.
+\begin{proof}[Proof of Proposition~\ref{prop:atom-count-endpoint-divergence}]
+Put \(r=r_\delta=1/4-\delta\) and
+\(\beta=b_r-1/2=1/2-\sqrt r\), so \(\beta\sim\delta\). Write
+\(a_\delta=\log(1/\delta)/\log\log(1/\delta)\). Fix \(\zeta>0\).
+Proposition~\ref{prop:atom-one-gain} allows us to choose \(C<\infty\) so
+that
+\[
+    \limsup_{\beta\downarrow0}
+    \Pbb\{M_\beta>C\log\log(1/\beta)\}\le\zeta.
+\]
+On the complementary event, if \(K_{b_r}\le\eta a_\delta\), then
+Lemma~\ref{lem:atom-gain-subadditivity} gives
+\[
+    V_{b_r}\le K_{b_r}M_\beta
+       \le \{C\eta+o(1)\}\log(1/\beta).
+\]
+Proposition~\ref{prop:atom-many-gain} supplies a deterministic \(c>0\) for
+which \(V_{b_r}\ge c\log(1/\beta)\) with probability tending to one. Thus,
+for every \(\eta<c/(2C)\),
+\[
+    \limsup_{\delta\downarrow0}
+    \Pbb\{K_{b_r}\le\eta a_\delta\}\le\zeta.
+\]
+Because \(\zeta\) was arbitrary, the nested limit is zero for the one-sided
+count. Finally, \(\mathsf K_r=1+K_{b_r}^++K_{b_r}^-\), and the event in the
+proposition implies \(K_{b_r}^+\le\eta a_\delta\), proving the stated result.
+\end{proof}

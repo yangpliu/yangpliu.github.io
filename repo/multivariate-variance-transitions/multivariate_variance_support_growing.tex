@@ -1,0 +1,2009 @@
+\subsection{Growing-dimensional support recovery}
+
+This subsection proves the support identity for every growing-dimensional
+regime in Theorem~\ref{thm:main-support-law}. In the Gaussian-bump coordinates
+of Subsection~\ref{sec:mv-one-atom-geometry}, the buffered reductions below
+identify every noncentral fitted atom with one radial exceedance while
+retaining the exact centering correction.
+
+\subsubsection{Exact edge coordinates}
+
+Recall the exact radial coordinate \(\xi_{n,i}^\star\), scale
+\(\delta_n^\star\), and identity \eqref{eq:exact-support-radius} from
+Section~\ref{sec:mv-gamma-normalization}.
+For fixed \(C,J<\infty\) and \(\eta>0\), recall the buffered event
+\(\mathcal B_n(C,J,\eta)\) from \eqref{eq:exact-support-buffer}.
+The centered radial Poisson limit makes the complement of such buffered
+events negligible after \(C,J\to\infty\) and then \(\eta\downarrow0\).
+It therefore remains to prove that every positive buffered excess creates
+exactly one noncentral support point.
+
+When \(d_nL_n=o(n^2)\), the exact coordinate agrees with the
+\(2\log n\)-based coordinate used in Sections~\ref{sec:radial-transition}
+and~\ref{sec:proof-program}. The next
+elementary comparison lets us invoke the radial estimates from those sections
+without carrying two normalizations through each proof.
+
+\begin{lemma}
+\label{lem:exact-old-edge-coordinate}
+Suppose \(d_nL_n=o(n^2)\) and \(s_n^\star=O(1)\).  With \(s_n\),
+\(\xi_{n,i}\), and \(\delta_n=a_n/\gamma_n\) as in
+\eqref{eq:s-definition} and \eqref{eq:bump-height-xi},
+\[
+ s_n-s_n^\star=o(1),
+ \qquad
+ \frac{\delta_n^\star}{\delta_n}=1+o(1).
+\]
+Moreover, for every fixed \(C<\infty\),
+\begin{equation}
+\label{eq:exact-old-edge-comparison}
+ \max_{i:\,|\xi_{n,i}^\star|\le C}
+ \left|\xi_{n,i}^\star-(\xi_{n,i}-s_n)\right|
+ \longrightarrow_{\Pbb}0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The second assertion is immediate from
+\(\delta_n^\star=\sigma_n^2a_n/\gamma_n\).  The definitions give
+\[
+ s_n-s_n^\star
+ =\frac{\gamma_n}{a_n}
+   \left(L_n-\frac{R_n^\star}{\sigma_n^2}\right).
+\]
+Since \(L_n-R_n^\star=O(n^{-1})\) and
+\(1-\sigma_n^2=n^{-1}\), its absolute value is
+\(O\{b_n/(na_n)+\gamma_n/(na_n)\}\).  This tends to zero: it is
+\(O(L_n/n)\) when \(d_n=O(L_n)\), while the superlogarithmic Gamma
+expansions make it \(O(\sqrt{d_nL_n}/n)=o(1)\) otherwise.
+
+In fact, the two excess coordinates satisfy the exact identity
+\begin{equation}
+\label{eq:exact-old-excess-identity}
+ \xi_{n,i}-s_n
+ =\sigma_n^2\xi_{n,i}^\star
+  -\frac{L_n-R_n^\star}{\delta_n}.
+\end{equation}
+Now \(L_n-R_n^\star=O(n^{-1})\).  Also
+\((n\delta_n)^{-1}=o(1)\): this is immediate when \(d_n=O(L_n)\), and in
+the superlogarithmic range it is
+\(O\{\sqrt{d_n/L_n}/n\}=o(L_n^{-1})\).
+Equation \eqref{eq:exact-old-excess-identity}, together with
+\(\sigma_n^2=1-n^{-1}\), proves
+\eqref{eq:exact-old-edge-comparison}.
+\end{proof}
+
+
+For later use, if \(c_1,\ldots,c_n>0\), define
+\[
+ \Gamma_c(w)=\frac1n\sum_{i=1}^n
+ c_i\exp\{w\cdot q_i-|w|^2/2\}.
+\]
+The Gibbs variational formula gives the weighted entropy dual
+\begin{equation}
+\label{eq:weighted-entropy-dual}
+ \log\Gamma_c(w)
+ =\sup_{p\in\Delta_n}
+ \left\{
+  w\cdot\sum_ip_iq_i-\frac{|w|^2}{2}
+  -K(p\Vert\mathbf u_n)+\sum_ip_i\log c_i
+ \right\}.
+\end{equation}
+
+The entropy argument used for one-atomicity must be made stable under the
+fitted denominators before it can count contacts.  The following weighted
+version supplies precisely that stability.  It is stated only in the random
+entropy regime, where it will be used.
+
+\begin{lemma}
+\label{lem:weighted-entropy-localization}
+Suppose \eqref{eq:entropy-regime} holds, \(s_n=O(1)\), and
+\(d_nL_n=o(n^2)\).  Put
+\[
+ q_i=\frac{Z_i-\bar Z_n}{\sqrt{\gamma_n}},
+ \qquad
+ R_i=\frac{|q_i|^2}{2},
+ \qquad
+ \delta_n=\frac{a_n}{\gamma_n},
+ \qquad
+ \mu_n^{\rm off}=\max_{i\ne j}|q_i\cdot q_j|,
+ \qquad
+ \mathfrak k_n=\frac{\|(q_i\cdot q_j)_{i,j\le n}\|_{\rm op}}{2n}.
+\]
+Fix \(C,J<\infty\) and \(\eta>0\), and suppose
+\[
+ \max_i(R_i-L_n)/\delta_n\le C,\qquad
+ \#\{i:R_i>L_n-\eta\delta_n\}\le J,\qquad
+ \min_i|R_i-L_n|>\eta\delta_n.
+\]
+Let \(A=\{i:R_i>L_n\}\).  Suppose a random vector
+\(\beta=(\beta_1,\ldots,\beta_n)\) satisfies, uniformly on this event,
+\begin{equation}
+\label{eq:weighted-entropy-alpha-profile}
+ \beta_i=-(R_i-L_n)+e_{n,i}\quad(i\in A),
+ \qquad
+ \max_{i\in A}|e_{n,i}|
+ +\max_{j\notin A}|\beta_j|
+ =:\omega_n,
+\end{equation}
+where
+\begin{equation}
+\label{eq:weighted-entropy-omega-rate}
+ \omega_n
+ =
+ O_{\Pbb}\left\{\frac{e^{\mu_n^{\rm off}}}n+\frac{\delta_nL_n}{n}\right\}
+ =n^{-1+o_{\Pbb}(1)}
+ =o_{\Pbb}(\delta_n).
+\end{equation}
+If
+\[
+ F_\beta(p)
+ =
+ \frac12\left|\sum_i p_iq_i\right|^2
+ -K(p\Vert \mathbf u_n)+\sum_i p_i\beta_i,
+\]
+then, with probability tending to one, every \(p\in\Delta_n\) satisfying
+\(F_\beta(p)\ge0\) has one of the following two forms:
+\begin{equation}
+\label{eq:weighted-entropy-two-patches}
+ \|p-\mathbf u_n\|_1\le n^{-1/2+o_{\Pbb}(1)},
+ \qquad\text{or}\qquad
+ 1-p_j\le n^{-1/2+o_{\Pbb}(1)}
+ \quad\text{for some }j\in A.
+\end{equation}
+In the first case \(|\sum_i p_iq_i|=o_{\Pbb}(1)\); in the second,
+\(|\sum_i p_iq_i-q_j|=o_{\Pbb}(1)\). Moreover, if \(p=p(w)\) is the
+Gibbs vector of a weighted certificate with value at least one, then \(w\)
+lies within \(n^{-1/2+o_{\Pbb}(1)}\) of zero in the first case and of
+\(q_j\) in the second.
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:random-off-diagonal} and \eqref{eq:entropy-regime} imply that
+the deterministic bounds in Proposition~\ref{prop:refined-deterministic-gram}
+hold with probability tending to one. Replace
+\(\mu_n^{\rm off}\) and \(\upsilon_n\) by deterministic upper bounds that
+hold with probability tending to one and preserve their asymptotic
+separation. For readability, continue to denote these deterministic bounds by
+\(\mu_n^{\rm off}\) and \(\upsilon_n\). We may then choose
+deterministic \(a_n^\circ\) so that
+\[
+ 1+\mu_n^{\rm off}\ll a_n^\circ\ll
+ \min\{\log(1/\upsilon_n),\log(n\delta_n),L_n\},
+\]
+on an event of probability tending to one, and then set
+\[
+ T_n=e^{a_n^\circ},
+ \qquad
+ L_ny_n=\{a_n^\circ\log(n\delta_n)\}^{1/2}.
+\]
+These choices satisfy \eqref{eq:refined-gram-conditions}. Since
+\(\max_iR_i=L_n+O(\delta_n)\), the extra diagonal term in
+\eqref{eq:heavy-energy} is
+\[
+ O(\delta_n)\sum_i b_i^2
+ =o\left(L_n\sum_i b_i^2\right)
+\]
+and is absorbed by the heavy-entropy term in
+\eqref{eq:heavy-entropy-scalar}.
+
+First suppose \(\max_i p_i\le1-y_n\).  Repeat the light-heavy
+decomposition in Proposition~\ref{prop:refined-deterministic-gram}. Explicitly,
+put
+\[
+ f_i=np_i,\qquad \ell_i=f_i\wedge T_n,\qquad h_i=(f_i-T_n)_+,
+ \qquad b_i=\frac{h_i}{n},
+ \qquad K_0=\frac1n\sum_i\phi(\ell_i),\qquad
+ z=\sum_i b_i,
+\]
+where \(\phi(x)=x\log x-x+1\).
+The active diagonal excess is canceled by the active fitted weight:
+because \(b_i^2\le p_i\),
+\[
+ \sum_{i\in A}(R_i-L_n)b_i^2+\sum_i p_i\beta_i
+ \le\omega_n.
+\]
+Keeping half of the slack in \eqref{eq:light-energy} and
+\eqref{eq:heavy-entropy-scalar} therefore gives
+\begin{equation}
+\label{eq:weighted-diffuse-slack}
+ F_\beta(p)
+ \le
+ -cK_0-ca_n^\circ z+\omega_n.
+\end{equation}
+Thus \(F_\beta(p)\ge0\) implies
+\(K_0+a_n^\circ z=O_{\Pbb}(\omega_n)\).  Moreover,
+\[
+ \|p-\mathbf u_n\|_1
+ \le
+ C\left\{
+   \left(\frac{T_n\omega_n}{a_n^\circ}\right)^{1/2}
+   +\frac{\omega_n}{a_n^\circ}
+ \right\}
+ \le n^{-1/2+o_{\Pbb}(1)}.
+\]
+The last inequality uses \(T_n=n^{o(1)}\) and
+\eqref{eq:weighted-entropy-omega-rate}; in particular,
+\(L_n(T_n\omega_n/a_n^\circ)^{1/2}=o_{\Pbb}(1)\).
+The Gram bound then gives
+\(|\sum_i p_iq_i|=o_{\Pbb}(1)\), proving the first alternative.
+
+It remains to consider \(p_i=1-y>1-y_n\).  Write
+\(\sum_jp_jq_j=(1-y)q_i+y\bar q\), as in the last part of the proof of
+Proposition~\ref{prop:refined-deterministic-gram}.  Put
+\[
+ \mathfrak H_n
+ =
+ L_n-\mu_n^{\rm off}-O(\delta_n)-2L_ny_n-\omega_n.
+\]
+The preceding choices give
+\(\mathfrak H_n\sim L_n\) and
+\(e^{-\mathfrak H_n}=n^{-1+o(1)}=o(\delta_n)\). Convexity,
+the entropy bound \(h_{\rm bin}(y)\le y\log(e/y)\), and the fitted weights give
+\begin{equation}
+\label{eq:weighted-near-vertex}
+ F_\beta(p)
+ \le
+ \alpha_i
+ +y\left\{\log\frac ey-\mathfrak H_n\right\},
+\end{equation}
+where \(\alpha_i=R_i-L_n+\beta_i\).
+
+If \(i\notin A\), the first term on the right of
+\eqref{eq:weighted-near-vertex} is at most
+\(-\eta\delta_n+\omega_n\). The second term on the right of
+\eqref{eq:weighted-near-vertex} is at most
+\(e^{-\mathfrak H_n}=o(\delta_n)\).
+Hence \(F_\beta(p)<0\).
+
+If \(i\in A\), then \(|\alpha_i|\le\omega_n\).  For
+\(y>e^{-\mathfrak H_n/2}\),
+\[
+ \log(e/y)-\mathfrak H_n\le-\mathfrak H_n/3
+\]
+for all large \(n\).  Nonnegative free energy consequently forces
+\[
+ y\le e^{-\mathfrak H_n/2}+\frac{3\omega_n}{\mathfrak H_n}
+ \le n^{-1/2+o_{\Pbb}(1)}.
+\]
+Since \(\max_j|q_j|=O_{\Pbb}(\sqrt{L_n})\), this gives
+\[
+ \left|\sum_jp_jq_j-q_i\right|
+ =y|\bar q-q_i|=o_{\Pbb}(1),
+\]
+which is the second alternative in
+\eqref{eq:weighted-entropy-two-patches}.
+
+For later use, define the weighted certificate and its Gibbs vector by
+\[
+ \Gamma_\beta(w)
+ =\frac1n\sum_{i=1}^n
+   \exp\left\{w\cdot q_i-\frac{|w|^2}{2}+\beta_i\right\},
+ \qquad
+ p_i(w)
+ =\frac{\exp\{w\cdot q_i+\beta_i\}}
+        {\sum_j\exp\{w\cdot q_j+\beta_j\}}.
+\]
+The exact identity
+\[
+ F_\beta\{p(w)\}-\log\Gamma_\beta(w)
+ =
+ \frac12\left|w-\sum_i p_i(w)q_i\right|^2
+\]
+shows that the two alternatives in
+\eqref{eq:weighted-entropy-two-patches} also localize \(w\) whenever
+\(\Gamma_\beta(w)\ge1\). On the diffuse branch,
+\eqref{eq:weighted-diffuse-slack} gives
+\(F_\beta\{p(w)\}=n^{-1+o_{\Pbb}(1)}\), while the Gram estimate and
+\eqref{eq:weighted-entropy-two-patches} give
+\(\lvert\sum_i p_i(w)q_i\rvert=n^{-1/2+o_{\Pbb}(1)}\). On an active
+branch, \eqref{eq:weighted-near-vertex} gives
+\(F_\beta\{p(w)\}=n^{-1+o_{\Pbb}(1)}\), and
+\(\lvert\sum_i p_i(w)q_i-q_j\rvert=n^{-1/2+o_{\Pbb}(1)}\). The displayed
+identity therefore proves the asserted spatial localization.
+Moreover,
+\[
+ \nabla^2\log\Gamma_\beta(w)
+ =\operatorname{Cov}_{p(w)}(q_i)-I.
+\]
+On the diffuse branch the covariance norm is at most
+\(2\mathfrak k_n+O\{L_n\|p-\mathbf u_n\|_1\}=o_{\Pbb}(1)\); on an active branch it is
+\(O\{L_n(1-p_i)\}=o_{\Pbb}(1)\).  Thus every relevant patch is strictly
+log-concave for all large \(n\).
+\end{proof}
+
+The slowly growing range needs a local version of the truncated shell
+argument.  Conditional first moments are enough.  Exponential tilting
+shows that the supremum of the background on a unit edge patch has mean
+\(\exp\{-\eps_nL_n+O(\sqrt{d_n}+\eps_n\sqrt{L_n})\}\), which beats the
+number of upper centers even when \(d_n\) grows arbitrarily slowly.
+
+\begin{lemma}
+\label{lem:slow-punctured-c3}
+Suppose
+\[
+ d_n\longrightarrow\infty,\qquad
+ d_n\le(\log L_n)^2,\qquad s_n=O(1),
+\]
+and put \(A_n=\sqrt{d_n}\).  There is a random set
+\(\mathcal U_n\), containing every index with
+\(\xi_{n,i}-s_n>-\eta\), such that, with probability tending to one,
+\[
+ |\mathcal U_n|\le e^{2A_n},\qquad
+ \min_{\substack{i,j\in\mathcal U_n\\i\ne j}}
+ |q_i-q_j|^2=4L_n\{1+o(1)\},
+\]
+and, for every fixed \(R<\infty\) and \(0\le k\le3\),
+\begin{equation}
+\label{eq:slow-punctured-c3}
+ \max_{j\in\mathcal U_n}\ \sup_{|w-q_j|\le R}
+ \left\|
+  \nabla^k\sum_{i\notin\mathcal U_n}
+  h_ie^{-|w-q_i|^2/2}
+ \right\|=o_{\Pbb}(1).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Work first with the independent uncentered vectors
+\(Q_i=Z_i/\sqrt{\gamma_n}\), and let \(\mathcal U_n^\circ\) contain the
+indices whose uncentered radial coordinate is at least \(-A_n-1\).
+Write \(h_i^\circ=n^{-1}e^{|Q_i|^2/2}\) for the corresponding uncentered
+bump height.
+The Gamma hazard estimate and Markov's inequality give
+\[
+ |\mathcal U_n^\circ|\le e^{2A_n}
+\]
+with probability tending to one. Conditional on the radii, their
+directions are independent and uniform. Since
+\(\log|\mathcal U_n^\circ|=O(A_n)=o(d_n)\), spherical concentration gives
+the displayed separation, first for the \(Q_i\)'s and then for the
+centered \(q_i\)'s.
+
+Conditional on \(Q_j\), \(j\in\mathcal U_n^\circ\), all remaining vectors
+are independent of \(Q_j\).  Write \(w=Q_j+h\), \(|h|\le R\).  For every
+multi-index \(|\alpha|\le3\), exponential tilting from
+\(\mathcal N(0,\gamma_n^{-1}I)\) to
+\(\mathcal N(Q_j/\gamma_n,\gamma_n^{-1}I)\) gives
+\begin{align*}
+ &\sum_{i\ne j}\E\left[
+  \sup_{|h|\le R}
+  \left|\partial^\alpha
+  \{h_i^\circ e^{-|Q_j+h-Q_i|^2/2}\}\right|
+  \mathbf1_{\{i\notin\mathcal U_n^\circ\}}
+  \,\middle|\,Q_j\right]\\
+ &\qquad\le
+ C_{\alpha,R}
+ \exp\left\{
+  -\frac{\eps_n|Q_j|^2}{2}
+  +C_{\alpha,R}\bigl(\sqrt{d_n}+\eps_n|Q_j|+1\bigr)
+ \right\}.
+\end{align*}
+Indeed, after tilting,
+\(Q_i-Q_j\) is Gaussian with mean \(-\eps_nQ_j\), covariance
+\(\gamma_n^{-1}I\), and the supremum over \(h\) contributes at most a
+fixed polynomial in its norm times \(e^{R|Q_i-Q_j|}\).
+Uniformly over \(j\in\mathcal U_n^\circ\),
+\(|Q_j|^2/2=L_n+O(A_n)\), while
+\[
+ \eps_nL_n=(1-o(1))\frac{d_n}{2}\log\frac{2L_n}{d_n}.
+\]
+This dominates
+\(A_n+\sqrt{d_n}+\eps_n\sqrt{L_n}\), since
+\(d_n\to\infty\) and \(d_n\le(\log L_n)^2\).  Conditional Markov's
+inequality is applied to the random set through
+\[
+ \Pbb\{\exists j\in\mathcal U_n^\circ:B_{n,j}\}
+ \le
+ \sum_{j=1}^n
+ \E\left[
+  \mathbf1_{\{j\in\mathcal U_n^\circ\}}
+  \Pbb(B_{n,j}\mid Q_j)
+ \right],
+\]
+where \(B_{n,j}\) is the failure of the displayed derivative bound.
+Since
+\(\E|\mathcal U_n^\circ|=e^{(1+o(1))A_n}\), the conditional exponential
+moment bound in the preceding display makes this sum \(o(1)\).  Passing from coordinate derivatives
+to the tensor norm costs at most \(O(d_n^k)\) for order \(k\le3\), whose
+logarithm is negligible compared with \(\eps_nL_n\).  This proves the
+uncentered version of \eqref{eq:slow-punctured-c3}.
+
+Finally,
+\[
+ B_n(w)=e^{-w\cdot\bar Z_n/\sqrt{\gamma_n}}B_n^\circ(w),
+ \qquad
+ \frac{|\bar Z_n|}{\sqrt{\gamma_n}}
+ =O_{\Pbb}\{\sqrt{d_n/n}\}.
+\]
+On the relevant balls \(|w|=O(\sqrt{L_n})\), this multiplicative factor
+is \(1+o_{\Pbb}(1)\), while each of its first four derivatives is
+\(o_{\Pbb}(1)\).  The uniform
+centered--uncentered radial difference is \(o_{\Pbb}(1)\), so the
+one-unit cutoff buffer shows that
+\(\mathcal U_n:=\mathcal U_n^\circ\) contains every centered index above
+\(-\eta\).  This proves all three assertions.
+\end{proof}
+
+\subsubsection{Uniform finite-contact continuation}
+
+The support-count argument needs a joint expansion over all active edge
+patches.  The following lemma supplies it.  The hypotheses are stated in
+terms of absolute derivative envelopes; this is important because the
+reciprocal fitted values used in the KKT certificate need not preserve
+cancellation among derivatives of different bumps.
+
+\begin{lemma}
+\label{lem:uniform-finite-edge-expansion}
+Let \(L=\log n\), and let \(q_1,\ldots,q_n\in\mathbb R^{d_n}\) satisfy
+\[
+ \sum_{j=1}^nq_j=0,\qquad \max_j|q_j|\le C_0\sqrt L.
+\]
+Suppose
+\[
+ \frac{|q_i|^2}{2}=L+\delta v_i,\qquad 0<\delta\le2,
+ \qquad \bar\delta=1\wedge\delta.
+\]
+Let \(\mathcal U\subseteq[n]\) contain every \(i\) with \(v_i>-\eta\),
+put \(A=\{i:v_i>0\}\), and assume
+\[
+ |A|\le J,\qquad \eta\le v_i\le C\quad(i\in A),\qquad
+ v_i\le-\eta\quad(i\in\mathcal U\setminus A).
+\]
+For \(0\le k\le3\), define
+\begin{equation}
+\label{eq:finite-edge-derivative-envelope}
+\mathcal E_{i,k}(r)
+ =
+ \sup_{|z|\le r}\frac1n\sum_{j\ne i}
+ \{1+|q_j-q_i-z|^k\}
+ \exp\left\{(q_i+z)\cdot q_j-\frac{|q_i+z|^2}{2}\right\}.
+\end{equation}
+Fix \(0<r_n\le R_n\le1/4\), and put
+\(e_{k,n}=\max_{i\in\mathcal U}\mathcal E_{i,k}(2R_n)\).  Suppose that
+\begin{equation}
+\label{eq:finite-edge-envelope-assumptions}
+ \max_{i\in\mathcal U}\mathcal E_{i,0}(2R_n)
+   =o_{\Pbb}(\bar\delta),\qquad
+ \max_{i\in\mathcal U}\mathcal E_{i,1}(2R_n)
+   =o_{\Pbb}(r_n),
+\end{equation}
+and
+\begin{equation}
+\label{eq:finite-edge-higher-envelope-assumptions}
+ \begin{aligned}
+ \max_{i\in\mathcal U}
+ \{\mathcal E_{i,2}(2R_n)+\mathcal E_{i,3}(2R_n)\}
+ &=o_{\Pbb}(1),\qquad
+ n\bar\delta\longrightarrow\infty,
+ \qquad
+ r_n^2=o(\bar\delta),\\
+ \frac{\bar\delta L}{n}&=o(r_n),\qquad
+ r_ne_{1,n}+r_n^2e_{2,n}+r_n^3e_{3,n}
+ &=o_{\Pbb}(\bar\delta).
+ \end{aligned}
+\end{equation}
+
+For \(\tau\in\mathbb R^{d_n}\), \(z_i\in\mathbb R^{d_n}\), and
+\(m_i\ge0\), set
+\begin{equation}
+\label{eq:finite-edge-candidate}
+ \Pi_{\tau,z,m}
+ =
+ \left(1-\frac{\sum_{i\in A}m_i}{n}\right)\delta_\tau
+ +\frac1n\sum_{i\in A}m_i\delta_{q_i+z_i}.
+\end{equation}
+Uniformly for
+\[
+ |\tau|\le K\bar\delta\sqrt L/n,\qquad |z_i|\le R_n,\qquad
+ 0\le m_i\le K\bar\delta,
+\]
+its relative log likelihood has the expansion
+\begin{equation}
+\label{eq:joint-finite-edge-expansion}
+ \ell_q(\Pi_{\tau,z,m})
+ =
+ -\frac n2|\tau|^2
+ +\sum_{i\in A}
+ \left[
+  \log\{1+m_i e^{\vartheta_i(\tau,z_i)}\}-m_i
+ \right]
+ +\mathcal R_n(\tau,z,m),
+\end{equation}
+where
+\[
+ \vartheta_i(\tau,z)
+ =
+ \delta v_i-\tau\cdot q_i+\frac{|\tau|^2}{2}-\frac{|z|^2}{2}.
+\]
+The remainder is \(o_{\Pbb}(\bar\delta^2)\), uniformly on this set.  The
+same expansion may be differentiated twice in the mass variables and
+three times in the spatial variables.  In particular, uniformly,
+\begin{align}
+\label{eq:joint-finite-edge-derivatives}
+ \|\partial_m\mathcal R_n\|
+   &\le O_{\Pbb}(e_{0,n}+n^{-1})=o_{\Pbb}(\bar\delta),
+ &\|\partial_m^2\mathcal R_n\|&=o_{\Pbb}(1),\notag\\
+ \|\nabla_z\mathcal R_n\|
+   &\le O_{\Pbb}(\bar\delta e_{1,n})
+     =o_{\Pbb}(\bar\delta r_n),
+ &\|\partial_m\nabla_z\mathcal R_n\|
+   &=O_{\Pbb}(e_{1,n})=o_{\Pbb}(r_n),\notag\\
+ \|\nabla_z^2\mathcal R_n\|+
+ \|\nabla_z^3\mathcal R_n\|
+   &\le O_{\Pbb}\{\bar\delta(e_{2,n}+e_{3,n})\}
+     =o_{\Pbb}(\bar\delta),
+ &\|\nabla_\tau\mathcal R_n\|
+   &=o_{\Pbb}(\bar\delta\sqrt L),
+\end{align}
+with all mixed blocks interpreted in the maximum block norm.
+
+There is a critical point of \(\ell_q\) in these patches, unique near the
+locations and masses displayed in
+\eqref{eq:finite-edge-contact-asymptotics}--\eqref{eq:finite-edge-mass-asymptotics},
+for which
+\begin{equation}
+\label{eq:finite-edge-contact-asymptotics}
+ \tau_n
+ =
+ -\frac1n\sum_{i\in A}(1-e^{-\delta v_i})q_i
+ +o_{\Pbb}(\bar\delta\sqrt L/n),\qquad
+ z_{n,i}=o_{\Pbb}(r_n),
+\end{equation}
+and
+\begin{equation}
+\label{eq:finite-edge-mass-asymptotics}
+ m_{n,i}=1-e^{-\delta v_i}+o_{\Pbb}(\bar\delta).
+\end{equation}
+In particular, all edge masses are positive.  If
+\(\widetilde\Pi=\Pi_{\tau_n,z_n,m_n}\), then
+\[
+ \Gamma_{\widetilde\Pi}(\tau_n)
+ =\Gamma_{\widetilde\Pi}(q_i+z_{n,i})=1,\qquad
+ \nabla\Gamma_{\widetilde\Pi}(\tau_n)
+ =\nabla\Gamma_{\widetilde\Pi}(q_i+z_{n,i})=0.
+\]
+Writing \(c_j=M_j(\widetilde\Pi)^{-1}\), one has
+\begin{equation}
+\label{eq:finite-edge-denominator-profile}
+ \max_{j\notin A}(\log c_j)_+
+ =O_{\Pbb}(\bar\delta L/n),\qquad
+ \log c_i=-\delta v_i+o_{\Pbb}(\bar\delta)\quad(i\in A).
+\end{equation}
+Moreover, each active patch has the \(C^2\) representation
+\begin{equation}
+\label{eq:finite-edge-certificate-c2}
+ \Gamma_{\widetilde\Pi}(q_i+y)
+ =
+ A_{n,i}e^{-|y|^2/2}+E_{n,i}(y),\qquad
+ A_{n,i}=1+o_{\Pbb}(1),
+\end{equation}
+where
+\[
+ \|E_{n,i}\|_{C^0(B(0,R_n))}=o_{\Pbb}(\bar\delta),
+ \qquad
+ \|E_{n,i}\|_{C^2(B(0,R_n))}=o_{\Pbb}(1).
+\]
+Thus the certificate is strictly log-concave on every active patch and
+has exactly one level-one point there.  On every inactive patch indexed
+by \(\mathcal U\setminus A\),
+\[
+ \sup_{|y|\le R_n}\Gamma_{\widetilde\Pi}(q_i+y)
+ \le1-c_\eta\bar\delta.
+\]
+\end{lemma}
+
+\begin{proof}
+Write \(k_w(j)=\exp\{w\cdot q_j-|w|^2/2\}\), \(m_+=\sum_{i\in A}m_i\),
+and \(w_i=q_i+z_i\).  Factoring out the moving central component gives
+the exact identity
+\[
+ M_j(\Pi_{\tau,z,m})=k_\tau(j)(1+x_j),\qquad
+ x_j=-\frac{m_+}{n}
+ +\frac1n\sum_{i\in A}m_iK_{ij},
+\]
+where
+\[
+ K_{ij}
+ =\frac{k_{w_i}(j)}{k_\tau(j)}
+ =\exp\left\{(w_i-\tau)\cdot(q_j-\tau)
+              -\frac{|w_i-\tau|^2}{2}\right\}.
+\]
+At the observation belonging to the \(i\)th patch,
+\begin{equation}
+\label{eq:finite-edge-own-response}
+ \frac{K_{ii}}n=e^{\vartheta_i(\tau,z_i)}.
+\end{equation}
+For \(j\notin A\), positivity and
+\eqref{eq:finite-edge-envelope-assumptions} give, uniformly over the
+displayed parameter set,
+\[
+ \max_{j\notin A}|x_j|=o_{\Pbb}(1),\qquad
+ \sum_{j\notin A}x_j=-m_++o_{\Pbb}(\bar\delta^2),
+ \qquad
+ \sum_{j\notin A}x_j^2=o_{\Pbb}(\bar\delta^2).
+\]
+Indeed, after putting \(a_i=w_i-\tau\), the positive response away from
+the own observation equals
+\[
+ \frac{m_i}{n}\sum_{j\ne i}K_{ij}
+ =
+ m_i e^{-a_i\cdot\tau}
+ \frac1n\sum_{j\ne i}e^{a_i\cdot q_j-|a_i|^2/2}
+ =o_{\Pbb}(\bar\delta^2).
+\]
+The negative part is \(m_+/n\) per observation.  Omitting the at most
+\(J\) active observations therefore costs \(O(\bar\delta/n)\), which is
+\(o(\bar\delta^2)\) by \(n\bar\delta\to\infty\).  Positivity also gives
+\[
+ \frac1{n^2}\sum_{j\ne i}K_{ij}^2
+ \le
+ \left(\frac1n\max_{j\ne i}K_{ij}\right)
+ \left(\frac1n\sum_{j\ne i}K_{ij}\right)
+ \le O_{\Pbb}(e_{0,n}^2),
+\]
+which controls the quadratic Taylor remainder. Applying the same product
+bound after inserting the polynomial factors from
+\eqref{eq:finite-edge-derivative-envelope} yields
+\begin{align}
+ |\mathcal R_n|
+ &\le O_{\Pbb}\{\bar\delta e_{0,n}+e_{0,n}^2
+                   +\bar\delta/n\},\notag\\
+ \|\partial_m\mathcal R_n\|
+ &\le O_{\Pbb}(e_{0,n}+n^{-1}),
+ &\|\partial_m^2\mathcal R_n\|&=o_{\Pbb}(1),\notag\\
+ \|\nabla_z\mathcal R_n\|
+ &\le O_{\Pbb}(\bar\delta e_{1,n}),
+ &\|\partial_m\nabla_z\mathcal R_n\|
+   &\le O_{\Pbb}(e_{1,n}),\notag\\
+ \|\nabla_z^2\mathcal R_n\|+
+ \|\nabla_z^3\mathcal R_n\|
+ &\le O_{\Pbb}\{\bar\delta(e_{2,n}+e_{3,n})\}.
+ \label{eq:finite-edge-remainder-bounds}
+\end{align}
+Differentiation with respect to \(\tau\) produces the same relative
+displacements, together with terms bounded by \(\sqrt L/n\) from the
+finitely many omitted observations.  Hence
+\begin{equation}
+\label{eq:finite-edge-tau-remainder}
+ \|\nabla_\tau\mathcal R_n\|
+ \le O_{\Pbb}\{\bar\delta e_{1,n}
+                +\bar\delta\sqrt L\,e_{0,n}
+                +\bar\delta\sqrt L/n\}
+ =o_{\Pbb}(\bar\delta\sqrt L).
+\end{equation}
+These estimates prove the remainder assertions in
+\eqref{eq:joint-finite-edge-derivatives}.
+
+Since \(\sum_jq_j=0\),
+\(\sum_j\log k_\tau(j)=-n|\tau|^2/2\).  Taylor expansion of
+\(\sum_{j\notin A}\log(1+x_j)\), together with
+\eqref{eq:finite-edge-own-response}, proves
+\eqref{eq:joint-finite-edge-expansion}.  Differentiating the same exact
+factorization proves \eqref{eq:joint-finite-edge-derivatives}.  The
+finiteness of \(|A|\) makes every bound uniform over simultaneous masses
+and locations.
+
+It remains to justify the critical point without treating the fitted
+denominators as fixed.  Define the contact map
+\[
+ \mathcal F(\tau,z,m)
+ =
+ \left(
+  \nabla\Gamma_\Pi(\tau),\
+  \{\nabla\Gamma_\Pi(q_i+z_i)\}_{i\in A},\
+  \{\Gamma_\Pi(q_i+z_i)-\Gamma_\Pi(\tau)\}_{i\in A}
+ \right).
+\]
+Put \(m_i^0=1-e^{-\delta v_i}\),
+\(\tau^0=-n^{-1}\sum_i m_i^0q_i\), and
+\(\widetilde m_i^0=1-e^{-\vartheta_i(\tau^0,0)}\).  Then
+\[
+ |\tau^0|=O(\bar\delta\sqrt L/n),\qquad
+ \widetilde m_i^0-m_i^0=o(\bar\delta),
+\]
+and \(m_i^0\ge c_{\eta,C}\bar\delta\).  Use the anisotropic norms
+\[
+ \|(f_0,\{f_i\},\{g_i\})\|_{\rm out}
+ =
+ \frac{n|f_0|}{\bar\delta\sqrt L}
+ +\max_i\frac{|f_i|}{r_n}
+ +\max_i\frac{|g_i|}{\bar\delta}
+\]
+and
+\[
+ \|(\Delta\tau,\Delta z,\Delta m)\|_{\rm in}
+ =
+ \frac{n|\Delta\tau|}{\bar\delta\sqrt L}
+ +\max_i\frac{|\Delta z_i|}{r_n}
+ +\max_i\frac{|\Delta m_i|}{\bar\delta}.
+\]
+The likelihood derivatives and contact equations are related by
+\[
+ \partial_\tau\ell_q
+ =n\left(1-\frac{m_+}{n}\right)\nabla\Gamma_\Pi(\tau),
+ \qquad
+ \nabla_{z_i}\ell_q=m_i\nabla\Gamma_\Pi(q_i+z_i),
+ \qquad
+ \partial_{m_i}\ell_q
+ =\Gamma_\Pi(q_i+z_i)-\Gamma_\Pi(\tau).
+\]
+
+For the quantitative estimates, put
+\[
+ \begin{split}
+ \chi_n={}&
+ \frac{e_{0,n}+n^{-1}}{\bar\delta}
+ +\frac{e_{1,n}}{r_n}
+ +\frac{e_{0,n}+e_{1,n}}{\sqrt L}
+ +\frac Ln,\\
+ \zeta_n={}&
+ \frac{e_{0,n}}{\bar\delta}
+ +\frac{e_{1,n}}{r_n}+e_{2,n}+e_{3,n}
+ +\frac{r_ne_{1,n}+r_n^2e_{2,n}+r_n^3e_{3,n}}{\bar\delta}\\
+ &+\frac1{n\bar\delta}+\frac{\bar\delta L}{nr_n}.
+ \end{split}
+\]
+Every term is \(o_{\Pbb}(1)\) by the hypotheses.  At
+\((\tau^0,0,\widetilde m^0)\), the principal part of
+\eqref{eq:joint-finite-edge-expansion} is stationary in the spatial and
+mass coordinates.  Its central derivative is
+\(O(\bar\delta L^{3/2}/n)\).  Hence
+\eqref{eq:finite-edge-remainder-bounds} and
+\eqref{eq:finite-edge-tau-remainder} give the explicit residual estimate
+\begin{equation}
+\label{eq:finite-edge-scaled-residual}
+ \|\mathcal F(\tau^0,0,\widetilde m^0)\|_{\rm out}
+ =O_{\Pbb}(\chi_n)=o_{\Pbb}(1).
+\end{equation}
+
+Let \(\alpha_i=e^{-\vartheta_i(\tau^0,0)}\), which is bounded above and
+below, and define
+\[
+ \mathcal J_n(\Delta\tau,\Delta z,\Delta m)
+ =
+ \left(
+ -\Delta\tau-\frac1n\sum_i\alpha_iq_i\Delta m_i,\
+ \{-\Delta z_i\}_{i\in A},\
+ \{-\Delta m_i-\alpha_iq_i\cdot\Delta\tau\}_{i\in A}
+ \right).
+\]
+Direct differentiation of the exact factorization gives
+\begin{equation}
+\label{eq:finite-edge-scaled-jacobian}
+ \|D\mathcal F(\tau^0,0,\widetilde m^0)-\mathcal J_n\|_{{\rm in}\to{\rm out}}
+ =O_{\Pbb}(\zeta_n)=o_{\Pbb}(1).
+\end{equation}
+The operator \(\mathcal J_n\) and its inverse are uniformly bounded.  Indeed,
+its only nontrivial Schur correction is bounded by
+\[
+ \left\|\frac1n\sum_{i\in A}\alpha_i^2q_iq_i^\top\right\|_{\rm op}
+ =O_J(L/n)=o(1).
+\]
+
+The own-response term requires one additional contribution in the
+Jacobian-variation estimate.  On a scaled ball of radius \(\rho\), one has
+\(|z_i|\le\rho r_n\), and differentiating
+\(-|z_i|^2/2\) in the mass equation contributes at most
+\(C\rho r_n^2/\bar\delta\) in the scaled operator norm.  The remaining
+principal and remainder terms are controlled by \(\rho\) and \(\zeta_n\).
+Consequently, uniformly for \(0<\rho\le1\),
+\begin{equation}
+\label{eq:finite-edge-scaled-jacobian-variation}
+ \sup_{\|(\tau,z,m)-(\tau^0,0,\widetilde m^0)\|_{\rm in}\le\rho}
+ \|D\mathcal F-D\mathcal F(\tau^0,0,\widetilde m^0)\|_{{\rm in}\to{\rm out}}
+ \le
+ O_{\Pbb}\left\{\zeta_n+\rho+
+                  \frac{\rho r_n^2}{\bar\delta}\right\}.
+\end{equation}
+Since \(r_n^2=o(\bar\delta)\), the right side is
+\(o_{\Pbb}(1)+O(\rho)\).
+
+We finally verify rather than assume the existence of a vanishing Newton
+radius.  Since \(\chi_n\xrightarrow{\Pbb}0\), choose integers \(N_k\uparrow\infty\)
+so that
+\[
+ \Pbb\{\chi_n>k^{-2}\}\le k^{-1}\qquad(n\ge N_k),
+\]
+and set \(\varrho_n=k^{-1}\) when \(N_k\le n<N_{k+1}\).  Then
+\(\varrho_n\downarrow0\) and
+\(\chi_n=o_{\Pbb}(\varrho_n)\).  Equations
+\eqref{eq:finite-edge-scaled-residual}--
+\eqref{eq:finite-edge-scaled-jacobian-variation}, the uniformly bounded
+inverse of \(\mathcal J_n\), and Newton--Kantorovich give a unique zero in
+the scaled ball of radius \(\varrho_n\).  Its correction has input norm
+\(o_{\Pbb}(\varrho_n)\), and therefore
+\[
+ |\tau_n-\tau^0|=o_{\Pbb}(\bar\delta\sqrt L/n),
+ \qquad
+ \max_i|z_{n,i}|=o_{\Pbb}(r_n),
+ \qquad
+ \max_i|m_{n,i}-\widetilde m_i^0|=o_{\Pbb}(\bar\delta).
+\]
+Together with the definition of the base point, these estimates give
+\eqref{eq:finite-edge-contact-asymptotics} and
+\eqref{eq:finite-edge-mass-asymptotics}.  Notice in particular that the
+central block is \(-I+o_{\Pbb}(1)\).  The Hessian
+\(\nabla^2B_n(0)\approx-\eps_nI\) is the Hessian of the unfitted bump
+field; it is not the Jacobian obtained when the central atom and all
+fitted denominators move together.
+
+Stationarity in \(\tau\) and \(z_i\) gives the gradient contact equations,
+while stationarity in \(m_i\) makes all displayed certificate values
+equal.  Since
+\(\int\Gamma_{\widetilde\Pi}\,d\widetilde\Pi=1\), their common value is
+one.  For \(j\notin A\),
+\[
+ M_j(\widetilde\Pi)
+ \ge
+ \left(1-\frac{\sum_i m_{n,i}}n\right)k_{\tau_n}(j),
+\]
+so \(\max_{j\notin A}(\log c_j)_+=O_{\Pbb}(\bar\delta L/n)\).
+The own fitted value and
+\eqref{eq:finite-edge-mass-asymptotics} give
+\(\log c_i=-\delta v_i+o_{\Pbb}(\bar\delta)\).
+
+Finally, separate the \(i\)th observation in the certificate:
+\[
+ \Gamma_{\widetilde\Pi}(q_i+y)
+ =
+ c_i e^{\delta v_i}e^{-|y|^2/2}
+ +\frac1n\sum_{j\ne i}c_j
+   e^{(q_i+y)\cdot q_j-|q_i+y|^2/2}.
+\]
+The positive fitted-weight bound and the absolute envelopes imply
+\eqref{eq:finite-edge-certificate-c2}.  The own Gaussian has Hessian
+\(-I\) at its peak, so the certificate is strictly log-concave on a
+smaller patch containing its stationary contact.  For
+\(i\in\mathcal U\setminus A\), its adjusted own height is at most
+\(\exp\{-\eta\delta+O_{\Pbb}(\bar\delta L/n)\}\), and the punctured
+background is \(o_{\Pbb}(\bar\delta)\).  This proves the inactive-patch
+claim and completes the proof.
+\end{proof}
+
+\subsubsection{Support identity when \(d_n\log n=o(n^2)\)}
+
+The finite-contact lemma is deterministic. We now verify its hypotheses
+throughout the range \(d_nL_n=o(n^2)\) and express the resulting support
+identity in the exact coordinate of Theorem~\ref{thm:main-support-law}.
+
+\begin{proposition}
+\label{prop:buffered-support-below-simplex}
+Suppose
+\[
+ d_n\longrightarrow\infty,
+ \qquad d_nL_n=o(n^2),
+ \qquad s_n^\star=O(1).
+\]
+For every fixed \(C,J<\infty\) and \(\eta>0\),
+\begin{equation}
+\label{eq:buffered-support-below-simplex}
+ \Pbb\left\{
+  \mathcal B_n(C,J,\eta),\quad
+  \widehat K_n\ne1+\#\{i:\xi_{n,i}^\star>0\}
+ \right\}\longrightarrow0.
+\end{equation}
+On \(\mathcal B_n(C,J,\eta)\), the NPMLE is also unique apart from an event
+whose probability tends to zero.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:exact-old-edge-coordinate} allows us to use
+\(v_{n,i}=\xi_{n,i}-s_n\) in place of \(\xi_{n,i}^\star\).  On a slightly
+smaller buffer the two active sets agree.  Put
+\(A_n=\{i:v_{n,i}>0\}\); throughout the proof \(|A_n|\le J\).
+
+We first describe the finite perturbation common to all the dimension
+ranges.  The centered directions are not conditionally independent, so we
+embed \(A_n\) in an uncentered buffered cloud.  The uniform
+centered--uncentered edge-coordinate estimates in
+Lemmas~\ref{lem:centered-radial-max} and
+\ref{lem:centered-radial-max-high-d} show that, with probability tending
+to one, every \(i\in A_n\) belongs to
+\[
+ \mathcal V_n=\{i:\xi_{n,i}^\circ-s_n>-\eta/2\}.
+\]
+This cloud has \(O_{\Pbb}(1)\) points. Conditional on its uncentered
+radii, the directions are independent and uniform. Since \(d_n\to\infty\),
+spherical concentration gives the following separation for the
+uncentered score vectors. The common empirical-centering shift is
+\(o_{\Pbb}(\sqrt{L_n})\), so it does not change their leading pairwise inner
+products or distances. Consequently,
+\begin{equation}
+\label{eq:finite-edge-angular-separation}
+ \max_{i\ne j\in A_n}
+ \frac{|q_i\cdot q_j|}{L_n}=o(1),
+ \qquad
+ |q_i-q_j|^2=4L_n\{1+o(1)\}.
+\end{equation}
+The pairwise estimates in \eqref{eq:finite-edge-angular-separation} also hold
+between an active point and any fixed number of other points in the upper
+radial cloud.  Hence a neighborhood of \(q_i\)
+sees its own bump at order one and every other retained upper bump at
+\(n^{-1+o(1)}\).
+
+Let \(\delta_n=a_n/\gamma_n\) and
+\(\bar\delta_n=1\wedge\delta_n\).  The regime expansions in
+Section~\ref{sec:regime-map} give \(\delta_n\le2\) for all large \(n\).
+They also verify the scale assumptions in
+Lemma~\ref{lem:uniform-finite-edge-expansion}. If
+\(d_n=O(L_n)\), then \(\bar\delta_n\) is bounded away from zero.  If
+\(L_n=o(d_n)\), then
+\[
+ \delta_n=\sqrt{L_n/d_n}\{1+o(1)\},
+ \qquad
+ n\bar\delta_n
+ =\frac{L_n}{\sqrt{d_nL_n/n^2}}\{1+o(1)\}\longrightarrow\infty,
+\]
+because \(d_nL_n=o(n^2)\).  Thus
+\(n\bar\delta_n\to\infty\) in the slowly growing, direct-truncation,
+crossover, and entropy ranges alike.
+After replacing \(\eta\) by a smaller fixed constant, the coordinate
+comparison and the buffer imply that every nonactive index has
+\(v_{n,i}\le-\eta\).  We may therefore take \(\mathcal U=A_n\) in
+Lemma~\ref{lem:uniform-finite-edge-expansion}.
+We verify the hypotheses of
+Lemma~\ref{lem:uniform-finite-edge-expansion} uniformly over the finitely
+many active indices.
+
+Fix a small constant \(r_0<1/4\).  In the slowly growing, direct
+truncation, and crossover ranges, let \(R_n=r_0\).  In the entropy range,
+let \(R_n=L_n^{-1/2}\).  Define the available-radius envelopes
+\[
+ \widetilde e_{k,n}
+ =
+ \max_{i\in A_n}\mathcal E_{i,k}(2R_n),
+ \qquad 0\le k\le3,
+\]
+and put
+\[
+ \Lambda_n^{\rm loc}
+ =\widetilde e_{1,n}\vee\frac{\bar\delta_nL_n}{n},
+ \qquad
+ U_n=R_n\wedge\sqrt{\bar\delta_n}.
+\]
+The earlier field estimates imply, in each range, that
+\begin{equation}
+\label{eq:newton-radius-separation}
+ \frac{\Lambda_n^{\rm loc}}{U_n}=o_{\Pbb}(1),
+ \qquad
+ \widetilde e_{0,n}=o_{\Pbb}(\bar\delta_n),
+ \qquad
+ \widetilde e_{2,n}+\widetilde e_{3,n}=o_{\Pbb}(1).
+\end{equation}
+
+In the slowly growing range, the proof of
+Lemma~\ref{lem:slow-punctured-c3} bounds the sum of the absolute
+derivatives of the lower cloud.  The remaining upper cloud has at most
+\(e^{2\sqrt{d_n}}\) points, and angular separation bounds its first three
+derivative envelopes by
+\[
+ e^{2\sqrt{d_n}}L_n^{3/2}e^{-2L_n+o(L_n)}=o(1).
+\]
+Thus \(\widetilde e_{0,n}=o_{\Pbb}(1)\) and
+\(\sum_{k=1}^3\widetilde e_{k,n}=o_{\Pbb}(1)\).  Since
+\(\bar\delta_n=1+o(1)\), \(U_n\) is bounded away from zero, and
+\(L_n/n=o(1)\), these estimates give \eqref{eq:newton-radius-separation}.
+
+In the direct truncation range, positivity of the Gaussian bumps and the
+proof of Proposition~\ref{prop:moderate-low-cloud} give
+\begin{equation}
+\label{eq:direct-available-envelope}
+ \widetilde e_{k,n}
+ \le
+ O_{\Pbb}(\delta_nL_n^{-10+k/2})+e^{-L_n+o(L_n)},
+ \qquad 0\le k\le3.
+\end{equation}
+When \(\bar\delta_n\) vanishes, the regime condition
+\(d_n(\log d_n)^2=o(L_n^3)\) and the superlogarithmic expansion imply
+\(\bar\delta_n\ge L_n^{-1+o(1)}\).  Hence
+\(\widetilde e_{1,n}/U_n=o_{\Pbb}(1)\) and
+\((\bar\delta_nL_n/n)/U_n=o(1)\). The bounds in
+\eqref{eq:direct-available-envelope} for \(k=0,2,3\) prove the other two assertions in
+\eqref{eq:newton-radius-separation}.
+
+In the crossover range, \eqref{eq:crossover-separation} gives
+\begin{equation}
+\label{eq:crossover-absolute-envelope}
+ \widetilde e_{k,n}
+ \le
+ L_n^{k/2}e^{-L_n/2+O(\sqrt{L_n})}
+ =o(\delta_n^m)
+ \qquad(0\le k\le3)
+\end{equation}
+for every fixed \(m\).  Since
+\(\bar\delta_n\asymp(\log L_n)/L_n\) and
+\(U_n\asymp\sqrt{\bar\delta_n}\), the superpolynomial bound and
+\(\sqrt{L_n\log L_n}/n=o(1)\) give
+\eqref{eq:newton-radius-separation}.
+
+Finally, in the entropy range put
+\[
+ \mu_n^{\rm off}=\max_{i\ne j}|q_i\cdot q_j|.
+\]
+The pairwise Gram bound gives
+\begin{equation}
+\label{eq:entropy-local-absolute-envelope}
+ \widetilde e_{k,n}
+ \le
+ \frac{e^{\mu_n^{\rm off}+O_{\Pbb}(1)}L_n^{k/2}}n,
+ \qquad 0\le k\le3.
+\end{equation}
+Writing \(A_n^{\rm off}=e^{\mu_n^{\rm off}}/n\), the rates in
+Lemma~\ref{lem:random-off-diagonal} imply
+\[
+ A_n^{\rm off}=o_{\Pbb}(\delta_n),\qquad
+ A_n^{\rm off}L_n=o_{\Pbb}(1),\qquad
+ A_n^{\rm off}L_n^{3/2}=o_{\Pbb}(1).
+\]
+Since \(U_n^{-1}\le\sqrt{L_n}+\bar\delta_n^{-1/2}\),
+\(A_n^{\rm off}\sqrt{L_n/\bar\delta_n}
+=\{(A_n^{\rm off}/\bar\delta_n)(A_n^{\rm off}L_n)\}^{1/2}
+=o_{\Pbb}(1)\).  It follows that
+\(\widetilde e_{1,n}/U_n=o_{\Pbb}(1)\); also
+\((\bar\delta_nL_n/n)/U_n=o(1)\), since it is at most
+\(\bar\delta_nL_n^{3/2}/n+\sqrt{\bar\delta_n}L_n/n\).  The three rates
+for \(A_n^{\rm off}\), applied to
+\eqref{eq:entropy-local-absolute-envelope}, prove the remaining assertions
+in \eqref{eq:newton-radius-separation}.
+
+We now choose the Newton scale.  From
+\eqref{eq:newton-radius-separation}, choose integers \(M_k\uparrow\infty\)
+so that
+\[
+ \Pbb\left\{\Lambda_n^{\rm loc}/U_n>k^{-2}\right\}\le k^{-1}
+ \qquad(n\ge M_k),
+\]
+and set \(c_n=k^{-1}\) for \(M_k\le n<M_{k+1}\).  Then \(c_n\downarrow0\)
+and
+\[
+ \Lambda_n^{\rm loc}=o_{\Pbb}(c_nU_n).
+\]
+Set \(r_n=c_nU_n\).  Then
+\[
+ r_n\le R_n,\qquad
+ \widetilde e_{1,n}=o_{\Pbb}(r_n),\qquad
+ \frac{\bar\delta_nL_n}{n}=o(r_n),\qquad
+ \frac{r_n^2}{\bar\delta_n}\le c_n^2\longrightarrow0.
+\]
+Because the envelopes decrease with the patch radius, the three inequalities
+in \eqref{eq:newton-radius-separation} verify
+\eqref{eq:finite-edge-envelope-assumptions}.  Moreover,
+\[
+ r_n\widetilde e_{1,n}=o_{\Pbb}(r_n^2)=o_{\Pbb}(\bar\delta_n),
+ \qquad
+ r_n^2\widetilde e_{2,n}+r_n^3\widetilde e_{3,n}
+ =o_{\Pbb}(\bar\delta_n),
+\]
+so every condition in
+\eqref{eq:finite-edge-higher-envelope-assumptions} holds.
+
+Lemma~\ref{lem:uniform-finite-edge-expansion} therefore constructs a
+measure \(\widetilde\Pi\) with one central contact \(\tau_n\) and one
+contact \(w_{n,i}\) in each active patch.  Its edge weights satisfy
+\begin{equation}
+\label{eq:below-simplex-contact-asymptotics}
+ |\tau_n|=O_{\Pbb}(\bar\delta_n\sqrt{L_n}/n),\qquad
+ w_{n,i}=q_i+o_{\Pbb}(r_n),\qquad
+ n\pi_{n,i}
+ =1-e^{-\delta_nv_{n,i}}+o_{\Pbb}(\bar\delta_n).
+\end{equation}
+The buffer keeps every displayed mass positive.  In the entropy range,
+retaining the explicit right side of
+\eqref{eq:entropy-local-absolute-envelope} in the contact-map proof gives
+\begin{equation}
+\label{eq:entropy-local-contact-rate}
+ n\pi_{n,i}
+ =
+ 1-e^{-\delta_nv_{n,i}}
+ +O_{\Pbb}\left\{
+   \frac{e^{\mu_n^{\rm off}}}n+\frac{\delta_nL_n}{n}
+ \right\}.
+\end{equation}
+
+It remains to check that the finite perturbation has not created a contact
+elsewhere.  If \(c_j\) denotes the reciprocal fitted value at observation
+\(j\), then
+\begin{equation}
+\label{eq:below-simplex-weight-perturbation}
+ (\log c_j)_+
+ =
+ O_{\Pbb}\left\{\frac{\bar\delta_nL_n}{n}\right\}
+ \quad(j\notin A_n),
+ \qquad
+ \log c_i=-\delta_nv_{n,i}+o_{\Pbb}(\bar\delta_n)
+ \le-c_\eta\bar\delta_n
+ \quad(i\in A_n).
+\end{equation}
+In the entropy range the contact equation gives the sharper cancellation
+\begin{equation}
+\label{eq:entropy-contact-cancellation}
+ \max_{i\in A_n}
+ \left|\delta_nv_{n,i}+\log c_i\right|
+ +\max_{j\notin A_n}|\log c_j|
+ =
+ O_{\Pbb}\left\{
+  \frac{e^{\mu_n^{\rm off}}}n+\frac{\delta_nL_n}{n}
+ \right\}
+ =n^{-1+o_{\Pbb}(1)}.
+\end{equation}
+We first control the inactive denominators without using the contact
+equation.  If \(m=\sum_{i\in A_n}n\pi_{n,i}=O_{\Pbb}(\delta_n)\), then
+\[
+ M_j
+ =
+ \left(1-\frac mn\right)
+ e^{\tau_n\cdot q_j-|\tau_n|^2/2}
+ +\frac1n\sum_{i\in A_n}n\pi_{n,i}
+ e^{w_{n,i}\cdot q_j-|w_{n,i}|^2/2}.
+\]
+Here
+\(|\tau_n|=O_{\Pbb}(\delta_n\sqrt{L_n}/n)\), so the central term differs
+from one by \(O_{\Pbb}(\delta_nL_n/n)\).  For \(j\notin A_n\), each edge
+response in the last sum is at most
+\(n^{-1}e^{\mu_n^{\rm off}+o_{\Pbb}(1)}\).  Consequently,
+\[
+ \max_{j\notin A_n}|M_j-1|
+ =
+ O_{\Pbb}\left\{
+  \frac{\delta_nL_n}{n}
+  +\frac{\delta_ne^{\mu_n^{\rm off}}}{n^2}
+ \right\},
+\]
+which proves the inactive part of
+\eqref{eq:entropy-contact-cancellation}.
+
+We may now evaluate the exact level-one contact equation in the \(i\)th
+edge patch.  If \(w_i\) is its contact and \(E_i\) is the contribution of
+all observations other than \(i\) to the certificate there, then the own
+term gives the exact identity
+\begin{equation}
+\label{eq:entropy-exact-contact-cancellation}
+ \log M_i
+ =
+ \delta_nv_{n,i}-\frac{|w_i-q_i|^2}{2}-\log(1-E_i).
+\end{equation}
+The derivative envelope
+\eqref{eq:entropy-local-absolute-envelope}, the \(C^2\) certificate
+expansion in Lemma~\ref{lem:uniform-finite-edge-expansion}, and the local
+stationarity equation give
+\[
+ |w_i-q_i|^2
+ =O_{\Pbb}\left\{
+  \frac{e^{2\mu_n^{\rm off}}L_n}{n^2}
+  +\frac{\delta_n^2L_n^2}{n^2}
+ \right\},
+ \qquad
+ E_i
+ =O_{\Pbb}\left\{
+  \frac{e^{\mu_n^{\rm off}}}n+\frac{\delta_nL_n}{n}
+ \right\}.
+\]
+Indeed, a retained upper response is at most
+\(e^{\mu_n^{\rm off}}/n\), and the
+central displacement and lower fitted values contribute
+\(O_{\Pbb}(\delta_nL_n/n)\).  Substitution in
+\eqref{eq:entropy-exact-contact-cancellation} proves the active part of
+\eqref{eq:entropy-contact-cancellation}.  These estimates are uniform
+because \(|A_n|\le J\), and the argument is noncircular: the inactive
+denominator bound was obtained before the certificate contribution
+\(E_i\) was estimated.
+The positive part in
+\eqref{eq:below-simplex-weight-perturbation} is \(o_{\Pbb}\) of the
+smallest gap used in each one-atom exclusion proof.  The following
+four-region argument verifies these comparisons while proving the
+weighted exclusion rather than applying the unweighted results formally.
+Write
+\[
+ \Gamma_{\widetilde\Pi}(w)
+ =
+ \Gamma_I(w)+\sum_{i\in A_n}G_i(w),
+ \qquad
+ G_i(w)=\frac{c_i}{n}e^{w\cdot q_i-|w|^2/2},
+\]
+where \(I=A_n^c\) and
+\[
+ \Gamma_I(w)
+ =\frac1n\sum_{j\in I}c_j
+   e^{w\cdot q_j-|w|^2/2},
+ \qquad
+ D_I(w)
+ =\frac1n\sum_{j\in I}
+   e^{w\cdot q_j-|w|^2/2}.
+\]
+If
+\[
+ \omega_n
+ =\max_{j\in I}(\log c_j)_+,
+\]
+then, pointwise and after every truncation used in the cited proofs,
+\begin{equation}
+\label{eq:weighted-inactive-domination}
+ \Gamma_I(w)\le e^{\omega_n}D_I(w).
+\end{equation}
+Thus every Bernstein or net upper bound for the inactive field changes by
+at most \(O(\omega_n)\).
+
+There are four regions.  First consider a fixed small ball around an active
+contact.  The own term satisfies the exact relation
+\[
+ G_i(w_{n,i})=1-E_i,
+\]
+where \(E_i\) is the remaining certificate contribution, rather than
+being one by itself.  The \(C^2\) representation
+\eqref{eq:finite-edge-certificate-c2} gives
+\(\nabla^2\log\Gamma_{\widetilde\Pi}\preceq-cI\) throughout this ball.
+Since the contact is stationary and has value one, it is the unique
+level-one point there.
+
+Next take a corresponding ball around an inactive upper point \(q_j\).
+Its adjusted own peak is at most
+\[
+ \frac{c_j}{n}e^{|q_j|^2/2}
+ \le
+ \exp\{\omega_n+\delta_nv_{n,j}\}
+ \le1-c_\eta\bar\delta_n.
+\]
+The punctured \(C^3\) estimates
+\eqref{eq:moderate-low-cloud},
+\eqref{eq:entropy-local-absolute-envelope},
+\eqref{eq:slow-punctured-c3}, and
+\eqref{eq:crossover-absolute-envelope},
+in their respective ranges, make all remaining terms
+\(o_{\Pbb}(\bar\delta_n)\).  Hence an inactive upper patch contains no
+contact.
+
+In the central region, the weighted Hessian differs from the unweighted
+one by
+\[
+ O_{\Pbb}(\omega_nL_n)
+ +O_{\Pbb}\left\{\frac{\bar\delta_nL_n^2}{n}\right\}
+ =o_{\Pbb}(\eps_n).
+\]
+To obtain this bound, write each fitted value as \(M_j=1+x_j\).
+The negative part of \(x_j\) is uniformly
+\(O_{\Pbb}(\bar\delta_nL_n/n)\), while
+\[
+ \frac1n\sum_j(x_j)_+
+ \le
+ C\frac{\bar\delta_n}{n}
+ +O_{\Pbb}\left\{\frac{\bar\delta_nL_n}{n}\right\};
+\]
+the first term follows by averaging each edge response and using
+\(B_n(w_{n,i})=O_{\Pbb}(1)\). Multiplication by
+\(\max_j|q_j|^2=O_{\Pbb}(L_n)\) gives the displayed covariance
+perturbation.
+It is therefore negative definite in the microscopic ball around the
+translated central contact.  On the surrounding annuli,
+\eqref{eq:weighted-inactive-domination} raises the field by at most
+\(O_{\Pbb}(\omega_n)\).  We compare the active profiles with the annular
+gap explicitly.  Uniformly for \(i\in A_n\),
+\[
+ G_i(w)
+ \le
+ \exp\left\{-\frac12(|q_i|-|w|)^2+o_{\Pbb}(1)\right\},
+ \qquad
+ |q_i|=\sqrt{2L_n}\{1+o_{\Pbb}(1)\}.
+\]
+Let \(g_n(r)=1-e^{-\eps_nr^2/2}\), and let \(g_{0,n}\) be the smallest
+gap at the inner endpoint of the annular argument.  If
+\(\eps_nr^2\le1\), then
+\[
+ g_n(r)\ge c\eps_nr^2\ge c g_{0,n},
+ \qquad
+ G_i(w)\le n^{-1+o(1)}=o(g_{0,n}).
+\]
+The last comparison is \(n^{-1}=o(\eps_n^3/L_n^3)\) in the slow and
+direct truncation ranges and is immediate in the crossover range. If
+\(\eps_nr^2\ge1\) and \(r\le|q_i|/2\), then \(g_n(r)\ge c\) and
+\(G_i(w)\le n^{-1/4+o(1)}\).  Hence
+\begin{equation}
+\label{eq:active-central-corridor}
+ \sum_{i\in A_n}G_i(w)=o_{\Pbb}\{g_n(|w|)\}
+ \quad
+ (r_{0,n}\le|w|\le\tfrac12\sqrt{2L_n}).
+\end{equation}
+Together with the annular estimates established separately in the slow,
+direct-truncation, crossover, and entropy regimes, this proves that the
+central contact is the only contact in the inner region.
+
+Finally consider the complement of the central and upper patches.
+Choose their fixed radius \(R=R(J)\) so large that
+\(Je^{-R^2/2}<1/20\); the patches are disjoint by angular separation.
+On the annulus between the implicit-function neighborhood and radius
+\(R\), the punctured \(C^2\) bound and the exact level-one contact show
+that the Gaussian profile generated by the nearest active observation has
+its unique maximum at the constructed contact.  In the slow range this
+uniform statement is precisely Lemma~\ref{lem:slow-punctured-c3}; in the
+direct-truncation and crossover ranges it follows from the local \(C^2\)
+estimates used to construct the active contacts.
+The inactive part is again controlled by
+\eqref{eq:weighted-inactive-domination}.  Conditional angular separation
+implies that at most one upper profile is nearest; outside its patch that
+profile loses a fixed Gaussian factor, while the sum of all other upper
+profiles is \(n^{-1+o_{\Pbb}(1)}\) in the direct truncation range,
+\(e^{-L_n/2+o(L_n)}\) in the crossover range, and \(o_{\Pbb}(1)\) in the
+slow range by Lemma~\ref{lem:slow-punctured-c3}.  Thus the outer-region
+decompositions from the unweighted proofs remain valid after the fitted
+denominators are inserted: equation
+\eqref{eq:weighted-inactive-domination} controls the inactive field, and
+the active tails retain their original bounds.  These estimates exclude
+every remaining level-one point.
+More concretely, in the crossover proof
+\eqref{eq:crossover-outer-net} bounds the clipped inactive field by
+\(0.9+o_{\Pbb}(1)\); choose \(R\) so that the active tails total less
+than \(0.05\).  In the slow proof, choose \(R\) so that those tails are
+smaller than \(\rho/4\), where \(\rho\) is the fixed slack in
+Lemma~\ref{lem:slow-outside-shell}; the fitted-denominator error is also
+\(o_{\Pbb}(\rho)\). The direct-truncation outer estimate has
+an \(o_{\Pbb}(\delta_n)\) inactive background and is stronger still.
+
+In the entropy range,
+Lemma~\ref{lem:weighted-entropy-localization}, applied with
+\(\beta_j=\log c_j\), directly localizes every level-one contact to the
+central patch or an active upper patch;
+\eqref{eq:entropy-contact-cancellation} verifies all of the lemma's weight
+hypotheses.  The strict log-concavity asserted there leaves only the
+constructed contacts.
+
+The fitted-denominator error and the tails of the active profiles are
+smaller than the KKT gaps in each unweighted localization argument.  More
+precisely,
+\[
+ \frac{L_n}{n}=o\left(\frac{\eps_n^3}{L_n^3}\right)
+ \quad\text{in the slow range},\qquad
+ \frac{\delta_nL_n}{n}+\delta_n\mathfrak j_n=o(g_{0,n})
+ \quad\text{in the direct range},
+\]
+where \(g_{0,n}\) is from
+Proposition~\ref{prop:moderate-inner-field}; in the crossover range,
+\(\delta_nL_n/n=o(L_n^{-3})\) and
+\(e^{-L_n/2+o(L_n)}=o(\delta_n^m)\) for every fixed \(m\).
+Thus the weighted estimates retain the gaps and negative curvature used in
+all four regions.
+
+This verifies the global KKT inequality for the constructed measure. Strict
+concavity of the log likelihood makes its fitted vector unique. The contact likelihood
+vectors are linearly independent: their active-coordinate block has
+diagonal entries \(n^{1+o(1)}\) and off-diagonal entries \(n^{o(1)}\),
+while the central vector is bounded.  Since
+ \(n^{-1}\sum_jk_{w_{n,i}}(j)=B_n(w_{n,i})=O_{\Pbb}(1)\) for each of the
+finitely many edge columns, their combined column sum is \(O_{\Pbb}(n)\).
+Choose a deterministic \(K_n\to\infty\) so slowly that \(K_n=o(n)\).
+Then
+\[
+ \#\left\{j:\max_{i\in A_n}k_{w_{n,i}}(j)>K_n\right\}
+ \le
+ \frac1{K_n}\sum_{i\in A_n}\sum_{j=1}^n k_{w_{n,i}}(j)
+ =o_{\Pbb}(n).
+\]
+Since \(|A_n|\le J\), with probability tending to one there is an inactive
+observation at which every edge entry is at most \(K_n=o(n)\).  Adjoin that
+observation as one extra row; its central entry is
+\(1+o_{\Pbb}(1)\).  After scaling the edge columns by \(n^{-1}\), their
+active-coordinate block is asymptotically diagonal with diagonal bounded
+away from zero, while all edge entries in the added row are \(o(1)\).
+The resulting square minor is therefore nonsingular.  Every
+maximizing mixing measure must therefore use all and only the
+\(1+|A_n|\) contacts.
+
+Finally, pass to a subsequence on which
+\(\mathfrak r_n=d_n(\log d_n)^2/L_n^3\) tends to zero, stays bounded above
+and away from zero, or tends to infinity.  These cases invoke,
+respectively, the slow/direct estimates (split at
+\(d_n=(\log L_n)^2\)), the crossover estimates, and the entropy estimates.
+They exhaust \(d_nL_n=o(n^2)\) and prove
+\eqref{eq:buffered-support-below-simplex}.
+\end{proof}
+
+\subsubsection{Ordered contacts in the simplex regime}
+
+When \(d_nL_n/n^2\) is bounded below, the centered sample is close to a
+regular simplex and the isolated-bump model no longer applies.  A radial
+crossing then creates a contact near an ordered Potts state.  Write
+\[
+ \chi_n=\frac{n-2}{n-1},
+ \qquad
+ p_i^{(i)}=\frac{n-1}{n},
+ \qquad
+ p_j^{(i)}=\frac1{n(n-1)}\quad(j\ne i).
+\]
+The identities \(\sum_jq_j=0\) and
+\eqref{eq:potts-radial-threshold} give, exactly,
+\begin{equation}
+\label{eq:ordered-potts-excess}
+ \sum_jp_j^{(i)}q_j=\chi_nq_i,
+ \qquad
+ \frac12\left|\sum_jp_j^{(i)}q_j\right|^2
+ -K(p^{(i)}\Vert \mathbf u_n)
+ =\chi_n^2\delta_n^\star \xi_{n,i}^\star.
+\end{equation}
+Thus the sign of the ordered-state free energy is the sign of the exact
+radial excess, with no centering approximation.
+
+\begin{proposition}
+\label{prop:buffered-simplex-support}
+Let \(n\ge3\), let \(q_1,\ldots,q_n\) be a centered triangular array, and
+write
+\[
+ R_i=\frac{|q_i|^2}{2},
+ \qquad
+ u_i=\frac{R_i-R_n^\star}{\delta_n},
+ \qquad
+ G_n=(q_i\cdot q_j)_{i,j\le n}.
+\]
+Suppose \(\delta_n\downarrow0\), \(\delta_n=O(L_n/n)\), and, for fixed
+\(C,J<\infty\) and \(\eta>0\),
+\[
+ \max_i u_i\le C,
+ \qquad
+ \#\{i:u_i>-\eta\}\le J,
+ \qquad
+ \min_i|u_i|>\eta.
+\]
+Assume also that
+\begin{equation}
+\label{eq:buffered-simplex-assumptions}
+ \max_{i\ne j}|q_i\cdot q_j|=o(L_n^{-1}),
+ \qquad
+ \|G_n\|_{\rm op}=O(L_n),
+ \qquad
+ \frac{C_n}{\delta_nL_n^2}\longrightarrow0,
+ \qquad
+ \frac{C_n^2}{n\delta_n}\longrightarrow0,
+\end{equation}
+where
+\[
+ C_n=\max_{i\ne j}
+ \left|q_i\cdot q_j+\frac{|q_i|^2}{n-1}\right|.
+\]
+Then, for all sufficiently large \(n\), every NPMLE has
+\begin{equation}
+\label{eq:buffered-simplex-count}
+ |\supp(\Pi)|=1+\#\{i:u_i>0\}.
+\end{equation}
+There is one central contact and, for each \(i\) with \(u_i>0\), one
+contact \(w_i=\chi_nq_i+o(1)\); its weight satisfies
+\begin{equation}
+\label{eq:buffered-simplex-mass}
+ n\pi_i=\frac{n}{n-1}\delta_nu_i+o(\delta_n).
+\end{equation}
+All remainders are uniform when \(C,J,\eta\) in the buffer are fixed.
+Moreover, the NPMLE is unique.
+\end{proposition}
+
+\begin{proof}
+Put \(A=\{i:u_i>0\}\), so \(|A|\le J\), and set
+\(w_i^0=\chi_nq_i\) for \(i\in A\).  The buffer and the definition of
+\(R_i\) imply
+\begin{equation}
+\label{eq:terminal-simplex-derived-rates}
+ \max_i|q_i|=O(\sqrt{L_n}),
+ \qquad
+ C_n=o(L_n^{-1}),
+ \qquad
+ \delta_nL_n=o(1),
+ \qquad
+ \frac{C_n^2}{n}=o(\delta_n).
+\end{equation}
+Indeed, the first assertion follows from
+\(R_i\le R_n^\star+C\delta_n=O(L_n)\), and the second follows from the
+first condition in \eqref{eq:buffered-simplex-assumptions} and
+\(|q_i|^2/(n-1)=O(L_n/n)\).  The last two assertions follow directly from
+the assumed bounds on \(\delta_n\) and \(C_n\).
+
+If \(A=\varnothing\), then
+\(\max_iR_i\le R_n^\star-\eta\delta_n\).  Proposition
+\ref{prop:local-simplex-criterion}, with \(g_n=\eta\delta_n\), applies by
+\eqref{eq:buffered-simplex-assumptions}.  Its proof is strict away from
+\(p=\mathbf u_n\), so the one-atom certificate equals one only at the
+origin.  The KKT conditions then force every NPMLE to be \(\delta_0\), and
+the conclusion follows.  We henceforth assume that \(A\ne\varnothing\).
+
+We begin by locating the maxima of the one-atom certificate.  If
+\[
+ e_{ij}=q_i\cdot q_j+\frac{|q_i|^2}{n-1},
+\]
+then \(|e_{ij}|\le C_n\), and direct substitution gives
+\begin{align}
+\label{eq:potts-response-expansion}
+ k_{w_i^0}(i)
+ &= (n-1)\exp\{(2\chi_n-\chi_n^2)\delta_nu_i\},\notag\\
+ k_{w_i^0}(j)
+ &= \frac1{n-1}
+    \exp\{-(\chi_n^2+2\chi_n/(n-1))\delta_nu_i
+                 +\chi_ne_{ij}\},\qquad j\ne i.
+\end{align}
+At \(u_i=0\) and \(e_{ij}=0\), these responses are \(n-1\) and
+\((n-1)^{-1}\), respectively, and their average is one.  Moreover,
+\(\sum_{j\ne i}e_{ij}=0\), by centering.  The linear row error therefore
+cancels when the off-diagonal responses are summed.  Expanding
+\eqref{eq:potts-response-expansion}, using \(C_n=o(1)\), gives
+\begin{equation}
+\label{eq:potts-local-height}
+ \log B_n(w_i^0)
+ =\chi_n^2\delta_nu_i
+  +O_{C,J}\left(\delta_n^2+\frac{C_n^2}{n}\right)
+ =\chi_n^2\delta_nu_i+o(\delta_n).
+\end{equation}
+The coefficient can also be read directly from the exact dual identity
+\eqref{eq:ordered-potts-excess}.
+
+The Gibbs weights at \(w_i^0\) differ from \(p^{(i)}\) by
+\(O_{C,J}\{(C_n+\delta_n)/n\}\) in total variation.  Differentiating the
+log-sum-exp representation therefore gives, uniformly for \(i\in A\),
+\begin{align}
+\label{eq:potts-local-derivatives}
+ |\nabla\log B_n(w_i^0)|
+ &\le K_{C,J}\frac{\sqrt{L_n}}n(C_n+\delta_n),\notag\\
+ \nabla^2\log B_n(w_i^0)
+ &=-I+O(L_n/n)+o(1)=-I+o(1).
+\end{align}
+The same estimate holds uniformly on \(B(w_i^0,L_n^{-2})\): moving by
+\(L_n^{-2}\) changes every exponent by \(O(L_n^{-3/2})\), while the total
+Gibbs mass outside coordinate \(i\) remains \(O(n^{-1})\).  The
+Newton--Kantorovich theorem now gives a unique critical point \(\bar w_i\)
+in that ball, with
+\begin{equation}
+\label{eq:quantitative-potts-location}
+ |\bar w_i-w_i^0|
+ \le K_{C,J}\frac{\sqrt{L_n}}n(C_n+\delta_n).
+\end{equation}
+It is a strict local maximum, and Taylor's theorem gives
+\begin{equation}
+\label{eq:potts-corrected-height}
+ h_i:=\log B_n(\bar w_i)
+ =\chi_n^2\delta_nu_i+\varepsilon_{n,i},
+ \qquad
+ \max_{i\in A}|\varepsilon_{n,i}|=o(\delta_n).
+\end{equation}
+More explicitly, the remainder is bounded by a constant times
+\[
+ \delta_n^2+\frac{C_n^2}{n}
+ +\frac{L_n(C_n+\delta_n)^2}{n^2},
+\]
+which is \(o(\delta_n)\) by
+\eqref{eq:terminal-simplex-derived-rates} and
+\eqref{eq:buffered-simplex-assumptions}.  In particular,
+\(h_i\ge c_\eta\delta_n\) for every \(i\in A\) and all sufficiently large
+\(n\).
+
+For \(i\in A\), let
+\(v_i=(k_{\bar w_i}(1),\ldots,k_{\bar w_i}(n))\).  Equations
+\eqref{eq:potts-response-expansion}--\eqref{eq:potts-local-derivatives}
+give
+\begin{equation}
+\label{eq:potts-response-gram}
+ A_{ij}^{(0)}
+ :=\frac1{n^2}\sum_{r=1}^n\{v_i(r)-1\}\{v_j(r)-1\}
+ =\beta_n^{\rm P}\mathbf1_{\{i=j\}}+e_{n,ij},
+ \qquad
+ \max_{i,j\in A}|e_{n,ij}|=o(1),
+\end{equation}
+where
+\[
+ \beta_n^{\rm P}=\frac{(n-2)^2}{n(n-1)}.
+\]
+For instance, at the unperturbed ordered state the diagonal expression is
+exactly
+\[
+ \frac1{n^2}\left\{(n-2)^2
+ +(n-1)\left(\frac1{n-1}-1\right)^2\right\}=\beta_n^{\rm P},
+\]
+whereas the cross expressions are \(O(n^{-1})\).  The perturbations in
+\eqref{eq:potts-response-expansion} and
+\eqref{eq:quantitative-potts-location} contribute \(o(1)\), uniformly over
+the at most \(J\) active indices.
+
+We next construct exact contacts and masses.  For
+\(m=(m_i)_{i\in A}\) and
+\(x=(\tau,(w_i)_{i\in A})\), define
+\[
+ \Pi_{x,m}
+ =\left(1-\frac1n\sum_{i\in A}m_i\right)\delta_\tau
+  +\frac1n\sum_{i\in A}m_i\delta_{w_i},
+\]
+and write \(\Gamma_{x,m}\) for its certificate.  Consider the stationarity
+map
+\[
+ \mathcal S(x,m)
+ =\left(
+   \nabla\log\Gamma_{x,m}(\tau),
+   \bigl(\nabla\log\Gamma_{x,m}(w_i)\bigr)_{i\in A}
+  \right).
+\]
+At \(m=0\) and
+\(x=x^0:=(0,(\bar w_i)_{i\in A})\), this map vanishes.  Equip the product
+of location spaces with the maximum of the Euclidean block norms.  For
+each fixed \(M<\infty\), the response table gives, uniformly on
+\[
+ |m|_\infty\le M\delta_n,
+ \qquad |\tau|\le L_n^{-2},
+ \qquad |w_i-\bar w_i|\le L_n^{-2},
+\]
+the bounds
+\begin{equation}
+\label{eq:terminal-location-map-bounds}
+ \|D_x\mathcal S(x^0,0)^{-1}\|\le2,
+ \quad
+ \|D_x\mathcal S(x,m)-D_x\mathcal S(x^0,0)\|=o(1),
+ \quad
+ \|D_m\mathcal S(x,m)\|
+ \le K_{C,J,M}\frac{\sqrt{L_n}}n.
+\end{equation}
+To verify the first two bounds, the diagonal location blocks are
+\(-I+o(1)\) by \eqref{eq:potts-local-derivatives}, while the central block
+is
+\[
+ \frac1n\sum_{r=1}^nq_rq_r^\top-I=-I+O(L_n/n).
+\]
+At zero mass, the derivative of an active equation with respect to the
+central location is also negligible: if the central atom is at \(\tau\),
+then
+\[
+ \log\Gamma_{\delta_\tau}(w)
+ =\log B_n(w-\tau)-(w-\tau)\cdot\tau,
+\]
+so at \((\tau,w)=(0,\bar w_i)\),
+\[
+ D_\tau\nabla_w\log\Gamma_{\delta_\tau}(w)
+ =-\nabla^2\log B_n(\bar w_i)-I=o(1).
+\]
+All other cross-location blocks vanish at zero mass and are
+\(O_{C,J}(\delta_nL_n)=o(1)\) on the displayed neighborhood.  Finally,
+one differentiation with respect to \(m_j\) produces a normalized product
+of a central or ordered response and its first moment.  The response table
+bounds this by \(K\sqrt{L_n}/n\), proving the last estimate in
+\eqref{eq:terminal-location-map-bounds}.
+
+The quantitative implicit-function theorem now supplies unique smooth
+locations satisfying the stationarity equations.  Write
+\[
+ x(m)=\bigl(\tau(m),(w_i(m))_{i\in A}\bigr).
+\]
+They obey
+\begin{equation}
+\label{eq:terminal-location-map-rate}
+ |\tau(m)|+\max_{i\in A}|w_i(m)-\bar w_i|
+ \le K_{C,J,M}\frac{\sqrt{L_n}}n|m|_1.
+\end{equation}
+Define the logarithmic contact-height differences
+\[
+ \mathcal H_i(m)
+ =\log\Gamma_{x(m),m}\{w_i(m)\}
+  -\log\Gamma_{x(m),m}\{\tau(m)\}.
+\]
+Stationarity permits the envelope theorem.  At zero mass,
+\(\mathcal H_i(0)=h_i\), and direct differentiation gives
+\begin{equation}
+\label{eq:terminal-mass-contact-jacobian}
+ -\partial_{m_j}\mathcal H_i(0)
+ =A_{ij}^{(0)}+o(1)
+ =\beta_n^{\rm P}\mathbf1_{\{i=j\}}+o(1).
+\end{equation}
+The additional \(o(1)\), beyond
+\eqref{eq:potts-response-gram}, includes the movement of the central
+contact; by \eqref{eq:terminal-location-map-bounds} its contribution is
+\(O(L_n/n)\).
+
+The response averages in \eqref{eq:potts-response-gram} also control the
+second derivative.  In particular,
+for any \(i,j,k\in A\),
+\[
+ \frac1{n^3}\sum_{r=1}^n
+  \{1+v_i(r)\}\{1+v_j(r)\}\{1+v_k(r)\}=O_{C,J}(1).
+\]
+The fitted denominators stay between \(1/2\) and \(2\) on
+\(|m|_\infty\le M\delta_n\), so
+\begin{equation}
+\label{eq:terminal-mass-second-derivative}
+ \sup_{|m|_\infty\le M\delta_n}
+ \|D_m^2\mathcal H(m)\|=O_{C,J,M}(1).
+\end{equation}
+Consequently,
+\begin{equation}
+\label{eq:potts-local-program}
+ \mathcal H(m)=h-A_nm+R_n(m),
+ \qquad
+ A_n=\beta_n^{\rm P}I_{|A|}+o(1),
+ \qquad
+ |R_n(m)|_\infty\le K_{C,J}|m|_\infty^2.
+\end{equation}
+Choose \(M\) larger than \(2C\).  Since \(u_i\in[\eta,C]\) on \(A\),
+the map
+\(m\mapsto A_n^{-1}\{h+R_n(m)\}\) is a contraction on a ball of radius
+\(o(\delta_n)\) about \(A_n^{-1}h\).  It therefore has a unique fixed
+point in \(|m|_\infty\le M\delta_n\), and
+\begin{equation}
+\label{eq:terminal-quantitative-mass}
+ m_i
+ =\frac{\chi_n^2}{\beta_n^{\rm P}}\delta_nu_i+o(\delta_n)
+ =\frac{n}{n-1}\delta_nu_i+o(\delta_n).
+\end{equation}
+Every component is positive for all sufficiently large \(n\).  The
+resulting measure \(\widetilde\Pi=\Pi_{x(m),m}\) has one stationary central
+contact and one stationary contact in each active patch, all at the same
+certificate level.  Since
+\(\int\Gamma_{\widetilde\Pi}\,d\widetilde\Pi=1\), that level equals one.
+
+We finally prove the global KKT inequality.  Put
+\(c_r=M_r(\widetilde\Pi)^{-1}\).  The response expansion and the mass
+formula imply
+\begin{equation}
+\label{eq:potts-fitted-weight-profile}
+ |\log c_r|=O_{C,J}(\delta_nL_n/n)\quad(r\notin A),
+ \qquad
+ \log c_i=-\chi_n\delta_nu_i+o(\delta_n)\quad(i\in A).
+\end{equation}
+Indeed, \eqref{eq:terminal-location-map-rate} gives
+\(|\tau(m)|=O_{C,J}(\delta_n\sqrt{L_n}/n)\) and
+\(\max_i|w_i(m)-\bar w_i|=O_{C,J}(\delta_n\sqrt{L_n}/n)\).
+For \(r\notin A\), the central response is
+\[
+ e^{\tau(m)\cdot q_r-|\tau(m)|^2/2}
+ =1+O_{C,J}(\delta_nL_n/n),
+\]
+the total mass removed from the central atom is \(O_{C,J}(\delta_n/n)\),
+and all active responses together contribute \(O_{C,J}(\delta_n/n^2)\).
+Thus \(M_r=1+O_{C,J}(\delta_nL_n/n)\).  At an active observation \(i\),
+\eqref{eq:potts-response-expansion} and
+\eqref{eq:terminal-quantitative-mass} instead give
+\[
+ M_i
+ =1+\frac{n-2}{n}\,
+      \frac{n}{n-1}\delta_nu_i+o(\delta_n)
+ =1+\chi_n\delta_nu_i+o(\delta_n).
+\]
+Taking negative logarithms proves
+\eqref{eq:potts-fitted-weight-profile}.
+
+For clarity, put
+\[
+ F_{\log c}(p)
+ =\frac12\left|\sum_rp_rq_r\right|^2
+  -K(p\Vert\mathbf u_n)+\sum_rp_r\log c_r.
+\]
+The weighted entropy dual \eqref{eq:weighted-entropy-dual} shows that
+\(\Gamma_{\widetilde\Pi}(w)\ge1\) only if its Gibbs vector \(p=p(w)\)
+satisfies \(F_{\log c}(p)\ge0\).  If
+\(\max_rp_r\le1-L_n^{-2}\), the stability inequality
+\eqref{eq:entropy-stability} may be applied after retaining the active
+diagonal terms.  Indeed, writing \(r=p-\mathbf u_n\), their contribution is at
+most
+\[
+ \sum_{i\in A}\delta_nu_i r_i^2
+ \le\chi_n\sum_{i\in A}\delta_nu_i p_i+O_{C,J}(\delta_n/n^2),
+\]
+where the scalar inequality
+\((p_i-1/n)^2\le\chi_np_i+n^{-2}\) holds for \(0\le p_i\le1\).
+This is canceled by \eqref{eq:potts-fitted-weight-profile}.  The remaining
+active-weight error is \(o(\delta_n)\), and the positive weight on
+inactive coordinates is \(O(\delta_nL_n/n)=o(\delta_n)\).  Consequently,
+\eqref{eq:entropy-stability} and
+\eqref{eq:buffered-simplex-assumptions} give, for a deterministic sequence
+\(\varpi_n\downarrow0\),
+\[
+ F_{\log c}(p)
+ \le
+ -\frac{c}{L_n}|p-\mathbf u_n|_1^2+\varpi_n\delta_n,
+ \qquad \varpi_n\longrightarrow0.
+\]
+Thus nonnegative weighted free energy forces
+\[
+ |p-\mathbf u_n|_1=o\{\sqrt{\delta_nL_n}\}
+ =o(L_n/\sqrt n).
+\]
+Because \(\sum_rq_r=0\), the corresponding
+\(\mu(p)=\sum_rp_rq_r\) satisfies
+\[
+ |\mu(p)|
+ \le \max_r|q_r|\,|p-\mathbf u_n|_1
+ =o(L_n\sqrt{\delta_n})
+ =o(L_n^{3/2}/\sqrt n)=o(1).
+\]
+For the Gibbs vector of an actual certificate point, the exact square
+identity is
+\begin{equation}
+\label{eq:weighted-certificate-square-identity}
+ \log\Gamma_{\widetilde\Pi}(w)
+ =F_{\log c}\{p(w)\}-\frac12|w-\mu\{p(w)\}|^2.
+\end{equation}
+Therefore \(\Gamma_{\widetilde\Pi}(w)\ge1\) implies \(w=o(1)\) in the
+diffuse case.
+
+Suppose instead that \(p_i=1-y>1-L_n^{-2}\), and decompose \(p\) as in
+the proof of Proposition~\ref{prop:local-simplex-criterion}: write
+\(p_j=yr_j\) for \(j\ne i\) and
+\[
+ v_r=\sum_{j\ne i}\left(r_j-\frac1{n-1}\right)q_j,
+ \qquad
+ \mathbf u_{n-1}=\left(\frac1{n-1},\ldots,\frac1{n-1}\right).
+\]
+Applying the local-simplex decomposition from that proposition with
+\(R_i=R_n^\star+\delta_nu_i\) gives
+\begin{align}
+\label{eq:weighted-potts-localization}
+ &\frac12\left|\sum_rp_rq_r\right|^2-K(p\Vert \mathbf u_n)\notag\\
+ &\qquad\le
+ \delta_nu_i c_y^2
+ -\{k_n(y)-R_n^\star c_y^2\}
+ +y|c_y|C_n,
+ \qquad c_y=1-\frac{ny}{n-1}.
+\end{align}
+Before the row error is bounded, the decomposition from the proof of
+Proposition~\ref{prop:local-simplex-criterion} also retains
+\begin{equation}
+\label{eq:weighted-potts-conditional-entropy}
+ -yK(r\Vert \mathbf u_{n-1})+\frac{y^2}{2}|v_r|^2
+ \le-\{1-o(1)\}yK(r\Vert \mathbf u_{n-1}),
+\end{equation}
+uniformly for \(y\le L_n^{-2}\). Indeed,
+\[
+ |v_r|^2
+ \le\frac{\|G_n\|_{\rm op}}{\log(n-1)}
+       K(r\Vert \mathbf u_{n-1})
+ =O\{K(r\Vert \mathbf u_{n-1})\}.
+\]
+We use a sharpened form of the last term. Pinsker's inequality and the
+definition of \(C_n\) give
+\[
+ |q_i\cdot v_r|
+ \le C_n\|r-\mathbf u_{n-1}\|_1
+ \le C_n\{2K(r\Vert \mathbf u_{n-1})\}^{1/2}.
+\]
+The spectral estimate in
+Proposition~\ref{prop:local-simplex-criterion} retains a fixed fraction of
+the conditional entropy \(yK(r\Vert \mathbf u_{n-1})\). Young's inequality
+therefore absorbs the cross term \(yc_yq_i\cdot v_r\), at the cost of
+\(O(yC_n^2)\). Thus the right side of
+\eqref{eq:weighted-potts-localization} may be replaced by
+\begin{equation}
+\label{eq:weighted-potts-localization-sharp}
+ \delta_nu_i c_y^2
+ -\{k_n(y)-R_n^\star c_y^2\}
+ -c\,yK(r\Vert \mathbf u_{n-1})
+ +O(yC_n^2).
+\end{equation}
+The scalar function in braces is nonnegative and, on
+\(0\le y\le L_n^{-2}\), vanishes only at \(y=1/n\); its second
+derivative there is \(n+O(L_n)\).  More generally, its explicit formula
+gives, on this interval,
+\begin{equation}
+\label{eq:potts-scalar-local-stability}
+ k_n(y)-R_n^\star c_y^2
+ \ge
+ \frac{c}{n}\{z\log z-z+1\},
+ \qquad z=ny.
+\end{equation}
+This follows by differentiating the two sides on either side of \(z=1\);
+both vanish with zero derivative at \(z=1\), while the second derivative
+of the left side after the change of variables is
+\(n^{-1}z^{-1}\{1+o(1)\}\).
+Combining this estimate with \eqref{eq:potts-fitted-weight-profile} gives
+the following dichotomy.  If \(i\notin A\), then \(u_i\le-\eta\), and the
+weighted free energy is at most \(-c\eta\delta_n\) for all large \(n\).
+If \(i\in A\), the active fitted weight cancels the radial term: uniformly
+on the present interval,
+\begin{equation}
+\label{eq:potts-active-radial-cancellation}
+ \delta_nu_i c_y^2+(1-y)\log c_i
+ \le O_{C,J}(\delta_n/n)+o(\delta_n),
+\end{equation}
+because
+\(\sup_{0\le y\le L_n^{-2}}\{c_y^2-\chi_n(1-y)\}
+=1/(n-1)\).
+Let \(\phi(z)=z\log z-z+1\).  Outside \(z=ny\in[1/2,2]\), one has
+\(\phi(z)\ge c(1+z)\), so the term \(yC_n^2=zC_n^2/n\) is absorbed by
+\eqref{eq:potts-scalar-local-stability}.  Inside that interval it is
+\(O(C_n^2/n)=o(\delta_n)\).  Nonnegative weighted free energy therefore
+implies
+\[
+ \phi(ny)+nyK(r\Vert\mathbf u_{n-1})=o(n\delta_n)=o(L_n).
+\]
+It follows that
+\[
+ y=o\left(\frac{L_n}{n\log L_n}\right),
+ \qquad
+ yK(r\Vert\mathbf u_{n-1})=o(\delta_n).
+\]
+Hence
+\[
+ y|v_r|
+ \le C\{y^2K(r\Vert\mathbf u_{n-1})\}^{1/2}
+ =o\{y\delta_n\}^{1/2}=o(1).
+\]
+Since
+\(|c_y-\chi_n|=|1-ny|/(n-1)\), we obtain
+\[
+ \mu(p)=c_yq_i+yv_r=\chi_nq_i+o(1).
+\]
+Substituting \eqref{eq:potts-active-radial-cancellation} and the bounds
+\(yK(r\Vert\mathbf u_{n-1})=o(\delta_n)\) and
+\(y|v_r|=o(1)\) into the definition of \(F_{\log c}\) gives
+\(F_{\log c}(p)=o(\delta_n)\).  Equation
+\eqref{eq:weighted-certificate-square-identity} then shows that every
+certificate point with value at least one lies within \(o(1)\) of
+\(\chi_nq_i\).
+
+It remains to prove uniqueness inside the localized patches.  Fix a small
+constant \(r_0>0\).  In \(B(\tau,r_0)\), the Gibbs probabilities are at
+most \(n^{-1+o(1)}\), and hence
+\[
+ \|\operatorname{Cov}_{p(w)}(q)\|_{\rm op}
+ \le n^{-1+o(1)}\|G_n\|_{\rm op}=o(1).
+\]
+In \(B(w_i,r_0)\), the total Gibbs mass outside coordinate \(i\) is
+\(n^{-1+o(1)}\), so the covariance operator is again \(o(1)\).  Therefore
+\[
+ \nabla^2\log\Gamma_{\widetilde\Pi}(w)
+ =\operatorname{Cov}_{p(w)}(q)-I\preceq-\frac12I
+\]
+on every localized patch.  Each patch contains exactly one stationary
+point, namely the contact already constructed there, and that point is its
+unique maximum.  The diffuse and near-vertex localization arguments in this
+proof now give
+\(\Gamma_{\widetilde\Pi}\le1\), with equality exactly at the central and
+active contacts.
+
+The constructed measure is an NPMLE\@. Its fitted vector is unique by
+strict concavity in the fitted likelihood vector.  The likelihood vectors
+at its contacts are linearly independent.  Indeed, on rows indexed by
+\(A\), the active-contact block has diagonal entries
+\((n-1)\{1+o(1)\}\) and off-diagonal entries
+\((n-1)^{-1}\{1+o(1)\}\), while the central column is \(1+o(1)\).
+Choose any inactive row, which exists because \(|A|\le J<n\) for large
+\(n\).  On that row the central entry is \(1+o(1)\), and every active
+entry is \((n-1)^{-1}\{1+o(1)\}\).  After scaling the active columns by
+\(n^{-1}\), this \((1+|A|)\)-square minor converges to an invertible
+triangular matrix.  The KKT conditions for the unique fitted likelihood
+vector restrict the support of every maximizing measure to these contacts;
+linear independence then makes its representing weights unique.  Thus every
+maximizing measure uses the same positive weights on precisely these
+contacts.  Equations
+\eqref{eq:buffered-simplex-count} and \eqref{eq:buffered-simplex-mass}
+follow from \eqref{eq:terminal-quantitative-mass}.
+\end{proof}
+
+For the random Gaussian cloud, all assumptions of
+Proposition~\ref{prop:buffered-simplex-support} hold whenever
+\(d_nL_n/n^2\) is bounded below.
+
+\begin{corollary}
+\label{cor:random-buffered-simplex-support}
+Suppose
+\[
+ d_nL_n/n^2\ge c>0,
+ \qquad s_n^\star=O(1).
+\]
+For every fixed \(C,J<\infty\) and \(\eta>0\),
+\begin{equation}
+\label{eq:random-buffered-simplex-support}
+ \Pbb\left\{
+  \mathcal B_n(C,J,\eta),\quad
+  \widehat K_n\ne1+\#\{i:\xi_{n,i}^\star>0\}
+ \right\}\longrightarrow0.
+\end{equation}
+On \(\mathcal B_n(C,J,\eta)\), the NPMLE is also unique apart from an event
+whose probability tends to zero.
+\end{corollary}
+
+\begin{proof}
+Here \(L_n=o(d_n)\), and Lemma~\ref{lem:random-off-diagonal} gives
+\begin{align*}
+ \delta_n^\star&=\sqrt{L_n/d_n}\{1+o(1)\},&
+ \mu_n^{\rm off}:=\max_{i\ne j}|q_i\cdot q_j|
+   &=o_{\Pbb}(L_n^{-1}),\\
+ \|G_n\|_{\rm op}&=O_{\Pbb}(L_n),&
+ C_n&=O_{\Pbb}(L_n^{3/2}/\sqrt{d_n}).
+\end{align*}
+Consequently,
+\[
+ \frac{C_n}{\delta_n^\star L_n^2}=O_{\Pbb}(L_n^{-1}),
+ \qquad
+ \frac{C_n^2}{n\delta_n^\star}
+ =O_{\Pbb}(\delta_n^\star L_n^2/n)=o_{\Pbb}(1),
+\]
+and \(\delta_n^\star=O(L_n/n)\to0\).  Proposition
+\ref{prop:buffered-simplex-support} applies on an event whose probability
+tends to one.
+\end{proof}
