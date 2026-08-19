@@ -1,0 +1,76 @@
+\begin{thebibliography}{BMP63}
+
+\bibitem[BB05]{BagnoliBergstrom2005LogConcave}
+Mark Bagnoli and Ted Bergstrom.
+\newblock Log-concave probability and its applications.
+\newblock {\em Economic Theory}, 26(2):445--469, 2005.
+
+\bibitem[BM13]{BanciuMirchandani2013IGFR}
+Mihai Banciu and Prakash Mirchandani.
+\newblock Technical note--new results concerning probability distributions with
+  increasing generalized failure rates.
+\newblock {\em Operations Research}, 61(4):925--931, 2013.
+
+\bibitem[BMP63]{BarlowMarshallProschan1963MHR}
+Richard~E. Barlow, Albert~W. Marshall, and Frank Proschan.
+\newblock Properties of probability distributions with monotone hazard rate.
+\newblock {\em The Annals of Mathematical Statistics}, 34(2):375--389, 1963.
+
+\bibitem[BR89]{BulowRoberts1989SimpleEconomics}
+Jeremy Bulow and John Roberts.
+\newblock The simple economics of optimal auctions.
+\newblock {\em Journal of Political Economy}, 97(5):1060--1090, 1989.
+
+\bibitem[CR14]{ColeRoughgarden2014SampleComplexity}
+Richard Cole and Tim Roughgarden.
+\newblock The sample complexity of revenue maximization.
+\newblock In {\em Proceedings of the Forty-Sixth Annual ACM Symposium on Theory
+  of Computing}, pages 243--252. ACM, 2014.
+
+\bibitem[CR15]{ColeRao2015AlphaStronglyRegular}
+Richard Cole and Shravas Rao.
+\newblock Applications of {$\alpha$}-strongly regular distributions to bayesian
+  auctions.
+\newblock In Evangelos Markakis and Guido Sch{\"a}fer, editors, {\em Web and
+  Internet Economics}, volume 9470 of {\em Lecture Notes in Computer Science},
+  pages 244--257. Springer, 2015.
+
+\bibitem[Ewe13]{Ewerhart2013RegularType}
+Christian Ewerhart.
+\newblock Regular type distributions in mechanism design and
+  {$\rho$}-concavity.
+\newblock {\em Economic Theory}, 53(3):591--603, 2013.
+
+\bibitem[Lar06]{Lariviere2006IGFR}
+Martin~A. Lariviere.
+\newblock A note on probability distributions with increasing generalized
+  failure rates.
+\newblock {\em Operations Research}, 54(3):602--604, 2006.
+
+\bibitem[Mye81]{Myerson1981OptimalAuction}
+Roger~B. Myerson.
+\newblock Optimal auction design.
+\newblock {\em Mathematics of Operations Research}, 6(1):58--73, 1981.
+
+\bibitem[Pr{\'e}73]{Prekopa1973LogConcave}
+Andr{\'a}s Pr{\'e}kopa.
+\newblock On logarithmic concave measures and functions.
+\newblock {\em Acta Scientiarum Mathematicarum}, 34:335--343, 1973.
+
+\bibitem[RS81]{RileySamuelson1981OptimalAuctions}
+John~G. Riley and William~F. Samuelson.
+\newblock Optimal auctions.
+\newblock {\em American Economic Review}, 71(3):381--392, 1981.
+
+\bibitem[SS19]{SchweizerSzech2019PerformanceBounds}
+Nikolaus Schweizer and Nora Szech.
+\newblock Performance bounds for optimal sales mechanisms beyond the monotone
+  hazard rate condition.
+\newblock {\em Journal of Mathematical Economics}, 82:202--213, 2019.
+
+\bibitem[ZAF04]{ZiyaAyhanFoley2004RevenueManagement}
+Serhan Ziya, Hayriye Ayhan, and Robert~D. Foley.
+\newblock Relationships among three assumptions in revenue management.
+\newblock {\em Operations Research}, 52(5):804--809, 2004.
+
+\end{thebibliography}
