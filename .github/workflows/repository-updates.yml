@@ -1,0 +1,30 @@
+name: Repository email updates
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - repository.html
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the complete history
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Notify subscribers about newly listed papers
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+        run: >-
+          python3 scripts/repository_updates.py
+          --before-ref "$BEFORE_SHA"
+          --after-ref "$AFTER_SHA"

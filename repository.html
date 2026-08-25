@@ -20,6 +20,40 @@
       line-height: 1.5;
     }
 
+    .repository-subscribe {
+      max-width: 690px;
+      margin-bottom: 1.75rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid #c9c9c9;
+      background: #fafafa;
+    }
+
+    .repository-subscribe h4 {
+      margin-bottom: 0.25rem;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .repository-subscribe-copy {
+      margin-bottom: 0.75rem;
+      color: #444;
+    }
+
+    .repository-subscribe-form {
+      max-width: 470px;
+    }
+
+    .repository-subscribe-form label {
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    .repository-subscribe-note {
+      margin: 0.55rem 0 0;
+      color: #666;
+      font-size: 0.82rem;
+    }
+
     .paper-list {
       margin: 0;
       padding: 0;
@@ -178,6 +212,24 @@
           published work, though the owner of this page is fairly confident about the correctness
           of each document.
         </p>
+
+        <section class="repository-subscribe" aria-labelledby="repository-subscribe-title">
+          <h4 id="repository-subscribe-title">Email updates</h4>
+          <p class="repository-subscribe-copy">Receive one email whenever a new paper is added.</p>
+          <form class="repository-subscribe-form" action="https://buttondown.com/api/emails/embed-subscribe/yangpliu" method="post" accept-charset="UTF-8">
+            <input type="hidden" name="embed" value="1">
+            <div class="form-row align-items-end">
+              <div class="col-sm-9">
+                <label for="repository-email">Email address</label>
+                <input class="form-control" id="repository-email" name="email" type="email" autocomplete="email" aria-describedby="repository-subscribe-note" required>
+              </div>
+              <div class="col-sm-3 mt-2 mt-sm-0">
+                <button class="btn btn-dark btn-block" type="submit">Subscribe</button>
+              </div>
+            </div>
+          </form>
+          <p class="repository-subscribe-note" id="repository-subscribe-note">Buttondown will send a confirmation email. Unsubscribe at any time.</p>
+        </section>
 
         <!-- Store PDFs under repo/, optionally in per-paper subdirectories. -->
         <ol class="paper-list">
