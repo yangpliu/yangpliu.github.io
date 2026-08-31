@@ -1,0 +1,244 @@
+\begin{thebibliography}{32}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Applegate and Kannan(1991)]{AK91sampling}
+David~L. Applegate and Ravi Kannan.
+\newblock Sampling and integration of near log-concave functions.
+\newblock In \emph{Proceedings of the Twenty-Third Annual ACM Symposium on
+  Theory of Computing}, pages 156--163. ACM, 1991.
+\newblock \doi{10.1145/103418.103439}.
+
+\bibitem[Brascamp and Lieb(1976)]{BrascampLieb76}
+Herm~Jan Brascamp and Elliott~H. Lieb.
+\newblock On extensions of the {Brunn--Minkowski} and {Pr{\'e}kopa--Leindler}
+  theorems, including inequalities for log concave functions, and with an
+  application to the diffusion equation.
+\newblock \emph{Journal of Functional Analysis}, 22\penalty0 (4):\penalty0
+  366--389, 1976.
+\newblock \doi{10.1016/0022-1236(76)90004-5}.
+
+\bibitem[Buser(1982)]{Buser82iso}
+Peter Buser.
+\newblock A note on the isoperimetric constant.
+\newblock \emph{Annales Scientifiques de l'{\'E}cole Normale Sup{\'e}rieure},
+  15\penalty0 (2):\penalty0 213--230, 1982.
+\newblock \doi{10.24033/asens.1426}.
+
+\bibitem[Cheeger(1970)]{Chee70lower}
+Jeff Cheeger.
+\newblock A lower bound for the smallest eigenvalue of the {L}aplacian.
+\newblock In \emph{Problems in Analysis}, pages 195--199. Princeton University
+  Press, 1970.
+
+\bibitem[Chen et~al.(2022)Chen, Chewi, Salim, and Wibisono]{CCSW22improved}
+Yongxin Chen, Sinho Chewi, Adil Salim, and Andre Wibisono.
+\newblock Improved analysis for a proximal algorithm for sampling.
+\newblock In \emph{Proceedings of the Thirty-Fifth Conference on Learning
+  Theory}, volume 178 of \emph{Proceedings of Machine Learning Research}, pages
+  2984--3014. PMLR, 2022.
+
+\bibitem[Cousins and Vempala(2015)]{CV15bypass}
+Ben Cousins and Santosh~S. Vempala.
+\newblock Bypassing {KLS}: {G}aussian cooling and an {$O^*(n^3)$} volume
+  algorithm.
+\newblock In \emph{Proceedings of the Forty-Seventh Annual ACM Symposium on
+  Theory of Computing}, pages 539--548. ACM, 2015.
+\newblock \doi{10.1145/2746539.2746563}.
+
+\bibitem[Cousins and Vempala(2018)]{CV18Gaussian}
+Ben Cousins and Santosh~S. Vempala.
+\newblock Gaussian cooling and {$O^*(n^3)$} algorithms for volume and
+  {G}aussian volume.
+\newblock \emph{SIAM Journal on Computing}, 47\penalty0 (3):\penalty0
+  1237--1273, 2018.
+\newblock \doi{10.1137/15M1054250}.
+
+\bibitem[Dyer et~al.(1991)Dyer, Frieze, and Kannan]{DFK91random}
+Martin Dyer, Alan Frieze, and Ravi Kannan.
+\newblock A random polynomial-time algorithm for approximating the volume of
+  convex bodies.
+\newblock \emph{Journal of the ACM}, 38\penalty0 (1):\penalty0 1--17, 1991.
+\newblock \doi{10.1145/102782.102783}.
+
+\bibitem[Kannan et~al.(1995)Kannan, Lov{\'a}sz, and Simonovits]{KLS95isop}
+Ravi Kannan, L{\'a}szl{\'o} Lov{\'a}sz, and Mikl{\'o}s Simonovits.
+\newblock Isoperimetric problems for convex bodies and a localization lemma.
+\newblock \emph{Discrete \& Computational Geometry}, 13\penalty0
+  (3--4):\penalty0 541--559, 1995.
+\newblock \doi{10.1007/BF02574061}.
+
+\bibitem[Kannan et~al.(1997)Kannan, Lov{\'a}sz, and Simonovits]{KLS97random}
+Ravi Kannan, L{\'a}szl{\'o} Lov{\'a}sz, and Mikl{\'o}s Simonovits.
+\newblock Random walks and an {$O^*(n^5)$} volume algorithm for convex bodies.
+\newblock \emph{Random Structures \& Algorithms}, 11\penalty0 (1):\penalty0
+  1--50, 1997.
+\newblock \doi{10.1002/(SICI)1098-2418(199708)11:1<1::AID-RSA1>3.0.CO;2-X}.
+
+\bibitem[Klartag(2023)]{Klartag23log}
+Bo'az Klartag.
+\newblock Logarithmic bounds for isoperimetry and slices of convex sets.
+\newblock \emph{Ars Inveniendi Analytica}, 2023.
+\newblock \doi{10.15781/jsjy-0b06}.
+\newblock Paper No. 4, 17 pp.
+
+\bibitem[Kook and Vempala(2025{\natexlab{a}})]{KV25faster}
+Yunbum Kook and Santosh~S. Vempala.
+\newblock Faster logconcave sampling from a cold start in high dimension.
+\newblock In \emph{2025 IEEE 66th Annual Symposium on Foundations of Computer
+  Science}, pages 997--1006. IEEE, 2025{\natexlab{a}}.
+\newblock \doi{10.1109/FOCS63196.2025.00052}.
+
+\bibitem[Kook and Vempala(2025{\natexlab{b}})]{KV25sampling}
+Yunbum Kook and Santosh~S. Vempala.
+\newblock Sampling and integration of logconcave functions by algorithmic
+  diffusion.
+\newblock In \emph{Proceedings of the 57th Annual ACM Symposium on Theory of
+  Computing}, pages 924--932. ACM, 2025{\natexlab{b}}.
+\newblock \doi{10.1145/3717823.3718202}.
+\newblock URL \url{https://arxiv.org/abs/2411.13462}.
+\newblock Full version: arXiv:2411.13462v1.
+
+\bibitem[Kook and Vempala(2026{\natexlab{a}})]{KV26unified}
+Yunbum Kook and Santosh~S. Vempala.
+\newblock A unified complexity bound for logconcave sampling,
+  2026{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2606.12694}.
+\newblock arXiv:2606.12694v1.
+
+\bibitem[Kook and Vempala(2026{\natexlab{b}})]{KV26zeroth}
+Yunbum Kook and Santosh~S. Vempala.
+\newblock Zeroth-order logconcave sampling, 2026{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2507.18021}.
+\newblock arXiv:2507.18021v2.
+
+\bibitem[Kook and Zhang(2025)]{KZ25Renyi}
+Yunbum Kook and Matthew~S. Zhang.
+\newblock R{\'e}nyi-infinity constrained sampling with {$d^3$} membership
+  queries.
+\newblock In \emph{Proceedings of the 2025 Annual ACM-SIAM Symposium on
+  Discrete Algorithms}, pages 5278--5306. SIAM, 2025.
+\newblock \doi{10.1137/1.9781611978322.181}.
+
+\bibitem[Kook et~al.(2024)Kook, Vempala, and Zhang]{KVZ24INO}
+Yunbum Kook, Santosh~S. Vempala, and Matthew~S. Zhang.
+\newblock In-and-{O}ut: Algorithmic diffusion for sampling convex bodies.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~37, pages 108354--108388, 2024.
+
+\bibitem[Kook et~al.(2026)Kook, Vempala, and Zhang]{KVZ26INO}
+Yunbum Kook, Santosh~S. Vempala, and Matthew~S. Zhang.
+\newblock In-and-{O}ut: Algorithmic diffusion for sampling convex bodies.
+\newblock \emph{Random Structures \& Algorithms}, 68\penalty0 (3):\penalty0
+  e70061, 2026.
+\newblock \doi{10.1002/rsa.70061}.
+
+\bibitem[Ledoux(2004)]{Led04spectral}
+Michel Ledoux.
+\newblock Spectral gap, logarithmic {S}obolev constant, and geometric bounds.
+\newblock In \emph{Surveys in Differential Geometry IX}, volume~9, pages
+  219--240. International Press, 2004.
+\newblock \doi{10.4310/SDG.2004.v9.n1.a6}.
+
+\bibitem[Lee et~al.(2021)Lee, Shen, and Tian]{LST21structured}
+Yin~Tat Lee, Ruoqi Shen, and Kevin Tian.
+\newblock Structured logconcave sampling with a restricted {G}aussian oracle.
+\newblock In \emph{Proceedings of the Thirty-Fourth Conference on Learning
+  Theory}, volume 134 of \emph{Proceedings of Machine Learning Research}, pages
+  2993--3050. PMLR, 2021.
+
+\bibitem[Letwin(2026)]{Letwin26KLS}
+Brayden Letwin.
+\newblock The {KLS} constant is {$O(\log^{1/4} n)$}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2607.24164}.
+\newblock arXiv:2607.24164v1.
+
+\bibitem[Lov{\'a}sz(1999)]{Lovasz99hit}
+L{\'a}szl{\'o} Lov{\'a}sz.
+\newblock Hit-and-run mixes fast.
+\newblock \emph{Mathematical Programming}, 86\penalty0 (3):\penalty0 443--461,
+  1999.
+\newblock \doi{10.1007/s101070050099}.
+
+\bibitem[Lov{\'a}sz and Simonovits(1990)]{LS90mixing}
+L{\'a}szl{\'o} Lov{\'a}sz and Mikl{\'o}s Simonovits.
+\newblock The mixing rate of {M}arkov chains, an isoperimetric inequality, and
+  computing the volume.
+\newblock In \emph{31st Annual Symposium on Foundations of Computer Science},
+  pages 346--354. IEEE, 1990.
+\newblock \doi{10.1109/FSCS.1990.89543}.
+
+\bibitem[Lov{\'a}sz and Simonovits(1993)]{LS93random}
+L{\'a}szl{\'o} Lov{\'a}sz and Mikl{\'o}s Simonovits.
+\newblock Random walks in a convex body and an improved volume algorithm.
+\newblock \emph{Random Structures \& Algorithms}, 4\penalty0 (4):\penalty0
+  359--412, 1993.
+\newblock \doi{10.1002/rsa.3240040402}.
+
+\bibitem[Lov{\'a}sz and Vempala(2006{\natexlab{a}})]{LV06fast}
+L{\'a}szl{\'o} Lov{\'a}sz and Santosh~S. Vempala.
+\newblock Fast algorithms for logconcave functions: Sampling, rounding,
+  integration and optimization.
+\newblock In \emph{47th Annual IEEE Symposium on Foundations of Computer
+  Science}, pages 57--68. IEEE, 2006{\natexlab{a}}.
+\newblock \doi{10.1109/FOCS.2006.28}.
+
+\bibitem[Lov{\'a}sz and Vempala(2006{\natexlab{b}})]{LV06hit}
+L{\'a}szl{\'o} Lov{\'a}sz and Santosh~S. Vempala.
+\newblock Hit-and-run from a corner.
+\newblock \emph{SIAM Journal on Computing}, 35\penalty0 (4):\penalty0
+  985--1005, 2006{\natexlab{b}}.
+\newblock \doi{10.1137/S009753970544727X}.
+
+\bibitem[Lov{\'a}sz and Vempala(2006{\natexlab{c}})]{LV06simulated}
+L{\'a}szl{\'o} Lov{\'a}sz and Santosh~S. Vempala.
+\newblock Simulated annealing in convex bodies and an {$O^*(n^4)$} volume
+  algorithm.
+\newblock \emph{Journal of Computer and System Sciences}, 72\penalty0
+  (2):\penalty0 392--417, 2006{\natexlab{c}}.
+\newblock \doi{10.1016/j.jcss.2005.08.004}.
+
+\bibitem[Lov{\'a}sz and Vempala(2007)]{LV07geometry}
+L{\'a}szl{\'o} Lov{\'a}sz and Santosh~S. Vempala.
+\newblock The geometry of logconcave functions and sampling algorithms.
+\newblock \emph{Random Structures \& Algorithms}, 30\penalty0 (3):\penalty0
+  307--358, 2007.
+\newblock \doi{10.1002/rsa.20135}.
+
+\bibitem[Salamon et~al.(1988)Salamon, Nulton, Harland, Pedersen, Ruppeiner, and
+  Liao]{SalamonEtAl1988}
+Peter Salamon, James~D. Nulton, John~R. Harland, Jacob Pedersen, George
+  Ruppeiner, and Luby Liao.
+\newblock Simulated annealing with constant thermodynamic speed.
+\newblock \emph{Computer Physics Communications}, 49\penalty0 (3):\penalty0
+  423--428, 1988.
+\newblock \doi{10.1016/0010-4655(88)90003-3}.
+
+\bibitem[Smith(1984)]{Smith84HAR}
+Robert~L. Smith.
+\newblock Efficient {M}onte {C}arlo procedures for generating points uniformly
+  distributed over bounded regions.
+\newblock \emph{Operations Research}, 32\penalty0 (6):\penalty0 1296--1308,
+  1984.
+\newblock \doi{10.1287/opre.32.6.1296}.
+
+\bibitem[{\v{S}}tefankovi{\v{c}} et~al.(2009){\v{S}}tefankovi{\v{c}}, Vempala,
+  and Vigoda]{SVV09}
+Daniel {\v{S}}tefankovi{\v{c}}, Santosh~S. Vempala, and Eric Vigoda.
+\newblock Adaptive simulated annealing: A near-optimal connection between
+  sampling and counting.
+\newblock \emph{Journal of the ACM}, 56\penalty0 (3):\penalty0 18:1--18:36,
+  2009.
+\newblock \doi{10.1145/1516512.1516520}.
+
+\bibitem[van Erven and Harremo{\"e}s(2014)]{vH14renyi}
+Tim van Erven and Peter Harremo{\"e}s.
+\newblock R{\'e}nyi divergence and {K}ullback--{L}eibler divergence.
+\newblock \emph{IEEE Transactions on Information Theory}, 60\penalty0
+  (7):\penalty0 3797--3820, 2014.
+\newblock \doi{10.1109/TIT.2014.2320500}.
+
+\end{thebibliography}
