@@ -236,6 +236,66 @@
           <li>
             <details class="paper-entry">
               <summary>
+                <span class="paper-title">Two-Forest Publisher Maintenance and Transcript-Free Recovery for Incremental Decentralized Data Archival</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/two-forest-incremental-data-archival/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/be5c0b816b840cbd481dc0e3b7fc4d5b73e57f13" title="View the commit that added this paper">Added September 1, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> We study incremental decentralized data archival for a database of at most <i>N</i> blocks over <i>F</i><sub>2<sup><i>B</i></sup></sub>, initialized with <i>n</i><sub>0</sub> blocks and extended by one-block Update calls. For slack <i>&epsilon;</i> with polynomially bounded 1/<i>&epsilon;</i>, we give an explicit Setup&ndash;Init&ndash;Join&ndash;Update&ndash;Audit construction based on tagged dyadic chunks and an additive-evaluation [<i>Rn</i>, <i>n</i>] MDS code, where <i>R</i> = &Theta;(1/<i>&epsilon;</i>). Its initialization prefix is frozen in one forest and its post-initialization suffix is maintained in a second. Over the first <i>U</i> updates, node-independent publisher maintenance is <i>O</i>(<i>BU</i> log <i>N</i>/<i>&epsilon;</i>), including public-digest serialization and without any relation between <i>n</i><sub>0</sub> and <i>U</i>; equivalently, the amortized cost is <i>O</i>(<i>B</i> log <i>N</i>/<i>&epsilon;</i>) per update. Publisher storage is <i>O</i>(<i>BN</i>/<i>&epsilon;</i>). Under the stated local verified-extraction contract and parameter conditions, the same construction gives transcript-free paired recovery: the quasi-polynomial extractor receives neither the experiment transcript nor the original database, the paired advice has at most <i>B</i> max{<i>n</i> &minus; (1 &minus; <i>&epsilon;</i>)<i>&mu;S</i>, 0} bits, and the probability of accepting with an incorrectly recovered database is negligible. The theorem concerns recoverability with paired advice and does not assert a replication bound.</p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="paper-entry">
+              <summary>
+                <span class="paper-title">Exact False-Name and One-User Coalition Incentives with Linear Miner Revenue</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/false-name-coalition-incentives/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/be5c0b816b840cbd481dc0e3b7fc4d5b73e57f13" title="View the commit that added this paper">Added September 1, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> Let <i>h</i> &ge; 1 and let <i>D</i> be a distribution on nonnegative values whose public finite description permits exact sampling in expected polynomial time and deterministic polynomial-time computation of a positive rational median <i>m</i><sub><i>D</i></sub> and the exact rational probabilities Pr[<i>V</i> &gt; <i>m</i><sub><i>D</i></sub>] and Pr[<i>V</i> = <i>m</i><sub><i>D</i></sub>]. In the infinite-capacity ideal-MPC model, we construct a weakly anonymous randomized transaction fee mechanism with exact nonnegative rational payments and miner revenue. Pointwise, an unconfirmed bid pays zero, a confirmed bid pays at most its report, and miner revenue is at most total payments. On finitely encoded bids comparable with <i>m</i><sub><i>D</i></sub> in polynomial time, the mechanism runs in expected time polynomial in the public-description length, log <i>h</i>, and the total bid-encoding length. It is ex post false-name user incentive compatible for every fixed outsider bid vector and every finite randomized deviation. For every miner coalition share <i>&rho;</i> &isin; [0, 1], it is exact Bayesian miner incentive compatible with at least <i>h</i> independent truthful draws from <i>D</i> and exact Bayesian one-user side-contract-proof with at least <i>h</i> such honest outsiders and one arbitrary-valued colluding user. For truthful bids <i>V</i> &sim; <i>D</i><sup><i>&#8467;</i></sup>, the expected miner revenue is <i>m</i><sub><i>D</i></sub>/2 when 1 &le; <i>h</i> &lt; 64 and <i>hm</i><sub><i>D</i></sub>/128 when <i>h</i> &ge; 64; this is also the infimum over every <i>&#8467;</i> &ge; <i>h</i>, and is always at least <i>hm</i><sub><i>D</i></sub>/128.</p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="paper-entry">
+              <summary>
+                <span class="paper-title">The Instance-Optimal Rate for Bounded Summation under Approximate Differential Privacy</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/instance-optimal-bounded-summation-adp/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/be5c0b816b840cbd481dc0e3b7fc4d5b73e57f13" title="View the commit that added this paper">Added September 1, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> In the central replacement model, let <i>D</i> = (<i>x</i><sub>1</sub>,&hellip;,<i>x</i><sub><i>n</i></sub>) &isin; {0,&hellip;,<i>U</i>}<sup><i>n</i></sup>, <i>S</i>(<i>D</i>) = &sum;<sub><i>i</i></sub> <i>x</i><sub><i>i</i></sub>, and <i>m</i>(<i>D</i>) = max{1,<i>x</i><sub>1</sub>,&hellip;,<i>x</i><sub><i>n</i></sub>}. We characterize, up to universal constants, the smallest worst-case ratio between <i>&epsilon;</i> times pointwise (1 &minus; <i>&beta;</i>)-quantile absolute error and <i>m</i>(<i>D</i>) among real-valued (<i>&epsilon;</i>, <i>&delta;</i>)-differentially private mechanisms. Under the stated parameter and sample-size conditions, this ratio is &Theta;(min{<i>A</i><sub><i>U</i>,<i>&beta;</i></sub>, <i>B</i><sub><i>&epsilon;</i>,<i>&delta;</i></sub>}), where <i>A</i><sub><i>U</i>,<i>&beta;</i></sub> = 1 + log((1 + &lceil;log<sub>2</sub> <i>U</i>&rceil;)/<i>&beta;</i>) and <i>B</i><sub><i>&epsilon;</i>,<i>&delta;</i></sub> = 1 + log(1 + (<i>e</i><sup><i>&epsilon;</i></sup> &minus; 1)/<i>&delta;</i>) for <i>&delta;</i> &gt; 0, with <i>B</i><sub><i>&epsilon;</i>,0</sub> = &infin;. The upper bound is attained by a central mechanism outputting a real estimate of <i>S</i>(<i>D</i>). In the ideal exact-real and exact-sampling model, its pure-private branch runs in <i>O</i>(<i>n</i> log <i>n</i> + log <i>U</i>) time; its approximate-private branch has deterministic error <i>O</i>(<i>m</i>(<i>D</i>)<i>B</i><sub><i>&epsilon;</i>,<i>&delta;</i></sub>/<i>&epsilon;</i>) and polynomial runtime. The lower bound has no computational restriction.</p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="paper-entry">
+              <summary>
+                <span class="paper-title">Universal Contextual Composition Is Strictly Weaker than Neighbor-Preserving Differential Obliviousness</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/universal-contextual-composition-npdo/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/be5c0b816b840cbd481dc0e3b7fc4d5b73e57f13" title="View the commit that added this paper">Added September 1, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> For a randomized mechanism <i>M</i>, let <i>P</i><sub><i>x</i></sub> be the law of its first-stage execution on a finite or countable space, and relate two executions when they have the same view and neighboring outputs. We define universal contextual composability by quantifying over every admissible common downstream Markov kernel. If the (<i>&epsilon;</i>, <i>&delta;</i>)-NPDO setwise inequalities hold for every ordered neighboring input pair, then every (<i>&eta;</i>, <i>&gamma;</i>)-admissible context satisfies the composed bound (<i>P</i><sub><i>x</i></sub><i>K</i>)(<i>A</i>) &le; <i>e</i><sup><i>&epsilon;</i>+<i>&eta;</i></sup>(<i>P</i><sub><i>x</i>&prime;</sub><i>K</i>)(<i>A</i>) + <i>&delta;</i> + <i>&gamma;</i> &minus; <i>&delta;&gamma;</i>. The converse fails even when <i>&epsilon;</i> = <i>&delta;</i> = 0. A finite mechanism with a fixed view exchanges masses 1/3 and 2/3 between the endpoints of a three-point output path. It is (0, 0)-universally contextually composable; for every admissible kernel and event, its two nontrivial contextual comparisons have additive loss at most 2<i>&gamma;</i>/3. Nevertheless, it violates (0, 0)-NPDO. The separating mechanism uses one exact uniform sample from three outcomes and runs in <i>O</i>(1) time.</p>
+              </div>
+            </details>
+          </li>
+
+          <li>
+            <details class="paper-entry">
+              <summary>
                 <span class="paper-title">Heat-capacity annealing for cold-start logconcave sampling</span>
                 <span class="paper-links">
                   <a class="paper-pdf" href="repo/heat-capacity-annealing/paper.pdf">PDF</a>
