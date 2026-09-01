@@ -1,0 +1,811 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{array}
+\usepackage{bm}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{nicefrac}
+\usepackage{paralist}
+\usepackage{enumitem}
+\usepackage{verbatim}
+\usepackage{thm-restate}
+\usepackage[normalem]{ulem}
+\usepackage[compact]{titlesec}
+\usepackage{fancybox}
+\newenvironment{fminipage}%
+  {\begin{Sbox}\begin{minipage}}%
+  {\end{minipage}\end{Sbox}\fbox{\TheSbox}}
+
+\newenvironment{algbox}[0]{%
+\vskip 0.2in
+\noindent
+\begin{fminipage}{6.3in}
+}{%
+\end{fminipage}
+\vskip 0.2in
+}
+
+\usepackage{xcolor}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{xspace}
+\usepackage[mathscr]{euscript}
+\usepackage{nameref}
+\usepackage[
+  linktocpage=true,
+  pagebackref=false,
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  bookmarks,
+  bookmarksopen,
+  bookmarksnumbered
+]{hyperref}
+\usepackage[noabbrev,nameinlink]{cleveref}
+
+% Make the font fallbacks used by Computer Modern explicit and silent.
+\DeclareFontShape{OT1}{cmr}{m}{scit}{<->ssub*cmr/m/sc}{}
+\DeclareFontShape{OT1}{cmr}{bx}{sc}{<->ssub*cmr/bx/n}{}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{claim}[lemma]{Claim}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{conjecture}[lemma]{Conjecture}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{observation}[lemma]{Observation}
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{claim*}{Claim}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{problem*}{Problem}
+
+\allowdisplaybreaks
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{2em}
+
+\title{Universal Contextual Composition Is Strictly Weaker than
+Neighbor-Preserving Differential Obliviousness}
+\author{}
+\date{September 1, 2026}
+
+\begin{document}
+
+\pagenumbering{roman}
+
+\maketitle
+
+\begin{abstract}
+For a randomized mechanism $M$, let $P_x$ be the law of the first-stage execution
+$\operatorname{Exec}_M(x)=(V,Y)$ on a finite or countable space
+$\Omega=\mathcal V\times\mathcal Y$, where the input and output spaces have
+symmetric neighbor relations.  Write $aRb$ when two executions have the same
+view and neighboring outputs, and let $R(S)=\{b:\text{some }a\in S\text{
+ satisfies }aRb\}$.  For $\eta\geq0$ and $\gamma\in[0,1]$, an
+$(\eta,\gamma)$-admissible context is a Markov kernel $K$ satisfying
+$K(a,A)\leq e^\eta K(b,A)+\gamma$ for every measurable event $A$ whenever
+$aRb$.  We define universal
+contextual composability by quantifying over all such contexts.  For
+$\varepsilon\geq0$ and $\delta\in[0,1]$, if the
+$(\varepsilon,\delta)$-NPDO inequalities
+$P_x(S)\leq e^\varepsilon P_{x'}(R(S))+\delta$ hold for every ordered pair
+$x\sim_{\mathcal X}x'$ and every $S\subseteq\Omega$, then, for every
+$\eta\geq0$, $\gamma\in[0,1]$, every $(\eta,\gamma)$-admissible $K$, and
+every contextual event $A$,
+\[
+ (P_xK)(A)
+ \leq e^{\varepsilon+\eta}(P_{x'}K)(A)
+      +\delta+\gamma-\delta\gamma
+ \qquad (x\sim_{\mathcal X}x').
+\]
+The converse fails with $\varepsilon=\delta=0$.  A finite mechanism with a
+fixed view exchanges masses $1/3$ and $2/3$ between the endpoints of a
+three-point output path.  It is $(0,0)$-universally contextually composable;
+in fact,
+for every $\eta\geq0$, $\gamma\in[0,1]$, $(\eta,\gamma)$-admissible kernel,
+and event, its two nontrivial contextual comparisons have additive loss at most
+\[
+ \frac{\max\{0,2+e^\eta-e^{2\eta}\}}{3}\,\gamma
+ \leq \frac{2\gamma}{3}.
+\]
+Nevertheless, it violates $(0,0)$-NPDO.  The mechanism is implemented in
+$O(1)$ time using one exact uniform sample from three outcomes and outputs an
+element of the three-point path with a fixed execution view.
+\end{abstract}
+
+\noindent\textbf{Note.} This paper was fully AI generated through a harness created by Richard Peng that discovers open problems and runs them through an automated research pipeline.\par
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Composability is particularly delicate when privacy protects what an
+execution reveals but not the intermediate value that it computes.  Classical
+oblivious computation seeks to hide data-dependent access patterns, whereas
+\emph{differential obliviousness} (DO) asks the observable access pattern to
+satisfy differential privacy on neighboring inputs
+\cite{GoldreichOstrovsky1996ORAM,DworkEtAl2006DP,ChanEtAl2022FoundationsDO}.
+This relaxation supports efficient algorithms for tasks such as database joins
+and relational operators \cite{ChuEtAl2021DOJoins,QinEtAl2022Adore}.  In a
+pipeline, however, a first algorithm may expose a view $V$ while passing an
+unobserved output $Y$ to a second algorithm.  Privacy of $V$ alone does not
+ensure that neighboring first-stage inputs produce neighboring values of $Y$,
+so the second algorithm's privacy guarantee cannot simply be invoked.
+
+Zhou, Shi, Chan, and Maimon introduced neighbor-preserving differential
+obliviousness (NPDO) to control precisely this interface
+\cite{ZhouEtAl2023NPDO}.  Their main composition theorem shows, on finite or
+countable execution spaces, that an NPDO first stage composes additively with a
+DO second stage.  The paper also characterizes NPDO by a supported fractional
+matching between the two first-stage execution laws.  Subsequent work develops
+advanced composition and divergence-based variants of NPDO
+\cite{ZhouEtAl2024AdvancedNPDO}.  These results establish NPDO as a sufficient
+interface.  They motivate a converse question: if a first stage remains private
+after every admissible downstream context, must it satisfy NPDO?
+
+In the finite-or-countable statistical model, we show that NPDO suffices for a
+strong guarantee against every common downstream context but is not necessary:
+the converse already fails with zero first-stage error on a three-point output
+path.  To state the result, let the input and output spaces carry symmetric
+neighbor relations, let
+$\operatorname{Exec}_M(x)=(V,Y)$ have law $P_x$ on a finite or countable
+space $\Omega=\mathcal V\times\mathcal Y$, and write
+\[
+ (v,y)R(v',y')
+ \quad\Longleftrightarrow\quad
+ v=v'\ \text{ and }\ y\sim_{\mathcal Y}y'.
+\]
+For $S\subseteq\Omega$, let $R(S)$ be the set of executions related to some
+element of $S$.  The $(\varepsilon,\delta)$-NPDO condition is the setwise
+requirement
+\[
+ P_x(S)\leq e^\varepsilon P_{x'}(R(S))+\delta
+ \qquad(x\sim_{\mathcal X}x')
+\]
+for every $S\subseteq\Omega$.  An $(\eta,\gamma)$-admissible context is a
+Markov kernel
+$K:\Omega\rightsquigarrow\mathcal W$ into an arbitrary measurable observation
+space such that
+\[
+ K(a,A)\leq e^\eta K(b,A)+\gamma
+ \qquad(aRb)
+\]
+for every measurable event $A$.  We call $M$
+$(\varepsilon,\delta)$-\emph{universally contextually composable} when, for
+every $\eta\geq0$ and $\gamma\in[0,1]$, every such common kernel applied in
+both neighboring worlds satisfies
+\[
+ (P_xK)(A)
+ \leq e^{\varepsilon+\eta}(P_{x'}K)(A)+\delta+\gamma
+ \qquad(x\sim_{\mathcal X}x').
+\]
+Our main theorem proves sufficiency and separates it from necessity.
+
+\begin{theorem}[Sufficiency and strict separation]
+\label{thm:main}
+Fix $\varepsilon\geq0$ and $\delta\in[0,1]$.  If $M$ is
+$(\varepsilon,\delta)$-NPDO on a finite or countable execution space, then for
+every $\eta\geq0$, $\gamma\in[0,1]$, every
+$(\eta,\gamma)$-admissible Markov context $K$, and every measurable contextual
+event $A$,
+\[
+ (P_xK)(A)
+ \leq e^{\varepsilon+\eta}(P_{x'}K)(A)
+      +\delta+\gamma-\delta\gamma
+\]
+for every ordered pair $x\sim_{\mathcal X}x'$.  Hence $M$ is
+$(\varepsilon,\delta)$-universally contextually composable.
+
+The converse fails with zero first-stage error.  Let
+$\mathcal X=\{x_0,x_1\}$ with every pair related, let
+$\mathcal Y=\{0,1,2\}$ with $i\sim_{\mathcal Y}j$ exactly when
+$|i-j|\leq1$, and let the execution view always equal $v$.  On input $x_i$,
+the algorithm \hyperref[alg:three-point]{\textsc{ThreePoint}} outputs a vertex
+$y\in\mathcal Y$ and realizes the execution laws
+\[
+ \begin{array}{c|ccc}
+  & (v,0)&(v,1)&(v,2)\\ \hline
+  P_{x_0}&1/3&0&2/3\\
+  P_{x_1}&2/3&0&1/3.
+ \end{array}
+\]
+It runs in $O(1)$ time assuming unit-cost exact uniform sampling from three
+outcomes.  The resulting mechanism is $(0,0)$-universally contextually
+composable but is not $(0,0)$-NPDO.  More strongly, for every $\eta\geq0$,
+$\gamma\in[0,1]$, every
+$(\eta,\gamma)$-admissible $K$, and every measurable $A$, define
+\[
+ c_{\eta,\gamma}
+ :=\frac{\max\{0,2+e^\eta-e^{2\eta}\}}{3}\,\gamma
+ \leq \frac{2\gamma}{3}.
+\]
+Then
+\[
+ (P_{x_0}K)(A)\leq e^\eta(P_{x_1}K)(A)+c_{\eta,\gamma}
+ \quad\text{and}\quad
+ (P_{x_1}K)(A)\leq e^\eta(P_{x_0}K)(A)+c_{\eta,\gamma}.
+\]
+\end{theorem}
+
+This common-kernel definition allows the context to depend on the full
+execution pair $(V,Y)$ and therefore includes the usual output-fed serial
+composition as a special case.  We use the phrase ``universal contextual
+composability'' only for this definition.  Thus, under the common-context
+definition above, universal contextual composability is strictly weaker than
+NPDO already for a finite output graph and
+$(\varepsilon,\delta)=(0,0)$.
+
+\paragraph{Relation to prior work.}
+The direct NPDO results concern the same hidden-output interface as the present
+theorem: they prove sufficient composition theorems, while our result asks what
+is forced by quantification over all common downstream contexts.  Structured
+forms of the interface also occur in guarantees for threshold binning,
+local-randomizer-to-DO-shuffler pipelines, and distance-preserving database
+operators
+\cite{ChanEtAl2022FoundationsDO,GordonEtAl2022PrivacyBlanket,ZhouShi2022DOShuffle,QinEtAl2022Adore}.
+Those are restricted, mechanism-specific composition results rather than
+characterizations of arbitrary first-stage execution laws.
+
+The setwise NPDO inequality also has a nearby, non-DO-specific interpretation.
+After aligning one-sided and symmetric conventions, it is the discrete form of
+a witness-free approximate relational lifting
+\cite{Sato2016ApproximateRHL}; on discrete spaces, approximate Strassen
+theorems turn this inequality into a supported star-lifting or fractional
+matching \cite{BartheEtAl2019StarLiftings,ZhouEtAl2023NPDO}.  Universal
+relational-testing formulations in the codensity-lifting literature quantify
+over a \emph{pair}
+of related contexts \cite{KatsumataEtAl2018Codensity,AguirreEtAl2021Adversarial}.
+Our property instead uses one common kernel in both worlds.  It is this
+diagonal restriction, together with a nontransitive output adjacency relation,
+that leaves room for the converse to fail.
+
+\paragraph{Proof ideas.}
+For sufficiency, the NPDO neighborhood inequalities yield a fractional
+$R$-subcoupling that matches all but $\delta$ of $P_x$ and whose right marginal
+is bounded by $e^\varepsilon P_{x'}$.  Transporting the function
+$a\mapsto K(a,A)$ through this subcoupling keeps the exact unmatched mass
+rather than replacing it immediately by $\delta$.  The contextual error is
+then charged only on matched mass, giving the sharper bound
+$\delta+\gamma-\delta\gamma$ without exponential amplification.  For strictness, the
+three-point path has no mass at its middle vertex.  The endpoint laws fail the
+one-hop neighborhood comparison required by NPDO, while admissibility still
+relates the two endpoints through the middle vertex; averaging those two-hop
+constraints according to the displayed laws gives the sharper contextual
+bound in \Cref{thm:main}.
+
+\paragraph{Organization.}
+\Cref{sec:preliminaries} formalizes execution laws, common contexts, NPDO, and
+fractional subcouplings.  \Cref{sec:overview} explains the
+matching-and-transport argument and the three-point separation.
+\Cref{sec:main-proof} proves both parts of \Cref{thm:main}.
+
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+\paragraph{Execution laws and relational neighborhoods.}
+Let $(\mathcal X,\sim_{\mathcal X})$ and
+$(\mathcal Y,\sim_{\mathcal Y})$ be sets with symmetric neighbor relations.
+For a randomized mechanism $M$, write
+$\operatorname{Exec}_M(x)=(V,Y)$ for its execution record on input $x$, where
+$V\in\mathcal V$ is the observable view and $Y\in\mathcal Y$ is the output.
+Throughout, the execution space
+$\Omega:=\mathcal V\times\mathcal Y$ is finite or countable and has the
+discrete $\sigma$-algebra.  Its execution law is
+\[
+ P_x(a):=\Pr[\operatorname{Exec}_M(x)=a].
+\]
+For any probability mass function $p$ on $\Omega$ and $S\subseteq\Omega$,
+write $p(S):=\sum_{a\in S}p(a)$.
+For $a=(v,y)$ and $b=(v',y')$, define the symmetric execution relation
+\begin{equation}
+ aRb
+ \quad\Longleftrightarrow\quad
+ v=v'\ \text{ and }\ y\sim_{\mathcal Y}y',
+ \label{eq:execution-relation}
+\end{equation}
+and, for $S\subseteq\Omega$, its relational neighborhood
+\begin{equation}
+ R(S):=\{b\in\Omega:\text{there exists }a\in S\text{ with }aRb\}.
+ \label{eq:relational-neighborhood}
+\end{equation}
+All privacy comparisons below are required for each ordered neighboring pair
+$x\sim_{\mathcal X}x'$.
+
+\paragraph{Contexts.}
+Let $(\mathcal W,\mathcal F)$ be an arbitrary measurable observation space.  A
+Markov kernel $K:\Omega\rightsquigarrow\mathcal W$ assigns a probability
+measure $K(a,\cdot)$ to every $a\in\Omega$.  For a law $P$ on $\Omega$, the
+contextual law $PK$ is
+\begin{equation}
+ (PK)(A):=\sum_{a\in\Omega}P(a)K(a,A),
+ \qquad A\in\mathcal F.
+ \label{eq:contextual-law}
+\end{equation}
+
+\begin{definition}[NPDO and universal contextual composability]
+\label{def:npdo-ucc}
+Fix $\varepsilon\geq0$ and $\delta\in[0,1]$.
+The mechanism $M$ is $(\varepsilon,\delta)$-NPDO if, for every
+$x\sim_{\mathcal X}x'$ and every $S\subseteq\Omega$,
+\begin{equation}
+ P_x(S)\leq e^\varepsilon P_{x'}(R(S))+\delta.
+ \label{eq:npdo}
+\end{equation}
+For $\eta\geq0$ and $\gamma\in[0,1]$, a kernel
+$K:\Omega\rightsquigarrow\mathcal W$ is
+$(\eta,\gamma)$-admissible if, for every $aRb$ and $A\in\mathcal F$,
+\begin{equation}
+ K(a,A)\leq e^\eta K(b,A)+\gamma.
+ \label{eq:admissible}
+\end{equation}
+The mechanism $M$ is $(\varepsilon,\delta)$-universally contextually
+composable if, for every $\eta\geq0$, $\gamma\in[0,1]$, every observation
+space, every $(\eta,\gamma)$-admissible $K$, every
+$x\sim_{\mathcal X}x'$, and every $A\in\mathcal F$,
+\begin{equation}
+ (P_xK)(A)
+ \leq e^{\varepsilon+\eta}(P_{x'}K)(A)+\delta+\gamma.
+ \label{eq:ucc}
+\end{equation}
+\end{definition}
+
+The NPDO clause in \Cref{def:npdo-ucc} is the discrete setwise formulation of
+Zhou, Shi, Chan, and Maimon~\cite{ZhouEtAl2023NPDO}.  The
+universal-composability clause fixes the meaning of that term throughout this paper.
+It includes the usual output-fed serial context.  Indeed, if a downstream
+algorithm takes $y$ as input and has view kernel $L_y$ on a measurable space
+$\mathcal Z$, retain the first view and use observations in
+$\mathcal V\times\mathcal Z$.  For an event $A$ and a fixed $v$, set
+$A_v:=\{z:(v,z)\in A\}$ and define
+\[
+ K((v,y),A):=L_y(A_v).
+\]
+Whenever the kernels $L_y$ and $L_{y'}$ satisfy the downstream privacy
+inequality for $y\sim_{\mathcal Y}y'$, this $K$ is admissible by
+\Cref{eq:execution-relation,eq:admissible}.
+
+\paragraph{Fractional subcouplings.}
+Let $p$ and $q$ be probability mass functions on a finite or countable set
+$\Omega$, let $R\subseteq\Omega\times\Omega$, and let $c\geq1$.  A
+$c$-dominated fractional $R$-subcoupling of $p$ and $q$ is a function
+$w:\Omega\times\Omega\to\mathbb R_{\geq0}$ satisfying
+\begin{align}
+ w(a,b)>0&\quad\Longrightarrow\quad aRb,
+ \label{eq:w-support}\\
+ \sum_b w(a,b)&\leq p(a) &&\text{for every }a\in\Omega,
+ \label{eq:w-row}\\
+ \sum_a w(a,b)&\leq c q(b) &&\text{for every }b\in\Omega.
+ \label{eq:w-column}
+\end{align}
+Its mass is $\operatorname{mass}(w):=\sum_{a,b}w(a,b)$.  The row bound gives
+$\operatorname{mass}(w)\leq1$; we call
+$1-\operatorname{mass}(w)$ its unmatched mass.
+
+\begin{fact}[Countable approximation and finite flows]
+\label{fact:basic-tools}
+We use the following standard facts.  If $h:D\to\mathbb R_{\geq0}$ is
+summable on a countable set, then for every $\rho>0$ there is a finite
+$F\subseteq D$ with $\sum_{z\notin F}h(z)<\rho$.  If $D$ is countable, every
+sequence in $[0,1]^D$ has a pointwise-convergent subsequence.  Finally, in a
+finite network with nonnegative capacities, the maximum flow value equals the
+minimum capacity of a source--sink cut.
+\end{fact}
+
+\section{Overview}
+\label{sec:overview}
+
+The proof of \Cref{thm:main} has two parts.  For sufficiency, we turn the
+setwise NPDO inequalities into a fractional matching between neighboring
+execution laws and then transport an arbitrary contextual event through that
+matching.  The central difficulty is the error accounting: NPDO controls
+indicators of sets, while a context tests the law against the $[0,1]$-valued
+function $a\mapsto K(a,A)$, and the desired conclusion must have additive
+loss at most $\delta+\gamma-\delta\gamma$ without multiplying either error by
+a privacy factor.  For strictness, we construct a finite endpoint-exchange mechanism on
+a three-point path.  Its laws fail the one-hop neighborhood comparison
+required by NPDO, although every admissible context can compare them through
+the two edges of the path.
+
+\paragraph{The fractional matching lift.}
+Fix an ordered pair $x\sim_{\mathcal X}x'$ and apply the NPDO inequality with
+$p=P_x$, $q=P_{x'}$, and $c=e^\varepsilon$.  The countable fractional
+matching lift, \Cref{lem:matching}, produces weights $w(a,b)$ satisfying
+\[
+ \begin{gathered}
+ w(a,b)>0\ \Longrightarrow\ aRb,
+ \qquad \sum_b w(a,b)\leq P_x(a),
+ \qquad \sum_a w(a,b)\leq e^\varepsilon P_{x'}(b),\\
+ \sum_{a,b}w(a,b)\geq1-\delta.
+ \end{gathered}
+\]
+Thus $w$ couples all but at most $\delta$ of the first law to related
+executions, while allowing the second law's capacity to be enlarged by the
+multiplicative factor $e^\varepsilon$.  On a finite space, these weights are
+the flow in the bipartite graph induced by $R$: the NPDO set inequality is
+precisely the cut condition needed by max-flow/min-cut.  For countable
+$\Omega$, we build flows on finite truncations with mass $1-\delta-o(1)$ and
+take a coordinatewise limit.  A tightness argument prevents matched mass from
+escaping to infinity, which is the extra point needed beyond the finite
+fractional Hall argument.
+
+\paragraph{Contextual transport.}
+For an $(\eta,\gamma)$-admissible context, fix an event $A$, write
+$k(a)=K(a,A)$, and let $m=\sum_{a,b}w(a,b)$.  The four properties above give
+the complete transport estimate
+\begin{align*}
+ (P_xK)(A)
+ &\leq \sum_{a,b}w(a,b)k(a)+1-m\\
+ &\leq e^\eta\sum_{a,b}w(a,b)k(b)+\gamma m+1-m\\
+ &\leq e^{\varepsilon+\eta}(P_{x'}K)(A)
+       +\delta+\gamma-\delta\gamma.
+\end{align*}
+The support of $w$ permits the pointwise admissibility comparison, its column
+bound supplies $e^\varepsilon$, and $m\geq1-\delta$ gives
+$\gamma m+1-m\leq\delta+\gamma-\delta\gamma$.  Thus contextual error is paid
+only on matched mass, while the unmatched mass is not multiplied by $e^\eta$.
+Since the context,
+event, and ordered neighboring inputs were arbitrary, this proves the positive
+direction through \Cref{lem:transport}.
+
+\paragraph{The separating mechanism.}
+For the converse, let the output relation be the path
+$0\sim_{\mathcal Y}1\sim_{\mathcal Y}2$ and let the execution view always be
+$v$.  The two neighboring inputs have laws
+\[
+ \begin{aligned}
+ \bigl(P_{x_0}((v,0)),P_{x_0}((v,1)),P_{x_0}((v,2))\bigr)
+   &=(1/3,0,2/3),\\
+ \bigl(P_{x_1}((v,0)),P_{x_1}((v,1)),P_{x_1}((v,2))\bigr)
+   &=(2/3,0,1/3).
+ \end{aligned}
+\]
+The \hyperref[alg:three-point]{\textsc{ThreePoint}} algorithm realizes these
+laws exactly: on input $x_i$ it takes one uniform ternary sample, selects the
+corresponding endpoint, and writes it using a fixed constant-length access
+schedule whose view is $v$.  Its output is the selected path vertex, its joint
+execution law is the displayed row, and it runs in $O(1)$ time under unit-cost
+exact ternary sampling.  The zero mass at the middle vertex makes the NPDO
+failure immediate.  For $S=\{(v,2)\}$,
+\[
+ R(S)=\{(v,1),(v,2)\},
+ \qquad
+ P_{x_0}(S)=\frac23>\frac13=P_{x_1}(R(S)).
+\]
+
+\paragraph{Why every admissible context still composes.}
+The unused middle vertex nevertheless constrains a context at both endpoints.
+For an arbitrary contextual event, set $t=e^\eta$ and
+\[
+ a=K((v,0),A),\qquad b=K((v,1),A),\qquad c=K((v,2),A).
+\]
+Chaining admissibility along the two edges gives
+\[
+ c\leq tb+\gamma\leq t^2a+(t+1)\gamma,
+ \qquad
+ a\leq tb+\gamma\leq t^2c+(t+1)\gamma.
+\]
+A bare two-hop comparison would lose a second factor of $t$.  The asymmetric
+endpoint masses are chosen so that their averaging removes this loss.  Indeed,
+for the two contextual probabilities
+$\mu=(a+2c)/3$ and $\nu=(2a+c)/3$, the key identity is
+\[
+ 3(\mu-t\nu)=(1-2t)a+(2-t)c.
+\]
+Combining this identity with the appropriate two-hop bound, and then
+exchanging $a$ and $c$ for the reverse comparison, yields
+\[
+ \mu\leq t\nu+
+ \frac{\max\{0,2+t-t^2\}}{3}\,\gamma.
+\]
+The coefficient is at most $2/3$, so \Cref{lem:separation} proves the stronger
+additive guarantee
+$\max\{0,2+e^\eta-e^{2\eta}\}\gamma/3\leq2\gamma/3$, and hence
+$(0,0)$-universal contextual composability.  Together with the one-hop NPDO
+violation, this completes the strict separation.
+
+\section{Proof of the Main Theorem}
+\label{sec:main-proof}
+
+\subsection{Sufficiency via fractional matching}
+
+The first ingredient turns the setwise expansion in \Cref{eq:npdo} into a
+fractional matching.  Its countable form requires both a finite approximation
+and a tightness argument.
+
+\begin{lemma}[Countable fractional matching lift]
+\label{lem:matching}
+Let $\Omega$ be finite or countable, let $p$ and $q$ be probability mass
+functions on $\Omega$, let $R\subseteq\Omega\times\Omega$ be a relation, and
+let $c\geq1$ and $\delta\in[0,1]$.  Suppose that
+\begin{equation}
+ p(S)\leq c q(R(S))+\delta
+ \qquad\text{for every }S\subseteq\Omega.
+ \label{eq:hall}
+\end{equation}
+Then there is a $c$-dominated fractional $R$-subcoupling $w$ of $p$ and $q$
+such that
+\begin{equation}
+ \operatorname{mass}(w)\geq1-\delta.
+ \label{eq:w-mass}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Suppose first that $\Omega$ is finite.  Form a flow network with a source, a
+left copy of $\Omega$, a right copy of $\Omega$, and a sink.  Give the edge
+from the source to left vertex $a$ capacity $p(a)$, each middle edge from $a$
+to $b$ with $aRb$ capacity $2+c$, and the edge from right vertex $b$ to the
+sink capacity $cq(b)$.  The cut having only the source on its source side has
+capacity $1$.  Hence a minimum cut cannot cross a middle edge, whose capacity
+is greater than $1$.  If $S$ is the set of left vertices on the source side of
+such a cut, all of $R(S)$ must also lie on its source side.  The cut therefore
+has capacity at least
+\[
+ p(\Omega\setminus S)+cq(R(S))
+ \geq 1-p(S)+p(S)-\delta
+ =1-\delta,
+\]
+where \Cref{eq:hall} gives the inequality.
+By the finite max-flow/min-cut fact in \Cref{fact:basic-tools}, there is a flow
+of value at least $1-\delta$.  The flows on the middle edges define the
+required subcoupling $w$.
+
+Now suppose that $\Omega$ is countable.  By the summable-tail fact in
+\Cref{fact:basic-tools}, choose finite sets
+$F_n\subseteq\Omega$ and positive numbers $\rho_n\downarrow0$ such that
+$p(F_n)\geq1-\rho_n$.  For each of the finitely many subsets
+$S\subseteq F_n$, choose a finite set $G_{n,S}\subseteq R(S)$ satisfying
+\[
+ cq(R(S)\setminus G_{n,S})<\rho_n,
+\]
+and let $G_n$ be the union of these sets.  Apply the finite network construction
+with left vertex set $F_n$ and right vertex set $G_n$.  A cut determined by
+$S\subseteq F_n$ has capacity at least
+\begin{align*}
+ p(F_n\setminus S)+cq(R(S)\cap G_n)
+ &\geq p(F_n)-p(S)+cq(R(S))-\rho_n\\
+ &\geq p(F_n)-\delta-\rho_n\\
+ &\geq1-\delta-2\rho_n.
+\end{align*}
+Consequently there is a function $w_n$, extended by zero to $\Omega^2$, that
+satisfies \Cref{eq:w-support,eq:w-row,eq:w-column} and has total mass at least
+$1-\delta-2\rho_n$.
+
+Since $0\leq w_n(a,b)\leq p(a)\leq1$, the pointwise subsequence fact in
+\Cref{fact:basic-tools}, applied to the countable set $\Omega^2$, gives a
+subsequence along which every coordinate of $w_n$ converges.  Denote the
+pointwise limit by $w$.  Passing to limits in finite partial sums proves
+\Cref{eq:w-support,eq:w-row,eq:w-column}.
+To retain the total mass, fix $\rho>0$ and choose finite
+$F,G\subseteq\Omega$ such that
+\[
+ p(F^{\mathsf c})<\rho
+ \qquad\text{and}\qquad
+ cq(G^{\mathsf c})<\rho.
+\]
+The row and column bounds imply
+\[
+ \sum_{(a,b)\notin F\times G}w_n(a,b)
+ \leq p(F^{\mathsf c})+cq(G^{\mathsf c})<2\rho.
+\]
+After passing to the limit in the finite sum over $F\times G$ and using
+$\rho_n\to0$, we obtain
+\[
+ \sum_{a,b}w(a,b)\geq1-\delta-2\rho.
+\]
+Letting $\rho\downarrow0$ proves \Cref{eq:w-mass}.
+\end{proof}
+
+The matching lift is supported only on related executions.  It therefore
+allows the admissibility inequality to be applied pointwise, while its row and
+column bounds control the two execution laws and its missing mass accounts for
+at most $\delta$.
+
+\begin{lemma}[Contextual transport without error amplification]
+\label{lem:transport}
+Every $(\varepsilon,\delta)$-NPDO mechanism on a finite or countable execution
+space satisfies, for every $\eta\geq0$, $\gamma\in[0,1]$, every
+$(\eta,\gamma)$-admissible context $K$, every ordered pair
+$x\sim_{\mathcal X}x'$, and every contextual event $A$,
+\[
+ (P_xK)(A)\leq e^{\varepsilon+\eta}(P_{x'}K)(A)
+ +\delta+\gamma-\delta\gamma.
+\]
+In particular, it is $(\varepsilon,\delta)$-universally contextually
+composable.
+\end{lemma}
+
+\begin{proof}
+Fix an ordered pair $x\sim_{\mathcal X}x'$.  Apply \Cref{lem:matching} with
+\[
+ p=P_x,\qquad q=P_{x'},\qquad c=e^\varepsilon,
+\]
+and the execution relation $R$.  The hypothesis of that lemma is exactly
+\Cref{eq:npdo}.  For the resulting $w$, set
+\[
+ r(a):=\sum_b w(a,b),\qquad
+ s(b):=\sum_a w(a,b),\qquad
+ m:=\sum_{a,b}w(a,b).
+\]
+Fix arbitrary $\eta\geq0$ and $\gamma\in[0,1]$, an observation space, an
+$(\eta,\gamma)$-admissible kernel $K$, and an event $A$ in that space.  Write
+$k(a):=K(a,A)$.  Since $0\leq k(a)\leq1$, the row and mass bounds give
+\begin{align*}
+ (P_xK)(A)
+ &=\sum_a r(a)k(a)+\sum_a(P_x(a)-r(a))k(a)\\
+ &\leq\sum_{a,b}w(a,b)k(a)+1-m.
+\end{align*}
+On the support of $w$, \Cref{eq:admissible} gives
+$k(a)\leq e^\eta k(b)+\gamma$.  Thus, using the column bound and
+$m\geq1-\delta$,
+\begin{align*}
+ (P_xK)(A)
+ &\leq e^\eta\sum_b s(b)k(b)+\gamma m+1-m\\
+ &\leq e^{\varepsilon+\eta}\sum_bP_{x'}(b)k(b)+1-(1-\gamma)m\\
+ &\leq e^{\varepsilon+\eta}(P_{x'}K)(A)
+       +1-(1-\gamma)(1-\delta)\\
+ &=e^{\varepsilon+\eta}(P_{x'}K)(A)
+       +\delta+\gamma-\delta\gamma.
+\end{align*}
+All choices were arbitrary.  Since $\delta+\gamma-\delta\gamma\leq
+\delta+\gamma$, \Cref{eq:ucc} follows.
+\end{proof}
+
+It remains to prove that the implication is strict.  The next construction
+places no mass at the middle vertex of a three-point path.  The endpoint laws
+cannot satisfy a one-hop NPDO matching, but every admissible context relates
+the endpoints through the middle vertex.
+
+\subsection{The finite separating mechanism}
+
+Let
+\[
+ \mathcal X=\{x_0,x_1\},\qquad
+ \mathcal V=\{v\},\qquad
+ \mathcal Y=\{0,1,2\}.
+\]
+Relate every pair of inputs, and define the output relation by
+\[
+ i\sim_{\mathcal Y}j
+ \quad\Longleftrightarrow\quad
+ |i-j|\leq1.
+\]
+Define a mechanism $M_\star$ by the execution laws
+\begin{equation}
+\begin{array}{c|ccc}
+ & (v,0)&(v,1)&(v,2)\\ \hline
+ P_{x_0}&1/3&0&2/3\\
+ P_{x_1}&2/3&0&1/3
+\end{array}.
+\label{eq:three-point-law}
+\end{equation}
+Assume that an exact uniform sample from a three-element set is available at
+unit cost.  Fix a constant-length access schedule $\sigma$, independent of the
+input and sampled value, that writes to a designated output location, and take
+$v$ to be its access-pattern view.  The following procedure implements the
+already defined law.
+
+\begin{algbox}
+\phantomsection\label{alg:three-point}
+\textbf{\uline{\textsc{ThreePoint}}}: Exact sampling of the endpoint-exchange mechanism.
+
+\medskip
+\noindent\uline{Input}: An input $x_i\in\mathcal X$, where $i\in\{0,1\}$.\\
+\uline{Output}: An element $y\in\mathcal Y$ whose execution record is $(v,y)$.\\
+\uline{Guarantee}: The execution law is the row indexed by $x_i$ in
+\Cref{eq:three-point-law}.
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt,topsep=4pt]
+  \item Sample $U$ exactly and uniformly from $\{1,2,3\}$.
+  \item If $i=0$, assign $y\gets2$ for $U\leq2$ and $y\gets0$ for $U=3$.
+        If $i=1$, assign $y\gets0$ for $U\leq2$ and $y\gets2$ for $U=3$.
+  \item Execute $\sigma$ to write $y$ to the designated output location, and
+        return $y$; the execution view is $v$.
+\end{enumerate}
+\end{algbox}
+
+The implementation guarantee follows by counting the three equally likely
+samples.  To prove the privacy claim, the essential additional step is to
+convert the two adjacent admissibility inequalities into a two-hop endpoint
+bound and then average according to \Cref{eq:three-point-law}.
+
+\begin{lemma}[Exact realization and strict three-point separation]
+\label{lem:separation}
+The \hyperref[alg:three-point]{\textsc{ThreePoint}} algorithm realizes
+\Cref{eq:three-point-law} in $O(1)$ time under exact uniform ternary sampling.
+The resulting mechanism $M_\star$ is $(0,0)$-universally contextually
+composable.  For every $\eta\geq0$ and $\gamma\in[0,1]$, each nontrivial
+contextual comparison has additive term at most
+$\max\{0,2+e^\eta-e^{2\eta}\}\gamma/3$, and hence at most $2\gamma/3$.
+The mechanism is not $(0,0)$-NPDO.
+\end{lemma}
+
+\begin{proof}
+For input $x_0$, two values of $U$ produce output $2$ and one produces output
+$0$; for input $x_1$, these probabilities are exchanged.  The schedule
+$\sigma$ always gives the fixed view $v$, so the joint laws are exactly
+\Cref{eq:three-point-law}.  The procedure uses one unit-cost sample and a
+constant number of other operations, hence runs in $O(1)$ time.
+
+Fix $\eta\geq0$, $\gamma\in[0,1]$, an $(\eta,\gamma)$-admissible kernel $K$,
+and an event $A$ in its observation space.  Set
+\[
+ t:=e^\eta,\qquad
+ a:=K((v,0),A),\qquad
+ b:=K((v,1),A),\qquad
+ c:=K((v,2),A).
+\]
+The output relation is symmetric and contains the two adjacent pairs, so
+admissibility in both directions yields
+\begin{equation}
+ c\leq tb+\gamma\leq t^2a+(t+1)\gamma,
+ \qquad
+ a\leq tb+\gamma\leq t^2c+(t+1)\gamma.
+ \label{eq:two-hop}
+\end{equation}
+The probabilities of $A$ under the two contextual laws are
+\[
+ \mu:=(P_{x_0}K)(A)=\frac{a+2c}{3},
+ \qquad
+ \nu:=(P_{x_1}K)(A)=\frac{2a+c}{3}.
+\]
+Direct calculation gives
+\begin{equation}
+ 3(\mu-t\nu)=(1-2t)a+(2-t)c.
+ \label{eq:endpoint-difference}
+\end{equation}
+If $t\geq2$, both coefficients on the right-hand side are nonpositive.  If
+$1\leq t<2$, the coefficient of $c$ is positive, so the first bound in
+\Cref{eq:two-hop} gives
+\begin{align*}
+ 3(\mu-t\nu)
+ &\leq \bigl(1-2t+(2-t)t^2\bigr)a+(2-t)(t+1)\gamma\\
+ &=- (t-1)(t^2-t+1)a+(2+t-t^2)\gamma\\
+ &\leq(2+t-t^2)\gamma.
+\end{align*}
+Combining the two cases gives
+\[
+ \mu\leq t\nu+\frac{\max\{0,2+t-t^2\}}{3}\,\gamma.
+\]
+Exchanging $a$ and $c$ and using the second bound in \Cref{eq:two-hop} gives
+the same inequality with $\mu$ and $\nu$ interchanged.  The inequalities for
+the two reflexive input pairs hold with zero additive term because $t\geq1$.
+For $t\geq1$, the displayed coefficient is at most $2/3$; since
+$2\gamma/3\leq\gamma$, this proves $(0,0)$-universal contextual
+composability, as well as the stated sharper comparison.
+
+Finally, let $S=\{(v,2)\}$.  Its relational neighborhood is
+\[
+ R(S)=\{(v,1),(v,2)\}.
+\]
+\Cref{eq:three-point-law} gives
+\[
+ P_{x_0}(S)=\frac23>\frac13=P_{x_1}(R(S)),
+\]
+which contradicts \Cref{eq:npdo} with $\varepsilon=\delta=0$.  Thus
+$M_\star$ is not $(0,0)$-NPDO.
+\end{proof}
+
+\Cref{lem:transport} proves the sufficiency assertion of \Cref{thm:main}, and
+\Cref{lem:separation} supplies the finite constant-time counterexample.  Hence
+universal contextual composability is strictly weaker than NPDO in the stated
+finite-or-countable statistical execution model.
+
+\bibliographystyle{alpha}
+\bibliography{references}
+
+\end{document}

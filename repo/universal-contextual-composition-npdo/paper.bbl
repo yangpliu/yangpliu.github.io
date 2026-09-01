@@ -1,0 +1,87 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{ABG{\etalchar{+}}21}
+
+\bibitem[ABG{\etalchar{+}}21]{AguirreEtAl2021Adversarial}
+Alejandro Aguirre, Gilles Barthe, Marco Gaboardi, Deepak Garg, Shin
+  ya~Katsumata, and Tetsuya Sato.
+\newblock Higher-order probabilistic adversarial computations: Categorical
+  semantics and program logics.
+\newblock {\em Proceedings of the ACM on Programming Languages}, 5(ICFP), 2021.
+
+\bibitem[BEH{\etalchar{+}}19]{BartheEtAl2019StarLiftings}
+Gilles Barthe, Thomas Espitau, Justin Hsu, Tetsuya Sato, and Pierre-Yves Strub.
+\newblock Relational {$\star$}-liftings for differential privacy.
+\newblock {\em Logical Methods in Computer Science}, 15(4):18:1--18:32, 2019.
+
+\bibitem[CCMS22]{ChanEtAl2022FoundationsDO}
+T.-H.~Hubert Chan, Kai-Min Chung, Bruce~M. Maggs, and Elaine Shi.
+\newblock Foundations of differentially oblivious algorithms.
+\newblock {\em Journal of the ACM}, 69(4):27:1--27:49, 2022.
+
+\bibitem[CZSC21]{ChuEtAl2021DOJoins}
+Shumo Chu, Danyang Zhuo, Elaine Shi, and T-H.~Hubert Chan.
+\newblock Differentially oblivious database joins: Overcoming the worst-case
+  curse of fully oblivious algorithms.
+\newblock In Stefano Tessaro, editor, {\em 2nd Conference on
+  Information-Theoretic Cryptography ({ITC} 2021)}, volume 199 of {\em Leibniz
+  International Proceedings in Informatics (LIPIcs)}, pages 19:1--19:24.
+  Schloss Dagstuhl -- Leibniz-Zentrum fuer Informatik, 2021.
+
+\bibitem[DMNS06]{DworkEtAl2006DP}
+Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam~D. Smith.
+\newblock Calibrating noise to sensitivity in private data analysis.
+\newblock In Shai Halevi and Tal Rabin, editors, {\em Theory of Cryptography},
+  volume 3876 of {\em Lecture Notes in Computer Science}, pages 265--284.
+  Springer, 2006.
+
+\bibitem[GKLX22]{GordonEtAl2022PrivacyBlanket}
+S.~Dov Gordon, Jonathan Katz, Mingyu Liang, and Jiayu Xu.
+\newblock Spreading the privacy blanket: Differentially oblivious shuffling for
+  differential privacy.
+\newblock In Giuseppe Ateniese and Daniele Venturi, editors, {\em Applied
+  Cryptography and Network Security}, volume 13269 of {\em Lecture Notes in
+  Computer Science}, pages 501--520. Springer, 2022.
+
+\bibitem[GO96]{GoldreichOstrovsky1996ORAM}
+Oded Goldreich and Rafail Ostrovsky.
+\newblock Software protection and simulation on oblivious {RAMs}.
+\newblock {\em Journal of the ACM}, 43(3):431--473, 1996.
+
+\bibitem[QJS{\etalchar{+}}22]{QinEtAl2022Adore}
+Lianke Qin, Rajesh Jayaram, Elaine Shi, Zhao Song, Danyang Zhuo, and Shumo Chu.
+\newblock {Adore}: Differentially oblivious relational database operators.
+\newblock {\em Proceedings of the VLDB Endowment}, 16(4):842--855, 2022.
+
+\bibitem[Sat16]{Sato2016ApproximateRHL}
+Tetsuya Sato.
+\newblock Approximate relational hoare logic for continuous random samplings.
+\newblock {\em Electronic Notes in Theoretical Computer Science}, 325:277--298,
+  2016.
+
+\bibitem[yKSU18]{KatsumataEtAl2018Codensity}
+Shin ya~Katsumata, Tetsuya Sato, and Tarmo Uustalu.
+\newblock Codensity lifting of monads and its dual.
+\newblock {\em Logical Methods in Computer Science}, 14(4):6:1--6:31, 2018.
+
+\bibitem[ZS22]{ZhouShi2022DOShuffle}
+Mingxun Zhou and Elaine Shi.
+\newblock The power of the differentially oblivious shuffle in distributed
+  privacy mechanisms.
+\newblock Cryptology ePrint Archive, Paper 2022/177, 2022.
+
+\bibitem[ZSCM23]{ZhouEtAl2023NPDO}
+Mingxun Zhou, Elaine Shi, T.-H.~Hubert Chan, and Shir Maimon.
+\newblock A theory of composition for differential obliviousness.
+\newblock In Carmit Hazay and Martijn Stam, editors, {\em Advances in
+  Cryptology -- {EUROCRYPT} 2023}, volume 14006 of {\em Lecture Notes in
+  Computer Science}, pages 3--34. Springer, 2023.
+
+\bibitem[ZZCS24]{ZhouEtAl2024AdvancedNPDO}
+Mingxun Zhou, Mengshi Zhao, T-H.~Hubert Chan, and Elaine Shi.
+\newblock Advanced composition theorems for differential obliviousness.
+\newblock In Venkatesan Guruswami, editor, {\em 15th Innovations in Theoretical
+  Computer Science Conference ({ITCS} 2024)}, volume 287 of {\em Leibniz
+  International Proceedings in Informatics (LIPIcs)}, pages 103:1--103:24.
+  Schloss Dagstuhl -- Leibniz-Zentrum fuer Informatik, 2024.
+
+\end{thebibliography}

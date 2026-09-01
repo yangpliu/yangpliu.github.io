@@ -1,0 +1,88 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{AKMV19}
+
+\bibitem[AKMV19]{AminKuleszaMunozMedinaVassilvitskii2019Contributions}
+Kareem Amin, Alex Kulesza, Andres~Mu{\~n}oz Medina, and Sergei Vassilvitskii.
+\newblock Bounding user contributions: A bias-variance trade-off in
+  differential privacy.
+\newblock In {\em Proceedings of the 36th International Conference on Machine
+  Learning}, volume~97 of {\em Proceedings of Machine Learning Research}, pages
+  263--271. PMLR, 2019.
+
+\bibitem[BNSV15]{BunNissimStemmerVadhan2015Thresholds}
+Mark Bun, Kobbi Nissim, Uri Stemmer, and Salil~P. Vadhan.
+\newblock Differentially private release and learning of threshold functions.
+\newblock In {\em 56th Annual IEEE Symposium on Foundations of Computer
+  Science}, pages 634--649. IEEE Computer Society, 2015.
+
+\bibitem[DKSS23]{DickKuleszaSunSuresh2023Subset}
+Travis Dick, Alex Kulesza, Ziteng Sun, and Ananda~Theertha Suresh.
+\newblock Subset-based instance optimality in private estimation.
+\newblock In {\em Proceedings of the 40th International Conference on Machine
+  Learning}, volume 202 of {\em Proceedings of Machine Learning Research},
+  pages 7992--8014. PMLR, 2023.
+
+\bibitem[DLF{\etalchar{+}}24]{DongLuoFantiShiYi2024Clipping}
+Wei Dong, Qiyao Luo, Giulia Fanti, Elaine Shi, and Ke~Yi.
+\newblock Almost instance-optimal clipping for summation problems in the
+  shuffle model of differential privacy.
+\newblock In {\em Proceedings of the 2024 ACM SIGSAC Conference on Computer and
+  Communications Security}, pages 1939--1953. Association for Computing
+  Machinery, 2024.
+
+\bibitem[DMNS06]{DworkMcSherryNissimSmith2006Calibrating}
+Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam~D. Smith.
+\newblock Calibrating noise to sensitivity in private data analysis.
+\newblock In {\em Theory of Cryptography}, volume 3876 of {\em Lecture Notes in
+  Computer Science}, pages 265--284. Springer, 2006.
+
+\bibitem[DSY23]{DongSunYi2023BetterComposition}
+Wei Dong, Dajun Sun, and Ke~Yi.
+\newblock Better than composition: How to answer multiple relational queries
+  under differential privacy.
+\newblock {\em Proceedings of the ACM on Management of Data},
+  1(2):123:1--123:26, 2023.
+
+\bibitem[DY23]{DongYi2023Universal}
+Wei Dong and Ke~Yi.
+\newblock Universal private estimators.
+\newblock In {\em Proceedings of the 42nd ACM SIGMOD-SIGACT-SIGAI Symposium on
+  Principles of Database Systems}, pages 195--206. Association for Computing
+  Machinery, 2023.
+
+\bibitem[GDGK20]{GengDingGuoKumar2020Tradeoff}
+Quan Geng, Wei Ding, Ruiqi Guo, and Sanjiv Kumar.
+\newblock Tight analysis of privacy and utility tradeoff in approximate
+  differential privacy.
+\newblock In {\em Proceedings of the Twenty Third International Conference on
+  Artificial Intelligence and Statistics}, volume 108 of {\em Proceedings of
+  Machine Learning Research}, pages 89--99. PMLR, 2020.
+
+\bibitem[HLY21]{HuangLiangYi2021Mean}
+Ziyue Huang, Yuting Liang, and Ke~Yi.
+\newblock Instance-optimal mean estimation under differential privacy.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~34, pages 25993--26004, 2021.
+
+\bibitem[LRSS25]{LinderRaskhodnikovaSmithSteinke2025BlackBox}
+Ephraim Linder, Sofya Raskhodnikova, Adam Smith, and Thomas Steinke.
+\newblock Privately evaluating untrusted black-box functions.
+\newblock In {\em Proceedings of the 57th Annual ACM Symposium on Theory of
+  Computing}, pages 2350--2361. Association for Computing Machinery, 2025.
+
+\bibitem[LSZ{\etalchar{+}}23]{LiuSureshZhuKairouzGruteser2023Contribution}
+Yuhan Liu, Ananda~Theertha Suresh, Wennan Zhu, Peter Kairouz, and Marco
+  Gruteser.
+\newblock Algorithms for bounding contribution for histogram estimation under
+  user-level privacy.
+\newblock In {\em Proceedings of the 40th International Conference on Machine
+  Learning}, volume 202 of {\em Proceedings of Machine Learning Research},
+  pages 21969--21996. PMLR, 2023.
+
+\bibitem[MT07]{McSherryTalwar2007Mechanism}
+Frank McSherry and Kunal Talwar.
+\newblock Mechanism design via differential privacy.
+\newblock In {\em 48th Annual IEEE Symposium on Foundations of Computer
+  Science}, pages 94--103. IEEE Computer Society, 2007.
+
+\end{thebibliography}

@@ -1,0 +1,1941 @@
+% The paper contains no EPS graphics; disable automatic EPS conversion so the
+% documented no-shell-escape build remains warning-free.
+\newcommand{\DoNotLoadEpstopdf}{}
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{array}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{nicefrac}
+\usepackage{paralist}
+\usepackage{enumitem}
+\usepackage{verbatim}
+\usepackage{thm-restate}
+\usepackage[normalem]{ulem}
+\usepackage[compact]{titlesec}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{fit}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+
+\usepackage{fancybox}
+\newenvironment{fminipage}%
+  {\begin{Sbox}\begin{minipage}}%
+  {\end{minipage}\end{Sbox}\fbox{\TheSbox}}
+
+\newenvironment{algbox}[0]{%
+\vskip 0.2in
+\noindent
+\begin{fminipage}{6.3in}
+}{%
+\end{fminipage}
+\vskip 0.2in
+}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\tcbset{enhanced jigsaw}
+\usepackage{mdframed}
+\usepackage{xcolor}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{xspace}
+\usepackage[mathscr]{euscript}
+\usepackage{nameref}
+\usepackage[
+  linktocpage=true,
+  pagebackref=false,
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  bookmarks,
+  bookmarksopen,
+  bookmarksnumbered
+]{hyperref}
+\usepackage[noabbrev,nameinlink]{cleveref}
+
+% Explicitly record the substitutions already selected by NFSS for unavailable
+% Computer Modern small-cap combinations, avoiding font-substitution warnings.
+\DeclareFontShape{OT1}{cmr}{m}{scit}{<->ssub*cmr/m/sc}{}
+\DeclareFontShape{OT1}{cmr}{bx}{sc}{<->ssub*cmr/bx/n}{}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{claim}[lemma]{Claim}
+\newtheorem{fact}[lemma]{Fact}
+\newtheorem{conjecture}[lemma]{Conjecture}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{problem}{Problem}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{observation}[lemma]{Observation}
+
+% Include the parent section in PDF anchor names for counters reset by section.
+\renewcommand*{\theHtheorem}{\thesection.\arabic{theorem}}
+\renewcommand*{\theHexample}{\thesection.\arabic{example}}
+\renewcommand*{\theHlemma}{\thesection.\arabic{lemma}}
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{claim*}{Claim}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{problem*}{Problem}
+
+\allowdisplaybreaks
+\setlength{\parskip}{3pt}
+
+\title{The Instance-Optimal Rate for Bounded Summation under Approximate Differential Privacy}
+\author{}
+\date{September 1, 2026}
+
+\begin{document}
+
+\pagenumbering{roman}
+
+\maketitle
+
+\begin{abstract}
+In the central replacement model, let
+$D=(x_1,\ldots,x_n)\in\{0,\ldots,U\}^n$,
+$S(D)=\sum_i x_i$, and $m(D)=\max\{1,x_1,\ldots,x_n\}$.  Let
+$\rho^*_{\varepsilon,\delta,\beta}(n,U)$ be the infimum, over real-valued
+$(\varepsilon,\delta)$-differentially private mechanisms, of the worst-case
+ratio $\varepsilon\operatorname{err}_{\beta}(M,D)/m(D)$, where
+$\operatorname{err}_{\beta}$ is pointwise $(1-\beta)$-quantile absolute
+error.  There are universal constants $C,C_0>0$ such that, for integers
+$U\ge2$ and $n\ge1$, $0<\varepsilon\le1$, $0<\beta\le1/3$,
+$0\le\delta\le n^{-2}$, and
+\[
+ n\ge \frac{C_0}{\varepsilon}
+ \left(1+\log\log U+\log\frac1\beta\right),
+\]
+we prove
+\[
+ \frac1{200}\min\{A_{U,\beta},B_{\varepsilon,\delta}\}
+ \le \rho^*_{\varepsilon,\delta,\beta}(n,U)
+ \le C\min\{A_{U,\beta},B_{\varepsilon,\delta}\},
+\]
+where $L_U=1+\lceil\log_2U\rceil$,
+$A_{U,\beta}=1+\log(L_U/\beta)$,
+$B_{\varepsilon,\delta}=1+\log(1+(e^\varepsilon-1)/\delta)$ for
+$\delta>0$, and $B_{\varepsilon,0}=+\infty$.  The upper bound is attained by
+a central mechanism outputting a real estimate of $S(D)$.  In the ideal
+exact-real and exact-sampling model, its pure-private branch runs in
+$O(n\log n+L_U)$ time; its approximate-private branch has deterministic
+error $O(m(D)B_{\varepsilon,\delta}/\varepsilon)$ and runs in time polynomial
+in $n$, $\log U$, $\log(1/\delta)$, and $\log(1/\varepsilon)$.  The lower
+bound has no computational restriction.
+\end{abstract}
+
+\noindent\textbf{Note.} This paper was fully AI generated through a harness created by Richard Peng that discovers open problems and runs them through an automated research pipeline.
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Summation is among the most basic tasks in private data analysis.  Consider
+$n$ nonnegative contributions $x_1,\ldots,x_n\in\{0,\ldots,U\}$ and the
+query $S(D)=\sum_i x_i$.  Under replacement adjacency, its global
+sensitivity is $U$, so the classical Laplace mechanism adds noise at scale
+$U/\varepsilon$~\cite{DworkMcSherryNissimSmith2006Calibrating}.  This
+worst-case calibration treats a database whose largest entry is $1$ in the
+same way as one whose largest entry is $U$.  When $U$ is only a conservative
+public bound, an error guarantee governed by the largest value actually
+present in the database is substantially more informative.
+
+Clipping makes the issue concrete.  For a threshold $t$, the clipped query
+\[
+ Q_t(D)=\sum_{i=1}^n\min\{x_i,t\}
+\]
+has replacement sensitivity $t$, but it incurs the deterministic bias
+\[
+ S(D)-Q_t(D)=\sum_{i=1}^n(x_i-t)_+.
+\]
+Thus a low threshold reduces privacy noise at the cost of discarding more of
+the sum, while a high threshold has the opposite effect.  This bias--noise
+tradeoff also appears in contribution-bounding work, where the best cap can
+be characterized with the data held fixed
+\cite{AminKuleszaMunozMedinaVassilvitskii2019Contributions}.  In the present
+problem, however, the threshold must be chosen from the private data and one
+mechanism must give a simultaneous guarantee over every database.
+
+We determine this uniform adaptation cost, up to universal constants, under
+central approximate differential privacy.  The formal criterion is as follows.
+
+Let $U\ge2$ and $n\ge1$ be integers, and let databases
+$D=(x_1,\ldots,x_n)$ belong to
+$\{0,\ldots,U\}^n$, with two databases adjacent when they differ in one
+coordinate.  For a real-valued central mechanism $M$, define
+\[
+ S(D)=\sum_{i=1}^n x_i,
+ \qquad
+ m(D)=\max\{1,x_1,\ldots,x_n\},
+\]
+\[
+ \operatorname{err}_{\beta}(M,D)
+ =\inf\left\{a\ge0:
+   \Pr\bigl[|M(D)-S(D)|\le a\bigr]\ge1-\beta\right\},
+\]
+and
+\[
+ \rho^*_{\varepsilon,\delta,\beta}(n,U)
+ =\inf_M\sup_{D\in\{0,\ldots,U\}^n}
+ \frac{\varepsilon\operatorname{err}_{\beta}(M,D)}{m(D)},
+\]
+where the infimum ranges over all $(\varepsilon,\delta)$-differentially
+private mechanisms.  The floor in $m(D)$ keeps the normalization
+nondegenerate on the all-zero database.  Unlike a pointwise oracle benchmark,
+this definition requires the same private mechanism to attain its guarantee
+on all instances.
+
+\subsection{Our result}
+
+Put
+\[
+ L_U=1+\lceil\log_2U\rceil,
+ \qquad
+ A_{U,\beta}=1+\log\frac{L_U}{\beta},
+\]
+and, for $\delta>0$,
+\[
+ B_{\varepsilon,\delta}
+ =1+\log\left(1+\frac{e^\varepsilon-1}{\delta}\right),
+ \qquad B_{\varepsilon,0}=+\infty.
+\]
+
+\begin{theorem}[Instance-optimal rate for bounded summation]
+\label{thm:main}
+There are universal constants $C,C_0>0$ such that the following holds for
+all integers $U\ge2$ and $n\ge1$.  If
+\[
+ 0<\varepsilon\le1,
+ \qquad 0<\beta\le\frac13,
+ \qquad 0\le\delta\le n^{-2},
+\]
+and
+\begin{equation}
+ n\ge\frac{C_0}{\varepsilon}
+ \left(1+\log\log U+\log\frac1\beta\right),
+ \label{eq:sample-hypothesis}
+\end{equation}
+then
+\begin{equation}
+ \frac1{200}\min\{A_{U,\beta},B_{\varepsilon,\delta}\}
+ \le
+ \rho^*_{\varepsilon,\delta,\beta}(n,U)
+ \le
+ C\min\{A_{U,\beta},B_{\varepsilon,\delta}\}.
+ \label{eq:main-rate}
+\end{equation}
+The upper bound is attained by
+\hyperref[alg:branch-clip-sum]{\textsc{BranchClipSum}}, which outputs a real
+estimate $\widehat S$ satisfying, for every $D$,
+\[
+ \Pr\left[
+  |\widehat S-S(D)|
+  \le \frac{C m(D)}{\varepsilon}
+  \min\{A_{U,\beta},B_{\varepsilon,\delta}\}
+ \right]\ge1-\beta.
+\]
+Its pure-private branch uses $O(n\log n+L_U)$ exact-real operations.  Its
+approximate-private branch has the displayed error on every execution and
+runs in time polynomial in $n$, $\log U$, $\log(1/\delta)$, and
+$\log(1/\varepsilon)$.  The lower bound in \Cref{eq:main-rate} applies to
+all mechanisms, without a computational restriction.
+\end{theorem}
+
+The two terms in \Cref{eq:main-rate} describe different privacy regimes.
+For $0<\varepsilon\le1$,
+\[
+ B_{\varepsilon,\delta}
+ =\Theta\left(1+\log\left(1+\frac{\varepsilon}{\delta}\right)\right)
+ \qquad(\delta>0).
+\]
+At $\delta=0$, the second term is absent and the theorem gives the
+pure-private rate $\Theta(A_{U,\beta})$.  For $\delta>0$, the approximate
+branch is smaller precisely when
+\begin{equation}
+ \delta>
+ \frac{(e^\varepsilon-1)\beta}{L_U-\beta}.
+ \label{eq:intro-crossover}
+\end{equation}
+Crossing this threshold selects the better branch; obtaining a strict
+asymptotic-order improvement additionally requires
+$B_{\varepsilon,\delta}=o(A_{U,\beta})$.
+
+For example, fix $\varepsilon$ and $\beta$, take
+$n=\Theta(\log\log U)$ with a sufficiently large implicit constant to meet
+\Cref{eq:sample-hypothesis}, and set $\delta=n^{-2}$.  Then
+\[
+ A_{U,\beta}=\Theta(\log\log U),
+ \qquad
+ B_{\varepsilon,\delta}=\Theta(\log\log\log U),
+\]
+and hence
+\[
+ \rho^*_{\varepsilon,\delta,\beta}(n,U)
+ =\Theta(\log\log\log U).
+\]
+Thus approximate privacy gives a strict improvement over the pure-private
+rate in this regime, while the matching lower bound shows that the normalized
+ratio still diverges with $U$.
+
+\subsection{Relation to prior work}
+
+For fixed public $n$, estimating a one-dimensional empirical mean and
+estimating its sum differ only by multiplication by $n$.  Huang, Liang, and
+Yi~\cite{HuangLiangYi2021Mean} study this empirical statistic with
+radius- and diameter-adaptive guarantees under $\rho$-zCDP.  Their privacy
+notion and their diameter benchmark differ from the standard
+$(\varepsilon,\delta)$ replacement-DP and origin-anchored maximum used here.
+For pure DP, Dong and Yi~\cite{DongYi2023Universal} give the direct
+maximum/radius-based clipping lineage over integer domains and a finite-domain
+hard family yielding the double-logarithmic obstruction at constant failure
+probability.  The $\delta=0$ specialization of \Cref{thm:main} has this
+double-logarithmic dependence and also records the dependence on $\beta$ in
+our stated parameter regime.
+
+The same bounded nonnegative sum and realized-maximum accuracy objective have
+also been studied under stronger or otherwise altered privacy models.  Dong,
+Luo, Fanti, Shi, and Yi~\cite{DongLuoFantiShiYi2024Clipping} obtain the
+$A_{U,\beta}$ accuracy scale with a one-round shuffle protocol; their bound
+does not use $\delta$ to improve that scale.  Dong, Sun, and
+Yi~\cite{DongSunYi2023BetterComposition} give approximate-private
+max-contribution upper bounds for vector sums and relational aggregation;
+the one-dimensional case is a summation guarantee, but it uses add/remove
+user semantics and retains additional terms rather than giving the scalar
+replacement-DP transition in \Cref{eq:main-rate}.  A general
+approximate-private wrapper for finite-range monotone functions due to
+Linder, Raskhodnikova, Smith, and
+Steinke~\cite{LinderRaskhodnikovaSmithSteinke2025BlackBox} also implies a
+max-scaled sum bound under its add/remove and down-neighborhood formulation;
+this is an inferred specialization with a range overhead, rather than the
+present max-normalized minimax statement.
+
+Several nearby lines optimize a different object.  Contribution-bound
+selection for histograms competes with the best cap in a prescribed family
+under user-level privacy~\cite{LiuSureshZhuKairouzGruteser2023Contribution},
+while subset-based private mean estimation uses an expected-loss benchmark
+defined through deletions from the observed
+dataset~\cite{DickKuleszaSunSuresh2023Subset}.  Fixed-sensitivity noise
+mechanisms, including truncated Laplace noise, assume that the sensitivity is
+already available as a public parameter
+\cite{GengDingGuoKumar2020Tradeoff}.  These works respectively illuminate
+clipping, alternative notions of instance optimality, and the eventual noise
+release, but they do not privately identify the present instance scale and
+match it with a lower bound for the same central replacement-DP criterion.
+
+\subsection{Proof ideas}
+
+The upper bound begins by mapping each record to a dyadic scale and retaining
+the largest $K$ scales.  This top-$K$ operation is stable under one
+replacement.  Any interior point of the retained scales determines a
+threshold $t$ satisfying $t<2m(D)$ and clips fewer than $K$ records; therefore
+the clipping bias is at most $Km(D)$.  In the pure-private branch, the
+exponential mechanism~\cite{McSherryTalwar2007Mechanism} selects an interior
+scale with high probability and a Laplace release completes the estimate.  In
+the approximate-private branch, an always-interior selector uses one level of
+the prefix reduction from the private interior-point
+literature~\cite{BunNissimStemmerVadhan2015Thresholds}, after which bounded
+truncated Laplace noise is added.  The latter release is in the
+fixed-sensitivity tradition of
+Geng, Ding, Guo, and Kumar~\cite{GengDingGuoKumar2020Tradeoff}.  Publicly
+choosing the branch with the smaller of $A_{U,\beta}$ and
+$B_{\varepsilon,\delta}$ gives
+\hyperref[alg:branch-clip-sum]{\textsc{BranchClipSum}}.
+
+For the lower bound, we compare the all-zero database with databases
+containing the same number of copies of geometrically separated values.
+Accuracy forces their output intervals to be disjoint.  Exact approximate
+group privacy, with its additive $\delta$ loss retained, then yields both the
+$\log(L_U/\beta)$ obstruction and the
+$\log(1+(e^\varepsilon-1)/\delta)$ obstruction from a single packing.  A
+separate three-point packing supplies the constant floor needed when these
+logarithms are small.  Together the arguments give the uniform constant in
+the left side of \Cref{eq:main-rate}.
+
+\paragraph{Organization.}
+\Cref{sec:preliminaries} fixes the privacy conventions and develops the
+ordered-multiset, selection, and prefix tools used in the proof.
+\Cref{sec:overview} gives a detailed overview of the two upper-bound branches
+and the lower-bound packing.  The full construction and analysis appear in
+\Cref{sec:main-proof}.
+
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+\paragraph{Conventions and ordered multisets.}
+All unqualified logarithms are natural, and $[n]=\{1,\ldots,\allowbreak n\}$.  Multisets
+retain multiplicities, and $\uplus$ denotes multiset union.  Two same-size
+multisets differ by one replacement if they can be written as
+$C\uplus\{x\}$ and $C\uplus\{x'\}$.  All mechanisms below that take
+multiset inputs are permutation invariant.  Resource statements use ideal
+exact-real arithmetic and exact sampling from the displayed laws; the
+minimax statement is information theoretic.
+
+In calls between displayed algorithms, public parameters fixed by the
+enclosing specification are ambient and may be suppressed.  Every parameter
+whose value differs from its ambient value is displayed explicitly, while
+each algorithm's input line records all data and public parameters it uses.
+
+For a finite multiset $Y$ in a totally ordered set and
+$0\le K\le |Y|$, let $\operatorname{Top}_K(Y)$ and
+$\operatorname{Bot}_K(Y)$ be its $K$ largest and $K$ smallest members,
+respectively, with multiplicity.  An \emph{interior point} of a nonempty
+multiset $Y$ is an element of its ordered universe lying in
+$[\min Y,\max Y]$.  For a point $z$ in the same ordered universe, define
+its rank quality by
+\begin{equation}
+ q_Y(z)=\min\bigl\{
+  \#\{y\in Y:y\le z\},\#\{y\in Y:y\ge z\}
+ \bigr\}.
+ \label{eq:rank-quality}
+\end{equation}
+One replacement changes every value of $q_Y$ by at most one.  A median of
+$Y$ has quality at least $|Y|/2$, whereas a point strictly outside
+$[\min Y,\max Y]$ has quality zero.  For every integer $r\ge1$,
+\begin{equation}
+ q_Y(z)\ge r
+ \quad\Longleftrightarrow\quad
+ \#\{y\in Y:y\le z\}\ge r
+ \ \text{ and }\
+ \#\{y\in Y:y\ge z\}\ge r.
+ \label{eq:rank-invariant}
+\end{equation}
+We also write $c_z(Y)=\#\{y\in Y:y\ge z\}$.  For $r\ge1$, a point $z$ is
+an \emph{$r$-robust interior point} of $Y$ if
+$\min Y\le z$ and $c_z(Y)\ge r$; these conditions imply that $z$ is
+interior.
+
+\begin{lemma}[Stability of order truncation]
+\label{lem:order-truncation-stability}
+If same-size multisets $Y,Y'$ differ by one replacement, then, for every
+$0\le K\le|Y|$, the multisets
+$\operatorname{Top}_K(Y),\operatorname{Top}_K(Y')$ differ by at most one
+replacement, as do
+$\operatorname{Bot}_K(Y),\operatorname{Bot}_K(Y')$.  Consequently, applying a
+permutation-invariant private mechanism after either truncation preserves
+its privacy parameters with respect to the original input.
+\end{lemma}
+
+\begin{proof}
+Write $Y=C\uplus\{y\}$ and $Y'=C\uplus\{y'\}$.  For
+$1\le K<|Y|$, both top-$K$ multisets contain
+$\operatorname{Top}_{K-1}(C)$ and one further member; the same statement
+holds for the bottom-$K$ multisets.  The cases $K=0$ and $K=|Y|$ are
+immediate.
+\end{proof}
+
+\paragraph{Privacy tools.}
+For $D,D'\in\{0,\ldots,U\}^n$, write $D\sim D'$ when they differ in one
+coordinate; for multiset inputs, $D\sim D'$ denotes the one-replacement
+relation above.  With either declared adjacency relation, a mechanism $M$ is
+$(\varepsilon,\delta)$-differentially private if, for every adjacent pair
+and every measurable set $T$,
+\begin{equation}
+ \Pr[M(D)\in T]\le e^\varepsilon\Pr[M(D')\in T]+\delta.
+ \label{eq:dp-definition}
+\end{equation}
+The replacement $\ell_1$-sensitivity of $f$ taking values in $\mathbb R^k$
+is $\sup_{D\sim D'}\|f(D)-f(D')\|_1$; for a scalar query this is its
+\emph{replacement sensitivity}.  We use
+postprocessing and adaptive basic composition: if, conditional on every
+earlier transcript, invocation $j$ is
+$(\varepsilon_j,\delta_j)$-private, then the joint transcript is
+$(\sum_j\varepsilon_j,\sum_j\delta_j)$-private.  We also use the exact
+group-privacy consequence of \Cref{eq:dp-definition}: if $D,D'$ are joined
+by a chain of $k$ replacements, then
+\begin{equation}
+ \Pr[M(D)\in T]
+ \le e^{k\varepsilon}\Pr[M(D')\in T]
+   +\delta\sum_{j=0}^{k-1}e^{j\varepsilon}.
+ \label{eq:group-privacy}
+\end{equation}
+
+For $s>0$, $\operatorname{Lap}(s)$ denotes the law with density
+$(2s)^{-1}e^{-|w|/s}$.  If $W\sim\operatorname{Lap}(s)$ and $u\ge0$, then
+\begin{equation}
+ \Pr[|W|>u]=e^{-u/s},
+ \qquad
+ \Pr[W>u]=\Pr[W<-u]=\tfrac12e^{-u/s}.
+ \label{eq:laplace-tail}
+\end{equation}
+Thus adding independent $\operatorname{Lap}(\Delta/\alpha)$ noise to the
+coordinates of a query with $\ell_1$-sensitivity at most $\Delta$ is
+$(\alpha,0)$-private.
+
+Suppose a quality function $q_D:\mathcal R\to\mathbb R$ on a finite range
+satisfies
+$|q_D(z)-q_{D'}(z)|\le\Delta$ for every $D\sim D'$ and
+$z\in\mathcal R$, where $\Delta>0$.  The exponential mechanism with
+parameter $\alpha$ samples $Z$ according to
+\[
+ \Pr[Z=z]\ \propto\
+ \exp\left(\frac{\alpha q_D(z)}{2\Delta}\right).
+\]
+It is $(\alpha,0)$-private.  Moreover, for any $z_0\in\mathcal R$ and
+$u\ge0$,
+\begin{equation}
+ \Pr[q_D(Z)\le q_D(z_0)-u]
+ \le |\mathcal R|\exp\left(-\frac{\alpha u}{2\Delta}\right).
+ \label{eq:exponential-tail}
+\end{equation}
+
+For probability laws $P,Q$, their total-variation distance is
+$d_{\mathrm{TV}}(P,Q)=\sup_T|P(T)-Q(T)|$; any coupling of random variables
+$X\sim P$ and $Y\sim Q$ gives
+$d_{\mathrm{TV}}(P,Q)\le\Pr[X\ne Y]$.  If a family $P_D$ is
+$(\alpha,\zeta)$-private and
+$d_{\mathrm{TV}}(P_D,Q_D)\le\tau$ for every $D$, then, for adjacent
+$D,D'$ and every event $T$,
+\begin{equation}
+ Q_D(T)\le e^\alpha Q_{D'}(T)
+       +\zeta+(1+e^\alpha)\tau.
+ \label{eq:tv-dp}
+\end{equation}
+
+For $\alpha,\Delta>0$ and $0<\zeta\le1/2$, define
+\[
+ R(\alpha,\zeta,\Delta)
+ =\frac{\Delta}{\alpha}
+   \log\left(1+\frac{e^\alpha-1}{2\zeta}\right).
+\]
+The corresponding truncated-Laplace law has density proportional to
+$e^{-\alpha|w|/\Delta}$ on
+$[-R(\alpha,\zeta,\Delta),\allowbreak R(\alpha,\zeta,\Delta)]$ and density zero
+outside this interval.
+
+\paragraph{Dyadic scales and binary prefixes.}
+For $x\in\{0,\ldots,U\}$, define the dyadic scale and, for $t\ge0$, the
+clipped sum by
+\begin{align}
+ b(x)&=\left\lceil\log_2\max\{1,x\}\right\rceil
+       \in\{0,\ldots,L_U-1\},
+ \label{eq:dyadic-scale}\\
+ Q_t(D)&=\sum_{i=1}^n\min\{x_i,t\}.
+ \label{eq:clipped-sum}
+\end{align}
+
+\begin{lemma}[Sensitivity of clipped summation]
+\label{lem:clipped-sensitivity}
+For every fixed $t\ge0$, the replacement sensitivity of $Q_t$ is at most
+$t$.
+\end{lemma}
+
+\begin{proof}
+A replacement changes one summand, and every summand lies in $[0,t]$.
+\end{proof}
+
+For the prefix construction, fix $d\ge2$, put
+$\mathcal X=\{0,\ldots,d-1\}$ and $\ell=\lceil\log_2d\rceil$, and let
+$\operatorname{bin}_{\ell}(x)\in\{0,1\}^{\ell}$ be the binary
+representation of $x\in\mathcal X$ padded with leading zeroes.  If
+$x,x'\in\mathcal X$, their longest-common-prefix length is
+\[
+ \lambda(x,x')=
+ \max\left\{s\in\{0,\ldots,\ell\}:
+  \operatorname{bin}_{\ell}(x)_{1:s}
+  =\operatorname{bin}_{\ell}(x')_{1:s}\right\}.
+\]
+For $0\le s\le\ell$ and $p\in\{0,1\}^s$, let
+\[
+ C(p)=\{x\in\mathcal X:
+       \operatorname{bin}_{\ell}(x)_{1:s}=p\}.
+\]
+When $C(p)$ is nonempty, write $a(p)=\min C(p)$ and $b(p)=\max C(p)$;
+then $C(p)=[a(p),b(p)]\cap\mathcal X$, also when $d$ is not a power of
+two.  For a multiset $Y$ over $\mathcal X$ and a fixed prefix length $s$,
+write
+\[
+ c_Y(p)=|Y\cap C(p)|,
+ \qquad
+ G_s(Y)=\{p\in\{0,1\}^s:c_Y(p)>0\}
+\]
+for its prefix counts and its set of observed prefixes.
+
+\section{Overview}
+\label{sec:overview}
+
+Put $T=\min\{A_{U,\beta},B_{\varepsilon,\delta}\}$.  The upper construction
+and two complementary packing arguments give the matching bounds.  The main
+algorithm
+\hyperref[alg:branch-clip-sum]{\textsc{BranchClipSum}} receives the database
+and the public parameters, chooses publicly between a pure-private and an
+approximate-private clipping mechanism, and is $(\varepsilon,\delta)$-private
+with pointwise $(1-\beta)$-quantile error $O(m(D)T/\varepsilon)$.  The lower
+bound applies to every private mechanism, without a computational
+restriction.  The sample hypothesis is used through the normalization
+$\varepsilon n\ge64A_{U,\beta}$, which closes the packing case requiring more
+than $n$ records and, with $\delta\le n^{-2}$, gives the parameter comparison
+needed by the approximate branch.
+
+\paragraph{The common clipping reduction.}
+Both upper branches first replace $x_i$ by its dyadic scale $b(x_i)$ and
+form
+\[
+ Y=\operatorname{Top}_K\bigl(\{b(x_i):i\in[n]\}\bigr).
+\]
+This transformation serves two purposes.  Dyadic scaling reduces threshold
+selection from the original universe to only $L_U=O(1+\log U)$ ordered
+scales, while retaining the largest $K$ scales makes it enough to locate an
+interior point rather than estimate the maximum itself.  Moreover,
+top-$K$ order truncation changes by at most one replacement when the input
+database does, so a private selector run on $Y$ remains private for the
+original database.
+
+The deterministic clipping lemma is the central reduction.  If
+$z\in[\min Y,\max Y]$ and $t=2^z$, then
+\begin{equation}
+ t<2m(D),\qquad
+ \#\{i:x_i>t\}\le K-1,
+ \qquad
+ 0\le S(D)-Q_t(D)\le K m(D).
+ \label{eq:overview-clipping}
+\end{equation}
+Thus an interior scale simultaneously keeps the sensitivity of $Q_t$ within
+a constant factor of the instance scale and limits the clipping bias.  Once
+$Q_t(D)$ is privately released as $\widehat S$, the two contributions obey
+\[
+ |\widehat S-S(D)|
+ \le K m(D)+|\widehat S-Q_t(D)|.
+\]
+If a prescribed value of $K$ exceeds $n$, the corresponding branch instead
+returns zero; the elementary bound
+$\varepsilon|S(D)|/m(D)\le\varepsilon n<\varepsilon K$ gives the same
+order of error.
+
+\paragraph{The pure-private branch.}
+\hyperref[alg:pure-clip-sum]{\textsc{PureClipSum}} takes
+$K_{\mathrm{pure}}
+ =\left\lceil\frac8\varepsilon\log\frac{2L_U}{\beta}\right\rceil
+ =O(A_{U,\beta}/\varepsilon)$.
+On the top scales it applies the exponential mechanism, with half the
+privacy budget, to the balanced rank quality $q_Y$.  A median of $Y$ has
+quality at least $K_{\mathrm{pure}}/2$, whereas every scale outside the
+sample range has quality zero, so the selected scale is interior with
+probability at least $1-\beta/2$.  Using the remaining privacy budget, it
+returns $Q_t(D)+Z$ for
+$Z\sim\operatorname{Lap}(2t/\varepsilon)$.  Its standard tail bound and
+\Cref{eq:overview-clipping} give normalized $\beta$-error
+$O(A_{U,\beta})$.  The required sorting, rank-quality computation, and
+clipped summation take $O(n\log n+L_U)$ exact-real operations.
+
+\paragraph{The approximate-private interior-point construction.}
+To obtain the smaller $B_{\varepsilon,\delta}$ rate, the proof must avoid the
+pure branch's $\log(L_U/\beta)$ cost for making the threshold interior and
+must replace the unbounded Laplace tail by a deterministic noise bound.  The
+main technical challenge is therefore an approximate-private selector on an
+ordered universe of size $d$ whose output is interior on every execution and
+whose sample cost depends only doubly logarithmically on $d$.
+
+The starting mechanism,
+\hyperref[alg:one-level-prefix]{\textsc{OneLevelPrefix}}, takes a multiset
+$S\in\{0,\ldots,d-1\}^K$ and privacy and failure parameters
+$(\alpha,\zeta,\eta)$.  It is $(\alpha,\zeta)$-private and, except with
+probability $\eta$, returns a robust interior point using
+\begin{equation}
+ K=O\left(\frac1\alpha\left(
+  1+\log\log(4d)+\log\frac1\zeta+\log\frac1\eta
+    +\log\frac1\alpha\right)\right)
+ \label{eq:overview-one-level-samples}
+\end{equation}
+records.  Its main intermediate objects preserve the rank information needed
+to lift a selected prefix length to a valid point of the original universe.
+The mechanism stably bottom-truncates $S$, randomly pairs the retained records, and forms
+the multiset of their longest-common-prefix lengths.  An exponential
+mechanism chooses a prefix length with both lower and upper rank margins.
+The random-pairing separation lemma and the upper margin guarantee that some
+binary-prefix cylinder at the next level is well populated.  This ensures
+that the
+\hyperref[alg:sparse-prefix]{\textsc{SparsePrefix}} subroutine privately
+returns an observed cylinder rather than $\bot$ with high probability; the
+returned cylinder need not be the populous one.  The subroutine perturbs only
+observed prefix counts.  Approximate privacy pays for the possible singleton
+bin that can appear or disappear under one replacement, so there is no need
+to enumerate all prefixes.  On the same rank events, for any returned
+observed cylinder the lower margin and the largest records omitted by bottom
+truncation make at least one endpoint robust; a noisy count selects a robust
+endpoint with high probability.
+
+The base mechanism is only high-probability interior.  The
+\hyperref[alg:sure-interior]{\textsc{SureInterior}} conversion runs two
+independent base calls with reduced privacy parameters, returns the first
+output that actually lies in $[\min S,\max S]$, and returns $\min S$ only if
+both calls fail.  This validation-and-fallback step is data dependent, but
+its law is within $O(\eta^2)$ in total variation of the base law conditioned
+on being interior.  Taking $\eta$ proportional to
+$\min\{\alpha,\zeta\}$ leaves enough privacy slack to absorb the correction.
+The result is an $(\alpha,\zeta)$-private, always-interior selector with
+the sample bound in \Cref{eq:overview-one-level-samples} with the
+$\log(1/\eta)$ term absorbed by
+$\log(1/\alpha)+\log(1/\zeta)$.  It runs in time polynomial in $K$,
+$\log d$, $\log(1/\zeta)$, and $\log(1/\alpha)$.
+
+\paragraph{The approximate-private branch.}
+For $\delta>0$, define
+\[
+ G=1+\log\log(4L_U)+\log\frac1\delta+\log\frac1\varepsilon,
+ \qquad
+ K_{\mathrm{app}}=\left\lceil\frac{C_1G}{\varepsilon}\right\rceil.
+\]
+\hyperref[alg:approx-clip-sum]{\textsc{ApproxClipSum}} applies
+\textsc{SureInterior} with parameters $(\varepsilon/2,\delta/2)$ to the
+top $K_{\mathrm{app}}$ scales.  This makes
+\Cref{eq:overview-clipping} deterministic.  It then invokes
+\hyperref[alg:truncated-laplace-release]{\textsc{TruncatedLaplaceRelease}}
+on $Q_t$.  For a sensitivity-$\Delta$ scalar query this subroutine uses a
+Laplace density truncated to radius
+$R(\alpha,\zeta,\Delta)
+=(\Delta/\alpha)\log(1+(e^\alpha-1)/(2\zeta))$.
+The radius is chosen so that neighboring densities have likelihood ratio at
+most $e^\alpha$ on their common support and boundary mass at most $\zeta$;
+thus the release is approximately private with deterministically bounded
+noise.  With
+$(\alpha,\zeta,\Delta)=(\varepsilon/2,\delta/2,t)$, it gives
+\begin{equation}
+ |Z|\le
+ \frac{2t}{\varepsilon}
+ \log\left(1+\frac{e^{\varepsilon/2}-1}{\delta}\right)
+ \le\frac{4m(D)}{\varepsilon}B_{\varepsilon,\delta}.
+ \label{eq:overview-bounded-noise}
+\end{equation}
+The assumptions $\delta\le n^{-2}$ and
+$\varepsilon n\ge64A_{U,\beta}$ imply the parameter comparison
+$G=O(B_{\varepsilon,\delta})$.  Therefore the clipping bias
+$K_{\mathrm{app}}m(D)$ and the bounded noise in
+\Cref{eq:overview-bounded-noise} together give deterministic error
+$O(m(D)B_{\varepsilon,\delta}/\varepsilon)$.  This branch runs in time
+polynomial in $n$, $\log U$, $\log(1/\delta)$, and
+$\log(1/\varepsilon)$.  The public wrapper runs the pure branch when
+$\delta=0$ or $A_{U,\beta}\le B_{\varepsilon,\delta}$, and otherwise runs
+the approximate branch, proving the upper bound with exactly one invocation.
+
+\paragraph{The matching lower bound.}
+Fix any $(\varepsilon,\delta)$-private mechanism $M$, let $R(M)$ be its
+worst normalized error, and choose $r>R(M)$.  Set
+$a=r/\varepsilon$, $k=\lfloor2a\rfloor+1$, and
+$h=1+\lfloor\log_4U\rfloor$.  When $k\le n$, compare the all-zero database
+with the $h$ databases having $k$ copies of $4^j$ and zeros elsewhere.
+Accuracy places their outputs in pairwise disjoint intervals: the factor
+four separates consecutive scales, and $k>2a$ separates all of them from
+the interval around zero.  Retaining the additive loss in exact approximate
+group privacy and summing these disjoint events under the all-zero database
+gives
+\begin{equation}
+ e^{-k\varepsilon}
+ \le\frac{\beta/h+\gamma}{1-\beta+\gamma},
+ \qquad
+ \gamma=
+ \begin{cases}
+  \delta/(e^\varepsilon-1),&\delta>0,\\
+  0,&\delta=0.
+ \end{cases}
+ \label{eq:overview-star}
+\end{equation}
+This single inequality yields the two alternatives
+$\log(h/\beta)$ and $\log((e^\varepsilon-1)/\delta)$, which are, up to
+universal additive constants, $A_{U,\beta}$ and
+$B_{\varepsilon,\delta}$.  If $k>n$, the normalized sample condition gives
+the desired lower bound directly.
+
+The additive constants in this logarithmic packing matter when $T$ is
+small.  A separate argument assumes $R(M)<1/20$, chooses its own
+$r\in(R(M),1/20)$ and corresponding $k$, and packs databases with
+$0$, $k$, and $2k$ ones to obtain a contradiction.  This proves the uniform
+floor $R(M)\ge1/20$.  Combining that floor with
+\Cref{eq:overview-star} gives
+$R(M)\ge T/200$.  Taking the infimum over all mechanisms proves the stated
+information-theoretic lower bound and completes the match with
+\textsc{BranchClipSum}.
+
+\section{Proof of the Main Theorem}
+\label{sec:main-proof}
+
+Unless a statement explicitly changes the scope, all parameters in this
+section satisfy the hypotheses of \Cref{thm:main}.
+
+\subsection{Scope and parameter normalization}
+
+The floor in $m(D)$ makes the normalized error meaningful at the all-zero
+database.  The restriction on $\beta$ is also substantive.
+
+\begin{lemma}[Necessity of a bounded failure probability]
+\label{lem:beta-counterexample}
+If the restriction $\beta\le1/3$ is dropped and
+$1-\beta\le1/(nU+1)$, then
+$\rho^*_{\varepsilon,\delta,\beta}(n,U)=0$ for every
+$\varepsilon,\delta\ge0$.
+\end{lemma}
+
+\begin{proof}
+Let $M$ ignore its input and output a uniformly random member of
+$\{0,1,\ldots,nU\}$.  This mechanism is $(0,0)$-differentially private.
+For every $D$, it outputs $S(D)$ with probability
+$1/(nU+1)\ge1-\beta$, so
+$\operatorname{err}_{\beta}(M,D)=0$ for every database.
+\end{proof}
+
+We next put the sample hypothesis into the form used by both the upper and
+lower bounds and relate the exact expression $B_{\varepsilon,\delta}$ to its
+more familiar scale.
+
+\begin{lemma}[Parameter normalization]
+\label{lem:parameter-bookkeeping}
+There is a universal choice of $C_0$ such that
+\Cref{eq:sample-hypothesis} implies
+\begin{equation}
+ \varepsilon n\ge64A_{U,\beta}.
+ \label{eq:normalized-sample}
+\end{equation}
+Moreover, for $0<\varepsilon\le1$ and $\delta>0$,
+\[
+ B_{\varepsilon,\delta}
+ =\Theta\left(1+\log\left(1+\frac{\varepsilon}{\delta}\right)\right)
+\]
+with universal constants.
+\end{lemma}
+
+\begin{proof}
+For $U\ge2$, $L_U\le5\log U$, and hence
+\[
+ A_{U,\beta}
+ \le1+\log\log U+\log(1/\beta)+\log5.
+\]
+Because $\beta\le1/3$, the expression in parentheses in
+\Cref{eq:sample-hypothesis} is bounded below by a positive universal
+constant.  Increasing $C_0$ therefore gives
+\Cref{eq:normalized-sample}.  Finally,
+\[
+ \varepsilon\le e^\varepsilon-1\le(e-1)\varepsilon
+ \qquad(0<\varepsilon\le1),
+\]
+and substitution in the definition of $B_{\varepsilon,\delta}$ proves the
+second assertion.
+\end{proof}
+
+\subsection{Stable dyadic clipping}
+
+The following deterministic fact controls the clipping bias and the scale
+of the subsequent noisy release.
+
+\begin{lemma}[Bias from an interior dyadic scale]
+\label{lem:dyadic-clipping}
+Let $y_{[1]}\ge\cdots\ge y_{[n]}$ be the sorted values of $b(x_i)$.  If
+$1\le K\le n$, $y_{[K]}\le z\le y_{[1]}$, and $t=2^z$, then
+\[
+ t<2m(D),
+ \qquad
+ \#\{i:x_i>t\}\le K-1,
+\]
+and therefore
+\begin{equation}
+ 0\le S(D)-Q_t(D)\le K m(D).
+ \label{eq:clipping-bias}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $M_D=\max_i x_i$.  Since $z\le b(M_D)$,
+\[
+ t\le2^{b(M_D)}<2\max\{1,M_D\}=2m(D);
+\]
+when $M_D\le1$, the sharper equality $t=1$ holds.  If $x_i>2^z$, then
+$b(x_i)>z\ge y_{[K]}$.  Fewer than $K$ scales strictly exceed
+$y_{[K]}$, which proves the count bound.  Hence
+\[
+ S(D)-Q_t(D)
+ =\sum_i\max\{x_i-t,0\}
+ \le \#\{i:x_i>t\}\,M_D
+ \le K m(D).
+\]
+\end{proof}
+
+\subsection{The pure-private branch}
+
+Set
+\begin{equation}
+ K_{\mathrm{pure}}
+ =\left\lceil\frac8\varepsilon\log\frac{2L_U}{\beta}\right\rceil.
+ \label{eq:pure-k}
+\end{equation}
+
+\begin{algbox}
+\textbf{\uline{\textsc{PureClipSum}}}: Pure-private clipping and release.
+\phantomsection\label{alg:pure-clip-sum}
+
+\uline{Input}: A database $D\in\{0,\ldots,U\}^n$; public integers
+$U\ge2$, $n\ge1$ and public parameters $0<\varepsilon\le1$,
+$0<\beta<1$.
+
+\uline{Output}: A real estimate of $S(D)$.
+
+\uline{Guarantee}: $(\varepsilon,0)$-privacy and normalized
+$\beta$-error $O(A_{U,\beta})$.
+
+\begin{enumerate}[leftmargin=*,nosep]
+  \item If $K_{\mathrm{pure}}>n$, return $0$.
+  \item Form
+  $Y=\operatorname{Top}_{K_{\mathrm{pure}}}
+  (\{b(x_i):i\in[n]\})$ and sample $z\in\{0,\ldots,L_U-1\}$ with
+  probability proportional to $\exp(\varepsilon q_Y(z)/4)$.
+  \item Set $t=2^z$, independently draw
+  $Z\sim\operatorname{Lap}(2t/\varepsilon)$, and return $Q_t(D)+Z$.
+\end{enumerate}
+\end{algbox}
+
+\begin{lemma}[Pure-private clipping guarantee]
+\label{lem:pure-upper}
+For integers $U\ge2$, $n\ge1$ and parameters
+$0<\varepsilon\le1$, $0<\beta<1$,
+\hyperref[alg:pure-clip-sum]{\textsc{PureClipSum}} is
+$(\varepsilon,0)$-differentially private and, for every $D$,
+\[
+ \Pr\left[
+  |\text{\textsc{PureClipSum}}(D)-S(D)|
+  \le\frac{C m(D)}\varepsilon A_{U,\beta}
+ \right]\ge1-\beta
+\]
+for a universal $C$.  It runs in $O(n\log n+L_U)$ exact-real operations.
+\end{lemma}
+
+\begin{proof}
+If $K_{\mathrm{pure}}>n$, the output is data independent and
+\[
+ \frac{\varepsilon|S(D)|}{m(D)}
+ \le\varepsilon n<\varepsilon K_{\mathrm{pure}}=O(A_{U,\beta}).
+\]
+Assume $K_{\mathrm{pure}}\le n$.  By
+\Cref{lem:order-truncation-stability} and the sensitivity-one quality
+\Cref{eq:rank-quality}, the exponential-mechanism step is
+$(\varepsilon/2,0)$-private.  Conditional on every fixed preceding output
+$t$, \Cref{lem:clipped-sensitivity} shows that $Q_t$ has sensitivity at most
+$t$, so adding $\operatorname{Lap}(2t/\varepsilon)$ is also
+$(\varepsilon/2,0)$-private.  Adaptive composition proves
+$(\varepsilon,0)$-privacy.
+
+Some median of $Y$ has quality at least $K_{\mathrm{pure}}/2$, while every
+point strictly outside $[\min Y,\max Y]$ has quality zero.  Thus
+\Cref{eq:exponential-tail} gives
+\[
+ \Pr[z\notin[\min Y,\max Y]]
+ \le L_Ue^{-\varepsilon K_{\mathrm{pure}}/8}
+ \le\frac\beta2.
+\]
+The Laplace tail \Cref{eq:laplace-tail} also gives
+\[
+ \Pr\left[|Z|>\frac{2t}{\varepsilon}\log\frac2\beta\right]
+ \le\frac\beta2.
+\]
+On the complementary events, \Cref{lem:dyadic-clipping} yields
+\[
+ |Q_t(D)+Z-S(D)|
+ \le K_{\mathrm{pure}}m(D)
+   +\frac{4m(D)}\varepsilon\log\frac2\beta
+ \le\frac{C m(D)}\varepsilon A_{U,\beta}.
+\]
+A union bound proves accuracy.
+
+For the resource bound, compute and sort the $n$ scales, fill an
+$L_U$-entry histogram of the selected scales, and use one prefix and one
+suffix pass to compute all qualities.  These operations cost
+$O(n\log n+L_U)$.  Sampling the resulting categorical law costs $O(L_U)$
+exact-real operations, evaluating $Q_t$ costs $O(n)$, and the Laplace draw
+costs $O(1)$.
+\end{proof}
+
+\subsection{Bounded noise for approximate privacy}
+
+The approximate-private branch uses the truncated-Laplace law from the
+preliminaries.  Writing
+$\lambda=\alpha/\Delta$, $R=R(\alpha,\zeta,\Delta)$, and
+$E=e^{-\lambda R}$, its magnitude is
+\[
+ -\lambda^{-1}\log\bigl(1-(1-E)V\bigr)
+\]
+for $V$ uniform on $[0,1]$, and its sign is an independent fair sign.
+
+\begin{algbox}
+\textbf{\uline{\textsc{TruncatedLaplaceRelease}}}: Bounded-noise scalar
+release.  \phantomsection\label{alg:truncated-laplace-release}
+
+\uline{Input}: A database $D$, a scalar query $q$, and public parameters
+$\Delta>0$, $\alpha>0$, and $0<\zeta\le1/2$, where $q$ has replacement
+sensitivity at most $\Delta$.
+
+\uline{Output}: A real release of $q(D)$.
+
+\uline{Guarantee}: $(\alpha,\zeta)$-privacy and deterministic error at most
+$R(\alpha,\zeta,\Delta)$.
+
+\begin{enumerate}[leftmargin=*,nosep]
+  \item Put $R=R(\alpha,\zeta,\Delta)$ and $\lambda=\alpha/\Delta$.
+  Draw $V$ uniformly from $[0,1]$ and an independent fair sign
+  $\sigma\in\{-1,1\}$.
+  \item Set
+  $W=-\sigma\lambda^{-1}
+  \log(1-(1-e^{-\lambda R})V)$ and return $q(D)+W$.
+\end{enumerate}
+\end{algbox}
+
+\begin{lemma}[Privacy and bounded error of truncated Laplace release]
+\label{lem:truncated-laplace}
+For every input in its specification,
+\hyperref[alg:truncated-laplace-release]{\textsc{TruncatedLaplaceRelease}}
+is $(\alpha,\zeta)$-differentially private and has absolute error at most
+$R(\alpha,\zeta,\Delta)$ on every execution.  If evaluating $q(D)$ takes
+time $T_q(D)$, its running time is $T_q(D)+O(1)$ in the exact-real model.
+\end{lemma}
+
+\begin{proof}
+Consider adjacent query values $q(D)\le q(D')=q(D)+s$ with
+$0\le s\le\Delta$.  Because $\zeta\le1/2$,
+$R(\alpha,\zeta,\Delta)\ge\Delta$.  On the overlap of the two shifted
+supports, the density ratio is at most
+$e^{\alpha s/\Delta}\le e^\alpha$.  The part of either support outside the
+other has probability at most the mass of a boundary interval of width
+$\Delta$.  With $R=R(\alpha,\zeta,\Delta)$, this mass is
+\[
+ \frac{e^{-\alpha(R-\Delta)/\Delta}-e^{-\alpha R/\Delta}}
+      {2(1-e^{-\alpha R/\Delta})}
+ =\frac{e^\alpha-1}{2(e^{\alpha R/\Delta}-1)}
+ =\zeta.
+\]
+Splitting an arbitrary event into its overlap and nonoverlap parts proves
+the privacy inequality in both directions.  The support gives the
+deterministic error bound.  The inverse-CDF representation in the algorithm
+uses a constant number of exact-real operations and random draws in addition
+to evaluating $q(D)$.
+\end{proof}
+
+\subsection{A rank-preserving interior-point construction}
+
+We now construct an always-interior selector on the ordered universe
+$\mathcal X=\{0,\ldots,d-1\}$ for $d\ge2$, using the binary-prefix notation
+from the preliminaries.  The next selector inspects only prefixes that occur
+in its input.  Approximate
+privacy pays for the possible singleton prefix that appears or disappears
+under a replacement, avoiding enumeration of all $2^s$ prefixes.
+
+For $0<\rho,\zeta,\nu\le1/4$, define
+\begin{equation}
+ b_\rho=\frac2\rho,
+ \qquad
+ \tau_{\rho,\zeta}
+ =1+\frac2\rho\log\frac{1+e^\rho}{2\zeta},
+ \qquad
+ h_{\rho,\zeta,\nu}
+ =\left\lceil
+   \tau_{\rho,\zeta}+\frac2\rho\log\frac1{2\nu}
+  \right\rceil.
+ \label{eq:sparse-thresholds}
+\end{equation}
+\begin{algbox}
+\textbf{\uline{\textsc{SparsePrefix}}}: Private selection from observed
+prefixes.  \phantomsection\label{alg:sparse-prefix}
+
+\uline{Input}: A multiset $D$ over $\mathcal X$, a prefix length
+$s\in\{0,\ldots,\ell\}$, and parameters
+$0<\rho,\zeta,\nu\le1/4$, in this order.
+
+\uline{Output}: An observed length-$s$ prefix, or $\bot$.
+
+\uline{Guarantee}: $(\rho,\zeta)$-privacy; if some prefix occurs at least
+$h_{\rho,\zeta,\nu}$ times, the output is an observed prefix with probability
+at least $1-\nu$.
+
+\begin{enumerate}[leftmargin=*,nosep]
+  \item Form the observed-prefix histogram
+  $\{(p,c_D(p)):p\in G_s(D)\}$.
+  \item For each $p\in G_s(D)$, independently draw
+  $E_p\sim\operatorname{Lap}(b_\rho)$ and declare $p$ active when
+  $c_D(p)+E_p\ge\tau_{\rho,\zeta}$.
+  \item Return the lexicographically first active prefix, or return $\bot$
+  if none is active.
+\end{enumerate}
+\end{algbox}
+
+\begin{lemma}[Private sparse-prefix selection]
+\label{lem:sparse-prefix}
+\hyperref[alg:sparse-prefix]{\textsc{SparsePrefix}} has the privacy and
+utility guarantees in its specification.  It runs in $O(|D|\ell)$ bit
+operations and uses at most $|D|$ exact Laplace samples after the histogram
+is formed.
+\end{lemma}
+
+\begin{proof}
+Fix adjacent multisets $D,D'$ and let
+$H=G_s(D)\cap G_s(D')$.  Each of
+$G_s(D)\setminus H$ and $G_s(D')\setminus H$ has cardinality at most one,
+and a prefix in either difference has count one in the multiset where it
+occurs.  Put $u=\zeta/(1+e^\rho)$.  Such a singleton prefix is activated with
+probability
+\begin{equation}
+ \Pr[1+E_p\ge\tau_{\rho,\zeta}]
+ =\frac12\exp\left(-\frac{\tau_{\rho,\zeta}-1}{2/\rho}\right)
+ =\frac{\zeta}{1+e^\rho}=u.
+ \label{eq:singleton-tail}
+\end{equation}
+
+Let $Q_D$ be the same procedure restricted to the common prefix set $H$,
+using the counts from $D$, and define $Q_{D'}$ analogously.  Coupling noises
+on $H$ shows that the output law of \textsc{SparsePrefix}$(D)$ is within
+total variation $u$ of that of $Q_D$, and likewise for $D'$.  On $H$, the
+two count vectors have $\ell_1$-distance at most two.  Adding independent
+$\operatorname{Lap}(2/\rho)$ noise therefore changes their joint density by
+a factor at most $e^\rho$.  Thresholding and selecting the first active
+coordinate are postprocessing, so $Q_D$ and $Q_{D'}$ satisfy pure
+$\rho$-privacy.  Consequently, for every output event $T$,
+\[
+ \begin{aligned}
+ \Pr[\text{\textsc{SparsePrefix}}(D)\in T]
+ &\le \Pr[Q_D\in T]+u\\
+ &\le e^\rho\Pr[Q_{D'}\in T]+u\\
+ &\le e^\rho\Pr[\text{\textsc{SparsePrefix}}(D')\in T]
+       +(1+e^\rho)u,
+ \end{aligned}
+\]
+which is the $(\rho,\zeta)$-privacy inequality.  Interchanging $D,D'$ gives
+the reverse direction.
+
+If $c_D(p)\ge h_{\rho,\zeta,\nu}$ for some $p$, then this prefix is inactive
+only if
+\[
+ E_p\le-\frac2\rho\log\frac1{2\nu},
+\]
+an event of probability at most $\nu$.  Whenever it is active, the algorithm
+returns some member of $G_s(D)$.  Finally, a binary-trie scan constructs the
+at most $|D|$ observed bins and their counts in $O(|D|\ell)$ bit operations;
+the remaining resource claims follow directly from the algorithm.
+\end{proof}
+
+To turn a privately selected prefix length into a useful cylinder, we need a
+random pairing to contain a pair that is well separated in input rank.
+
+\begin{lemma}[Random-pairing separation]
+\label{lem:pairing}
+Let $N$ be even, let $(\Pi_1,\ldots,\Pi_N)$ be a uniformly random
+permutation of $\{1,\ldots,N\}$, and pair consecutive positions.  For every
+integer $r\ge1$,
+\begin{equation}
+ \Pr\left[
+  \#\left\{j:|\Pi_{2j-1}-\Pi_{2j}|\le r/12\right\}\ge r
+ \right]\le2^{-r}.
+ \label{eq:pairing-bound}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+If $r>N/2$, the event is empty.  Otherwise call a pair short when its labels
+differ by at most $r/12$.  From a permutation with at least $r$ short pairs,
+select canonically the first $r$ of them.  There are at most $\binom Nr$
+choices for the labels in their first positions, and each such label has at
+most $r/6$ possible partner labels.  Compressing the selected directed pairs
+into blocks leaves $N-r$ distinct objects, which can be ordered in at most
+$(N-r)!$ ways.  This gives an injective encoding after the canonical
+selection, and hence the probability is at most
+\[
+ \frac{\binom Nr(r/6)^r(N-r)!}{N!}
+ =\frac{(r/6)^r}{r!}
+ \le\left(\frac e6\right)^r<2^{-r},
+\]
+where $r!\ge(r/e)^r$.
+\end{proof}
+
+We now choose public parameters that provide both lower and upper rank
+margins.  For $0<\alpha,\zeta,\eta\le1/4$, put
+\begin{equation}
+ \rho=\frac\alpha3,
+ \qquad \nu=\frac\eta4,
+ \qquad h=h_{\rho,\zeta,\nu},
+ \label{eq:one-level-basic-parameters}
+\end{equation}
+\begin{equation}
+ r=\left\lceil\max\left\{
+  24h,
+  \frac2\rho\log\frac1{2\nu},
+  \frac{\log(1/\nu)}{\log2},
+  12
+ \right\}\right\rceil,
+ \label{eq:rank-guard}
+\end{equation}
+and
+\begin{equation}
+ K_0=6r+\frac8\rho\log\frac{\ell+1}{\nu}+2.
+ \label{eq:exact-sample-threshold}
+\end{equation}
+For an input size $K\ge K_0$, define
+\begin{equation}
+ m=\left\lfloor\frac{K-2r}{2}\right\rfloor,
+ \qquad N=2m.
+ \label{eq:bottom-size}
+\end{equation}
+These definitions ensure
+\begin{equation}
+ K-N\ge2r,
+ \qquad
+ m\ge2r+\frac4\rho\log\frac{\ell+1}{\nu}.
+ \label{eq:pair-count-lower}
+\end{equation}
+For the prefix-length multiset $W=(w_1,\ldots,w_m)$, we use the rank
+quality $q_W$ and the two rank margins in
+\Cref{eq:rank-quality,eq:rank-invariant}.
+
+\begin{algbox}
+\textbf{\uline{\textsc{OneLevelPrefix}}}: A robust one-level prefix lift.
+\phantomsection\label{alg:one-level-prefix}
+
+\uline{Input}: A multiset $S\in\{0,\ldots,d-1\}^K$ and parameters
+$\alpha,\zeta,\eta$ satisfying $0<\alpha,\zeta,\eta\le1/4$ and
+$K\ge K_0$, in this order.
+
+\uline{Output}: A point of $\{0,\ldots,d-1\}$.
+
+\uline{Guarantee}: The mechanism is permutation invariant and
+$(\alpha,\zeta)$-private; except with probability $\eta$, its output is an
+$r$-robust interior point of $S$.
+
+\begin{enumerate}[leftmargin=*,nosep]
+  \item Form $B=\operatorname{Bot}_N(S)$, uniformly order its labelled
+  occurrences as $(y_1,\ldots,y_N)$, and set
+  $w_j=\lambda(y_{2j-1},y_{2j})$ for $j\in[m]$.
+  \item Sample $z\in\{0,\ldots,\ell\}$ with probability proportional to
+  $\exp(\rho q_W(z)/2)$, where $W=(w_1,\ldots,w_m)$.
+  \item Set $s=\min\{z+1,\ell\}$ and
+  $p=\text{\textsc{SparsePrefix}}(B,s;\rho=\rho,\zeta=\zeta,\nu=\nu)$.
+  If $p=\bot$, return $0$;
+  otherwise set $a=a(p)$ and $b=b(p)$.
+  \item If $z=\ell$, return $a$.  Otherwise compute $c_b(S)$, draw
+  $E\sim\operatorname{Lap}(1/\rho)$, and return $b$ when
+  $c_b(S)+E\ge3r/2$, or $a$ otherwise.
+\end{enumerate}
+\end{algbox}
+
+\begin{lemma}[One-level robust prefix lift]
+\label{lem:one-level-prefix}
+For every input satisfying its specification,
+\hyperref[alg:one-level-prefix]{\textsc{OneLevelPrefix}} is permutation
+invariant and $(\alpha,\zeta)$-differentially private.  With probability at
+least $1-\eta$, its output $x$ is $r$-robust, namely
+\[
+ \min S\le x,
+ \qquad
+ \#\{y\in S:y\ge x\}\ge r,
+\]
+and in particular is an interior point.  Its running time is polynomial in
+$K$, $\log d$, $\log(1/\zeta)$, and $\log(1/\eta)$ in the exact-real model.
+\end{lemma}
+
+\begin{proof}
+We begin with privacy.  By \Cref{lem:order-truncation-stability}, the bottom
+truncations of adjacent inputs differ by at most one replacement.  Match
+their common labelled occurrences and their possible exceptional
+occurrences, and place matched occurrences in the same positions of the two
+uniform random orderings.  This couples the orderings so that they differ in
+at most one position, and their paired LCP multisets therefore differ in at
+most one coordinate.  Since \Cref{eq:rank-quality} has sensitivity one,
+the exponential mechanism selecting $z$ is pure $\rho$-private.
+
+Conditional on every selected $z$, the prefix length $s$ is fixed, and
+\Cref{lem:order-truncation-stability,lem:sparse-prefix} make the
+sparse-prefix call
+$(\rho,\zeta)$-private as a mechanism of the original input.  Conditional on
+every transcript $(z,p)$, the final count $c_b(S)$ has replacement
+sensitivity one; adding $\operatorname{Lap}(1/\rho)$ before thresholding is
+pure $\rho$-private.  The remaining branches are postprocessing.  Adaptive
+composition gives
+\begin{equation}
+ (\rho,0)+(\rho,\zeta)+(\rho,0)=(\alpha,\zeta).
+ \label{eq:one-level-composition}
+\end{equation}
+
+We turn to utility.  A median of $W$ has rank quality at least $m/2$.
+The exponential tail \Cref{eq:exponential-tail} and
+\Cref{eq:pair-count-lower} imply,
+conditional on every $W$,
+\begin{equation}
+ \Pr[q_W(z)<r\mid W]
+ \le(\ell+1)
+   \exp\left[-\frac\rho2\left(\frac m2-r\right)\right]
+ \le\nu.
+ \label{eq:robust-em-utility}
+\end{equation}
+Thus both rank margins in \Cref{eq:rank-invariant} hold except with
+probability $\nu$.
+
+Label the occurrences of $B$ by $1,\ldots,N$ in nondecreasing value order,
+breaking ties arbitrarily.  The random ordering induces a uniform
+permutation of these ranks.  By \Cref{lem:pairing} and the definition of
+$r$, except with probability at most
+\begin{equation}
+ 2^{-r}\le\nu,
+ \label{eq:pairing-failure}
+\end{equation}
+fewer than $r$ pairs have rank distance at most $r/12$.  Suppose this event
+and $q_W(z)\ge r$ both hold.  Among the at least $r$ pairs with LCP length at
+least $z$, one pair has rank distance greater than $r/12$.  More than
+$r/12$ records of $B$ lie between its endpoints in value order, inclusively,
+and all share their first $z$ bits.  If $z<\ell$, at least half share one of
+the two possible next bits; if $z=\ell$, all have the full common binary
+representation.  Hence some prefix of length
+$s=\min\{z+1,\ell\}$ occurs more than $r/24\ge h$ times in $B$.
+
+By \Cref{lem:sparse-prefix}, the call
+$\text{\textsc{SparsePrefix}}(B,s;\rho=\rho,\zeta=\zeta,\nu=\nu)$ returns an observed prefix $p$
+except with probability $\nu$.  Fix a witness
+$y^*\in B\cap C(p)$, so
+\begin{equation}
+ a\le y^*\le b.
+ \label{eq:cylinder-witness}
+\end{equation}
+Every one of the at least $K-N\ge2r$ omitted largest records is at least
+every member of $B$.  If $z=\ell$, then $a=b=y^*$, so the returned value has
+a lower witness and at least $2r$ records at or above it.
+
+Suppose $z<\ell$.  The lower-rank margin in
+\Cref{eq:rank-invariant} supplies a pair whose LCP length is at most $z$.
+The two endpoints cannot both lie in the length-$(z+1)$ cylinder $[a,b]$.
+Thus either its smaller endpoint is below $a$, or its larger endpoint is
+above $b$.  In the former case, $a$ has a lower witness and at least $2r$
+inputs at or above it.  In the latter case, $b$ has the lower witness
+\Cref{eq:cylinder-witness}, and the omitted records show that at least
+$2r$ inputs are at or above $b$.  At least one endpoint is therefore robust.
+
+It remains to analyze the noisy choice.  The point $a$ always has at least
+$2r$ inputs at or above it, and it is robust precisely when some input is at
+most $a$.  The point $b$ always has the witness $y^*\le b$, and it is robust
+whenever $c_b(S)\ge r$.  If $c_b(S)<r$, choosing $b$ requires
+$E\ge r/2$ and has probability at most
+\begin{equation}
+ \Pr[E\ge r/2]\le\tfrac12e^{-\rho r/2}\le\nu.
+ \label{eq:noisy-endpoint-failure}
+\end{equation}
+If $a$ is not robust, the separating pair must instead have an endpoint
+above $b$, so $c_b(S)\ge2r$; choosing $a$ then requires $E<-r/2$ and has the
+same probability bound.  If both endpoints are robust, either choice works.
+
+The failures in \Cref{eq:robust-em-utility},
+\Cref{eq:pairing-failure}, the sparse-prefix call, and
+\Cref{eq:noisy-endpoint-failure} each have probability at most $\nu$.
+Their union has probability at most $4\nu=\eta$, proving the claimed
+invariant.
+
+Finally, sorting costs $O(K\log K)$ comparisons; computing the LCP values
+and the sparse observed-prefix histogram costs $O(K\ell)$ bit operations;
+histograms compute all $\ell+1$ balanced qualities in $O(K+\ell)$
+exact-real operations; and the endpoint count costs $O(K)$.  Since
+$\ell=O(\log d)$ and all public thresholds use only the displayed
+logarithms, the running time has the asserted polynomial bound.  Uniformly
+ordering labelled occurrences also shows permutation invariance.
+\end{proof}
+
+The preceding exact sample threshold has the asymptotic form needed by the
+summation algorithm.
+
+\begin{lemma}[One-level interior-point sample bound]
+\label{lem:ip-sample-bound}
+Let
+\[
+ \Xi=1+\log\log(4d)+\log\frac1\zeta
+       +\log\frac1\eta+\log\frac1\alpha.
+\]
+For $d\ge2$ and $0<\alpha,\zeta,\eta\le1/4$, the parameters defined in
+\Cref{eq:one-level-basic-parameters,eq:rank-guard,eq:exact-sample-threshold}
+satisfy
+\[
+ K_0\le\frac{2256}{\alpha}\Xi.
+\]
+Consequently, $K\ge3000\Xi/\alpha$ implies the precondition of
+\hyperref[alg:one-level-prefix]{\textsc{OneLevelPrefix}}.
+\end{lemma}
+
+\begin{proof}
+Since $\rho=\alpha/3\le1/12$ and $\nu=\eta/4$,
+\[
+ \log\frac{1+e^\rho}{2\zeta}\le1+\log\frac1\zeta,
+ \qquad
+ \log\frac1{2\nu}=\log\frac2\eta\le1+\log\frac1\eta.
+\]
+Thus \Cref{eq:sparse-thresholds} gives $h\le5\Xi/\rho$.  Each of the
+other three entries in the maximum in \Cref{eq:rank-guard} is at most
+$120\Xi/\rho$, as is $24h$, and therefore
+\begin{equation}
+ r\le\frac{121\Xi}{\rho}.
+ \label{eq:r-comparison}
+\end{equation}
+Moreover,
+\[
+ \ell+1\le\log_2(4d),
+ \qquad
+ \log\frac{\ell+1}{\nu}\le3\Xi.
+\]
+Substituting these bounds into \Cref{eq:exact-sample-threshold}, and using
+$2\le2\Xi/\rho$, yields
+\[
+ K_0\le\frac{(6\cdot121+24+2)\Xi}{\rho}
+ =\frac{752\Xi}{\rho}
+ =\frac{2256\Xi}{\alpha}.
+\]
+\end{proof}
+
+We next convert the high-probability interior point into an output that is
+interior on every execution.  For $0<\alpha,\zeta\le1/2$, define
+\begin{equation}
+ \alpha_0=\frac\alpha4,
+ \qquad
+ \zeta_0=\frac\zeta{16},
+ \qquad
+ \eta=\frac{\min\{\alpha,\zeta\}}{64}.
+ \label{eq:sure-parameters}
+\end{equation}
+Let
+\begin{equation}
+ K_{\mathrm{sure}}
+ =\frac{3000}{\alpha_0}\left(
+  1+\log\log(4d)+\log\frac1{\zeta_0}
+  +\log\frac1\eta+\log\frac1{\alpha_0}
+ \right).
+ \label{eq:sure-exact-threshold}
+\end{equation}
+By \Cref{lem:one-level-prefix,lem:ip-sample-bound}, running
+\textsc{OneLevelPrefix} with parameters
+$(\alpha_0,\zeta_0,\eta)$ on at least $K_{\mathrm{sure}}$ records is
+$(\alpha_0,\zeta_0)$-private and returns an interior point with probability
+at least $1-\eta$.
+
+\begin{algbox}
+\textbf{\uline{\textsc{SureInterior}}}: Conversion to an always-interior
+selector.  \phantomsection\label{alg:sure-interior}
+
+\uline{Input}: A multiset $Y\in\{0,\ldots,d-1\}^K$ and parameters
+$0<\alpha,\zeta\le1/2$, in this order, with $K\ge K_{\mathrm{sure}}$.
+
+\uline{Output}: A point of $\{0,\ldots,d-1\}$.
+
+\uline{Guarantee}: $(\alpha,\zeta)$-privacy and output in
+$[\min Y,\max Y]$ on every execution.
+
+\begin{enumerate}[leftmargin=*,nosep]
+  \item Independently compute
+  $Z_1=\text{\textsc{OneLevelPrefix}}
+  (Y;\alpha=\alpha_0,\zeta=\zeta_0,\eta=\eta)$ and
+  $Z_2=\text{\textsc{OneLevelPrefix}}
+  (Y;\alpha=\alpha_0,\zeta=\zeta_0,\eta=\eta)$.
+  \item Return the first $Z_j$ that belongs to $[\min Y,\max Y]$; if neither
+  does, return $\min Y$.
+\end{enumerate}
+\end{algbox}
+
+\begin{lemma}[Always-interior conversion]
+\label{lem:sure-interior}
+There is a universal $C$ such that
+\hyperref[alg:sure-interior]{\textsc{SureInterior}} is an
+$(\alpha,\zeta)$-differentially private, always-interior mechanism whenever
+\begin{equation}
+ K\ge\frac{C}{\alpha}\left(
+  1+\log\log(4d)+\log\frac1\zeta+\log\frac1\alpha
+ \right).
+ \label{eq:sure-sample}
+\end{equation}
+If $T_{\mathrm{base}}$ is the running time of one base call with the
+parameters in \Cref{eq:sure-parameters}, then the running time is
+$2T_{\mathrm{base}}+O(K)$.  It is polynomial in $K$, $\log d$,
+$\log(1/\zeta)$, and $\log(1/\alpha)$.
+\end{lemma}
+
+\begin{proof}
+The parameters in \Cref{eq:sure-parameters} lie in the range required by
+\Cref{lem:one-level-prefix}, and
+\[
+ \log(1/\eta)
+ \le\log64+\log(1/\alpha)+\log(1/\zeta).
+\]
+Thus a universal choice of $C$ in \Cref{eq:sure-sample} makes its
+right-hand side at least $K_{\mathrm{sure}}$.
+
+Let $P_Y$ be the output law of one base call, let
+$G_Y=[\min Y,\max Y]$, and let $C_Y$ be $P_Y$ conditioned on $G_Y$.  For
+every measurable $T$, base privacy and base failure probability at most
+$\eta$ imply
+\[
+ \begin{aligned}
+ C_Y(T)
+ &\le\frac{P_Y(T)}{1-\eta}\\
+ &\le\frac{e^{\alpha_0}P_{Y'}(T)+\zeta_0}{1-\eta}\\
+ &\le\frac{e^{\alpha_0}C_{Y'}(T)+e^{\alpha_0}\eta+\zeta_0}
+          {1-\eta}.
+ \end{aligned}
+\]
+Hence the family $C_Y$ is $(\alpha_C,\zeta_C)$-private for
+\begin{equation}
+ \alpha_C=\alpha_0+\log\frac1{1-\eta},
+ \qquad
+ \zeta_C=\frac{\zeta_0+e^{\alpha_0}\eta}{1-\eta}.
+ \label{eq:conditioned-privacy}
+\end{equation}
+
+For $x\in\mathcal X$, let $\delta_x$ denote the point-mass law at $x$.
+If $p_Y=P_Y(G_Y^c)$, the output law $Q_Y$ of \textsc{SureInterior} is
+\[
+ Q_Y=(1-p_Y^2)C_Y+p_Y^2\,\delta_{\min Y},
+\]
+so $d_{\mathrm{TV}}(Q_Y,C_Y)\le\eta^2$.  Apply \Cref{eq:tv-dp} with
+$\tau=\eta^2$ and the parameters in
+\Cref{eq:conditioned-privacy}.  Since $\eta\le1/128$ and
+$\eta\le\alpha/64$, we have
+$\log(1/(1-\eta))\le2\eta$ and therefore
+\[
+ \alpha_C\le\alpha/4+2\eta
+ \le\alpha/4+\alpha/32<\alpha.
+\]
+Also $\eta\le\zeta/64$, $e^{\alpha_0}\le e^{1/8}<8/7$, and therefore
+\[
+ \zeta_C
+ \le\frac{128}{127}\left(\frac1{16}+\frac{8/7}{64}\right)\zeta
+ <\frac\zeta{12}.
+\]
+Finally, $\eta^2\le\zeta/8192$ and $\alpha_C<1/2$, so
+\[
+ \zeta_C+(1+e^{\alpha_C})\eta^2<\zeta.
+\]
+This proves $(\alpha,\zeta)$-privacy.  The output is interior by
+construction.  One scan computes $\min Y$ and $\max Y$ in $O(K)$ time, and
+the algorithm makes exactly two base calls; the resource bounds now follow
+from \Cref{lem:one-level-prefix}.
+\end{proof}
+
+\subsection{The approximate-private branch}
+
+It remains to compare the sample requirement of the interior-point
+construction with the target error rate.  For $\delta>0$, put
+\begin{equation}
+ G=1+\log\log(4L_U)+\log\frac1\delta+\log\frac1\varepsilon.
+ \label{eq:G-definition}
+\end{equation}
+
+\begin{lemma}[Approximate-branch parameter comparison]
+\label{lem:parameter-comparison}
+Under \Cref{eq:sample-hypothesis}, if $0<\delta\le n^{-2}$, then
+\begin{equation}
+ G\le C B_{\varepsilon,\delta}
+ \label{eq:G-versus-B}
+\end{equation}
+for a universal $C$.
+\end{lemma}
+
+\begin{proof}
+Put $h=1+\log L_U$.  By \Cref{lem:parameter-bookkeeping},
+$\varepsilon n\ge64A_{U,\beta}\ge64h$.  Write
+\[
+ u=\log\frac\varepsilon\delta,
+ \qquad
+ e_0=\log\frac1\varepsilon.
+\]
+Since $\delta\le n^{-2}$,
+\[
+ \frac\varepsilon\delta
+ \ge\varepsilon n^2
+ =\frac{(\varepsilon n)^2}{\varepsilon}
+ \ge\frac{(64h)^2}{\varepsilon}.
+\]
+Consequently $u\ge e_0$, and $e^\varepsilon-1\ge\varepsilon$ gives
+$B_{\varepsilon,\delta}\ge1+u$.  Furthermore,
+\[
+ \log\frac1\delta+\log\frac1\varepsilon
+ =(u+e_0)+e_0\le3u\le3B_{\varepsilon,\delta}.
+\]
+Finally, $\log(4L_U)\le2h$, whereas $u\ge2\log(64h)$, and hence
+$1+\log\log(4L_U)=O(1+u)$.  Combining the estimates proves the claim.
+\end{proof}
+
+Fix a sufficiently large universal $C_1$ and define
+\begin{equation}
+ K_{\mathrm{app}}=\left\lceil\frac{C_1G}{\varepsilon}\right\rceil.
+ \label{eq:approx-k}
+\end{equation}
+The choice of $C_1$ ensures that \Cref{eq:sure-sample} holds with
+$d=L_U$, $\alpha=\varepsilon/2$, and $\zeta=\delta/2$ whenever
+$K_{\mathrm{app}}\le n$.
+
+\begin{algbox}
+\textbf{\uline{\textsc{ApproxClipSum}}}: Always-accurate
+approximate-private clipping.  \phantomsection\label{alg:approx-clip-sum}
+
+\uline{Input}: A database $D\in\{0,\ldots,U\}^n$; public parameters
+$U,n,\varepsilon,\delta,\beta$ satisfying the hypotheses of
+\Cref{thm:main}, with $\delta>0$.
+
+\uline{Output}: A real estimate of $S(D)$.
+
+\uline{Guarantee}: $(\varepsilon,\delta)$-privacy and deterministic
+normalized error $O(B_{\varepsilon,\delta})$.
+
+\begin{enumerate}[leftmargin=*,nosep]
+  \item If $K_{\mathrm{app}}>n$, return $0$.
+  \item Form
+  $Y=\operatorname{Top}_{K_{\mathrm{app}}}
+     (\{b(x_i):i\in[n]\})$ and compute
+  $z=\text{\textsc{SureInterior}}(Y,\varepsilon/2,\delta/2)$.
+  \item Put $t=2^z$ and return
+  $\text{\textsc{TruncatedLaplaceRelease}}
+  (D,Q_t;\Delta=t,\alpha=\varepsilon/2,\zeta=\delta/2)$.
+\end{enumerate}
+\end{algbox}
+
+\begin{lemma}[Approximate-private clipping guarantee]
+\label{lem:approx-upper}
+Under the hypotheses of \Cref{lem:parameter-comparison},
+\hyperref[alg:approx-clip-sum]{\textsc{ApproxClipSum}} is
+$(\varepsilon,\delta)$-differentially private and satisfies, for every $D$,
+\[
+ |\text{\textsc{ApproxClipSum}}(D)-S(D)|
+ \le\frac{C m(D)}\varepsilon B_{\varepsilon,\delta}
+\]
+on every execution.  It runs in time polynomial in
+$n$, $\log U$, $\log(1/\delta)$, and $\log(1/\varepsilon)$ in the exact-real
+model.
+\end{lemma}
+
+\begin{proof}
+If $K_{\mathrm{app}}>n$, the output is data independent and
+\[
+ \frac{\varepsilon|S(D)|}{m(D)}
+ \le\varepsilon n<\varepsilon K_{\mathrm{app}}
+ =O(G)=O(B_{\varepsilon,\delta})
+\]
+by \Cref{lem:parameter-comparison}.
+
+Suppose $K_{\mathrm{app}}\le n$.  By
+\Cref{lem:order-truncation-stability,lem:sure-interior}, the selector is
+$(\varepsilon/2,\delta/2)$-private.  Conditional on every fixed selected
+threshold $t$, \Cref{lem:clipped-sensitivity,lem:truncated-laplace} make the
+release $(\varepsilon/2,\delta/2)$-private.  Adaptive composition proves
+overall $(\varepsilon,\delta)$-privacy.
+
+The selected $z$ always lies between the minimum and maximum of $Y$.
+Thus \Cref{lem:dyadic-clipping} bounds the clipping bias by
+$K_{\mathrm{app}}m(D)$ and gives $t<2m(D)$.  The added noise has magnitude at
+most
+\[
+ \begin{aligned}
+ R\left(\frac\varepsilon2,\frac\delta2,t\right)
+ &=\frac{2t}{\varepsilon}
+   \log\left(1+\frac{e^{\varepsilon/2}-1}{\delta}\right)\\
+ &\le\frac{4m(D)}\varepsilon B_{\varepsilon,\delta}.
+ \end{aligned}
+\]
+Consequently,
+\[
+ \frac{\varepsilon
+ |\text{\textsc{ApproxClipSum}}(D)-S(D)|}{m(D)}
+ \le\varepsilon K_{\mathrm{app}}+4B_{\varepsilon,\delta}
+ =O(G+B_{\varepsilon,\delta})
+ =O(B_{\varepsilon,\delta}),
+\]
+deterministically.
+
+For the resource bound, computing and sorting the scales costs
+$O(n\log n)$.  The selector makes two calls to
+\textsc{OneLevelPrefix}, and evaluating $Q_t$ costs $O(n)$; the bounded-noise
+release adds $O(1)$ exact-real operations.  Here $K_{\mathrm{app}}\le n$,
+$d=L_U$, and the base parameters are
+\[
+ \left(\alpha_0,\zeta_0,\eta\right)
+ =\left(\frac\varepsilon8,\frac\delta{32},
+        \frac{\min\{\varepsilon,\delta\}}{128}\right).
+\]
+The claimed polynomial follows from
+\Cref{lem:one-level-prefix,lem:sure-interior}, since
+$L_U=O(1+\log U)$ and
+$\log(1/\eta)=O(1+\log(1/\varepsilon)+\log(1/\delta))$.
+\end{proof}
+
+\subsection{The matching lower bound}
+
+For a fixed mechanism $M$, abbreviate its worst normalized error by
+\[
+ R(M)=\sup_{D\in\{0,\ldots,U\}^n}
+ \frac{\varepsilon\operatorname{err}_{\beta}(M,D)}{m(D)}.
+\]
+The first packing places geometrically separated databases around the
+all-zero database and retains the exact additive loss from group privacy.
+
+\begin{lemma}[Geometric star-packing inequality]
+\label{lem:star-packing}
+Let $M$ be $(\varepsilon,\delta)$-differentially private, let $r>R(M)$, put
+$a=r/\varepsilon$ and $k=\lfloor2a\rfloor+1$, and define
+\[
+ h=1+\lfloor\log_4U\rfloor,
+ \qquad
+ \gamma=
+ \begin{cases}
+  \delta/(e^\varepsilon-1),&\delta>0,\\
+  0,&\delta=0.
+ \end{cases}
+\]
+If $k\le n$, then
+\begin{equation}
+ e^{-k\varepsilon}
+ \le\frac{\beta/h+\gamma}{1-\beta+\gamma},
+ \qquad
+ k\varepsilon
+ \ge\log\frac{1-\beta+\gamma}{\beta/h+\gamma}.
+ \label{eq:exact-star}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $j=0,\ldots,h-1$, let $v_j=4^j\le U$.  Let $D_\circ$ be the all-zero
+database, and let $D_j$ contain $k$ copies of $v_j$ and $n-k$ zeroes.  Since
+$r>R(M)$, the mechanism assigns probability at least $1-\beta$ to
+\[
+ I_\circ=[-a,a]
+ \quad\text{under }D_\circ,
+ \qquad
+ I_j=[(k-a)v_j,(k+a)v_j]
+ \quad\text{under }D_j.
+\]
+Indeed, each displayed radius is strictly larger than
+$\operatorname{err}_{\beta}(M,D)$ for the corresponding database, and the
+set of radii attaining probability at least $1-\beta$ is upward closed.
+These intervals are pairwise disjoint.  The inequality $k>2a$ separates
+$I_\circ$ from $I_0$, and consecutive geometric intervals are disjoint
+because
+\[
+ (k+a)v_j<(k-a)v_{j+1}
+ \quad\Longleftrightarrow\quad 5a<3k,
+\]
+which follows from $k>2a$.
+
+The replacement distance from $D_\circ$ to $D_j$ is $k$.  Applying
+\Cref{eq:group-privacy} from $D_j$ toward $D_\circ$ to the event $I_j$
+and rearranging exactly yields
+\[
+ \Pr[M(D_\circ)\in I_j]
+ \ge e^{-k\varepsilon}(1-\beta+\gamma)-\gamma.
+\]
+The interval $I_\circ$ already has probability at least $1-\beta$ under
+$D_\circ$, so the other disjoint intervals have total probability at most
+$\beta$.  Summing the displayed lower bound on
+$\Pr[M(D_\circ)\in I_j]$ over $j$ proves both forms in
+\Cref{eq:exact-star}.
+\end{proof}
+
+The logarithmic packing alone loses an additive constant.  A three-point
+count packing supplies a uniform positive floor before those constants are
+absorbed.
+
+\begin{lemma}[Uniform constant error floor]
+\label{lem:constant-floor}
+If $\varepsilon n\ge64A_{U,\beta}$ and $\delta\le n^{-2}$, then every
+$(\varepsilon,\delta)$-differentially private mechanism $M$ satisfies
+$R(M)\ge1/20$.
+\end{lemma}
+
+\begin{proof}
+Suppose that $R(M)<1/20$, and choose $R(M)<r<1/20$.  Put
+\[
+ a=\frac r\varepsilon,
+ \qquad
+ k=\lfloor2a\rfloor+1,
+ \qquad
+ \gamma=
+ \begin{cases}
+  \delta/(e^\varepsilon-1),&\delta>0,\\
+  0,&\delta=0.
+ \end{cases}
+\]
+Then
+\[
+ k<\frac{0.1}{\varepsilon}+1\le\frac{1.1}{\varepsilon}.
+\]
+Since $A_{U,\beta}\ge1+\log6$, the sample hypothesis gives
+$n>2.2/\varepsilon>2k$.
+
+For $q\in\{0,k,2k\}$, let $E_q$ contain $q$ ones and $n-q$ zeroes, and set
+$J_q=[q-a,q+a]$.  These intervals are disjoint because $k>2a$.  Moreover,
+$m(E_q)=1$ and $a>\operatorname{err}_{\beta}(M,E_q)$; by upward closure of
+the admissible quantile radii, $J_q$ has probability at least $1-\beta$
+under $E_q$.  Each of $E_0$ and $E_{2k}$ is at replacement distance $k$ from
+$E_k$.  Group privacy in \Cref{eq:group-privacy}, rearranged toward $E_k$,
+gives
+\[
+ \Pr[M(E_k)\in J_0],\ \Pr[M(E_k)\in J_{2k}]
+ \ge e^{-k\varepsilon}(1-\beta)-\gamma.
+\]
+Since $J_k$ itself has mass at least $1-\beta$ under $E_k$, disjointness
+implies
+\begin{equation}
+ \beta\ge2e^{-k\varepsilon}(1-\beta)-2\gamma.
+ \label{eq:floor-contradiction}
+\end{equation}
+Here $k\varepsilon<1.1$.  Also, using
+$e^\varepsilon-1\ge\varepsilon$, $\delta\le n^{-2}$, and the sample
+hypothesis,
+\[
+ \gamma\le\frac1{\varepsilon n^2}
+ \le\frac1{(\varepsilon n)^2}<\frac1{18000}.
+\]
+Because $1-\beta\ge2/3$, the right-hand side of
+\Cref{eq:floor-contradiction} is strictly greater than
+$(4/3)e^{-1.1}-2/18000>1/3\ge\beta$, a contradiction.
+\end{proof}
+
+Combining the exact star inequality with the constant floor yields the full
+rate.  The case in which the packing would require too many records is
+handled directly.
+
+\begin{lemma}[Matching minimax lower bound]
+\label{lem:full-lower}
+If $\varepsilon n\ge64A_{U,\beta}$ and $\delta\le n^{-2}$, then
+\[
+ \rho^*_{\varepsilon,\delta,\beta}(n,U)
+ \ge\frac1{200}\min\{A_{U,\beta},B_{\varepsilon,\delta}\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix an $(\varepsilon,\delta)$-differentially private mechanism $M$.  If
+$R(M)=+\infty$, there is nothing to prove.  Otherwise choose $r>R(M)$ and
+put
+\[
+ a=\frac r\varepsilon,
+ \qquad
+ k=\lfloor2a\rfloor+1,
+ \qquad
+ T=\min\{A_{U,\beta},B_{\varepsilon,\delta}\},
+ \qquad
+ h=1+\lfloor\log_4U\rfloor.
+\]
+If $k>n$, then $\lfloor2a\rfloor\ge n$, and hence
+\[
+ r\ge\frac{\varepsilon n}{2}
+ \ge32A_{U,\beta}\ge32T.
+\]
+Assume now that $k\le n$.  From \Cref{lem:star-packing}, weakening the
+numerator to $1-\beta$, using $1-\beta\ge2/3$, and applying
+$x+y\le2\max\{x,y\}$ gives
+\begin{equation}
+ k\varepsilon
+ \ge\min\left\{
+  \log\frac h\beta,
+  \log\frac{e^\varepsilon-1}{\delta}
+ \right\}-\log3,
+ \label{eq:two-log-lower}
+\end{equation}
+where the second logarithm is $+\infty$ when $\delta=0$.
+
+Writing $q=\lfloor(\log_2U)/2\rfloor$, we have $h=q+1$ and
+$L_U\le2q+3\le3h$.  Therefore
+\[
+ \log(h/\beta)\ge A_{U,\beta}-1-\log3.
+\]
+When $\delta>0$, the standing hypotheses imply
+\[
+ \frac{e^\varepsilon-1}{\delta}
+ \ge\varepsilon n^2
+ =\frac{(\varepsilon n)^2}{\varepsilon}>1,
+\]
+and consequently
+\[
+ \log\frac{e^\varepsilon-1}{\delta}
+ \ge B_{\varepsilon,\delta}-1-\log2.
+\]
+Substitution in \Cref{eq:two-log-lower} yields
+$k\varepsilon\ge T-1-2\log3$.  On the other hand,
+$k\varepsilon\le2r+\varepsilon\le2r+1$, so
+\begin{equation}
+ r\ge\frac{T-2-2\log3}{2}.
+ \label{eq:lower-up-to-constant}
+\end{equation}
+
+By \Cref{lem:constant-floor}, $R(M)\ge1/20$.  If
+$T\ge2(2+2\log3)$, \Cref{eq:lower-up-to-constant} gives $r\ge T/4$.
+Otherwise $T<8.4$ and $R(M)\ge1/20>T/200$.  Letting
+$r\downarrow R(M)$ shows $R(M)\ge T/200$.  Taking the infimum over all
+private mechanisms proves the lemma.
+\end{proof}
+
+\subsection{Public branch selection and conclusion}
+
+The final mechanism chooses between the two upper constructions using only
+public parameters.  Thus the branch decision consumes no privacy budget.
+
+\begin{algbox}
+\textbf{\uline{\textsc{BranchClipSum}}}: Instance-optimal bounded
+summation.  \phantomsection\label{alg:branch-clip-sum}
+
+\uline{Input}: A database $D\in\{0,\ldots,U\}^n$; public parameters
+$U,n,\varepsilon,\delta,\beta$ satisfying the hypotheses of
+\Cref{thm:main}.
+
+\uline{Output}: A real estimate of $S(D)$.
+
+\uline{Guarantee}: $(\varepsilon,\delta)$-privacy and normalized
+$\beta$-error $O(\min\{A_{U,\beta},B_{\varepsilon,\delta}\})$.
+
+\begin{enumerate}[leftmargin=*,nosep]
+  \item Compute the public quantities $A_{U,\beta}$ and
+  $B_{\varepsilon,\delta}$, using $B_{\varepsilon,0}=+\infty$.
+  \item If $\delta=0$ or $A_{U,\beta}\le B_{\varepsilon,\delta}$, return
+  $\text{\textsc{PureClipSum}}(D)$.
+  \item Otherwise return $\text{\textsc{ApproxClipSum}}(D)$.
+\end{enumerate}
+\end{algbox}
+
+\begin{lemma}[Best-branch privacy, accuracy, and resources]
+\label{lem:branch-wrapper}
+Under the hypotheses of \Cref{thm:main},
+\hyperref[alg:branch-clip-sum]{\textsc{BranchClipSum}} is
+$(\varepsilon,\delta)$-differentially private and, for every $D$,
+\[
+ \Pr\left[
+  |\text{\textsc{BranchClipSum}}(D)-S(D)|
+  \le\frac{C m(D)}\varepsilon
+       \min\{A_{U,\beta},B_{\varepsilon,\delta}\}
+ \right]\ge1-\beta.
+\]
+On the pure branch its running time is $O(n\log n+L_U)$; on the approximate
+branch it is polynomial in $n$, $\log U$, $\log(1/\delta)$, and
+$\log(1/\varepsilon)$.
+\end{lemma}
+
+\begin{proof}
+The branch decision depends only on public parameters.  On the pure branch,
+\Cref{lem:pure-upper} gives $(\varepsilon,0)$-privacy and normalized
+$\beta$-error $O(A_{U,\beta})$, and here
+$A_{U,\beta}=\min\{A_{U,\beta},B_{\varepsilon,\delta}\}$.  On the
+approximate branch, \Cref{lem:approx-upper} gives
+$(\varepsilon,\delta)$-privacy and deterministic normalized error
+$O(B_{\varepsilon,\delta})$, and here
+$B_{\varepsilon,\delta}<A_{U,\beta}$.  Exactly one branch is invoked, so its
+resource bound is inherited unchanged.
+\end{proof}
+
+By \Cref{lem:parameter-bookkeeping}, the sample-size condition in
+\Cref{thm:main} implies the premise of \Cref{lem:full-lower}, which proves
+the left inequality in \Cref{eq:main-rate}.  The right inequality and the
+claimed output and resource guarantees follow from
+\Cref{lem:branch-wrapper}.  This completes the proof of \Cref{thm:main}.
+
+\bibliographystyle{alpha}
+\bibliography{references}
+
+\end{document}

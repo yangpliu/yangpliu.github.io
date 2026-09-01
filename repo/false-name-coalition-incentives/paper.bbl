@@ -1,0 +1,62 @@
+\begin{thebibliography}{CKWN16}
+
+\bibitem[CKWN16]{CarlstenEtAl2016Instability}
+Miles Carlsten, Harry~A. Kalodner, S.~Matthew Weinberg, and Arvind Narayanan.
+\newblock On the instability of {Bitcoin} without the block reward.
+\newblock In {\em Proceedings of the 2016 ACM SIGSAC Conference on Computer and
+  Communications Security}, pages 154--167. Association for Computing
+  Machinery, 2016.
+
+\bibitem[CS23]{ChungShi2023Foundations}
+Hao Chung and Elaine Shi.
+\newblock Foundations of transaction fee mechanism design.
+\newblock In Nikhil Bansal and Viswanath Nagarajan, editors, {\em Proceedings
+  of the 2023 Annual ACM-SIAM Symposium on Discrete Algorithms (SODA)}, pages
+  3856--3899. Society for Industrial and Applied Mathematics, 2023.
+
+\bibitem[CSLZZ25]{ChenSimchiLeviZhaoZhou2025}
+Xi~Chen, David Simchi-Levi, Zishuo Zhao, and Yuan Zhou.
+\newblock Bayesian mechanism design for blockchain transaction fee allocation.
+\newblock {\em Operations Research}, 73(4):1944--1964, 2025.
+
+\bibitem[GY24]{GafniYaish2024Discrete}
+Yotam Gafni and Aviv Yaish.
+\newblock Discrete and bayesian transaction fee mechanisms.
+\newblock In Stefanos Leonardos, Elise Alfieri, William~J. Knottenbelt, and
+  Panos Pardalos, editors, {\em Mathematical Research for Blockchain Economy},
+  Lecture Notes in Operations Research, pages 145--171, Cham, 2024. Springer.
+
+\bibitem[HLM21]{HubermanLeshnoMoallemi2021Monopoly}
+Gur Huberman, Jacob~D. Leshno, and Ciamac Moallemi.
+\newblock Monopoly without a monopolist: An economic analysis of the {Bitcoin}
+  payment system.
+\newblock {\em The Review of Economic Studies}, 88(6):3011--3040, 2021.
+
+\bibitem[Rou24]{Roughgarden2024TFM}
+Tim Roughgarden.
+\newblock Transaction fee mechanism design.
+\newblock {\em Journal of the ACM}, 71(4):30:1--30:25, 2024.
+
+\bibitem[SCW23]{shi_et_al:LIPIcs.ITCS.2023.97}
+Elaine Shi, Hao Chung, and Ke~Wu.
+\newblock {What Can Cryptography Do for Decentralized Mechanism Design?}
+\newblock In Yael Tauman~Kalai, editor, {\em 14th Innovations in Theoretical
+  Computer Science Conference (ITCS 2023)}, volume 251 of {\em Leibniz
+  International Proceedings in Informatics (LIPIcs)}, pages 97:1--97:22,
+  Dagstuhl, Germany, 2023. Schloss Dagstuhl -- Leibniz-Zentrum f{\"u}r
+  Informatik.
+
+\bibitem[TY23]{TangYao2023PoSTFM}
+Wenpin Tang and David~D. Yao.
+\newblock Transaction fee mechanism for proof-of-stake protocol, 2023.
+
+\bibitem[WSC24]{wu_et_al:LIPIcs.ITCS.2024.98}
+Ke~Wu, Elaine Shi, and Hao Chung.
+\newblock {Maximizing Miner Revenue in Transaction Fee Mechanism Design}.
+\newblock In Venkatesan Guruswami, editor, {\em 15th Innovations in Theoretical
+  Computer Science Conference (ITCS 2024)}, volume 287 of {\em Leibniz
+  International Proceedings in Informatics (LIPIcs)}, pages 98:1--98:23,
+  Dagstuhl, Germany, 2024. Schloss Dagstuhl -- Leibniz-Zentrum f{\"u}r
+  Informatik.
+
+\end{thebibliography}

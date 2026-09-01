@@ -1,0 +1,82 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{ABC{\etalchar{+}}07}
+
+\bibitem[ABC{\etalchar{+}}07]{AtenieseEtAl2007PDP}
+Giuseppe Ateniese, Randal~C. Burns, Reza Curtmola, Joseph Herring, Lea Kissner,
+  Zachary N.~J. Peterson, and Dawn~Xiaodong Song.
+\newblock Provable data possession at untrusted stores.
+\newblock In {\em Proceedings of the 14th ACM Conference on Computer and
+  Communications Security}, pages 598--609. ACM, 2007.
+
+\bibitem[BS80]{BentleySaxe1980StaticDynamic}
+Jon~Louis Bentley and James~B. Saxe.
+\newblock Decomposable searching problems {I}: Static-to-dynamic
+  transformation.
+\newblock {\em Journal of Algorithms}, 1(4):301--358, 1980.
+
+\bibitem[CKW13]{CashKupcuWichs2013DynamicPoR}
+David Cash, Alptekin K{\"u}p{\c{c}}{\"u}, and Daniel Wichs.
+\newblock Dynamic proofs of retrievability via oblivious {RAM}.
+\newblock In {\em Advances in Cryptology -- EUROCRYPT 2013}, volume 7881 of
+  {\em Lecture Notes in Computer Science}, pages 279--295. Springer, 2013.
+
+\bibitem[JJ07]{JuelsKaliski2007PoR}
+Ari Juels and Burton S.~Kaliski Jr.
+\newblock {PORs}: Proofs of retrievability for large files.
+\newblock In {\em Proceedings of the 14th ACM Conference on Computer and
+  Communications Security}, pages 584--597. ACM, 2007.
+
+\bibitem[KCR19]{KadheChungRamchandran2019SeF}
+Swanand Kadhe, Jichan Chung, and Kannan Ramchandran.
+\newblock {SeF}: A secure fountain architecture for slashing storage costs in
+  blockchains.
+\newblock arXiv preprint arXiv:1906.12140, 2019.
+
+\bibitem[MJS{\etalchar{+}}14]{MillerJuelsShiParnoKatz2014Permacoin}
+Andrew Miller, Ari Juels, Elaine Shi, Bryan Parno, and Jonathan Katz.
+\newblock Permacoin: Repurposing {Bitcoin} work for data preservation.
+\newblock In {\em 2014 IEEE Symposium on Security and Privacy}, pages 475--490.
+  IEEE, 2014.
+
+\bibitem[PLBD18]{PerardLacanBachyDetchart2018LowStorage}
+Doriane P{\'e}rard, J{\'e}r{\^o}me Lacan, Yann Bachy, and Jonathan Detchart.
+\newblock Erasure code-based low storage blockchain node.
+\newblock In {\em 2018 IEEE International Conference on Internet of Things
+  (iThings), Green Computing and Communications (GreenCom), Cyber, Physical and
+  Social Computing (CPSCom), and Smart Data (SmartData)}, pages 1622--1627.
+  IEEE, 2018.
+
+\bibitem[Rab89]{Rabin1989InformationDispersal}
+Michael~O. Rabin.
+\newblock Efficient dispersal of information for security, load balancing, and
+  fault tolerance.
+\newblock {\em Journal of the ACM}, 36(2):335--348, 1989.
+
+\bibitem[RS60]{ReedSolomon1960PolynomialCodes}
+I.~S. Reed and G.~Solomon.
+\newblock Polynomial codes over certain finite fields.
+\newblock {\em Journal of the Society for Industrial and Applied Mathematics},
+  8(2):300--304, 1960.
+
+\bibitem[RV21]{RamanVarshney2021Coding}
+Ravi~Kiran Raman and Lav~R. Varshney.
+\newblock Coding for scalable blockchains via dynamic distributed storage.
+\newblock {\em IEEE/ACM Transactions on Networking}, 29(6):2588--2601, 2021.
+
+\bibitem[SSM26]{ShiSilverMu2026}
+Elaine Shi, Rose Silver, and Changrui Mu.
+\newblock Decentralized data archival: New definitions and constructions.
+\newblock In Shubhangi Saraf, editor, {\em 17th Innovations in Theoretical
+  Computer Science Conference (ITCS 2026)}, volume 362 of {\em Leibniz
+  International Proceedings in Informatics (LIPIcs)}, pages 116:1--116:22,
+  Dagstuhl, Germany, 2026. Schloss Dagstuhl -- Leibniz-Zentrum f{\"u}r
+  Informatik.
+\newblock Full version: Cryptology ePrint Archive, Paper 2025/969.
+
+\bibitem[SSP13]{ShiStefanovPapamanthou2013PracticalDynamicPoR}
+Elaine Shi, Emil Stefanov, and Charalampos Papamanthou.
+\newblock Practical dynamic proofs of retrievability.
+\newblock In {\em Proceedings of the 2013 ACM SIGSAC Conference on Computer and
+  Communications Security}, pages 325--336. ACM, 2013.
+
+\end{thebibliography}
