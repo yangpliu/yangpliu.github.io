@@ -1,0 +1,159 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{ADVW{\etalchar{+}}25}
+
+\bibitem[ADVW{\etalchar{+}}25]{ADVXXZ25}
+Josh Alman, Ran Duan, Virginia Vassilevska~Williams, Yinzhan Xu, Zixuan Xu, and
+  Renfei Zhou.
+\newblock More asymmetry yields faster matrix multiplication.
+\newblock In {\em Proceedings of the 2025 ACM-SIAM Symposium on Discrete
+  Algorithms (SODA)}, pages 2005--2039, 2025.
+\newblock arXiv:2404.16349. $\omega < 2.371339$.
+
+\bibitem[AVW21]{AVW21}
+Josh Alman and Virginia Vassilevska~Williams.
+\newblock A refined laser method and faster matrix multiplication.
+\newblock In {\em Proceedings of the 2021 ACM-SIAM Symposium on Discrete
+  Algorithms (SODA)}, pages 522--539, 2021.
+\newblock arXiv:2010.05846. $\omega < 2.37286$.
+
+\bibitem[CLS21]{CLS21:journal}
+Michael~B. Cohen, Yin~Tat Lee, and Zhao Song.
+\newblock Solving linear programs in the current matrix multiplication time.
+\newblock {\em Journal of the ACM}, 68(1):3:1--3:39, 2021.
+\newblock Conference version in STOC 2019.
+
+\bibitem[CP15]{CP15}
+Michael~B. Cohen and Richard Peng.
+\newblock $\ell_p$ row sampling by {L}ewis weights.
+\newblock In {\em Proceedings of the 47th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 183--192, 2015.
+\newblock Full version arXiv:1412.0588.
+
+\bibitem[CW17]{CW17:journal}
+Kenneth~L. Clarkson and David~P. Woodruff.
+\newblock Low-rank approximation and regression in input sparsity time.
+\newblock {\em Journal of the ACM}, 63(6):54:1--54:45, 2017.
+
+\bibitem[DEK{\etalchar{+}}26]{DEKMRSZAVB26:arxiv}
+Emilien Dupont, Marvin Eisenberger, Borislav Kozlovskii, Abbas Mehrabian,
+  Francisco J.~R. Ruiz, Abigail See, Renfei Zhou, Josh Alman, Virginia
+  Vassilevska~Williams, and Matej Balog.
+\newblock Improving the matrix multiplication exponent with modern optimization
+  and {AlphaEvolve}.
+\newblock \url{https://arxiv.org/abs/2608.16884}, 2026.
+\newblock arXiv:2608.16884. $\omega < 2.371177$.
+
+\bibitem[DWZ23]{DWZ23}
+Ran Duan, Hongxun Wu, and Renfei Zhou.
+\newblock Faster matrix multiplication via asymmetric hashing.
+\newblock In {\em 64th Annual Symposium on Foundations of Computer Science
+  (FOCS)}, pages 2129--2138, 2023.
+\newblock arXiv:2210.10173. $\omega < 2.371866$.
+
+\bibitem[GPV23]{GPV23}
+Mehrdad Ghadiri, Richard Peng, and Santosh~S. Vempala.
+\newblock The bit complexity of efficient continuous optimization.
+\newblock In {\em 64th Annual Symposium on Foundations of Computer Science
+  (FOCS)}, pages 2059--2070, 2023.
+\newblock Full version arXiv:2304.02124v1; statement numbers refer to it.
+
+\bibitem[JSWZ21]{JSWZ21}
+Shunhua Jiang, Zhao Song, Omri Weinstein, and Hengjie Zhang.
+\newblock A faster algorithm for solving general {LPs}.
+\newblock In {\em Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory
+  of Computing (STOC)}, pages 823--832, 2021.
+\newblock Full version arXiv:2004.07470, titled ``Faster Dynamic Matrix Inverse
+  for Faster {LPs}''.
+
+\bibitem[LPT{\etalchar{+}}25]{LPTWY25:arxiv}
+Yang~P. Liu, Richard Peng, Colin Tang, Albert Weng, and Junzhao Yang.
+\newblock Adaptive matrix sparsification and applications to empirical risk
+  minimization.
+\newblock \url{https://arxiv.org/abs/2512.02003}, 2025.
+\newblock arXiv:2512.02003v1.
+
+\bibitem[LS13]{LS13:arxiv}
+Yin~Tat Lee and Aaron Sidford.
+\newblock Path finding {I}: Solving linear programs with
+  $\tilde{O}(\sqrt{\mathrm{rank}})$ linear system solves.
+\newblock \url{https://arxiv.org/abs/1312.6677}, 2013.
+\newblock arXiv:1312.6677, v1 December 2013, v3 March 2015.
+
+\bibitem[LS14]{LS14}
+Yin~Tat Lee and Aaron Sidford.
+\newblock Path finding methods for linear programming: Solving linear programs
+  in $\tilde{O}(\sqrt{\mathrm{rank}})$ iterations and faster algorithms for
+  maximum flow.
+\newblock In {\em 55th Annual Symposium on Foundations of Computer Science
+  (FOCS)}, pages 424--433, 2014.
+
+\bibitem[LS15]{LS15}
+Yin~Tat Lee and Aaron Sidford.
+\newblock Efficient inverse maintenance and faster algorithms for linear
+  programming.
+\newblock In {\em 56th Annual Symposium on Foundations of Computer Science
+  (FOCS)}, pages 230--249, 2015.
+\newblock Full version arXiv:1503.01752v3; statement numbers refer to it.
+
+\bibitem[LS19]{LS19:arxiv}
+Yin~Tat Lee and Aaron Sidford.
+\newblock Solving linear programs with $\sqrt{\mathrm{rank}}$ linear system
+  solves.
+\newblock \url{https://arxiv.org/abs/1910.08033}, 2019.
+\newblock arXiv:1910.08033, v1 October 2019, v2 August 2020.
+
+\bibitem[SS11]{SS11:journal}
+Daniel~A. Spielman and Nikhil Srivastava.
+\newblock Graph sparsification by effective resistances.
+\newblock {\em SIAM Journal on Computing}, 40(6):1913--1926, 2011.
+
+\bibitem[Tro12]{T12:journal}
+Joel~A. Tropp.
+\newblock User-friendly tail bounds for sums of random matrices.
+\newblock {\em Foundations of Computational Mathematics}, 12(4):389--434, 2012.
+
+\bibitem[Vai89]{V89}
+Pravin~M. Vaidya.
+\newblock Speeding-up linear programming using fast matrix multiplication.
+\newblock In {\em 30th Annual Symposium on Foundations of Computer Science
+  (FOCS)}, pages 332--337, 1989.
+
+\bibitem[vdB20]{B20}
+Jan van~den Brand.
+\newblock A deterministic linear program solver in current matrix
+  multiplication time.
+\newblock In {\em Proceedings of the 2020 ACM-SIAM Symposium on Discrete
+  Algorithms (SODA)}, pages 259--278, 2020.
+
+\bibitem[vdBLL{\etalchar{+}}21]{BLLSSSW21}
+Jan van~den Brand, Yin~Tat Lee, Yang~P. Liu, Thatchaphol Saranurak, Aaron
+  Sidford, Zhao Song, and Di~Wang.
+\newblock Minimum cost flows, {MDPs}, and $\ell_1$-regression in nearly linear
+  time for dense instances.
+\newblock In {\em Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory
+  of Computing (STOC)}, pages 859--869, 2021.
+\newblock Full version arXiv:2101.05719v2; statement numbers refer to it.
+
+\bibitem[vdBLN{\etalchar{+}}20]{BLNPSSSW20}
+Jan van~den Brand, Yin~Tat Lee, Danupon Nanongkai, Richard Peng, Thatchaphol
+  Saranurak, Aaron Sidford, Zhao Song, and Di~Wang.
+\newblock Bipartite matching in nearly-linear time on moderately dense graphs.
+\newblock In {\em 61st Annual Symposium on Foundations of Computer Science
+  (FOCS)}, pages 919--930, 2020.
+\newblock Full version arXiv:2009.01802; statement numbers refer to it.
+
+\bibitem[vdBLSS20]{BLSS20}
+Jan van~den Brand, Yin~Tat Lee, Aaron Sidford, and Zhao Song.
+\newblock Solving tall dense linear programs in nearly linear time.
+\newblock In {\em Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory
+  of Computing (STOC)}, pages 775--788, 2020.
+\newblock Full version arXiv:2002.02304.
+
+\bibitem[VWXXZ24]{VXXZ24}
+Virginia Vassilevska~Williams, Yinzhan Xu, Zixuan Xu, and Renfei Zhou.
+\newblock New bounds for matrix multiplication: from alpha to omega.
+\newblock In {\em Proceedings of the 2024 ACM-SIAM Symposium on Discrete
+  Algorithms (SODA)}, pages 3792--3835, 2024.
+\newblock arXiv:2307.07970. $\omega < 2.371552$.
+
+\end{thebibliography}
