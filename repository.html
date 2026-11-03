@@ -236,6 +236,34 @@
           <li>
             <details class="paper-entry">
               <summary>
+                <span class="paper-title"><i>n</i>-Batch Dynamic Adaptive Spectral Sparsification in <i>O&#776;</i>(<i>n</i> log<sup>4</sup> <i>n</i> + <i>&epsilon;</i><sup>&minus;2</sup><i>n</i> log<sup>3</sup> <i>n</i>) Time</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/batch-dynamic-adaptive-spectral-sparsification/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/bd5225741652af28c21c20c9977f56c9def12247" title="View the commit that added this paper">Added November 2, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> We maintain a weighted graph on <i>n</i> vertices under blocks of at most <i>n</i> edge insertions, deletions and weight changes, each block followed by a request for a (1 &plusmn; <i>&epsilon;</i>) spectral sparsifier, against an adaptive adversary. Using a query-driven partition of the edges, a heavy/light split of the edges and a three-step residual estimator of effective resistances &ndash; all proved here &ndash; and no expander decomposition, a block costs <i>O&#776;</i>(<i>n</i> log<sup>4</sup> <i>n</i> + <i>&epsilon;</i><sup>&minus;2</sup><i>n</i> log<sup>3</sup> <i>n</i>) time, and the output has <i>O</i>(<i>&epsilon;</i><sup>&minus;2</sup><i>n</i> log <i>n</i>) edges. The bound comes from a block lemma: a block whose updates decrease no quadratic form of the Laplacian by more than the factor 10 costs <i>O&#776;</i>(<i>&epsilon;</i><sup>&minus;2</sup><i>n</i> log<sup>3</sup> <i>n</i>), and an arbitrary block is simulated by <i>O</i>(log <i>n</i>) such blocks that halve the deleted weights. Removing the last logarithm reduces to sampling Gaussian vectors with covariance <b>L</b>(<i>G</i> &minus; <i>F</i>)<sup>&dagger;</sup> &minus; <b>L</b>(<i>G</i>)<sup>&dagger;</sup> for the deleted edge set <i>F</i>; this step is open. Every logarithmic factor is counted; <i>O&#776;</i>(&middot;) hides (log log <i>n</i>)<sup><i>O</i>(1)</sup> factors only.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details class="paper-entry">
+              <summary>
+                <span class="paper-title">Dense minimum-cost flow in <i>O&#776;</i>(<i>n</i><sup>2</sup> log <i>n</i>) word operations</span>
+                <span class="paper-links">
+                  <a class="paper-pdf" href="repo/dense-min-cost-flow/paper.pdf">PDF</a>
+                  <a class="paper-history" href="https://github.com/yangpliu/yangpliu.github.io/commit/bd5225741652af28c21c20c9977f56c9def12247" title="View the commit that added this paper">Added November 2, 2026</a>
+                </span>
+              </summary>
+              <div class="paper-details">
+                <p><b>Abstract.</b> We give a randomized word-RAM algorithm that computes an exact minimum-cost flow on a directed graph with <i>n</i> vertices, at most one arc per ordered pair, and polynomially bounded integer capacities, costs, and demands in <i>O&#776;</i>(<i>n</i><sup>2</sup> log <i>n</i>) word operations, where <i>O&#776;</i>(&middot;) hides factors of (log log <i>n</i>)<sup><i>O</i>(1)</sup>. The running time bound holds on every random tape. The output is an exact integral flow with an integer dual certificate, or a verified infeasibility certificate, with probability at least 1 &minus; <i>n</i><sup>&minus;<i>c</i><sub>0</sub></sup> for any fixed constant <i>c</i><sub>0</sub>, and <span style="font-variant: small-caps;">Fail</span> otherwise. Every returned answer is checked exactly before it is released. Dense bipartite minimum-cost perfect matching is a special case. The dense work per attempt is <i>O&#776;</i>(<i>n</i><sup>2</sup>) because maintained original-edge cores and packed arithmetic answer the per-frame queries in time proportional to the number of selected labels, and <i>O</i>(log <i>n</i>) attempts supply both progress and confidence.</p>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details class="paper-entry">
+              <summary>
                 <span class="paper-title">Approaching Cubic Oracle Calls for Isotropic Rounding</span>
                 <span class="paper-links">
                   <a class="paper-pdf" href="repo/cubic-oracle-isotropic-rounding/paper.pdf">PDF</a>
